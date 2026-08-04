@@ -16,6 +16,7 @@
 
 - [用語集](./CONTEXT.md)
 - [学習科学の調査レポート](./docs/research/learning-science-principles.md)
+- [誤答を次の学習へ変える最小記録](./docs/error-record.md)
 - [教材とパイロット範囲](./docs/materials.md)
 - [旧Wayfinderからの移行記録](./docs/migration.md)
 
