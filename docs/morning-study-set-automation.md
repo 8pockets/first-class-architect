@@ -19,6 +19,7 @@
 | 項目 | 決定 |
 |---|---|
 | 名称 | `First-Class Architect Morning Study Set`（朝の学習セット） |
+| 自動化ID | `first-class-architect-morning-study-set` |
 | 種類 | 現在の学習タスクへ継続するHeartbeat |
 | 実行時刻 | 毎日5時30分、Asia/Tokyo |
 | 実行先 | この学習プロジェクトの同じタスク |
