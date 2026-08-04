@@ -16,6 +16,7 @@
 
 - [用語集](./CONTEXT.md)
 - [学習科学の調査レポート](./docs/research/learning-science-principles.md)
+- [構造から他科目へ展開する条件](./docs/cross-subject-expansion.md)
 - [教材とパイロット範囲](./docs/materials.md)
 - [旧Wayfinderからの移行記録](./docs/migration.md)
 
