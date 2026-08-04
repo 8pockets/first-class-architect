@@ -16,6 +16,7 @@
 
 - [用語集](./CONTEXT.md)
 - [学習科学の調査レポート](./docs/research/learning-science-principles.md)
+- [2週間の構造パイロット検証基準](./docs/pilot-evaluation.md)
 - [教材とパイロット範囲](./docs/materials.md)
 - [旧Wayfinderからの移行記録](./docs/migration.md)
 
