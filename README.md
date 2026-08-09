@@ -21,6 +21,7 @@
 - [誤答を次の学習へ変える最小記録](./docs/error-record.md)
 - [2週間の構造パイロット検証基準](./docs/pilot-evaluation.md)
 - [構造から他科目へ展開する条件](./docs/cross-subject-expansion.md)
+- [毎朝の学習セット自動準備](./docs/morning-study-set-automation.md)
 - [教材とパイロット範囲](./docs/materials.md)
 - [旧Wayfinderからの移行記録](./docs/migration.md)
 
