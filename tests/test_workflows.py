@@ -60,7 +60,7 @@ def test_pages_uses_pinned_actions_and_no_auth_secrets() -> None:
 
     assert "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1" in text
     assert "actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97" in text
-    assert "actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b" in text
+    assert "actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d" in text
     assert "actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9" in text
     assert "actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128" in text
     assert "CODEX_AUTH_JSON" not in text
