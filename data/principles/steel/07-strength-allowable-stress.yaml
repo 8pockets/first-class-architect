@@ -1,0 +1,21 @@
+version: 1
+section:
+  id: K6-07
+  title: 基準強度と許容応力度
+  order: 8
+principles:
+- id: S-K6-STEEL-LONG-TERM-BEARING-ALLOWABLE-STRESS
+  order: 1
+  type: rule
+  principle: 鋼材の長期許容支圧応力度
+  conclusion: 長期許容支圧応力度はF/1.1で、長期許容引張応力度F/1.5より大きい。
+  reason: 教材に記載なし
+  conditions:
+  - 鋼材の長期支圧を検討する場合
+  source:
+    pages:
+    - 182
+    question_codes: []
+  prerequisites:
+  - S-K6-STEEL-F-VALUE-DEFINITION
+  editorial_status: source_gap

@@ -1,0 +1,54 @@
+version: 1
+section:
+  id: K6-22
+  title: 梁の補強材
+  order: 23
+principles:
+- id: S-K6-FILLER-PLATE-EQUALIZES-THICKNESS
+  order: 1
+  type: identification
+  principle: フィラープレートの用途
+  conclusion: フィラープレートは、ボルト・高力ボルト接合で接合板厚が異なるとき、板厚をそろえるため隙間へ入れる鋼板である。
+  reason: 教材に記載なし
+  conditions:
+  - 接合する鋼板の板厚が異なるボルト接合部
+  source:
+    pages:
+    - 197
+    question_codes:
+    - '03161'
+    - '23172'
+  prerequisites:
+  - S-K6-HIGH-STRENGTH-BOLT-CONNECTION-TYPES
+  editorial_status: source_gap
+- id: S-K6-SPLICE-PLATE-TRANSFERS-FORCE
+  order: 2
+  type: identification
+  principle: スプライスプレートの用途
+  conclusion: スプライスプレートは、H形鋼などの柱・梁をボルト接合するとき、応力を伝達するため部材に添える接合用鋼板である。
+  reason: 教材に記載なし
+  conditions:
+  - 柱・梁などのボルト継手
+  source:
+    pages:
+    - 197
+    question_codes:
+    - '01173'
+  prerequisites: []
+  editorial_status: source_gap
+- id: S-K6-STIFFENER-ROLE-BY-POSITION-AND-STRESS
+  order: 3
+  type: identification
+  principle: スチフナの配置と局部座屈防止の役割
+  conclusion: スチフナはウェブの座屈を防ぐ補強材で、荷重点・支持点や中間部に材軸直角方向へ設ける。中間スチフナはせん断力によるウェブのせん断座屈、水平スチフナは曲げ圧縮によるウェブの局部座屈を抑える。
+  reason: 荷重点、せん断力、曲げ圧縮でウェブやフランジに局部座屈が生じるため。
+  conditions:
+  - H形鋼梁・柱のウェブ補強
+  - 荷重点・支持点・中間部・曲げ圧縮域で役割を識別
+  source:
+    pages:
+    - 197
+    question_codes: []
+  prerequisites:
+  - S-K6-20-LOCAL-BUCKLING
+  editorial_status: source_checked

@@ -1,0 +1,79 @@
+version: 1
+section:
+  id: K6-30
+  title: 耐火被覆
+  order: 31
+principles:
+- id: S-K6-FIREPROOFING-BOARD-ATTACHMENT
+  order: 1
+  type: identification
+  principle: 張付け耐火被覆の施工法と特徴
+  conclusion: 張付け耐火被覆はALC板やけい酸カルシウム板などを金物・接着剤で取り付ける。作業能率と品質管理に優れるが、破損や割付けによるロスが生じる。
+  reason: 教材に記載なし
+  conditions:
+  - 成形板を用いる張付け耐火被覆
+  source:
+    pages:
+    - 205
+    question_codes: []
+  prerequisites: []
+  editorial_status: source_gap
+- id: S-K6-FIREPROOFING-CAST-IN
+  order: 2
+  type: identification
+  principle: 打込み耐火被覆の施工法と特徴
+  conclusion: 打込み耐火被覆は軽量コンクリートなどを打設する。接合部がなく施工しやすく安全性も高いが、打設・養生に時間がかかり、ひび割れが生じやすい。
+  reason: 教材に記載なし
+  conditions:
+  - 軽量コンクリートなどを用いる打込み耐火被覆
+  source:
+    pages:
+    - 205
+    question_codes: []
+  prerequisites: []
+  editorial_status: source_gap
+- id: S-K6-FIREPROOFING-PLASTER-FINISH
+  order: 3
+  type: identification
+  principle: 塗仕上げ耐火被覆の施工法と特徴
+  conclusion: 塗仕上げ耐火被覆は、丸鋼で補強したラスへモルタルなどを塗る。材料が安価で仕上げを兼ねられるが、施工に熟練を要する。
+  reason: 教材に記載なし
+  conditions:
+  - モルタルなどを用いる塗仕上げ耐火被覆
+  source:
+    pages:
+    - 205
+    question_codes: []
+  prerequisites: []
+  editorial_status: source_gap
+- id: S-K6-FIREPROOFING-REQUIRED-ABOVE-250C
+  order: 4
+  type: principle
+  principle: 鋼材の高温強度低下と耐火被覆
+  conclusion: 鋼材は250℃以上の高温へ長時間さらされると強度が低下するため、火災時の強度低下を防ぐ耐火被覆が必要である。
+  reason: 高温が長時間続くと鋼材強度が低下するため。
+  conditions:
+  - 火災時の鉄骨部材
+  - 250℃以上へ長時間さらされる場合
+  source:
+    pages:
+    - 205
+    question_codes: []
+  prerequisites:
+  - S-K6-STEEL-F-VALUE-DEFINITION
+  editorial_status: draft
+- id: S-K6-FIREPROOFING-SPRAY-APPLIED
+  order: 5
+  type: identification
+  principle: 吹付け耐火被覆の施工法と特徴
+  conclusion: 吹付け耐火被覆は、接着剤を塗った鉄骨またはラス下地へ岩綿などを吹き付ける。複雑・不整形にも対応できるが、表面が粗く、飛散が公害要因となり、雨水で剥落するため内部に用いる。
+  reason: 教材に記載なし
+  conditions:
+  - 吹付け岩綿などの耐火被覆
+  - 雨掛かりを避ける内部使用
+  source:
+    pages:
+    - 205
+    question_codes: []
+  prerequisites: []
+  editorial_status: source_gap

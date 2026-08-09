@@ -1,0 +1,36 @@
+version: 1
+section:
+  id: K6-21
+  title: 梁の種類・継手
+  order: 22
+principles:
+- id: S-K6-BEAM-SPLICE-METHODS-FIELD-SHOP
+  order: 1
+  type: identification
+  principle: 梁継手の接合方法と現場・工場の使い分け
+  conclusion: 梁継手には高力ボルト継手、高力ボルトと溶接の併用継手、溶接継手があり、現場継手は高力ボルト接合、品質を安定させやすい工場仕口は溶接接合とすることが多い。
+  reason: 現場溶接は施工条件の影響を受けやすく、工場溶接は品質を安定させやすいため。
+  conditions:
+  - 鉄骨梁の継手・仕口
+  - 現場接合か工場製作かを区別する
+  source:
+    pages:
+    - 196
+    question_codes: []
+  prerequisites:
+  - S-K6-STEEL-CONNECTION-TYPE-IDENTIFICATION
+  editorial_status: source_checked
+- id: S-K6-BEAM-TYPES-ROLLED-BUILT-UP
+  order: 2
+  type: identification
+  principle: 形鋼梁と組立梁の識別
+  conclusion: 形鋼梁にはH形鋼梁・I形鋼梁があり、組立梁にはトラス梁・ラチス梁がある。
+  reason: 教材に記載なし
+  conditions:
+  - 梁を製作形式で識別する場合
+  source:
+    pages:
+    - 196
+    question_codes: []
+  prerequisites: []
+  editorial_status: source_gap

@@ -1,0 +1,150 @@
+version: 1
+section:
+  id: K6-03
+  title: H形鋼の断面特性
+  order: 4
+principles:
+- id: S-K6-NO-LATERAL-BUCKLING-SECTION-ALLOWABLE-BENDING
+  order: 1
+  type: rule
+  principle: 横座屈しない断面の許容曲げ応力度
+  conclusion: 鋼管・箱形断面、又は弱軸曲げを受ける対称H形断面は、幅厚比・径厚比の制限を満たせば、材長にかかわらず許容曲げ応力度を許容引張応力度と同じ値にできる。
+  reason: これらの条件では横座屈のおそれがなく、局部座屈も制限されるため。
+  conditions:
+  - 横座屈のおそれがない断面・曲げ軸
+  - 幅厚比又は径厚比の制限を満足
+  - H形鋼が弱軸まわりに曲げを受ける場合
+  - 教材図の横座屈による低減を要しない扱い
+  - 角形鋼管または円形鋼管
+  - 幅厚比制限に従い、局部座屈しない場合
+  source:
+    pages:
+    - 164
+    - 165
+    - 178
+    - 193
+    question_codes:
+    - '01152'
+    - '03174'
+    - '04164'
+    - '05172'
+    - 07182
+    - '18171'
+    - '21151'
+    - '22151'
+    - '25163'
+    - '26173'
+    - '29302'
+  prerequisites:
+  - S-K6-20-LOCAL-BUCKLING
+  - S-K6-WIDTH-THICKNESS-LIMIT-MEANING
+  editorial_status: source_checked
+- id: S-K6-BEAM-LATERAL-BUCKLING-COUNTERMEASURES
+  order: 2
+  type: rule
+  principle: 横座屈の抑制方法
+  conclusion: 横座屈対策は、圧縮フランジの支点間距離を短くする、小梁・横補剛材を設ける、箱形鋼を用いる、弱軸まわりの細長比を小さくすることである。
+  reason: 細長比が大きいほど弱軸方向へ座屈しやすいため。
+  conditions:
+  - 横座屈のおそれがある梁
+  - H形鋼梁
+  source:
+    pages:
+    - 165
+    - 178
+    - 194
+    question_codes:
+    - '01153'
+    - '03172'
+    - 07183
+    - '18161'
+    - '20163'
+    - '21163'
+    - '22154'
+    - '23154'
+    - '24154'
+    - '26172'
+    - '28171'
+    - '30163'
+  prerequisites:
+  - S-K6-18-SLENDERNESS
+  editorial_status: source_checked
+- id: S-K6-H-SECTION-AXIS-LATERAL-BUCKLING
+  order: 3
+  type: principle
+  principle: H形鋼の曲げ軸と横座屈
+  conclusion: 弱軸まわりの曲げでは横座屈しにくく、強軸まわりの曲げでは横座屈しやすい。
+  reason: 教材に記載なし
+  conditions:
+  - H形鋼が曲げを受ける場合
+  source:
+    pages:
+    - 178
+    - 193
+    question_codes:
+    - '04164'
+    - 07182
+    - '21151'
+    - '25163'
+  prerequisites:
+  - S-K6-H-SECTION-STRONG-WEAK-AXIS-RIGIDITY
+  editorial_status: source_gap
+- id: S-K6-H-SECTION-STRONG-AXIS-LATERAL-RESTRAINT
+  order: 4
+  type: rule
+  principle: 強軸曲げを受けるH形鋼の横座屈対応
+  conclusion: 強軸まわりに曲げを受けるH形鋼は、横補剛材を設けるか許容圧縮応力度を低減する。
+  reason: 強軸まわりの曲げでは横座屈しやすいため。
+  conditions:
+  - H形鋼が強軸まわりに曲げを受ける場合
+  source:
+    pages:
+    - 178
+    - 193
+    question_codes:
+    - '04164'
+    - 07182
+    - '21151'
+    - '25163'
+  prerequisites: []
+  editorial_status: source_checked
+- id: S-K6-H-SECTION-STRONG-WEAK-AXIS-RIGIDITY
+  order: 5
+  type: identification
+  principle: H形鋼の強軸・弱軸
+  conclusion: H形鋼は強軸まわりでは曲がりにくく、弱軸まわりでは曲がりやすい。
+  reason: 教材に記載なし
+  conditions:
+  - 同じH形鋼断面の曲げ方向を比較する場合
+  source:
+    pages:
+    - 178
+    - 193
+    question_codes:
+    - '04164'
+    - 07182
+    - '21151'
+    - '25163'
+  prerequisites: []
+  editorial_status: source_gap
+- id: S-K6-STEEL-COMPRESSION-CAPACITY-BUCKLING
+  order: 6
+  type: principle
+  principle: 座屈の有無と圧縮耐力
+  conclusion: 座屈しなければ圧縮耐力は引張耐力と同じだが、それより小さい荷重で座屈する場合は座屈時の耐力を圧縮耐力とみなす。
+  reason: 鋼材は圧縮力を受けると座屈する場合があるため。
+  conditions:
+  - 圧縮力を受ける鋼部材
+  - 座屈耐力と引張耐力を比較する場合
+  source:
+    pages:
+    - 178
+    - 182
+    - 193
+    question_codes:
+    - '04164'
+    - 07182
+    - '21151'
+    - '25163'
+  prerequisites: []
+  editorial_status: source_checked

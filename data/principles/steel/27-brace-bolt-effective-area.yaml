@@ -1,0 +1,33 @@
+version: 1
+section:
+  id: K6-27
+  title: ボルト本数と有効断面
+  order: 28
+principles:
+- id: S-K6-BRACE-BOLT-COUNT-INCREASES-EFFECTIVE-AREA
+  order: 1
+  type: principle
+  principle: 筋かい接合のボルト本数と有効断面積
+  conclusion: 片側接合ブレースの有効断面積はA1=Ag-Ad'-hn×tで求める。材軸方向のボルト本数が多いほど無効長さhnが小さくなり、有効断面積は大きくなる。
+  reason: ボルト本数が増えるほど接合部から突出脚へ力が伝わりやすくなり、無効となる突出長さが小さくなるため。
+  conditions:
+  - 山形鋼又は溝形鋼を高力ボルト接合
+  - 配置形式が同じ
+  - Agは全断面積、Ad'はボルト孔による欠損断面積、tは突出脚の板厚
+  - '1本: 山形鋼・溝形鋼ともhn=h1-t1'
+  - '2本: ともに0.7h1、3本: ともに0.5h1'
+  - '4本: 山形鋼0.33h1、溝形鋼0.25h1'
+  - '5本: 山形鋼0.25h1、溝形鋼0.20h1'
+  - h1は突出脚高さ、溝形鋼のt1はウェブ厚
+  source:
+    pages:
+    - 170
+    - 202
+    question_codes:
+    - '02161'
+    - '07153'
+    - '18174'
+    - '25174'
+  prerequisites:
+  - S-K6-ANGLE-CHANNEL-BRACE-EFFECTIVE-AREA
+  editorial_status: source_checked

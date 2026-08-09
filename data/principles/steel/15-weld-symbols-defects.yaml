@@ -1,0 +1,116 @@
+version: 1
+section:
+  id: K6-15
+  title: 溶接記号・欠陥
+  order: 16
+principles:
+- id: S-K6-WELD-DEFECT-BLOWHOLE
+  order: 1
+  type: identification
+  principle: ブローホールの識別
+  conclusion: ブローホールは、溶着金属中にガスが残ってできる内部の空洞である。
+  reason: 溶着金属中にガスが残るため。
+  conditions:
+  - 空洞が溶接金属内部に閉じている場合
+  source:
+    pages:
+    - 190
+    question_codes: []
+  prerequisites: []
+  editorial_status: source_checked
+- id: S-K6-WELD-DEFECT-OVERLAP
+  order: 2
+  type: identification
+  principle: オーバーラップの識別
+  conclusion: オーバーラップは、溶接金属の上端が母材に融合せず重なった表面欠陥である。
+  reason: 教材に記載なし
+  conditions:
+  - 溶接金属が母材へ融合せず表面で重なる場合
+  source:
+    pages:
+    - 190
+    question_codes: []
+  prerequisites:
+  - S-K6-WELD-CONSTRUCTION-DEFECT-RISK
+  editorial_status: source_gap
+- id: S-K6-WELD-DEFECT-PIT
+  order: 3
+  type: identification
+  principle: ピットの識別
+  conclusion: ピットは、ブローホールと同じ現象が表面に開口した表面欠陥である。
+  reason: 内部の空洞が表面へ開口するため。
+  conditions:
+  - ガスによる空洞が溶接部表面に開口している場合
+  source:
+    pages:
+    - 190
+    question_codes: []
+  prerequisites:
+  - S-K6-WELD-DEFECT-BLOWHOLE
+  editorial_status: source_checked
+- id: S-K6-WELD-DEFECT-SLAG-INCLUSION
+  order: 4
+  type: identification
+  principle: スラグ巻込みの識別
+  conclusion: スラグ巻込みは、非金属物質のスラグが溶接金属内部に残る内部欠陥である。
+  reason: 溶着部に生じたスラグが浮上しないため。
+  conditions:
+  - 溶接金属内部にスラグが残る場合
+  source:
+    pages:
+    - 190
+    question_codes: []
+  prerequisites: []
+  editorial_status: source_checked
+- id: S-K6-WELD-DEFECT-UNDERCUT
+  order: 5
+  type: identification
+  principle: アンダーカットの識別
+  conclusion: アンダーカットは、母材側に溶接金属が満たされず溝として残る表面欠陥である。
+  reason: 溶接速度が速い場合などに生じる。
+  conditions:
+  - 溶接部表面の母材側に溝が残る場合
+  source:
+    pages:
+    - 190
+    question_codes: []
+  prerequisites: []
+  editorial_status: source_checked
+- id: S-K6-WELD-SCALLOP-DEFINITION
+  order: 6
+  type: identification
+  principle: スカラップとノンスカラップ
+  conclusion: スカラップは溶接線の交差を避けるための扇状切欠きで、切欠きのないノンスカラップ工法を用いる場合もある。
+  reason: 溶接線同士の交差を避けるため。
+  conditions:
+  - 複数の溶接線が交差する部材接合部
+  source:
+    pages:
+    - 190
+    question_codes:
+    - 04182
+    - '18183'
+    - '25183'
+    - '26162'
+    - '30153'
+  prerequisites: []
+  editorial_status: source_checked
+- id: S-K6-WELD-SYMBOL-ARROW-SIDE-POSITION
+  order: 7
+  type: identification
+  principle: 溶接記号の基準線上下と施工側
+  conclusion: 溶接箇所が矢印側・手前側なら基本記号を基準線の下側に、反対側・向こう側なら上側に描く。
+  reason: 教材に記載なし
+  conditions:
+  - 溶接記号の施工側を読み取る場合
+  - JIS溶接記号の基線と矢の側を読む場合
+  source:
+    pages:
+    - 190
+    - 213
+    question_codes:
+    - '21171'
+  prerequisites:
+  - S-K6-WELD-BASIC-SYMBOL-SHAPES
+  - S-K6-WELD-TYPE-IDENTIFICATION
+  editorial_status: source_gap

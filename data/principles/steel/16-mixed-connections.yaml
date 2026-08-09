@@ -1,0 +1,63 @@
+version: 1
+section:
+  id: K6-16
+  title: 併用接合
+  order: 17
+principles:
+- id: S-K6-COMBINED-BOLT-WELD-CONSTRUCTION-ORDER
+  order: 1
+  type: principle
+  principle: 高力ボルト・溶接併用継手の施工順序
+  conclusion: 高力ボルトを溶接より先に施工した場合は両者の耐力を加算できるが、溶接を先にした場合は全応力を溶接に負担させ、耐力を加算しない。
+  reason: 溶接を先に施工すると溶接熱によるひずみで後施工の高力ボルト締付けが不完全となり、高力ボルトが力を伝えられなくなるため。
+  conditions:
+  - 一つの継手内で高力ボルト摩擦接合と溶接を併用
+  - 溶接と高力ボルト接合の混用
+  - 施工順序を区別する
+  source:
+    pages:
+    - 163
+    - 191
+    question_codes:
+    - '05163'
+    - '24164'
+    - '27184'
+    - '30173'
+  prerequisites:
+  - S-K6-FRICTION-JOINT-PRE-SLIP-FORCE-TRANSFER
+  - S-K6-STEEL-CONNECTION-TYPE-IDENTIFICATION
+  - S-K6-WELD-HEAT-DISTORTION
+  editorial_status: source_checked
+- id: S-K6-MIXED-BUTT-FILLET-WELD-LOAD-SHARING
+  order: 2
+  type: rule
+  principle: 突合せ溶接とすみ肉溶接の応力分担
+  conclusion: 突合せ溶接とすみ肉溶接を混用する場合は、それぞれの許容耐力に応じて応力を分担する。
+  reason: 教材に記載なし
+  conditions:
+  - 突合せ溶接とすみ肉溶接を同じ接合部で併用する場合
+  source:
+    pages:
+    - 191
+    question_codes: []
+  prerequisites:
+  - S-K6-WELD-ALLOWABLE-STRESS-FULL-PENETRATION
+  - S-K6-WELD-ALLOWABLE-STRESS-NONFULL-PENETRATION
+  editorial_status: source_gap
+- id: S-K6-MIXED-WELD-ORDINARY-BOLT-LOAD-SHARING
+  order: 3
+  type: rule
+  principle: 溶接と普通ボルトを混用する場合の応力負担
+  conclusion: 溶接と普通ボルトを混用する接合では、全応力を溶接が負担するものとする。
+  reason: 教材に記載なし
+  conditions:
+  - 溶接接合と普通ボルト接合の混用
+  source:
+    pages:
+    - 191
+    question_codes:
+    - '05163'
+  prerequisites:
+  - S-K6-ORDINARY-BOLT-SHEAR-TRANSFER
+  - S-K6-WELD-TYPE-IDENTIFICATION
+  editorial_status: source_gap

@@ -1,0 +1,127 @@
+version: 1
+section:
+  id: K6-09
+  title: 高力ボルト摩擦接合
+  order: 10
+principles:
+- id: S-K6-FRICTION-JOINT-SHEAR-TENSION-INTERACTION
+  order: 1
+  type: principle
+  principle: 高力ボルト摩擦接合のせん断・引張相互作用
+  conclusion: せん断力と引張力を同時に受ける摩擦接合では、引張力の大きさに応じて許容せん断耐力を低減する。
+  reason: ボルト軸方向の引張りで接合面の圧縮力が減り、摩擦力とすべり耐力が低下するため。
+  conditions:
+  - 高力ボルト摩擦接合
+  - せん断力とボルト軸方向引張力が同時に作用
+  - 高力ボルト接合がせん断力と引張力を同時に受ける場合
+  source:
+    pages:
+    - 159
+    - 184
+    question_codes:
+    - 04183
+    - '27183'
+    - '30172'
+  prerequisites:
+  - S-K6-FRICTION-JOINT-PRE-SLIP-FORCE-TRANSFER
+  editorial_status: source_checked
+- id: S-K6-FRICTION-JOINT-POST-SLIP-RUPTURE-MODEL
+  order: 2
+  type: principle
+  principle: 高力ボルト摩擦接合の破断耐力時の伝力機構
+  conclusion: 破断耐力の検討では、摩擦面がすべって支圧接合状態になり、ボルト軸部のせん断と母材支圧で応力を伝えるものとして扱える。
+  reason: 板同士の摩擦力を超える力が作用した終局時は、接合部が破断しないことを確認する考え方へ移るため。
+  conditions:
+  - 高力ボルト摩擦接合
+  - 接合部の破断耐力検討
+  - 高力ボルト摩擦接合部の破断耐力・終局耐力を検討する場合
+  - 通常の使用時の摩擦伝達と区別する
+  source:
+    pages:
+    - 160
+    - 184
+    question_codes:
+    - '07163'
+    - '30171'
+  prerequisites:
+  - S-K6-FRICTION-JOINT-PRE-SLIP-FORCE-TRANSFER
+  - S-K6-ORDINARY-BOLT-SHEAR-TRANSFER
+  editorial_status: source_checked
+- id: S-K6-FRICTION-JOINT-REPEATED-LOAD-BELOW-SLIP
+  order: 3
+  type: principle
+  principle: すべり耐力以下の繰返し応力と摩擦接合
+  conclusion: すべり耐力以下の繰返し応力なら、ボルト張力低下や摩擦面変化によるすべり耐力の低減を考慮せず、母材について疲労設計する。
+  reason: すべり前は材間摩擦で応力を伝え、高力ボルト自体に繰返しせん断を負担させないため。
+  conditions:
+  - 高力ボルト摩擦接合
+  - 応力範囲がすべり耐力以下
+  - 繰返し荷重を受ける継手
+  source:
+    pages:
+    - 160
+    - 184
+    question_codes:
+    - '02162'
+    - '02163'
+    - '06163'
+    - '07163'
+    - '18172'
+    - '25171'
+    - '27181'
+    - '27182'
+    - '30171'
+  prerequisites:
+  - S-K6-FRICTION-JOINT-PRE-SLIP-FORCE-TRANSFER
+  editorial_status: source_checked
+- id: S-K6-HIGH-STRENGTH-BOLT-CONSTRUCTION-ADVANTAGE
+  order: 4
+  type: principle
+  principle: 高力ボルト接合の施工性
+  conclusion: 高力ボルト接合は施工が比較的容易で、工期を短縮できる。
+  reason: 教材に記載なし
+  conditions:
+  - 教材が説明する一般的な高力ボルト接合
+  source:
+    pages:
+    - 184
+    question_codes:
+    - '27182'
+  prerequisites: []
+  editorial_status: source_gap
+- id: S-K6-HIGH-STRENGTH-BOLT-STRESS-DISTRIBUTION
+  order: 5
+  type: principle
+  principle: 高力ボルト摩擦接合の応力集中
+  conclusion: 高力ボルト摩擦接合は、応力集中が生じにくい。
+  reason: 応力を伝達する面積が広いため。
+  conditions:
+  - 主に摩擦接合を用いる場合
+  source:
+    pages:
+    - 184
+    question_codes:
+    - '02163'
+    - '06163'
+    - '07163'
+    - '18172'
+    - '27181'
+    - '30171'
+  prerequisites:
+  - S-K6-FRICTION-JOINT-PRE-SLIP-FORCE-TRANSFER
+  editorial_status: source_checked
+- id: S-K6-HIGH-STRENGTH-BOLT-TENSILE-STRENGTH-RATIO
+  order: 6
+  type: rule
+  principle: 高力ボルトと普通ボルトの引張強度
+  conclusion: 高力ボルトの引張強度は、普通ボルトの2〜3倍である。
+  reason: 教材に記載なし
+  conditions:
+  - 教材の概略比較
+  source:
+    pages:
+    - 184
+    question_codes:
+    - '02162'
+  prerequisites: []
+  editorial_status: source_gap

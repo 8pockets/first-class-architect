@@ -1,0 +1,37 @@
+version: 1
+section:
+  id: K6-29
+  title: 柱脚
+  order: 30
+principles:
+- id: S-K6-COLUMN-BASE-NOTIFICATION-1456
+  order: 1
+  type: rule
+  principle: 鉄骨造柱脚の仕様規定の根拠告示
+  conclusion: 鉄骨造柱脚の仕様は、平成12年建設省告示第1456号「鉄骨造の柱の脚部を基礎に緊結する構造方法の基準を定める件」で規定される。
+  reason: 教材に記載なし
+  conditions:
+  - 鉄骨造柱脚の仕様規定を確認する場合
+  source:
+    pages:
+    - 204
+    question_codes: []
+  prerequisites:
+  - S-K6-COLUMN-BASE-TYPES-FIXITY-ORDER
+  editorial_status: source_gap
+- id: S-K6-ENCASED-BASE-BOTTOM-PIN-MOMENT-TRANSFER
+  order: 2
+  type: principle
+  principle: 根巻き柱脚最下部の曲げモーメント負担
+  conclusion: 根巻き柱脚の鉄骨部分最下部はピン接合として曲げモーメントをゼロとみなし、その位置の曲げモーメントは根巻き鉄筋コンクリート部分が負担する。
+  reason: 鉄骨最下部をピン接合としてモデル化し、周囲の根巻き鉄筋コンクリートが曲げを伝達するため。
+  conditions:
+  - 根巻き形式柱脚
+  - 基礎コンクリートまたは地中梁上端の鉄骨最下部
+  source:
+    pages:
+    - 204
+    question_codes:
+    - '20173'
+  prerequisites: []
+  editorial_status: source_checked

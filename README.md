@@ -2,7 +2,9 @@
 
 2027年の一級建築士学科試験に向けて、本番で使える理解を作り、働きながら継続できる学習方法を設計するプロジェクトです。
 
-現在は、鉄骨部材の座屈と塑性変形能力を題材に、2週間の構造パイロットを準備しています。
+現在は、鉄骨部材の座屈と塑性変形能力を題材にした構造パイロットを進めながら、PDF P158〜P215の鉄骨構造を原理単位で台帳化しています。
+
+[鉄骨構造 原理台帳（GitHub Pages）](https://8pockets.github.io/first-class-architect/)
 
 ## 現在の方針
 
@@ -23,6 +25,7 @@
 - [構造から他科目へ展開する条件](./docs/cross-subject-expansion.md)
 - [毎朝の学習セット自動準備](./docs/morning-study-set-automation.md)
 - [教材とパイロット範囲](./docs/materials.md)
+- [鉄骨構造の原理台帳](./docs/principle-catalog.md)
 - [旧Wayfinderからの移行記録](./docs/migration.md)
 
 ## 意思決定の進め方

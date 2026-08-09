@@ -1,0 +1,134 @@
+version: 1
+section:
+  id: K6-19
+  title: 梁の横座屈
+  order: 20
+principles:
+- id: S-K6-19-LATERAL-BUCKLING
+  order: 1
+  type: principle
+  principle: 梁の横座屈
+  conclusion: H形鋼などの開断面梁が曲げを受けると、ねじれを伴って圧縮フランジが面外にはらみ出す横座屈を生じる。スパンが長く、梁幅に対して梁せいが大きいほど生じやすい。
+  reason: 教材に記載なし
+  conditions:
+  - H形鋼などの開断面梁
+  - 曲げを受ける場合
+  - スパンが長い場合
+  - 梁幅に対して梁せいが大きい場合
+  source:
+    pages:
+    - 165
+    - 194
+    question_codes:
+    - '02172'
+  prerequisites:
+  - S-K6-H-SECTION-AXIS-LATERAL-BUCKLING
+  editorial_status: source_gap
+- id: S-K6-LATERAL-BRACE-STRENGTH-AND-STIFFNESS
+  order: 2
+  type: rule
+  principle: 中間横補剛材に必要な強度と剛性
+  conclusion: 横補剛材は強度と剛性の両方を持たせ、圧縮側合力の2%以上の集中横力に耐え、剛性は圧縮側合力の5倍を横補剛区間長で除した値以上を目安とする。
+  reason: 梁が塑性変形するまで圧縮側フランジの横変位を拘束し続ける必要があるため。
+  conditions:
+  - 許容応力度設計における中間支点の横補剛材
+  - 圧縮部分の支点に設ける補剛材
+  source:
+    pages:
+    - 165
+    - 194
+    question_codes:
+    - '01154'
+    - '20163'
+    - '24154'
+    - '27172'
+    - '30163'
+  prerequisites:
+  - S-K6-BEAM-LATERAL-BUCKLING-COUNTERMEASURES
+  editorial_status: source_checked
+- id: S-K6-FULL-PLASTIC-LATERAL-BRACING-PLACEMENT-METHODS
+  order: 3
+  type: identification
+  principle: 保有耐力横補剛の配置方法
+  conclusion: 保有耐力横補剛には、梁全長へ均等配置する方法と、梁端など曲げモーメントが大きい部分へ多く配置する方法がある。
+  reason: 横座屈を防ぐべき領域を、全長又は曲げ需要の大きい領域として扱えるため。
+  conditions:
+  - 強軸曲げを受けるH形鋼梁
+  - 保有耐力横補剛
+  - 横補剛材の配置形式を識別する場合
+  source:
+    pages:
+    - 166
+    - 194
+    question_codes:
+    - '03154'
+    - 06183
+    - '24183'
+    - '29154'
+    - '30164'
+  prerequisites:
+  - S-K6-BEAM-LATERAL-BUCKLING-COUNTERMEASURES
+  - S-K6-LATERAL-BRACING-ENABLES-FULL-PLASTIC-MOMENT
+  editorial_status: source_checked
+- id: S-K6-HIGHER-STRENGTH-REQUIRES-MORE-UNIFORM-BRACING
+  order: 4
+  type: principle
+  principle: 鋼材強度と均等配置横補剛数
+  conclusion: 同一断面・同じ弱軸細長比なら、SN490BはSN400Bより横補剛間隔を短くし、必要箇所数を多くする。
+  reason: 高強度鋼ほど高い応力まで横座屈を防いで塑性変形させる必要があるため。
+  conditions:
+  - 梁全長に横補剛を均等配置
+  - H形鋼梁
+  - 他の条件を同じにして鋼材強度を比較する場合
+  source:
+    pages:
+    - 166
+    - 194
+    question_codes:
+    - '01153'
+    - 07183
+    - '18161'
+    - '22154'
+    - '24183'
+    - '25191'
+    - '28171'
+  prerequisites:
+  - S-K6-BEAM-LATERAL-BUCKLING-COUNTERMEASURES
+  - S-K6-FULL-PLASTIC-LATERAL-BRACING-PLACEMENT-METHODS
+  editorial_status: source_checked
+- id: S-K6-WIDER-FLANGE-REDUCES-BRACING-DEMAND
+  order: 5
+  type: principle
+  principle: フランジ幅と横座屈・横補剛数
+  conclusion: 梁せい・断面積・ウェブ厚が同じなら、フランジ幅が大きい梁ほど横座屈しにくく、必要な横補剛箇所を少なくできる。
+  reason: フランジ幅が大きいほど弱軸まわりの断面二次モーメントが大きくなるため。
+  conditions:
+  - フランジが局部座屈しない
+  - 梁せい・断面積・ウェブ厚が同じ
+  - 梁せいが同じ
+  - 横補剛材を梁全長へ等間隔に配置
+  source:
+    pages:
+    - 166
+    - 194
+    question_codes:
+    - '04171'
+  prerequisites:
+  - S-K6-FULL-PLASTIC-LATERAL-BRACING-PLACEMENT-METHODS
+  editorial_status: source_checked
+- id: S-K6-BEAM-SECTION-SHAPE-LATERAL-BUCKLING
+  order: 6
+  type: identification
+  principle: 開断面・箱形断面と横座屈
+  conclusion: 教材図ではH形鋼・I形鋼は横座屈しやすく、箱形鋼は横座屈しにくい。
+  reason: 教材に記載なし
+  conditions:
+  - H形鋼・I形鋼と箱形鋼を比較する場合
+  source:
+    pages:
+    - 194
+    question_codes:
+    - '03174'
+  prerequisites:
+  - S-K6-19-LATERAL-BUCKLING
+  editorial_status: source_gap

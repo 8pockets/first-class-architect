@@ -1,0 +1,146 @@
+version: 1
+section:
+  id: K6-20
+  title: 局部座屈と幅厚比
+  order: 21
+principles:
+- id: S-K6-20-LOCAL-BUCKLING
+  order: 1
+  type: principle
+  principle: 局部座屈と幅厚比
+  conclusion: 板要素の幅厚比b/tが大きいほど局部座屈しやすく、幅厚比を小さくすると局部座屈を抑えて塑性化後の変形能力・靭性を確保しやすい。
+  reason: 板幅に対して板厚が薄いほど、圧縮を受ける板要素が面外へ変形しやすいため。
+  conditions:
+  - 圧縮を受けるフランジ・ウェブなどの板要素
+  - 板要素の幅bと厚さtを比較する場合
+  source:
+    pages:
+    - 166
+    - 177
+    - 195
+    question_codes:
+    - '02174'
+    - '23151'
+    - '25164'
+    - '28174'
+  prerequisites: []
+  editorial_status: source_checked
+- id: S-K6-LATERAL-LOCAL-BUCKLING-INTERACTION
+  order: 2
+  type: principle
+  principle: 横座屈変形と局部座屈・耐力低下
+  conclusion: 横座屈変形が生じると局部座屈しやすくなり、局部座屈が生じると部材耐力は急激に低下する。
+  reason: 局部座屈と横座屈は互いに連成し、断面形状に応じて一方又は両方が顕著になるため。
+  conditions:
+  - 部材に横座屈変形が生じた場合
+  - 局部座屈が生じた場合
+  - H形鋼梁
+  - 横座屈変形が生じる領域
+  source:
+    pages:
+    - 166
+    - 195
+    question_codes:
+    - '06151'
+    - '23151'
+    - '25164'
+  prerequisites:
+  - S-K6-20-LOCAL-BUCKLING
+  editorial_status: source_checked
+- id: S-K6-COLUMN-WEB-WIDTH-THICKNESS-STRICTER-THAN-BEAM
+  order: 3
+  type: principle
+  principle: 柱・梁のウェブ幅厚比上限の差
+  conclusion: 基準強度Fが同じなら、ウェブ幅厚比の上限は梁より柱のほうが小さく厳しい。
+  reason: 柱は軸圧縮力を負担し、局部座屈に対して梁より不利なため。
+  conditions:
+  - 同じ基準強度F
+  - 柱ウェブと梁ウェブの比較
+  - 基準強度Fが同じ
+  - 柱ウェブと梁ウェブを比較
+  source:
+    pages:
+    - 167
+    - 195
+    question_codes:
+    - '06153'
+  prerequisites:
+  - S-K6-20-LOCAL-BUCKLING
+  - S-K6-WIDTH-THICKNESS-LIMIT-MEANING
+  editorial_status: source_checked
+- id: S-K6-FA-H-BEAM-FLANGE-WEB-WIDTH-THICKNESS-LIMITS
+  order: 4
+  type: rule
+  principle: FA材H形鋼梁のフランジ・ウェブ幅厚比上限
+  conclusion: FA材の炭素鋼H形鋼梁では、フランジ上限は9√(235/F)、ウェブ上限は60√(235/F)で、ウェブの上限が大きい。
+  reason: 教材に記載なし
+  conditions:
+  - 炭素鋼H形鋼梁
+  - 部材種別FA
+  - 同じH形鋼のフランジとウェブを比較する場合
+  source:
+    pages:
+    - 167
+    - 195
+    question_codes:
+    - '01162'
+    - '01163'
+    - '05171'
+    - '05173'
+    - 06181
+    - '20165'
+    - '24151'
+    - '27162'
+    - '30161'
+  prerequisites:
+  - S-K6-STEEL-F-VALUE-DEFINITION
+  - S-K6-WIDTH-THICKNESS-LIMIT-MEANING
+  editorial_status: source_gap
+- id: S-K6-WIDTH-THICKNESS-LIMIT-DECREASES-WITH-STRENGTH
+  order: 5
+  type: principle
+  principle: 基準強度と幅厚比上限
+  conclusion: 塑性変形能力確保のための幅厚比上限は、基準強度Fが大きいほど小さく厳しくなる。
+  reason: 降伏点に達するまで局部座屈させない必要があり、上限式でFが分母に入るため。角形鋼管柱FAの例はd/t≤33√(235/F)である。
+  conditions:
+  - 柱・梁の部材種別と幅厚比制限
+  - 断面形状ごとの式を適用
+  - SN490材とSN400材のように強度が異なる鋼材を比較する場合
+  source:
+    pages:
+    - 167
+    - 195
+    question_codes:
+    - '01162'
+    - '03152'
+    - '05171'
+    - 06181
+    - '21161'
+    - '24151'
+    - '26171'
+    - '27161'
+    - '30162'
+  prerequisites:
+  - S-K6-20-LOCAL-BUCKLING
+  - S-K6-WIDTH-THICKNESS-LIMIT-MEANING
+  editorial_status: source_checked
+- id: S-K6-WIDTH-THICKNESS-LIMIT-MEANING
+  order: 6
+  type: identification
+  principle: 幅厚比制限の意味
+  conclusion: 『幅厚比の制限に従う』とは、局部座屈しないための幅厚比を満たすことを意味し、制限が厳しいほど許容される幅厚比は小さい。
+  reason: 幅厚比が小さいほど板要素が厚く、局部座屈しにくいため。
+  conditions:
+  - 幅厚比制限の大小を解釈する場合
+  source:
+    pages:
+    - 195
+    question_codes:
+    - '01162'
+    - '01163'
+    - '05173'
+    - 06181
+    - '30161'
+  prerequisites:
+  - S-K6-20-LOCAL-BUCKLING
+  editorial_status: source_checked

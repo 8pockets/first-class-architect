@@ -1,0 +1,56 @@
+version: 1
+section:
+  id: K6-34
+  title: ダイアフラム
+  order: 35
+principles:
+- id: S-K6-THROUGH-DIAPHRAGM-THICKNESS-MISMATCH-PREVENTION
+  order: 1
+  type: principle
+  principle: 通しダイアフラムの食い違い防止板厚
+  conclusion: 通しダイアフラムは梁フランジより1〜2サイズ、約3〜6mm厚くすることが多い。
+  reason: 鋼材許容誤差の累積や溶接変形があっても梁フランジをダイアフラム板厚内へ納め、補修困難な食い違いを防ぐため。
+  conditions:
+  - 通しダイアフラムと梁フランジの完全溶込み溶接
+  - 一般的な鋼板寸法は3mm刻み
+  - 通し又は内ダイアフラムと梁フランジの突合せ溶接
+  source:
+    pages:
+    - 173
+    - 209
+    question_codes:
+    - '01171'
+    - '06162'
+    - '25181'
+  prerequisites:
+  - S-K6-SQUARE-TUBE-COLUMN-DIAPHRAGM-TYPES
+  editorial_status: source_checked
+- id: S-K6-INTERNAL-DIAPHRAGM-CONSTRUCTION
+  order: 2
+  type: identification
+  principle: 内ダイアフラム形式の製作手順
+  conclusion: 内ダイアフラムは柱内部の梁上下フランジ位置へ設け、角形鋼管では一度柱を切断してダイアフラムを溶接した後、柱を再び溶接接合する。
+  reason: 柱内部へダイアフラムを取り付ける必要があるため。
+  conditions:
+  - 角形鋼管柱の内ダイアフラム形式
+  source:
+    pages:
+    - 209
+    question_codes: []
+  prerequisites: []
+  editorial_status: source_checked
+- id: S-K6-THROUGH-DIAPHRAGM-CONSTRUCTION-AND-WELD
+  order: 3
+  type: identification
+  principle: 通しダイアフラム形式の柱切断位置と溶接
+  conclusion: 通しダイアフラム形式は柱を梁の上下フランジ位置で切断し、上下柱とダイアフラムを完全溶込み溶接する。
+  reason: 教材に記載なし
+  conditions:
+  - 角形鋼管柱の通しダイアフラム形式
+  source:
+    pages:
+    - 209
+    question_codes: []
+  prerequisites:
+  - S-K6-FULL-PENETRATION-WELD-DEFINITION-REPEATED-STRESS
+  editorial_status: source_gap

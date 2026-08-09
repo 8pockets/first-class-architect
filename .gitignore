@@ -4,3 +4,7 @@ materials/
 .study/
 *.pdf
 *.pptx
+.venv/
+__pycache__/
+.pytest_cache/
+_site/

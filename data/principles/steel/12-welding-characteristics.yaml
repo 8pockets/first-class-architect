@@ -1,0 +1,171 @@
+version: 1
+section:
+  id: K6-12
+  title: 溶接接合の特徴
+  order: 13
+principles:
+- id: S-K6-TACK-WELD-MINIMUM-BEAD
+  order: 1
+  type: rule
+  principle: 組立溶接のショートビード防止
+  conclusion: 組立溶接は脚長4mm以上とし、最小ビード長を板厚6mm以下では30mm、6mm超では40mmとする。
+  reason: 極端に短いビードは周囲の冷たい鋼材で急冷・硬化し、靭性が低下して応力や低温で割れやすくなるため。
+  conditions:
+  - 組立溶接
+  - 板厚6mm以下又は6mm超
+  - 板厚6mm超は40mm以上
+  - 板厚6mm以下は30mm以上
+  source:
+    pages:
+    - 162
+    - 187
+    question_codes:
+    - 施工06143
+    - 施工23142
+    - '07162'
+    - '24173'
+    - '30154'
+  prerequisites:
+  - S-K6-PREHEAT-PREVENTS-LOW-TEMPERATURE-CRACKING
+  editorial_status: source_checked
+- id: S-K6-BOX-COLUMN-H-BEAM-RIGID-JOINT-WELD-TYPES
+  order: 2
+  type: principle
+  principle: 梁継手のフランジ・ウェブ応力分担と溶接形式
+  conclusion: 梁継手は曲げモーメントとせん断力に対して設計し、一般に曲げモーメントをフランジ、せん断力をウェブが負担すると仮定する。溶接仕口ではフランジを完全溶込み溶接、ウェブを両面すみ肉溶接とする。
+  reason: 曲げモーメントは主に梁フランジから柱へ、せん断力は梁ウェブから柱へ伝達されるため。
+  conditions:
+  - H形鋼梁の継手・柱梁仕口
+  - 教材図の溶接仕口
+  - 箱形断面柱とH形鋼梁の剛接合
+  - 組立H形鋼を作る場合、または角形鋼管にH形鋼を溶接する場合
+  - 梁側のフランジ・ウェブ接合形式を選ぶ場合
+  source:
+    pages:
+    - 167
+    - 187
+    - 196
+    - 207
+    question_codes:
+    - '20172'
+    - '23173'
+    - '26163'
+  prerequisites: []
+  editorial_status: source_checked
+- id: S-K6-BUILT-UP-H-SECTION-FLANGE-WEB-FILLET
+  order: 3
+  type: rule
+  principle: 組立H形鋼のフランジ・ウェブ接合
+  conclusion: 組立H形鋼そのもののフランジとウェブの接合は、隅肉溶接とする。
+  reason: 教材に記載なし
+  conditions:
+  - 組立H形鋼の断面を製作する場合
+  - 梁端の柱梁接合と混同しない
+  source:
+    pages:
+    - 187
+    question_codes:
+    - '20172'
+    - '23173'
+    - '26163'
+  prerequisites:
+  - S-K6-WELD-TYPE-IDENTIFICATION
+  editorial_status: source_gap
+- id: S-K6-WELD-BEAD-DEFINITION
+  order: 4
+  type: identification
+  principle: 溶接ビード
+  conclusion: 溶接の長さをビードという。
+  reason: 教材に記載なし
+  conditions:
+  - 溶接用語を識別する場合
+  source:
+    pages:
+    - 187
+    question_codes: []
+  prerequisites: []
+  editorial_status: source_gap
+- id: S-K6-WELD-CONSTRUCTION-DEFECT-RISK
+  order: 5
+  type: principle
+  principle: 溶接施工不良と欠陥
+  conclusion: 溶接接合は施工不良による欠陥が生じやすい。
+  reason: 教材に記載なし
+  conditions:
+  - 施工品質が不良な溶接接合
+  source:
+    pages:
+    - 187
+    question_codes: []
+  prerequisites: []
+  editorial_status: source_gap
+- id: S-K6-WELD-CONTINUOUS-STRESS-FLOW
+  order: 6
+  type: principle
+  principle: 溶接接合の連続性と応力集中
+  conclusion: 溶接接合は力の流れが集中しにくい。
+  reason: 接合部が連続性に富むため。
+  conditions:
+  - 教材が説明する一般的な溶接接合
+  source:
+    pages:
+    - 187
+    question_codes: []
+  prerequisites: []
+  editorial_status: source_checked
+- id: S-K6-WELD-FORM-FLEXIBILITY
+  order: 7
+  type: principle
+  principle: 溶接接合の形式自由度
+  conclusion: 溶接接合は形式が簡単で、自由な接合形式をとれる。
+  reason: 教材に記載なし
+  conditions:
+  - 教材が説明する一般的な溶接接合
+  source:
+    pages:
+    - 187
+    question_codes: []
+  prerequisites: []
+  editorial_status: source_gap
+- id: S-K6-WELD-HEAT-DISTORTION
+  order: 8
+  type: principle
+  principle: 溶接熱とひずみ
+  conclusion: 溶接接合はひずみが生じやすい。
+  reason: 溶接時の熱によるため。
+  conditions:
+  - 溶接施工
+  source:
+    pages:
+    - 187
+    question_codes: []
+  prerequisites: []
+  editorial_status: source_checked
+- id: S-K6-WELD-INSPECTION-DIFFICULTY
+  order: 9
+  type: principle
+  principle: 溶接箇所の検査
+  conclusion: 溶接接合は接合箇所の検査が難しい。
+  reason: 教材に記載なし
+  conditions:
+  - 溶接接合部を検査する場合
+  source:
+    pages:
+    - 187
+    question_codes: []
+  prerequisites: []
+  editorial_status: source_gap
+- id: S-K6-WELD-NO-CONSTRUCTION-NOISE
+  order: 10
+  type: principle
+  principle: 溶接施工時の騒音
+  conclusion: 溶接接合は施工時に騒音が発生しない。
+  reason: 教材に記載なし
+  conditions:
+  - 溶接施工
+  source:
+    pages:
+    - 187
+    question_codes: []
+  prerequisites: []
+  editorial_status: source_gap

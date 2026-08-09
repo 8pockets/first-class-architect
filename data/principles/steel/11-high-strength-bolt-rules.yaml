@@ -1,0 +1,171 @@
+version: 1
+section:
+  id: K6-11
+  title: 高力ボルトの設計規定
+  order: 12
+principles:
+- id: S-K6-FRICTION-JOINT-SLIP-COEFFICIENT
+  order: 1
+  type: rule
+  principle: 高力ボルト摩擦接合のすべり係数
+  conclusion: 許容耐力算定のすべり係数は摩擦面数によらず0.45で、溶融亜鉛めっきの場合は0.40とする。
+  reason: 教材に記載なし
+  conditions:
+  - 高力ボルト摩擦接合
+  - 通常面又は溶融亜鉛めっき面
+  - 教材掲載の高力ボルト摩擦接合
+  source:
+    pages:
+    - 160
+    - 161
+    - 186
+    question_codes:
+    - '02164'
+    - '19252'
+  prerequisites:
+  - S-K6-FRICTION-JOINT-PRE-SLIP-FORCE-TRANSFER
+  editorial_status: source_gap
+- id: S-K6-HIGH-STRENGTH-BOLT-ALLOWABLE-SHEAR-TABLE
+  order: 2
+  type: rule
+  principle: 摩擦面数・荷重期間と高力ボルト許容せん断耐力
+  conclusion: ボルト張力Tに対し、一面摩擦は長期0.3T・短期0.45T、二面摩擦は長期0.6T・短期0.9Tとする。
+  reason: 二面摩擦は摩擦面が二つなので一面の2倍となり、短期は長期の1.5倍となるため。
+  conditions:
+  - 高力ボルト摩擦接合
+  - 一面摩擦か二面摩擦かを区別
+  - 長期か短期かを区別
+  - 同一径・同一等級の高力ボルト
+  - 同じすべり係数
+  - 一面又は二面せん断
+  - 長期又は短期
+  source:
+    pages:
+    - 160
+    - 161
+    - 162
+    - 186
+    question_codes:
+    - '02164'
+    - '03162'
+    - '07164'
+    - '19252'
+    - '21153'
+    - '21154'
+    - '25173'
+    - '26161'
+    - '28162'
+    - '30174'
+  prerequisites:
+  - S-K6-FRICTION-JOINT-PRE-SLIP-FORCE-TRANSFER
+  editorial_status: source_checked
+- id: S-K6-BOLT-MINIMUM-EDGE-DISTANCE
+  order: 3
+  type: rule
+  principle: ボルトの最小縁端距離
+  conclusion: 最小縁端距離は、縁端の種類と軸径に応じて教材表の値以上とする。
+  reason: 教材に記載なし
+  conditions:
+  - 軸径12/16/20/22/24/27mmの順に、せん断縁・手動ガス切断縁は22/28/34/38/44/49mm
+  - 同じ順に、圧延縁・自動ガス切断縁・のこ引き縁・機械仕上げ縁は18/22/26/28/32/36mm
+  - はしあき距離・へりあき距離の双方
+  - 高力ボルト接合
+  - 縁の加工方法
+  source:
+    pages:
+    - 161
+    - 186
+    question_codes:
+    - '01174'
+    - '06164'
+    - '25172'
+  prerequisites:
+  - S-K6-BOLT-EDGE-DISTANCE-TERM-IDENTIFICATION
+  editorial_status: source_gap
+- id: S-K6-F10T-TENSILE-STRENGTH-MEANING
+  order: 4
+  type: identification
+  principle: F10Tの記号と引張強さ
+  conclusion: F10Tの引張強さは1,000-1,200N/mm²で、記号中の10は引張強さ約10tf/cm²を表し、せん断強さではない。
+  reason: 10tf/cm²が約1,000N/mm²に相当するため。
+  conditions:
+  - F10T高力ボルト
+  - F10Tの等級表示を読む場合
+  source:
+    pages:
+    - 161
+    - 186
+    question_codes:
+    - '19253'
+    - '27294'
+  prerequisites: []
+  editorial_status: source_checked
+- id: S-K6-HIGH-STRENGTH-BOLT-HOLE-CLEARANCE
+  order: 5
+  type: rule
+  principle: 高力ボルト孔径の上限
+  conclusion: 高力ボルト孔径は軸径より2mmを超えて大きくできず、軸径27mm以上では3mmまでとする。
+  reason: 教材に記載なし
+  conditions:
+  - 高力ボルト
+  - 軸径27mm未満又は27mm以上
+  - 施行令第68条の高力ボルト
+  - 軸径24mm以下、または27mm以上の教材掲載区分
+  source:
+    pages:
+    - 161
+    - 186
+    question_codes:
+    - '05164'
+    - '19251'
+    - '23171'
+  prerequisites: []
+  editorial_status: source_gap
+- id: S-K6-HIGH-STRENGTH-BOLT-MINIMUM-PITCH
+  order: 6
+  type: rule
+  principle: 高力ボルトの最小中心間隔
+  conclusion: 高力ボルト孔の中心間隔はボルト径の2.5倍以上とする。M22なら55mm以上である。
+  reason: 教材に記載なし
+  conditions:
+  - 高力ボルト接合
+  - 普通ボルト・高力ボルトの双方
+  source:
+    pages:
+    - 161
+    - 186
+    question_codes:
+    - '23171'
+  prerequisites: []
+  editorial_status: source_gap
+- id: S-K6-BOLT-EDGE-DISTANCE-TERM-IDENTIFICATION
+  order: 7
+  type: identification
+  principle: はしあき距離・へりあき距離の識別
+  conclusion: 教材図では、荷重方向の材端からボルト中心までをはしあき距離、荷重方向と直交する材縁からボルト中心までをへりあき距離として示す。
+  reason: 教材に記載なし
+  conditions:
+  - 引張力を受けるボルト接合板の縁端距離を読む場合
+  source:
+    pages:
+    - 186
+    question_codes:
+    - '01174'
+    - '06164'
+    - '25172'
+  prerequisites: []
+  editorial_status: source_gap
+- id: S-K6-BOLT-MAXIMUM-EDGE-DISTANCE
+  order: 8
+  type: rule
+  principle: ボルトの最大縁端距離
+  conclusion: 最大縁端距離は、材厚の12倍以下、かつ150mm以下とする。
+  reason: 教材に記載なし
+  conditions:
+  - ボルト接合の縁端距離の上限を検討する場合
+  source:
+    pages:
+    - 186
+    question_codes: []
+  prerequisites: []
+  editorial_status: source_gap

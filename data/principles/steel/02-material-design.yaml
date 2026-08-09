@@ -1,0 +1,186 @@
+version: 1
+section:
+  id: K6-02
+  title: 鋼材の特徴と設計上の注意
+  order: 3
+principles:
+- id: S-K6-STEEL-ALLOWABLE-STRESS-DURATION
+  order: 1
+  type: rule
+  principle: 構造用鋼材の長期・短期許容応力度
+  conclusion: 長期の圧縮・引張・曲げ許容応力度はF/1.5、長期せん断はF/(1.5√3)、短期の圧縮・引張・曲げはF、短期せん断はF/√3とする。
+  reason: 短期許容応力度を長期許容応力度の1.5倍とするため。
+  conditions:
+  - 構造用鋼材
+  - 座屈による低減を別途要しない応力度
+  - 長期荷重
+  - 鋼材母材
+  source:
+    pages:
+    - 159
+    - 177
+    - 182
+    question_codes:
+    - '19165'
+    - '23303'
+  prerequisites: []
+  editorial_status: source_checked
+- id: S-K6-STEEL-MATERIAL-STRENGTH-JIS-FACTOR
+  order: 2
+  type: rule
+  principle: 構造用鋼材の材料強度とJIS規格品補正
+  conclusion: 構造用鋼材の材料強度は、圧縮・引張・曲げでF、せん断でF/√3とし、炭素鋼のJIS規格品は教材表の値を1.1倍する。
+  reason: 教材に記載なし
+  conditions:
+  - 構造用鋼材の材料強度を扱う場合
+  - 1.1倍は炭素鋼のJIS規格品に適用
+  - SN材
+  - 材料強度の算定
+  source:
+    pages:
+    - 159
+    - 177
+    - 182
+    question_codes:
+    - '19165'
+    - '23303'
+  prerequisites:
+  - S-K6-STEEL-F-VALUE-DEFINITION
+  editorial_status: source_gap
+- id: S-K6-WELD-ALLOWABLE-STRESS-FULL-PENETRATION
+  order: 3
+  type: rule
+  principle: 完全溶込み溶接部の許容応力度
+  conclusion: 完全溶込み溶接部は、長期の圧縮・引張・曲げをF/1.5、長期せん断をF/(1.5√3)、短期の圧縮・引張・曲げをF、短期せん断をF/√3とする。
+  reason: 教材に記載なし
+  conditions:
+  - 突合せ溶接のうち完全溶込み溶接
+  - 母材の種類に応じた適切な溶接材料を使用
+  - 突合せ又は完全溶込み溶接
+  - 突合せ完全溶込み溶接
+  - 母材鋼種に応じた溶接材料を使用
+  source:
+    pages:
+    - 159
+    - 177
+    - 182
+    - 212
+    question_codes:
+    - '03163'
+    - '05162'
+    - '07161'
+    - '19153'
+    - '20183'
+    - '21171'
+    - '26164'
+    - '28154'
+    - '30152'
+  prerequisites:
+  - S-K6-FULL-PENETRATION-WELD-DEFINITION-REPEATED-STRESS
+  - S-K6-STEEL-F-VALUE-DEFINITION
+  editorial_status: source_gap
+- id: S-K6-WELD-ALLOWABLE-STRESS-NONFULL-PENETRATION
+  order: 4
+  type: rule
+  principle: 完全溶込み以外の溶接部の許容応力度
+  conclusion: 完全溶込み以外の突合せ溶接・隅肉溶接は、長期の圧縮・引張・曲げ・せん断をF/(1.5√3)、短期および材料強度をF/√3とする。
+  reason: 教材に記載なし
+  conditions:
+  - 完全溶込みではない突合せ溶接、または隅肉溶接
+  - 炭素鋼のJIS規格品は教材表の値を1.1倍
+  - すみ肉溶接ののど断面
+  source:
+    pages:
+    - 159
+    - 177
+    - 182
+    question_codes:
+    - '03163'
+    - '05162'
+    - '07161'
+    - '19153'
+    - '20183'
+    - '26164'
+    - '28154'
+    - '30152'
+  prerequisites:
+  - S-K6-FILLET-WELD-DEFINITION-REPEATED-STRESS
+  - S-K6-STEEL-F-VALUE-DEFINITION
+  editorial_status: source_gap
+- id: S-K6-STEEL-DIAMETER-THICKNESS-RATIO-SMALLER-PREFERRED
+  order: 5
+  type: rule
+  principle: 径厚比の大小
+  conclusion: 教材の概略整理では、径厚比は小さい方がよい。
+  reason: 教材に記載なし
+  conditions:
+  - 教材P177の概略整理
+  source:
+    pages:
+    - 177
+    question_codes: []
+  prerequisites: []
+  editorial_status: source_gap
+- id: S-K6-STEEL-F-VALUE-DEFINITION
+  order: 6
+  type: rule
+  principle: 鋼材の基準強度Fの決め方
+  conclusion: 基準強度Fは、降伏点の下限値と引張強度の下限値の70%を比較し、小さい方とする。
+  reason: 教材に記載なし
+  conditions:
+  - 鋼材の基準強度Fを定める場合
+  source:
+    pages:
+    - 177
+    - 182
+    question_codes:
+    - '19165'
+    - '23303'
+  prerequisites: []
+  editorial_status: source_gap
+- id: S-K6-STEEL-YIELD-RATIO-SMALLER-PREFERRED
+  order: 7
+  type: rule
+  principle: 降伏比の大小
+  conclusion: 教材の概略整理では、降伏比は小さい方がよい。
+  reason: 教材に記載なし
+  conditions:
+  - 教材P177の概略整理
+  source:
+    pages:
+    - 177
+    question_codes: []
+  prerequisites: []
+  editorial_status: source_gap
+- id: S-K6-STEEL-YOUNGS-MODULUS-STRENGTH-INDEPENDENT
+  order: 8
+  type: principle
+  principle: 鋼材強度とヤング係数
+  conclusion: 鋼材の強度が変わっても、ヤング係数Eは一定である。
+  reason: 教材に記載なし
+  conditions:
+  - 鋼種の強度だけを変えて比較する場合
+  source:
+    pages:
+    - 177
+    - 192
+    question_codes:
+    - '03173'
+    - '20161'
+    - '27173'
+  prerequisites: []
+  editorial_status: source_gap
+- id: S-K6-STEEL-YOUNGS-MODULUS-VS-CONCRETE
+  order: 9
+  type: rule
+  principle: 鋼材とコンクリートのヤング係数
+  conclusion: 鋼材のヤング係数Eは、コンクリートの約10倍である。
+  reason: 教材に記載なし
+  conditions:
+  - 教材の概略比較
+  source:
+    pages:
+    - 177
+    question_codes: []
+  prerequisites: []
+  editorial_status: source_gap
