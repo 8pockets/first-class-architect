@@ -1,0 +1,76 @@
+version: 1
+section:
+  id: K6-24
+  title: ブレース
+  order: 25
+principles:
+- id: S-K6-BRACE-CAPACITY-DESIGN-JOINT-OVERSTRENGTH
+  order: 1
+  type: rule
+  principle: 筋かい端部・接合部の保有耐力接合
+  conclusion: 筋かい端部・接合部の破断耐力を、使用する筋かい断面の軸部降伏耐力より十分大きくし、炭素鋼では1.2倍以上、ステンレス鋼では1.5倍以上とする。
+  reason: ブレース軸部の降伏による塑性変形より先に脆性的な接合破断を生じさせないため。
+  conditions:
+  - 軸力を負担する筋かい
+  - 採用断面が必要断面より大きい場合も実断面で降伏耐力を算定
+  - 耐震ブレースの接合部・端部
+  source:
+    pages:
+    - 169
+    - 199
+    question_codes:
+    - '01164'
+    - '02171'
+    - 06182
+    - '18181'
+    - '19171'
+    - '21183'
+    - '22164'
+    - '25192'
+    - '26151'
+    - '29151'
+  prerequisites: []
+  editorial_status: source_checked
+- id: S-K6-BRACE-BALANCED-DIRECTIONAL-LAYOUT
+  order: 2
+  type: rule
+  principle: ブレースの方向別配置
+  conclusion: ブレースは、すべての方向に釣り合いよく配置する。
+  reason: 教材に記載なし
+  conditions:
+  - 建物のブレース配置計画
+  source:
+    pages:
+    - 199
+    question_codes:
+    - 06182
+  prerequisites: []
+  editorial_status: source_gap
+- id: S-K6-BRACE-HORIZONTAL-LOAD-TO-AXIAL-FORCE
+  order: 3
+  type: principle
+  principle: ブレースの水平力伝達と鉛直・水平ブレースの役割
+  conclusion: ブレースは風圧力・地震力などの水平力を引張・圧縮の軸力へ変えて柱梁の応力を低減する。鉛直ブレースは壁面の水平変形、水平ブレースは水平面の変形を抑える。
+  reason: 斜材が水平力を軸方向力として負担し、鉛直面または水平面の剛性を高めるため。
+  conditions:
+  - 鉄骨造の鉛直面または水平面へ斜材を設ける場合
+  source:
+    pages:
+    - 199
+    question_codes: []
+  prerequisites: []
+  editorial_status: source_checked
+- id: S-K6-BRACE-SECTION-USE-IDENTIFICATION
+  order: 4
+  type: identification
+  principle: 建物規模に応じたブレース鋼材の例
+  conclusion: 教材図では、軽微な建築物に鉄筋バー、一般的な建築物に鋼管・山形鋼、高層・超高層建築物にH形鋼を用いる例を示している。
+  reason: 教材に記載なし
+  conditions:
+  - 教材図による代表的な使用例であり、絶対的な適用規定ではない
+  source:
+    pages:
+    - 199
+    question_codes: []
+  prerequisites: []
+  editorial_status: source_gap

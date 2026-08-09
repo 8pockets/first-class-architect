@@ -1,0 +1,219 @@
+version: 1
+section:
+  id: K6-05
+  title: 柱脚の概要
+  order: 6
+principles:
+- id: S-K6-EMBEDDED-BASE-MINIMUM-DEPTH
+  order: 1
+  type: rule
+  principle: 埋込み柱脚の埋込み深さ
+  conclusion: 所定の構造計算を行わない場合、鉄骨柱の埋込み深さを柱の大きい見付け幅の2倍以上とする。
+  reason: 教材に記載なし
+  conditions:
+  - 埋込み形式柱脚
+  - 所定の構造計算を行わない場合
+  - 埋込み柱脚
+  source:
+    pages:
+    - 171
+    - 180
+    - 204
+    question_codes:
+    - '19161'
+    - '23164'
+  prerequisites:
+  - S-K6-COLUMN-BASE-TYPES-FIXITY-ORDER
+  editorial_status: source_gap
+- id: S-K6-EXPOSED-BASE-ANCHOR-AREA-RATIO
+  order: 2
+  type: rule
+  principle: 露出柱脚アンカーボルトの全断面積
+  conclusion: 所定の構造計算を行わない場合、アンカーボルト全断面積を柱最下端断面積の20%以上とする。
+  reason: 教材に記載なし
+  conditions:
+  - 露出形式柱脚
+  - 所定の構造計算を行わない場合
+  - 露出柱脚
+  source:
+    pages:
+    - 171
+    - 180
+    - 204
+    question_codes:
+    - 施工06144
+    - '23162'
+    - '28163'
+  prerequisites:
+  - S-K6-EXPOSED-BASE-MODEL-BY-DESIGN-TARGET
+  editorial_status: source_gap
+- id: S-K6-EXPOSED-BASE-ANCHOR-EMBEDMENT-LENGTH
+  order: 3
+  type: rule
+  principle: 露出柱脚アンカーボルトの定着長さ
+  conclusion: 所定の構造計算を行わない場合、定着長さはアンカーボルト径の20倍以上とし、先端をかぎ状に折り曲げるか定着金物を設ける。
+  reason: 抜け出しとコンクリート破壊を防ぐため。
+  conditions:
+  - 露出形式柱脚
+  - 付着力を考慮した安全確認を別途行わない場合
+  - 露出柱脚
+  - 露出形式柱脚のアンカーボルト
+  source:
+    pages:
+    - 171
+    - 180
+    - 204
+    question_codes:
+    - '23161'
+    - '23162'
+    - '28163'
+  prerequisites:
+  - S-K6-EXPOSED-BASE-MODEL-BY-DESIGN-TARGET
+  editorial_status: source_checked
+- id: S-K6-EXPOSED-BASE-ANCHOR-HOLE-CLEARANCE
+  order: 4
+  type: rule
+  principle: 露出柱脚アンカーボルト孔径
+  conclusion: アンカーボルト孔径は、公称軸径に5mm以下を加えた大きさとする。
+  reason: 教材に記載なし
+  conditions:
+  - 露出形式柱脚
+  - 露出柱脚
+  - 露出形式柱脚のベースプレート孔
+  source:
+    pages:
+    - 171
+    - 180
+    - 204
+    question_codes:
+    - '24163'
+    - '28163'
+  prerequisites:
+  - S-K6-EXPOSED-BASE-MODEL-BY-DESIGN-TARGET
+  editorial_status: source_gap
+- id: S-K6-EXPOSED-BASE-PLATE-MINIMUM-THICKNESS
+  order: 5
+  type: rule
+  principle: 露出柱脚ベースプレートの厚さ
+  conclusion: ベースプレート厚さはアンカーボルト径の1.3倍以上とする。
+  reason: ベースプレートの変形を抑えるため。
+  conditions:
+  - 露出形式柱脚
+  - 露出柱脚
+  source:
+    pages:
+    - 171
+    - 180
+    - 204
+    question_codes:
+    - 施工30141
+    - '28163'
+  prerequisites:
+  - S-K6-EXPOSED-BASE-MODEL-BY-DESIGN-TARGET
+  editorial_status: source_checked
+- id: S-K6-EXPOSED-BASE-SHEAR-CAPACITY-NOT-ADDITIVE
+  order: 6
+  type: rule
+  principle: 露出柱脚のせん断耐力
+  conclusion: 露出柱脚のせん断耐力は、ベースプレート下面の摩擦耐力とアンカーボルトせん断耐力のうち大きい方とし、両者を加算しない。
+  reason: 教材に記載なし
+  conditions:
+  - 露出柱脚
+  - 最大又は降伏せん断耐力の評価
+  - 露出柱脚部のせん断力を算定する場合
+  - 露出形式柱脚のせん断耐力算定
+  source:
+    pages:
+    - 171
+    - 180
+    - 204
+    question_codes:
+    - '02263'
+    - '07263'
+    - '18184'
+  prerequisites:
+  - S-K6-EXPOSED-BASE-MODEL-BY-DESIGN-TARGET
+  editorial_status: source_gap
+- id: S-K6-WRAPPED-BASE-HEIGHT-AND-TOP-CONFINEMENT
+  order: 7
+  type: rule
+  principle: 根巻き柱脚の高さと上端拘束
+  conclusion: 根巻き高さは柱の大きい見付け幅の2.5倍以上とし、上端部の帯筋を密に配置する。
+  reason: 根巻き部のせん断降伏を防いで曲げ降伏を先行させ、上端へ集中する力に対してコンクリートを拘束するため。
+  conditions:
+  - 根巻き形式柱脚
+  - 根巻き柱脚
+  source:
+    pages:
+    - 171
+    - 180
+    - 204
+    question_codes:
+    - '20173'
+    - '23163'
+    - '29163'
+  prerequisites: []
+  editorial_status: source_checked
+- id: S-K6-EMBEDDED-BASE-EFFECTIVE-FIXED-POINT
+  order: 8
+  type: rule
+  principle: 埋込み柱脚の構造計算上の固定位置
+  conclusion: 埋込み柱脚は、ベースプレート位置ではなく、基礎コンクリートまたは地中梁上端から柱幅の1.5倍下がった位置を固定点として計算する。
+  reason: 教材に記載なし
+  conditions:
+  - 埋込み形式柱脚の応力解析
+  - 埋込み形式柱脚
+  - 特別な剛性検討を行わない場合
+  - 埋込み柱脚を構造計算でモデル化する場合
+  source:
+    pages:
+    - 172
+    - 180
+    - 204
+    question_codes:
+    - '19161'
+    - '29164'
+  prerequisites:
+  - S-K6-EMBEDDED-BASE-MINIMUM-DEPTH
+  editorial_status: source_gap
+- id: S-K6-EXPOSED-BASE-MODEL-BY-DESIGN-TARGET
+  order: 9
+  type: principle
+  principle: 露出柱脚の解析モデルと設計対象
+  conclusion: アンカーボルト本数が少ない露出柱脚はほぼピンだが完全なピンではない。柱・梁断面設計では安全側に柱脚をピンとして解析し、アンカーボルト・ベースプレートなど柱脚部の設計では回転剛性と柱脚曲げモーメントを考慮する。
+  reason: アンカーボルトの剛性により柱脚へ多少の曲げが生じ、柱梁設計と柱脚部設計で安全側となるモデルが異なるため。
+  conditions:
+  - アンカーボルト本数が少ない露出柱脚
+  - 柱・梁の断面設計か柱脚部設計かを区別
+  - 露出形式柱脚
+  - 上部骨組を柱脚ピンとする場合でも柱脚部は別途評価
+  - 露出柱脚
+  source:
+    pages:
+    - 173
+    - 180
+    - 210
+    question_codes:
+    - '03171'
+    - '19162'
+    - '27154'
+  prerequisites: []
+  editorial_status: source_checked
+- id: S-K6-EXPOSED-BASE-ANCHOR-LOCKING
+  order: 10
+  type: rule
+  principle: 露出柱脚アンカーボルトの座金と戻り止め
+  conclusion: アンカーボルトには座金を用い、ナットは二重使用または同等以上の効力を持つ戻り止めを行う。
+  reason: 教材に記載なし
+  conditions:
+  - 露出形式柱脚
+  - 露出柱脚
+  source:
+    pages:
+    - 180
+    - 204
+    question_codes:
+    - '23161'
+  prerequisites:
+  - S-K6-EXPOSED-BASE-MODEL-BY-DESIGN-TARGET
+  editorial_status: source_gap

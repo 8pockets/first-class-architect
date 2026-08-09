@@ -1,0 +1,53 @@
+version: 1
+section:
+  id: K6-37
+  title: 演習：溶接部
+  order: 38
+principles:
+- id: S-K6-HEAT-AFFECTED-ZONE-IDENTIFICATION
+  order: 1
+  type: identification
+  principle: 熱影響部の位置と性質
+  conclusion: 熱影響部は母材と溶接金属の中間にあり、溶接熱で組織・冶金的性質・機械的性質が変化した母材部分である。
+  reason: 溶融には至らない周辺母材も溶接熱の影響を受けるため。
+  conditions:
+  - 溶接部断面の母材近傍
+  source:
+    pages:
+    - 212
+    question_codes:
+    - '21171'
+  prerequisites:
+  - S-K6-WELD-METAL-COMPOSITION
+  editorial_status: source_checked
+- id: S-K6-WELD-BASIC-SYMBOL-SHAPES
+  order: 2
+  type: identification
+  principle: すみ肉・V形・U形溶接の基本記号
+  conclusion: JISの基本記号は、すみ肉溶接を直角三角形、V形突合せ溶接をV形、U形突合せ溶接をU形で表し、すみ肉・V形記号の角度は90度とする。
+  reason: 教材に記載なし
+  conditions:
+  - JIS Z 3021の溶接記号を識別する場合
+  source:
+    pages:
+    - 212
+    question_codes:
+    - '21171'
+  prerequisites:
+  - S-K6-FILLET-WELD-DEFINITION-REPEATED-STRESS
+  editorial_status: source_gap
+- id: S-K6-WELD-METAL-COMPOSITION
+  order: 3
+  type: identification
+  principle: 溶着金属と溶接金属の構成
+  conclusion: 溶着金属は溶接材料から溶接部へ移行した金属で、溶接金属は溶融した母材と溶着金属が融合・凝固した部分である。
+  reason: 溶接では母材の一部と溶接棒などが熱で溶融し、融合後に凝固して接合されるため。
+  conditions:
+  - 溶融溶接部の断面を識別する場合
+  source:
+    pages:
+    - 212
+    question_codes:
+    - '21171'
+  prerequisites: []
+  editorial_status: source_checked

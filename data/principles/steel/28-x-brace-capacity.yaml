@@ -1,0 +1,49 @@
+version: 1
+section:
+  id: K6-28
+  title: X形筋かいの保有水平耐力
+  order: 29
+principles:
+- id: S-K6-BRACE-TENSION-YIELD-COMPRESSION-BUCKLING
+  order: 1
+  type: principle
+  principle: ブレースの引張降伏と圧縮座屈
+  conclusion: ブレースは一般に引張側で降伏耐力を発揮するが、圧縮側は座屈により耐力が引張降伏耐力より低下し、特に細長比が大きいと圧縮側は降伏耐力を発揮できない。
+  reason: 圧縮ブレースは材料が降伏する前に全体座屈しやすく、細長比が大きいほど座屈耐力が小さいため。
+  conditions:
+  - 鉄骨造ブレース
+  - 引張側と圧縮側を比較
+  - 細長比の大小を考慮
+  - 細長比が大きい筋かい
+  source:
+    pages:
+    - 170
+    - 203
+    - 214
+    question_codes:
+    - 05181
+    - '21184'
+  prerequisites:
+  - S-K6-18-SLENDERNESS
+  editorial_status: source_checked
+- id: S-K6-BRACED-FRAME-ULTIMATE-CAPACITY-COMPONENTS
+  order: 2
+  type: rule
+  principle: 筋かい付き骨組の保有水平耐力の構成
+  conclusion: 筋かい付き骨組の保有水平耐力は柱と筋かいの水平せん断耐力を合計できる。X形筋かいで圧縮側を考慮する場合は、一対の耐力を圧縮筋かい座屈時水平力の2倍とする方法、または引張側耐力と圧縮側座屈後安定耐力を合算する方法がある。引張側だけを期待する場合は引張降伏耐力の水平成分とする。
+  reason: 圧縮筋かいは座屈後も安定耐力を残すため、終局時には引張側と圧縮側の寄与を組み合わせられる。
+  conditions:
+  - X形筋かい付き骨組
+  - 終局時・保有水平耐力の算定
+  - 圧縮側を考慮するか引張側だけを期待するかを区別
+  - 圧縮側の座屈後安定耐力を評価
+  source:
+    pages:
+    - 170
+    - 203
+    question_codes:
+    - '14225'
+    - '26153'
+    - '29251'
+  prerequisites: []
+  editorial_status: source_checked

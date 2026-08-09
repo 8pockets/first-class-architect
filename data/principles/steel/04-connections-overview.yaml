@@ -1,0 +1,156 @@
+version: 1
+section:
+  id: K6-04
+  title: 接合・補強材の概要
+  order: 5
+principles:
+- id: S-K6-FRICTION-JOINT-PRE-SLIP-FORCE-TRANSFER
+  order: 1
+  type: principle
+  principle: 高力ボルト摩擦接合のすべり前の伝力機構
+  conclusion: すべりが生じるまでは、締付け力による接触面の摩擦で応力を伝え、ボルト軸部のせん断や母材支圧には期待しない。
+  reason: ボルト締付け力が接合面を圧着し、材間の摩擦力が外力に抵抗するため。
+  conditions:
+  - 高力ボルト摩擦接合
+  - すべり発生前
+  - 高力ボルト摩擦接合の通常の応力伝達
+  - 破断耐力の検討は別扱い
+  source:
+    pages:
+    - 160
+    - 179
+    - 184
+    question_codes:
+    - '02163'
+    - '06163'
+    - '07163'
+    - '18172'
+    - '27181'
+    - '30171'
+  prerequisites: []
+  editorial_status: source_checked
+- id: S-K6-FRICTION-SURFACE-PREPARATION
+  order: 2
+  type: rule
+  principle: 摩擦接合面の表面状態
+  conclusion: 摩擦面は黒皮・塗料・油・塵埃を除去し、浮き錆ではない赤錆程度に処理する。
+  reason: 所定のすべり係数0.45を確保するため。
+  conditions:
+  - 通常の高力ボルト摩擦接合面
+  - 高力ボルト摩擦接合の摩擦面
+  source:
+    pages:
+    - 161
+    - 179
+    - 184
+    question_codes:
+    - '02163'
+    - '06163'
+    - '07163'
+    - '18172'
+    - '19252'
+    - '27181'
+    - '30171'
+  prerequisites:
+  - S-K6-FRICTION-JOINT-PRE-SLIP-FORCE-TRANSFER
+  editorial_status: source_checked
+- id: S-K6-PARTIAL-PENETRATION-WELD-APPLICABILITY
+  order: 3
+  type: rule
+  principle: 部分溶込み溶接を用いてよい応力状態
+  conclusion: 部分溶込み溶接はせん断力だけが作用する場合に用い、溶接線直角方向の引張、溶接線を軸とする曲げ、又は繰返し荷重を受ける箇所には用いない。
+  reason: 教材に記載なし
+  conditions:
+  - 部分溶込み溶接
+  - 作用応力と荷重履歴
+  - 繰返し荷重
+  - 溶接線に直交する引張力
+  - 溶接線を軸とする曲げ
+  source:
+    pages:
+    - 162
+    - 179
+    - 187
+    - 189
+    question_codes:
+    - '05161'
+    - '22172'
+    - '24171'
+  prerequisites:
+  - S-K6-WELD-TYPE-IDENTIFICATION
+  editorial_status: source_gap
+- id: S-K6-SQUARE-TUBE-COLUMN-DIAPHRAGM-TYPES
+  order: 4
+  type: identification
+  principle: 柱梁仕口のダイアフラムの役割と形式
+  conclusion: 梁が取り付く柱部分には仕口剛性を高めるダイアフラムを設け、角形鋼管柱の形式は外ダイアフラム、通しダイアフラム、内ダイアフラムの3種類である。
+  reason: 梁から伝わる力による柱板厚方向の局部変形を抑え、仕口の剛性を確保するため。
+  conditions:
+  - 角形鋼管柱と梁の仕口
+  - 柱梁接合部の図を識別する場合
+  source:
+    pages:
+    - 168
+    - 179
+    - 198
+    - 209
+    question_codes:
+    - '01171'
+    - '19151'
+    - '24174'
+    - '25181'
+    - '28152'
+    - '29182'
+  prerequisites:
+  - S-K6-STEEL-CONNECTION-TYPE-IDENTIFICATION
+  editorial_status: source_checked
+- id: S-K6-GUSSET-PLATE-MEMBER-CONNECTION
+  order: 5
+  type: identification
+  principle: ガセットプレートの用途
+  conclusion: ガセットプレートは、柱梁の隅角部やトラス節点などに集まる部材を接合するための鋼板である。
+  reason: 集まる部材同士を一つの接合板で結ぶため。
+  conditions:
+  - ブレース納まり・トラス節点など複数部材の接合部
+  - 柱と筋かい、またはトラス部材などが一点付近へ集まる接合部
+  source:
+    pages:
+    - 179
+    - 199
+    question_codes: []
+  prerequisites:
+  - S-K6-STEEL-CONNECTION-TYPE-IDENTIFICATION
+  editorial_status: source_checked
+- id: S-K6-WELD-NO-SECTION-LOSS-HIGH-RIGIDITY
+  order: 6
+  type: principle
+  principle: 溶接接合の断面欠損と剛性
+  conclusion: 溶接接合はボルト接合などに比べて断面欠損がなく、接合部の剛性が最も高い。
+  reason: 教材に記載なし
+  conditions:
+  - 溶接接合とボルト接合などを比較する場合
+  source:
+    pages:
+    - 179
+    - 187
+    question_codes: []
+  prerequisites:
+  - S-K6-STEEL-CONNECTION-TYPE-IDENTIFICATION
+  editorial_status: source_gap
+- id: S-K6-WELD-TYPE-IDENTIFICATION
+  order: 7
+  type: identification
+  principle: 溶接接合の種類
+  conclusion: 教材では溶接接合を、突合せ溶接（完全溶込み溶接）・すみ肉溶接・部分溶込み溶接に整理する。
+  reason: 教材に記載なし
+  conditions:
+  - 溶接形式を識別する場合
+  source:
+    pages:
+    - 179
+    - 187
+    question_codes:
+    - '24171'
+  prerequisites:
+  - S-K6-STEEL-CONNECTION-TYPE-IDENTIFICATION
+  editorial_status: source_gap

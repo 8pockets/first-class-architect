@@ -1,0 +1,65 @@
+version: 1
+section:
+  id: K6-36
+  title: 多パス溶接
+  order: 37
+principles:
+- id: S-K6-MULTIPASS-HEAT-INPUT-INTERPASS-UPPER-CONTROL
+  order: 1
+  type: principle
+  principle: 入熱量・パス間温度と溶接部強度
+  conclusion: 入熱量とパス間温度が規定上限を超えないよう管理する。大きい入熱・高いパス間温度ほど溶接部の強度・靭性が低下する。
+  reason: 溶接部の機械的性質は溶接条件の影響を受け、過大な入熱や高いパス間温度が強度低下・欠陥につながるため。
+  conditions:
+  - 多パス溶接
+  - 強度・靭性低下を防ぐ管理
+  - 次のパス直前の溶接金属および近接母材温度
+  source:
+    pages:
+    - 174
+    - 211
+    question_codes:
+    - 04181
+    - '20184'
+    - '23174'
+    - '30151'
+  prerequisites:
+  - S-K6-WELD-METAL-COMPOSITION
+  editorial_status: source_checked
+- id: S-K6-PREHEAT-PREVENTS-LOW-TEMPERATURE-CRACKING
+  order: 2
+  type: principle
+  principle: 予熱と低温割れ防止
+  conclusion: 板厚が厚い又は気温が低い場合は、溶接前に溶接部周辺を50-100℃程度で予熱し、開始時温度が規定下限を下回らないようにする。
+  reason: 冷たい母材への溶接では欠陥が生じやすいため、母材を事前に温めて溶接部の低温割れを防ぐため。
+  conditions:
+  - 厚板又は低温環境
+  - 低温割れ防止
+  - 厚板
+  - 低気温
+  - 溶接開始前
+  source:
+    pages:
+    - 175
+    - 211
+    question_codes:
+    - '22173'
+    - '28153'
+  prerequisites: []
+  editorial_status: source_checked
+- id: S-K6-WELD-PASS-AND-MULTIPASS-IDENTIFICATION
+  order: 3
+  type: identification
+  principle: 1パスと多パス溶接
+  conclusion: 溶接棒を一周させる一回の溶接作業を1パスといい、開先を埋めるため複数回のパスを行う施工を多パス溶接という。
+  reason: 開先が大きいと1パスだけでは全断面を溶接できないため。
+  conditions:
+  - 開先溶接
+  - 一回で開先全体を充填できない場合
+  source:
+    pages:
+    - 211
+    question_codes: []
+  prerequisites:
+  - S-K6-MULTIPASS-HEAT-INPUT-INTERPASS-UPPER-CONTROL
+  editorial_status: source_checked

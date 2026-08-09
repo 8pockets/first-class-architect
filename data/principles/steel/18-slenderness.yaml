@@ -1,0 +1,105 @@
+version: 1
+section:
+  id: K6-18
+  title: 全体座屈と細長比
+  order: 19
+principles:
+- id: S-K6-18-ELASTIC-STRENGTH
+  order: 1
+  type: principle
+  principle: 弾性座屈領域と鋼材強度
+  conclusion: 細長比λが限界細長比Λ以上の弾性座屈領域では、許容圧縮応力度はヤング係数Eとλで決まり、基準強度Fを高くしても変わらない。
+  reason: 弾性座屈域の座屈耐力はオイラー座屈荷重π²EI/Lk²で決まり、鋼材強度Fを含まないため。
+  conditions:
+  - 圧縮材
+  - 細長比λが限界細長比Λ以上
+  - 断面・座屈長さ・ヤング係数Eが同じ
+  source:
+    pages:
+    - 164
+    - 193
+    question_codes:
+    - '01161'
+    - '02153'
+  prerequisites:
+  - S-K6-18-SLENDERNESS
+  - S-K6-LIMIT-SLENDERNESS-STRENGTH-RELATION
+  editorial_status: source_checked
+- id: S-K6-18-SLENDERNESS
+  order: 2
+  type: principle
+  principle: 全体座屈と細長比
+  conclusion: 圧縮材の細長比はλ=Lk/iで表し、座屈長さLkが短いほど、また断面二次半径iが大きいほど細長比は小さくなり、全体座屈しにくく許容圧縮応力度は大きくなる。
+  reason: 材端支持条件は座屈長さLkを、断面形状と座屈軸は断面二次半径iを左右し、細長比が大きいほど座屈しやすいため。
+  conditions:
+  - 圧縮材
+  - 鋼材・断面・材端支持条件の違いをLkとiで比較する場合
+  source:
+    pages:
+    - 164
+    - 165
+    - 177
+    - 193
+    question_codes:
+    - '01152'
+    - '04163'
+    - '05172'
+    - 07184
+    - '18162'
+    - '22152'
+    - '27164'
+    - '28172'
+    - '29254'
+    - '29302'
+  prerequisites: []
+  editorial_status: source_checked
+- id: S-K6-EFFECTIVE-SLENDERNESS-MAXIMUMS
+  order: 3
+  type: rule
+  principle: 圧縮材の有効細長比上限
+  conclusion: 圧縮力を負担する主要柱は200以下、柱以外は250以下、ラチス材は160以下とする。
+  reason: 教材に記載なし
+  conditions:
+  - 圧縮力を負担する構造耐力上主要な部材
+  - 柱は200以下
+  - 柱以外は250以下
+  - ラチス材は160以下
+  source:
+    pages:
+    - 164
+    - 193
+    question_codes:
+    - '01152'
+    - '04163'
+    - '05172'
+    - 07184
+    - '18162'
+    - '22152'
+    - '23153'
+    - '28172'
+    - '29254'
+    - '29302'
+  prerequisites:
+  - S-K6-18-SLENDERNESS
+  editorial_status: source_gap
+- id: S-K6-LIMIT-SLENDERNESS-STRENGTH-RELATION
+  order: 4
+  type: principle
+  principle: 限界細長比と基準強度
+  conclusion: 応力度が基準強度Fの60%となる弾性座屈・非弾性座屈の境界を限界細長比といい、Λ=√(π²E/(0.6F))である。Fが大きいほどΛは小さくなる。
+  reason: Λの式でFが分母にあるため。
+  conditions:
+  - 圧縮材の弾性座屈・非弾性座屈の境界
+  - 圧縮材の弾性座屈領域と非弾性座屈領域を区別する場合
+  source:
+    pages:
+    - 164
+    - 193
+    question_codes:
+    - '01161'
+    - '02153'
+    - '04161'
+    - '24152'
+    - '27163'
+  prerequisites: []
+  editorial_status: source_checked

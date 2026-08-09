@@ -1,0 +1,94 @@
+version: 1
+section:
+  id: K6-10
+  title: 高力ボルトの製品・疲労
+  order: 11
+principles:
+- id: S-K6-FATIGUE-CHECK-CYCLE-THRESHOLD
+  order: 1
+  type: rule
+  principle: 疲労検討を要する繰返し数
+  conclusion: 1×10^4回を超える繰返し応力を受ける部材・接合部は疲労検討を行う。繰返し応力を受けない場合、又は応力範囲が打切り限界以下なら疲労を考慮しなくてよい。
+  reason: 教材に記載なし
+  conditions:
+  - 部材又は接合部
+  - 繰返し数が1×10^4回を超えるか
+  - 応力範囲が打切り限界を超えるか
+  - 繰返し応力が1万回を超える場合
+  - 繰返し応力を受けない場合は検討不要
+  source:
+    pages:
+    - 160
+    - 185
+    question_codes:
+    - '05152'
+    - 06184
+    - '24161'
+  prerequisites: []
+  editorial_status: source_gap
+- id: S-K6-REFERENCE-FATIGUE-STRENGTH-JOINT-TYPE
+  order: 2
+  type: rule
+  principle: 接合形式別の基準疲労強さ
+  conclusion: 2×10^6回で疲労破壊する応力範囲を基準疲労強さとし、高力ボルト摩擦接合部は140N/mm²、完全溶込み溶接継手は100N/mm²である。
+  reason: 高力ボルト摩擦接合部の基準値が完全溶込み溶接継手より40N/mm²高いため。
+  conditions:
+  - 基準疲労強さ
+  - 高力ボルト摩擦接合部又は完全溶込み溶接継手
+  - 継手部の基準疲労強さを比較する場合
+  source:
+    pages:
+    - 160
+    - 185
+    question_codes:
+    - '05152'
+    - 06184
+    - '24161'
+  prerequisites: []
+  editorial_status: source_checked
+- id: S-K6-HIGH-STRENGTH-BOLT-PRODUCT-TYPES
+  order: 3
+  type: identification
+  principle: 高力ボルト製品の種類
+  conclusion: 高力ボルトには、JIS形高力ボルトとトルシア形高力ボルトがある。
+  reason: 教材に記載なし
+  conditions:
+  - 高力ボルト製品を識別する場合
+  source:
+    pages:
+    - 185
+    question_codes: []
+  prerequisites: []
+  editorial_status: source_gap
+- id: S-K6-TORSHEAR-BOLT-PINTAIL-SECONDARY-TIGHTENING
+  order: 4
+  type: principle
+  principle: トルシア形高力ボルトのピンテール破断
+  conclusion: ピンテールの破断は、所要のボルト張力に達して二次締めトルクが入ったことを示す。
+  reason: 所要値まで締めると破断溝が破断してピンテールが取れる構造だから。
+  conditions:
+  - トルシア形高力ボルトの締付け完了を確認する場合
+  source:
+    pages:
+    - 185
+    question_codes:
+    - '17045'
+  prerequisites: []
+  editorial_status: source_checked
+- id: S-K6-TORSHEAR-BOLT-ROTATION-MARKING-INSPECTION
+  order: 5
+  type: rule
+  principle: トルシア形高力ボルトの共回り・軸回り検査
+  conclusion: 共回り・軸回りの有無は、一次締め後のマーキングで確認し、ピンテール破断では判定しない。
+  reason: ピンテール破断は二次締めトルクを示すだけで、共回り・軸回りとは関係しないため。
+  conditions:
+  - トルシア形高力ボルトの締付け後の目視検査
+  source:
+    pages:
+    - 185
+    question_codes:
+    - '17045'
+    - '21134'
+  prerequisites:
+  - S-K6-TORSHEAR-BOLT-PINTAIL-SECONDARY-TIGHTENING
+  editorial_status: source_checked

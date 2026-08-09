@@ -1,0 +1,52 @@
+version: 1
+section:
+  id: K6-25
+  title: ブレースの偏心・有効断面
+  order: 26
+principles:
+- id: S-K6-ANGLE-CHANNEL-BRACE-EFFECTIVE-AREA
+  order: 1
+  type: principle
+  principle: 山形鋼・溝形鋼筋かいの有効断面積
+  conclusion: 片側接合の山形鋼・溝形鋼引張ブレースは、全断面からボルト孔欠損と突出脚の無効部分を差し引いて有効断面積を求める。無効部分はボルト本数で決まる無効長さと板厚の積とし、簡略には突出脚の1/2を無効とする場合がある。
+  reason: 接合されない突出脚にはせん断遅れによる無効部分があり、孔欠損部も引張力を伝えないため。
+  conditions:
+  - 山形鋼又は溝形鋼の引張筋かい
+  - ボルト接合
+  - 山形鋼又は溝形鋼
+  - ガセットプレート片側だけに接合
+  - 山形鋼または溝形鋼の片側接合
+  - 引張ブレース
+  - ボルト孔欠損も別途控除
+  source:
+    pages:
+    - 169
+    - 170
+    - 200
+    - 202
+    question_codes:
+    - 04184
+    - '21181'
+    - '22163'
+    - '26152'
+    - '26154'
+    - '29152'
+  prerequisites: []
+  editorial_status: source_checked
+- id: S-K6-BRACE-ECCENTRIC-JOINT-EFFECTS
+  order: 2
+  type: principle
+  principle: 筋かい接合の偏心
+  conclusion: 筋かいは柱へ偏心接合しないようにし、やむを得ない場合は偏心曲げを含む応力を解析して柱・接合部を設計する。
+  reason: 偏心曲げモーメントが接合部や柱へ付加応力を生じ、接合部破壊につながるため。
+  conditions:
+  - 筋かい材が柱材へ偏心して接合
+  - ブレースと柱梁の接合納まり
+  source:
+    pages:
+    - 169
+    - 200
+    question_codes:
+    - '26154'
+  prerequisites: []
+  editorial_status: source_checked

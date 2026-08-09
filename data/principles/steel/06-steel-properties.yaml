@@ -1,0 +1,105 @@
+version: 1
+section:
+  id: K6-06
+  title: 鋼材の材料特性
+  order: 7
+principles:
+- id: S-K6-STEEL-BUCKLING-MODE-IDENTIFICATION
+  order: 1
+  type: identification
+  principle: 鋼部材の座屈形式
+  conclusion: 教材では座屈を、曲げ座屈・局部座屈・横座屈の3形式に整理する。
+  reason: 教材に記載なし
+  conditions:
+  - 鋼部材の座屈形式を識別する場合
+  source:
+    pages:
+    - 181
+    question_codes: []
+  prerequisites: []
+  editorial_status: source_gap
+- id: S-K6-STEEL-CORROSION-PROTECTION
+  order: 2
+  type: principle
+  principle: 鋼材の発錆と防錆処理
+  conclusion: 鋼材には防錆塗料やめっきなどの防錆処理が必要である。
+  reason: 鋼材は錆びやすいため。
+  conditions:
+  - 教材が説明する一般的な鋼材
+  source:
+    pages:
+    - 181
+    question_codes: []
+  prerequisites: []
+  editorial_status: source_checked
+- id: S-K6-STEEL-FIRE-STRENGTH-FIREPROOFING
+  order: 3
+  type: principle
+  principle: 鋼材の高温強度と耐火被覆
+  conclusion: 鋼部材には耐火被覆が必要である。
+  reason: 鋼材は火に弱く、300℃を超えると強度が急激に低下するため。
+  conditions:
+  - 火災時など、鋼材温度が300℃を超える場合
+  source:
+    pages:
+    - 181
+    question_codes: []
+  prerequisites: []
+  editorial_status: draft
+- id: S-K6-STEEL-HIGH-STRENGTH-SMALLER-SECTION
+  order: 4
+  type: principle
+  principle: 鋼材強度と部材断面
+  conclusion: 鋼材は部材断面積を小さくできる。
+  reason: 材料強度が高いため。
+  conditions:
+  - 教材が説明する鉄骨部材の一般的な特徴
+  source:
+    pages:
+    - 181
+    question_codes: []
+  prerequisites: []
+  editorial_status: source_checked
+- id: S-K6-STEEL-SMALL-SECTION-DEFLECTION
+  order: 5
+  type: principle
+  principle: 小さい鋼材断面とたわみ
+  conclusion: 鋼部材はたわみやすい。
+  reason: 断面積を小さくできる反面、断面積が小さいため。
+  conditions:
+  - 断面積が小さい鋼部材
+  source:
+    pages:
+    - 181
+    question_codes: []
+  prerequisites:
+  - S-K6-STEEL-HIGH-STRENGTH-SMALLER-SECTION
+  editorial_status: source_checked
+- id: S-K6-STEEL-STRUCTURE-DEFINITION
+  order: 6
+  type: identification
+  principle: 鉄骨構造の構成
+  conclusion: 形鋼や角形鋼管などの鋼材を、高力ボルトや溶接で接合して組み立てる構造を鉄骨構造という。
+  reason: 教材に記載なし
+  conditions:
+  - 鋼材で造られた形鋼・角形鋼管などを用いる場合
+  source:
+    pages:
+    - 181
+    question_codes: []
+  prerequisites: []
+  editorial_status: source_gap
+- id: S-K6-STEEL-THIN-SECTION-BUCKLING
+  order: 7
+  type: principle
+  principle: 薄い鋼部材と座屈
+  conclusion: 鋼部材は座屈しやすい。
+  reason: 部材が薄い形になりやすいため。
+  conditions:
+  - 薄い鋼部材
+  source:
+    pages:
+    - 181
+    question_codes: []
+  prerequisites: []
+  editorial_status: source_checked

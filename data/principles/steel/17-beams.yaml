@@ -1,0 +1,124 @@
+version: 1
+section:
+  id: K6-17
+  title: 梁の設計
+  order: 18
+principles:
+- id: S-K6-ELASTIC-DEFLECTION-NOT-REDUCED-BY-HIGHER-STEEL-GRADE
+  order: 1
+  type: principle
+  principle: 鋼種の高強度化と弾性たわみ
+  conclusion: 同一断面・同一材長ならSN400からSN490へ替えても弾性たわみは小さくならない。たわみを小さくするには断面を大きくするか材長を短くする。
+  reason: 弾性たわみはヤング係数Eと断面剛性に支配され、SN400とSN490のEは同じため。
+  conditions:
+  - 弾性範囲
+  - 断面・材長・荷重条件が同じ
+  - 断面形状が同じ
+  source:
+    pages:
+    - 163
+    - 164
+    - 192
+    question_codes:
+    - '02173'
+    - '03173'
+    - '05174'
+    - '20161'
+    - '26304'
+    - '27173'
+  prerequisites: []
+  editorial_status: source_checked
+- id: S-K6-STEEL-BEAM-COMMON-SECTIONS
+  order: 2
+  type: identification
+  principle: 梁によく使う形鋼
+  conclusion: 教材図では、梁によく使う形鋼としてH形鋼・溝形鋼・等辺山形鋼を示す。
+  reason: 教材に記載なし
+  conditions:
+  - 梁に用いる形鋼を識別する場合
+  source:
+    pages:
+    - 192
+    question_codes: []
+  prerequisites: []
+  editorial_status: source_gap
+- id: S-K6-STEEL-BEAM-DEFLECTION-CHECK
+  order: 3
+  type: rule
+  principle: 鉄骨梁のたわみ検討
+  conclusion: 鉄骨梁は応力だけでなく、たわみも検討する。
+  reason: 教材に記載なし
+  conditions:
+  - たわみ検討を省略できる条件に該当しない鉄骨梁
+  source:
+    pages:
+    - 192
+    question_codes: []
+  prerequisites:
+  - S-K6-STEEL-BEAM-DESIGN-ACTIONS
+  editorial_status: source_gap
+- id: S-K6-STEEL-BEAM-DEFLECTION-CHECK-OMISSION
+  order: 4
+  type: rule
+  principle: 梁たわみ検討の省略条件
+  conclusion: 梁せいが有効長さの1/15を超える場合は、たわみの検討を省略できる。
+  reason: 教材に記載なし
+  conditions:
+  - 梁せい > 有効長さ/15
+  source:
+    pages:
+    - 192
+    question_codes:
+    - '02173'
+    - '26304'
+  prerequisites:
+  - S-K6-STEEL-BEAM-DEFLECTION-CHECK
+  editorial_status: source_gap
+- id: S-K6-STEEL-BEAM-DEFLECTION-LIMITS
+  order: 5
+  type: rule
+  principle: 鉄骨梁のたわみ制限
+  conclusion: 両端支持梁のたわみはスパンの1/300以下、片持ち梁はスパンの1/250以下とする。
+  reason: 教材に記載なし
+  conditions:
+  - 両端支持梁はL/300以下
+  - 片持ち梁はL/250以下
+  source:
+    pages:
+    - 192
+    question_codes:
+    - '05174'
+  prerequisites:
+  - S-K6-STEEL-BEAM-DEFLECTION-CHECK
+  editorial_status: source_gap
+- id: S-K6-STEEL-BEAM-DEPTH-SPAN-RANGE
+  order: 6
+  type: rule
+  principle: 一般的な鉄骨梁せい
+  conclusion: 一般的な鉄骨構造の梁せいは、スパンの1/15〜1/30程度である。
+  reason: 教材に記載なし
+  conditions:
+  - 一般的な鉄骨構造の概略寸法
+  source:
+    pages:
+    - 192
+    question_codes:
+    - '28173'
+  prerequisites: []
+  editorial_status: source_gap
+- id: S-K6-STEEL-BEAM-DESIGN-ACTIONS
+  order: 7
+  type: rule
+  principle: 鉄骨梁に生じる設計用応力
+  conclusion: 鉄骨梁は、曲げモーメントとせん断力が生じるものとして計算する。
+  reason: 教材に記載なし
+  conditions:
+  - 鉄骨梁の応力を計算する場合
+  source:
+    pages:
+    - 192
+    question_codes: []
+  prerequisites:
+  - S-K6-H-SECTION-FLANGE-BENDING
+  - S-K6-H-SECTION-WEB-SHEAR
+  editorial_status: source_gap

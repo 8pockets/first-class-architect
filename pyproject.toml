@@ -1,0 +1,17 @@
+[project]
+name = "first-class-architect-principles"
+version = "0.1.0"
+description = "Source-checked principle catalog and static GitHub Pages builder"
+requires-python = ">=3.11"
+dependencies = [
+  "PyYAML>=6.0,<7",
+]
+
+[dependency-groups]
+dev = [
+  "pytest>=8.4,<9",
+]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]

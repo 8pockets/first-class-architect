@@ -1,0 +1,116 @@
+version: 1
+section:
+  id: K6-08
+  title: 普通ボルト接合
+  order: 9
+principles:
+- id: S-K6-ORDINARY-BOLT-HOLE-CLEARANCE
+  order: 1
+  type: rule
+  principle: 普通ボルト孔径の上限
+  conclusion: 普通ボルト孔径はボルト径より1mmを超えて大きくできない。ただし径20mm以上で構造耐力上支障がなければ1.5mmまで大きくできる。
+  reason: 教材に記載なし
+  conditions:
+  - 普通ボルト
+  - 例外はボルト径20mm以上かつ構造耐力上支障なし
+  - 軸径16mm以下、または20mm以上の教材掲載区分
+  source:
+    pages:
+    - 159
+    - 183
+    question_codes:
+    - '23302'
+  prerequisites: []
+  editorial_status: source_gap
+- id: S-K6-HIGH-STRENGTH-BOLT-SLIP-RIGIDITY
+  order: 2
+  type: principle
+  principle: 高力ボルト摩擦接合の滑りと剛性
+  conclusion: 高力ボルト摩擦接合は剛性が高い。
+  reason: 鋼材間の滑りが生じないため。
+  conditions:
+  - 滑りを生じない範囲の高力ボルト摩擦接合
+  source:
+    pages:
+    - 183
+    - 184
+    question_codes:
+    - '25171'
+  prerequisites:
+  - S-K6-FRICTION-JOINT-PRE-SLIP-FORCE-TRANSFER
+  editorial_status: source_checked
+- id: S-K6-ORDINARY-BOLT-CLEARANCE-LOOSENING
+  order: 3
+  type: principle
+  principle: 普通ボルト孔のクリアランスと緩み
+  conclusion: 普通ボルト接合は、締付け後も外力が繰り返されると緩みやすい。
+  reason: ボルト軸まわりにクリアランスがあるため。
+  conditions:
+  - 普通ボルト接合
+  - 外力が繰り返し作用する場合
+  source:
+    pages:
+    - 183
+    question_codes: []
+  prerequisites:
+  - S-K6-ORDINARY-BOLT-SHEAR-TRANSFER
+  editorial_status: source_checked
+- id: S-K6-ORDINARY-BOLT-HOLE-DIAMETER-AIJ
+  order: 4
+  type: rule
+  principle: 普通ボルト孔径の鋼構造設計規準値
+  conclusion: 日本建築学会『鋼構造設計規準』では、普通ボルト孔径をボルト軸径+0.5mmとする。
+  reason: 教材に記載なし
+  conditions:
+  - 日本建築学会『鋼構造設計規準』の値を問う場合
+  source:
+    pages:
+    - 183
+    question_codes:
+    - '23302'
+  prerequisites: []
+  editorial_status: source_gap
+- id: S-K6-ORDINARY-BOLT-SHEAR-TRANSFER
+  order: 5
+  type: principle
+  principle: 普通ボルト接合のせん断伝達
+  conclusion: せん断力を受ける普通ボルトは、ボルト軸の側面で力を伝達する。
+  reason: ボルト軸と母材孔のかみ合い・支圧によってせん断力を伝えるため。
+  conditions:
+  - 普通ボルト接合がせん断力を受ける場合
+  source:
+    pages:
+    - 183
+    - 184
+    question_codes: []
+  prerequisites:
+  - S-K6-STEEL-CONNECTION-TYPE-IDENTIFICATION
+  editorial_status: source_checked
+- id: S-K6-ORDINARY-BOLT-THREAD-PROJECTION
+  order: 6
+  type: rule
+  principle: 普通ボルトのねじ部余長
+  conclusion: ねじ部はナットより外へ2〜3山程度出す。
+  reason: 教材に記載なし
+  conditions:
+  - 普通ボルトのせん断接合
+  source:
+    pages:
+    - 183
+    question_codes: []
+  prerequisites: []
+  editorial_status: source_gap
+- id: S-K6-ORDINARY-BOLT-WASHER-UNDER-NUT
+  order: 7
+  type: rule
+  principle: 普通ボルト接合の座金位置
+  conclusion: 普通ボルト接合では、ナット側に必ず座金を用いる。
+  reason: 教材に記載なし
+  conditions:
+  - 普通ボルトのせん断接合
+  source:
+    pages:
+    - 183
+    question_codes: []
+  prerequisites: []
+  editorial_status: source_gap

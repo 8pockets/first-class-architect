@@ -1,0 +1,57 @@
+version: 1
+section:
+  id: K6-38
+  title: 演習：荷重変形履歴
+  order: 39
+principles:
+- id: S-K6-BRACE-FRAME-HYSTERESIS-BY-SLENDERNESS
+  order: 1
+  type: principle
+  principle: 筋かい細長比と架構の履歴特性
+  conclusion: 細長比が大きいX形筋かい架構は小荷重で変形が進み原点付近のエネルギー吸収が小さい。細長比が小さいX形筋かい架構は圧縮筋かいが座屈しにくく、座屈後曲げ抵抗とエネルギー吸収が大きいが、繰返しで耐力が低下する。ラーメン架構は変形増大とともにループ・強度・吸収能力が増え、平行四辺形状に近似できる。
+  reason: 大細長比材は圧縮を負担できず、引張降伏後に伸びた筋かいが再び効くまで抵抗できない一方、小細長比材は圧縮座屈しにくく座屈後抵抗も大きいため。
+  conditions:
+  - X形筋かい架構とラーメン架構の繰返し荷重
+  - 同じ基準強度で筋かい細長比の大小を比較
+  source:
+    pages:
+    - 214
+    - 215
+    question_codes:
+    - 05181
+  prerequisites:
+  - S-K6-18-SLENDERNESS
+  editorial_status: source_checked
+- id: S-K6-HYSTERESIS-LOOP-AREA-ENERGY-ABSORPTION
+  order: 2
+  type: identification
+  principle: 履歴曲線とエネルギー吸収能力
+  conclusion: 左右交互の繰返し水平荷重に対する荷重-変形関係を履歴曲線といい、ループで囲まれた面積がエネルギー吸収能力・靭性能の大きさを表す。
+  reason: 教材に記載なし
+  conditions:
+  - 地震力のような繰返し水平荷重
+  - 荷重-変形履歴ループ
+  source:
+    pages:
+    - 214
+    - 215
+    question_codes:
+    - 05181
+  prerequisites: []
+  editorial_status: source_gap
+- id: S-K6-BRACE-SHARE-SEISMIC-STRESS-AMPLIFICATION
+  order: 3
+  type: rule
+  principle: 筋かい水平力分担率による地震時応力割増し
+  conclusion: ラーメン・筋かい併用架構で筋かい水平力分担率βが5/7以上なら地震時応力を1.5倍、5/7未満なら1+0.7β倍に割り増す。
+  reason: 筋かい強度が全体の約70%以上になると筋かいの履歴特性が架構全体へ強く現れ、5/7未満との間で耐震性能を不連続にしないため。
+  conditions:
+  - ラーメン架構と筋かい架構の併用
+  - βは筋かいの水平力分担率
+  source:
+    pages:
+    - 215
+    question_codes:
+    - 05181
+  prerequisites: []
+  editorial_status: source_checked

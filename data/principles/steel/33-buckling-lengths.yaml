@@ -1,0 +1,51 @@
+version: 1
+section:
+  id: K6-33
+  title: 柱・トラス材の座屈長さ
+  order: 34
+principles:
+- id: S-K6-FRAME-COLUMN-BUCKLING-LENGTH-RESTRAINT
+  order: 1
+  type: principle
+  principle: ラーメン柱の水平移動拘束と座屈長さ
+  conclusion: 節点水平移動が拘束された柱は、理論上ピン・ピンで階高、固定・固定で階高の1/2、実架構ではその中間だが、安全側に階高を座屈長さとすることが多い。水平移動が拘束されない柱は座屈長さが階高より長くなる。
+  reason: 架構全体の横移動を伴う座屈モードでは、節点回転を拘束しても柱の側方移動が残るため。
+  conditions:
+  - ラーメン架構の柱
+  - 節点水平移動の拘束有無
+  - 端部回転条件を区別
+  - 水平移動が拘束されたラーメン架構柱
+  - 水平移動が拘束されていないラーメン架構柱
+  source:
+    pages:
+    - 172
+    - 208
+    question_codes:
+    - '02151'
+    - '03151'
+    - '20162'
+    - '26174'
+    - '29153'
+  prerequisites:
+  - S-K6-18-SLENDERNESS
+  editorial_status: source_checked
+- id: S-K6-TRUSS-MEMBER-IN-OUT-PLANE-BUCKLING-LENGTH
+  order: 2
+  type: rule
+  principle: トラス圧縮材の構面内・構面外座屈長さ
+  conclusion: トラス圧縮材の構面内座屈長さは節点間距離、構面外座屈長さは横補剛間隔とする。
+  reason: 教材に記載なし
+  conditions:
+  - トラスを構成する圧縮部材
+  - 構面内座屈と構面外座屈を区別
+  - トラス弦材
+  - 精算によらない場合
+  source:
+    pages:
+    - 172
+    - 208
+    question_codes:
+    - '27171'
+  prerequisites:
+  - S-K6-LATERAL-BRACING-ENABLES-FULL-PLASTIC-MOMENT
+  editorial_status: source_gap

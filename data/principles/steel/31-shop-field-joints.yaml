@@ -1,0 +1,43 @@
+version: 1
+section:
+  id: K6-31
+  title: 工場継手・現場継手
+  order: 32
+principles:
+- id: S-K6-COLUMN-SPLICE-NEAR-MIDSTORY
+  order: 1
+  type: principle
+  principle: 柱・梁の継手位置と作用力
+  conclusion: 柱・梁の継手は部材に生じる力が小さい位置へ設ける。柱継手は曲げ応力が小さい階高中央付近が望ましく、床面から約1mの位置も許容範囲となり得る。
+  reason: 継手に作用する応力を小さくしつつ、現場施工性も確保するため。
+  conditions:
+  - 鉄骨柱の現場継手
+  - 柱・梁の中間継手位置を決める場合
+  source:
+    pages:
+    - 172
+    - 206
+    question_codes:
+    - '05153'
+    - '19152'
+    - '26261'
+    - '29183'
+  prerequisites: []
+  editorial_status: source_checked
+- id: S-K6-SHOP-JOINT-FIELD-SPLICE-IDENTIFICATION
+  order: 2
+  type: identification
+  principle: 仕口と継手の位置・施工場所・接合方法
+  conclusion: 柱梁接合部の仕口は一般に工場で溶接製作し、柱・梁の中間に設ける継手は一般に現場施工とする。現場継手は溶接より気象条件の影響を受けにくい高力ボルト接合が一般的である。
+  reason: 工場では溶接品質を管理しやすく、現場では高力ボルト接合が気象条件の影響を受けにくいため。
+  conditions:
+  - 鉄骨柱梁の仕口と柱・梁中間継手を区別
+  source:
+    pages:
+    - 206
+    question_codes:
+    - '05153'
+    - '19152'
+    - '26261'
+  prerequisites: []
+  editorial_status: source_checked
