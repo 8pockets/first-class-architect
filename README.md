@@ -15,7 +15,9 @@
 ## ドキュメント
 
 - [用語集](./CONTEXT.md)
+- [朝30分の基本学習ループ](./docs/morning-study-loop.md)
 - [学習科学の調査レポート](./docs/research/learning-science-principles.md)
+- [疲れた日でも翌日に戻れる学習運用](./docs/sustainable-study-operation.md)
 - [誤答を次の学習へ変える最小記録](./docs/error-record.md)
 - [教材とパイロット範囲](./docs/materials.md)
 - [旧Wayfinderからの移行記録](./docs/migration.md)
