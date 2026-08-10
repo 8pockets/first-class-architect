@@ -127,17 +127,19 @@ def sync_study_items(path: Path = LOCAL_STUDY_STATE) -> tuple[str, ...]:
 
 
 def study_brief(item_id: str) -> str:
-    """Render the four always-visible learning fields for one catalog item."""
+    """Render the always-visible question and learning fields for one catalog item."""
 
     catalog = load_catalog()
     item = next((candidate for candidate in catalog.principles if candidate.id == item_id), None)
     if item is None:
         raise CatalogError(f"unknown catalog item: {item_id}")
+    if item.editorial_status != "source_checked" or item.question is None:
+        raise CatalogError(f"catalog item is not source-checked: {item_id}")
     conditions = "\n".join(f"- {condition}" for condition in item.conditions)
     return (
         f"# {item.principle}\n\n"
         f"項目ID: `{item.id}`\n\n"
-        f"## 原理\n\n{item.principle}\n\n"
+        f"## 確認問題（自作）\n\n{item.question}\n\n"
         f"## 結論\n\n{item.conclusion}\n\n"
         f"## 理由\n\n{item.reason}\n\n"
         f"## 結論を左右する条件\n\n{conditions}\n"

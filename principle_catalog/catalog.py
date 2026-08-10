@@ -273,20 +273,23 @@ def _load_section(path: Path, manifest: CatalogManifest) -> tuple[Principle, ...
     principles: list[Principle] = []
     for index, raw in enumerate(_list(data["principles"], path, "principles"), start=1):
         item = _mapping(raw, path, f"principles[{index}]")
+        item_keys = {
+            "id",
+            "order",
+            "type",
+            "principle",
+            "conclusion",
+            "reason",
+            "conditions",
+            "source",
+            "prerequisites",
+            "editorial_status",
+        }
+        if "question" in item:
+            item_keys.add("question")
         _exact_keys(
             item,
-            {
-                "id",
-                "order",
-                "type",
-                "principle",
-                "conclusion",
-                "reason",
-                "conditions",
-                "source",
-                "prerequisites",
-                "editorial_status",
-            },
+            item_keys,
             path,
             f"principles[{index}]",
         )
@@ -300,6 +303,23 @@ def _load_section(path: Path, manifest: CatalogManifest) -> tuple[Principle, ...
         status = _str(item["editorial_status"], path, f"{item_id}.editorial_status")
         if status not in _EDITORIAL_STATUSES:
             _fail(path, f"{item_id}.editorial_status must be one of {sorted(_EDITORIAL_STATUSES)}")
+
+        question = (
+            _str(item["question"], path, f"{item_id}.question")
+            if "question" in item
+            else None
+        )
+        if status == "source_checked" and question is None:
+            _fail(path, f"{item_id}.question is required for source_checked entries")
+        if status != "source_checked" and question is not None:
+            _fail(path, f"{item_id}.question is only allowed for source_checked entries")
+        if question is not None:
+            missing_prompts = [word for word in ("結論", "理由", "条件") if word not in question]
+            if missing_prompts:
+                _fail(
+                    path,
+                    f"{item_id}.question must explicitly ask for a conclusion, reason, and conditions",
+                )
 
         reason = _str(item["reason"], path, f"{item_id}.reason")
         conditions = _string_list(item["conditions"], path, f"{item_id}.conditions")
@@ -338,6 +358,7 @@ def _load_section(path: Path, manifest: CatalogManifest) -> tuple[Principle, ...
                 order=item_order,
                 type=cast(PrincipleType, item_type),
                 principle=_str(item["principle"], path, f"{item_id}.principle"),
+                question=question,
                 conclusion=_str(item["conclusion"], path, f"{item_id}.conclusion"),
                 reason=reason,
                 conditions=conditions,
