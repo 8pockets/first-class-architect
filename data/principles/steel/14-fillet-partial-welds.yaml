@@ -28,6 +28,7 @@ principles:
   order: 2
   type: rule
   principle: すみ肉溶接の有効長さ
+  question: すみ肉溶接の有効長さの定め方について、結論、その理由及び結論を左右する条件を述べなさい。
   conclusion: まわし溶接を含む溶接全長から、すみ肉サイズの2倍を減じた長さを有効長さとする。
   reason: 始端と終端では十分なのど厚を確保できないため。
   conditions:

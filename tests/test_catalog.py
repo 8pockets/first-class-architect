@@ -1,12 +1,17 @@
 from __future__ import annotations
 
 import json
+import re
+import shutil
+import unicodedata
+from html import escape
 from pathlib import Path
 
 import pytest
 import yaml
 
 from principle_catalog.catalog import (
+    CATALOG_ROOT,
     CatalogError,
     MANIFEST_PATH,
     PUBLIC_PROGRESS_PATH,
@@ -21,6 +26,12 @@ from principle_catalog.study import study_brief, sync_study_items
 
 EXPECTED_SHA256 = "33b77550756a6994fe07ab653aaf4ab046c08765c980a62f7f555eea2cda0ec8"
 LOCAL_STUDY_STATE = Path(".study/state.json")
+
+
+def _copy_catalog(tmp_path: Path) -> Path:
+    root = tmp_path / "steel"
+    shutil.copytree(CATALOG_ROOT, root)
+    return root
 
 
 def test_manifest_covers_every_requested_pdf_page() -> None:
@@ -78,18 +89,30 @@ def test_existing_study_items_are_stable_catalog_ids() -> None:
     assert study_ids <= catalog_ids
 
 
-def test_source_checked_entries_have_complete_three_point_content() -> None:
+def test_source_checked_entries_have_complete_question_and_three_point_content() -> None:
     checked = [
         item for item in load_catalog().principles if item.editorial_status == "source_checked"
     ]
 
-    assert checked
+    assert len(checked) == 116
     for item in checked:
         assert item.principle
+        assert item.question
+        assert "結論" in item.question
+        assert "理由" in item.question
+        assert "条件" in item.question
+        assert item.question != item.conclusion
         assert item.conclusion
         assert item.reason != "教材に記載なし"
         assert item.conditions
         assert "教材に記載なし" not in item.conditions
+
+    normalized_questions = {
+        unicodedata.normalize("NFKC", item.question).casefold().strip()
+        for item in checked
+        if item.question is not None
+    }
+    assert len(normalized_questions) == 116
 
 
 def test_public_progress_is_exact_coarse_projection_of_local_state() -> None:
@@ -137,8 +160,48 @@ def test_build_publishes_only_source_checked_entries(tmp_path: Path) -> None:
     assert published == len(expected_published)
     assert planned == len(catalog.principles)
     assert html.count('class="principle-card"') == published
+    assert html.count("確認問題（自作）") == published
     assert all(item.principle in html for item in expected_published)
+    assert all(item.question in html for item in expected_published)
     assert all(f'id="{item.id}"' not in html for item in unpublished)
+
+
+def test_build_places_each_question_before_its_three_point_answer_and_searches_it(
+    tmp_path: Path,
+) -> None:
+    output = tmp_path / "site"
+    build_site(output, "https://8pockets.github.io/first-class-architect/")
+    html = (output / "index.html").read_text(encoding="utf-8")
+    published = [
+        item
+        for item in load_catalog().principles
+        if item.editorial_status == "source_checked"
+    ]
+
+    for item in published:
+        assert item.question is not None
+        card = html.split(f'id="{item.id}"', maxsplit=1)[1].split(
+            "</article>", maxsplit=1
+        )[0]
+        question = escape(item.question)
+        search_text = card.split('data-search="', maxsplit=1)[1].split('"', maxsplit=1)[0]
+        question_opening = card.split('<div class="practice-question"', maxsplit=1)[
+            1
+        ].split(">", maxsplit=1)[0]
+
+        heading = f"<h3>{escape(item.principle)}</h3>"
+        assert card.index(heading) < card.index('<div class="practice-question"')
+        assert card.index('<div class="practice-question"') < card.index(
+            "<dt>結論</dt>"
+        )
+        assert card.index("<dt>結論</dt>") < card.index("<dt>理由</dt>")
+        assert card.index("<dt>理由</dt>") < card.index(
+            "<dt>結論を左右する条件</dt>"
+        )
+        assert "hidden" not in question_opening
+        assert "<details" not in card
+        assert question in card
+        assert escape(item.question.lower()) in search_text
 
 
 def test_build_is_public_read_only_and_privacy_bounded(tmp_path: Path) -> None:
@@ -223,6 +286,49 @@ def test_yaml_duplicate_keys_are_rejected(tmp_path: Path) -> None:
 
     with pytest.raises(CatalogError, match="invalid YAML"):
         load_public_progress(path)
+
+
+def test_source_checked_entry_without_a_question_is_rejected(tmp_path: Path) -> None:
+    root = _copy_catalog(tmp_path)
+    section = root / "01-overview.yaml"
+    text, replacements = re.subn(r"\n  question: [^\n]+", "", section.read_text(), count=1)
+    assert replacements == 1
+    section.write_text(text, encoding="utf-8")
+
+    with pytest.raises(CatalogError, match="question is required"):
+        load_catalog(root / "manifest.yaml")
+
+
+def test_unpublished_entry_with_a_question_is_rejected(tmp_path: Path) -> None:
+    root = _copy_catalog(tmp_path)
+    section = root / "01-overview.yaml"
+    text = section.read_text(encoding="utf-8")
+    target = "  principle: 柱脚形式と固定度の大小\n"
+    replacement = (
+        f"{target}"
+        "  question: 柱脚形式について、結論、その理由及び結論を左右する条件を説明しなさい。\n"
+    )
+    assert target in text
+    section.write_text(text.replace(target, replacement, 1), encoding="utf-8")
+
+    with pytest.raises(CatalogError, match="only allowed for source_checked"):
+        load_catalog(root / "manifest.yaml")
+
+
+def test_question_without_all_three_requested_parts_is_rejected(tmp_path: Path) -> None:
+    root = _copy_catalog(tmp_path)
+    section = root / "01-overview.yaml"
+    text, replacements = re.subn(
+        r"\n  question: [^\n]+",
+        "\n  question: この項目について説明しなさい。",
+        section.read_text(encoding="utf-8"),
+        count=1,
+    )
+    assert replacements == 1
+    section.write_text(text, encoding="utf-8")
+
+    with pytest.raises(CatalogError, match="conclusion, reason, and conditions"):
+        load_catalog(root / "manifest.yaml")
 
 
 def test_unknown_public_progress_id_fails_the_build(
@@ -334,15 +440,26 @@ def test_public_progress_rejects_duplicate_local_ids(tmp_path: Path) -> None:
         public_progress_from_local(path)
 
 
-def test_study_brief_always_shows_the_four_learning_fields() -> None:
+def test_study_brief_shows_the_question_before_the_three_point_answer() -> None:
     item = next(
         item for item in load_catalog().principles if item.editorial_status == "source_checked"
     )
     brief = study_brief(item.id)
 
-    assert "## 原理" in brief
+    assert "## 確認問題（自作）" in brief
     assert "## 結論" in brief
     assert "## 理由" in brief
     assert "## 結論を左右する条件" in brief
+    assert brief.index("## 確認問題（自作）") < brief.index("## 結論")
+    assert item.question in brief
     assert item.conclusion in brief
     assert item.reason in brief
+
+
+def test_study_brief_rejects_items_without_a_source_checked_question() -> None:
+    item = next(
+        item for item in load_catalog().principles if item.editorial_status != "source_checked"
+    )
+
+    with pytest.raises(CatalogError, match="not source-checked"):
+        study_brief(item.id)

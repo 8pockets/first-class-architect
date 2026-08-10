@@ -480,6 +480,29 @@ a:focus-visible {
   line-height: 1.45;
 }
 
+.practice-question {
+  margin: 0;
+  padding: 18px 24px 18px 28px;
+  color: #f8f5ed;
+  background: var(--blue-dark);
+}
+
+.practice-question-label {
+  margin: 0 0 7px;
+  color: #f6b58f;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+.practice-question-text {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-size: 0.98rem;
+  font-weight: 650;
+  line-height: 1.75;
+}
+
 .three-point {
   display: flex;
   flex: 1;
@@ -665,6 +688,10 @@ a:focus-visible {
 
   .card-header {
     padding: 20px 18px 17px 23px;
+  }
+
+  .practice-question {
+    padding: 16px 18px 16px 23px;
   }
 
   .three-point {

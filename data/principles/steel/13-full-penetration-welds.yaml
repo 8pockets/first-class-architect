@@ -8,6 +8,7 @@ principles:
   order: 1
   type: principle
   principle: 完全溶込み溶接端部のエンドタブ
+  question: 完全溶込み溶接の始端・終端におけるエンドタブの扱いについて、結論、その理由及び結論を左右する条件を説明しなさい。
   conclusion: 開先溶接の両端には、健全な完全溶込み溶接断面を確保するためエンドタブを用いる。
   reason: 突合せ溶接の始点と終点での欠陥発生を避けるため。
   conditions:
@@ -77,6 +78,7 @@ principles:
   order: 5
   type: rule
   principle: 完全溶込み溶接の有効長さ
+  question: 完全溶込み溶接の有効長さの定め方について、結論、その理由及び結論を左右する条件を述べなさい。
   conclusion: 完全溶込み溶接の有効長さは、全幅にわたり溶接するため材幅とする。
   reason: 材幅全長にわたって溶接するため。
   conditions:
@@ -106,6 +108,7 @@ principles:
   order: 7
   type: principle
   principle: 裏はつりの目的と順序
+  question: 突合せ溶接における裏はつりの目的と施工順序について、結論、その理由及び結論を左右する条件を説明しなさい。
   conclusion: 裏はつりは第一層の溶込み不足やスラグ巻込みを除去する作業で、その後に裏面から溶接する。
   reason: 第一層に残った欠陥を除去してから裏面溶接するため。
   conditions:
@@ -120,6 +123,7 @@ principles:
   order: 8
   type: rule
   principle: 裏あて金の役割と必要条件
+  question: 溶接部の裏あて金の役割と必要となる場合について、結論、その理由及び結論を左右する条件を述べなさい。
   conclusion: 裏あて金は溶接部を裏側から補強する補助板で、ルート間隔が6mm以上の場合に必要である。
   reason: 強度補強のため。
   conditions:

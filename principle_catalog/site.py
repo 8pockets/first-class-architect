@@ -53,9 +53,12 @@ def _condition_list(item: Principle) -> str:
 
 
 def _card(item: Principle, progress: PublicProgress) -> str:
+    if item.question is None:
+        raise ValueError(f"published principle has no confirmation question: {item.id}")
     search_text = " ".join(
         [
             item.principle,
+            item.question,
             item.conclusion,
             item.reason,
             *item.conditions,
@@ -77,6 +80,10 @@ def _card(item: Principle, progress: PublicProgress) -> str:
     <p class="card-id">{escape(item.id)}</p>
     <h3>{escape(item.principle)}</h3>
   </header>
+  <div class="practice-question">
+    <p class="practice-question-label">確認問題（自作）</p>
+    <p class="practice-question-text">{escape(item.question)}</p>
+  </div>
   <dl class="three-point">
     <div>
       <dt>結論</dt>
@@ -157,7 +164,7 @@ def _page(base_url: str) -> str:
     script_url = urljoin(base_url, "assets/catalog.js")
     summary = (
         f"PDF P{catalog.manifest.first_page}-P{catalog.manifest.last_page}の鉄骨構造を、"
-        "結論・理由・条件で整理した原理台帳。"
+        "自作問題・結論・理由・条件で整理した原理台帳。"
     )
     stats = json.dumps(
         {
@@ -191,7 +198,7 @@ def _page(base_url: str) -> str:
   <header class="site-header">
     <div class="eyebrow">FIRST-CLASS ARCHITECT / STEEL STRUCTURE</div>
     <h1>鉄骨構造<br><span>原理台帳</span></h1>
-    <p class="lead">知識を答えではなく、<strong>結論・理由・条件</strong>のつながりとして見渡す。</p>
+    <p class="lead">自作問題から考え、<strong>結論・理由・条件</strong>のつながりを見渡す。</p>
     <div class="scope-note">対象：2026 構造・文章問題 / PDF P{catalog.manifest.first_page}-P{catalog.manifest.last_page}</div>
     <div class="hero-stats" aria-label="台帳の進捗">
       <div><strong>{len(published)}</strong><span>出典確認済み</span></div>
@@ -240,7 +247,7 @@ def _page(base_url: str) -> str:
   </main>
 
   <footer class="site-footer">
-    <p>原典の問題文・図版・PDFは掲載していません。内容は対象範囲を自分用に再構成した学習台帳です。</p>
+    <p>確認問題は台帳の内容から作成した自作です。原典の問題文・図版・PDFは掲載していません。</p>
     <p>閲覧専用 / Cookie・外部解析なし</p>
   </footer>
   <script type="application/json" id="catalog-stats">{stats}</script>

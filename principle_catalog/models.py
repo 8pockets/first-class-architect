@@ -27,6 +27,7 @@ class Principle:
     order: int
     type: PrincipleType
     principle: str
+    question: str | None
     conclusion: str
     reason: str
     conditions: tuple[str, ...]

@@ -26,6 +26,7 @@ principles:
   order: 2
   type: principle
   principle: 高力ボルト摩擦接合の滑りと剛性
+  question: 高力ボルト摩擦接合の滑りと剛性の関係について、結論、その理由及び結論を左右する条件を説明しなさい。
   conclusion: 高力ボルト摩擦接合は剛性が高い。
   reason: 鋼材間の滑りが生じないため。
   conditions:
@@ -43,6 +44,7 @@ principles:
   order: 3
   type: principle
   principle: 普通ボルト孔のクリアランスと緩み
+  question: 普通ボルト孔のクリアランスが接合部の緩みに与える影響について、結論、その理由及び結論を左右する条件を説明しなさい。
   conclusion: 普通ボルト接合は、締付け後も外力が繰り返されると緩みやすい。
   reason: ボルト軸まわりにクリアランスがあるため。
   conditions:
@@ -74,6 +76,7 @@ principles:
   order: 5
   type: principle
   principle: 普通ボルト接合のせん断伝達
+  question: せん断力を受ける普通ボルト接合の伝力機構について、結論、その理由及び結論を左右する条件を説明しなさい。
   conclusion: せん断力を受ける普通ボルトは、ボルト軸の側面で力を伝達する。
   reason: ボルト軸と母材孔のかみ合い・支圧によってせん断力を伝えるため。
   conditions:
