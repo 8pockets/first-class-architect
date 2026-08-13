@@ -99,25 +99,33 @@ def _card(item: Principle, progress: PublicProgress) -> str:
     <p class="practice-question-label">確認問題（自作・2択）</p>
     <p class="practice-question-text">{escape(item.question.prompt)}</p>
     <ul class="binary-choices">{_binary_choices(item)}</ul>
-    <p class="answer-key"><span>正解</span><strong>{escape(item.question.correct)}</strong></p>
   </div>
-  <dl class="three-point">
-    <div>
-      <dt>結論</dt>
-      <dd>{escape(item.conclusion)}</dd>
+  <details class="answer-disclosure" name="answer-disclosure" data-disclosure>
+    <summary>
+      <span class="disclosure-label-closed">正解と解説を見る<span class="visually-hidden">：{escape(item.principle)}</span></span>
+      <span class="disclosure-label-open">正解と解説を閉じる<span class="visually-hidden">：{escape(item.principle)}</span></span>
+    </summary>
+    <div class="answer-content">
+      <p class="answer-key"><span>正解</span><strong>{escape(item.question.correct)}</strong></p>
+      <dl class="three-point">
+        <div>
+          <dt>結論</dt>
+          <dd>{escape(item.conclusion)}</dd>
+        </div>
+        <div>
+          <dt>理由</dt>
+          <dd>{escape(item.reason)}</dd>
+        </div>
+        <div>
+          <dt>結論を左右する条件</dt>
+          <dd><ul>{_condition_list(item)}</ul></dd>
+        </div>
+      </dl>
     </div>
-    <div>
-      <dt>理由</dt>
-      <dd>{escape(item.reason)}</dd>
-    </div>
-    <div>
-      <dt>結論を左右する条件</dt>
-      <dd><ul>{_condition_list(item)}</ul></dd>
-    </div>
-  </dl>
+  </details>
   <footer class="card-source">
     <span>{escape(_source_label(item))}</span>
-    <a href="#{escape(item.id)}" aria-label="{escape(item.principle)}への固定リンク">#</a>
+    <a href="#{escape(item.id)}" data-principle-link aria-label="{escape(item.principle)}への固定リンク">#</a>
   </footer>
 </article>""".strip()
 
