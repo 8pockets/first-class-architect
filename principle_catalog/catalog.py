@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import hashlib
+import json
 import re
 import unicodedata
 from pathlib import Path
@@ -13,8 +15,10 @@ from yaml.nodes import MappingNode
 from yaml.resolver import BaseResolver
 
 from principle_catalog.models import (
+    BinaryQuestion,
     Catalog,
     CatalogManifest,
+    ChoiceLabel,
     EditorialStatus,
     Principle,
     PrincipleType,
@@ -43,6 +47,30 @@ _PUBLIC_PROGRESS: set[str] = {
     "retained_14d",
 }
 _GAP = "教材に記載なし"
+_CHOICE_LABELS: set[str] = {"A", "B"}
+_QUESTION_PROMPT_SUFFIX = "正しい結論はどちらか。"
+_QUESTION_FORBIDDEN = {
+    "説明しなさい",
+    "述べなさい",
+    "誤っている",
+    "正しくない",
+}
+_ANSWER_CUE_FORBIDDEN = {
+    "正解",
+    "不正解",
+    "誤答",
+    "答え",
+}
+_ANSWER_SYMBOL_CUES = {"(○)", "(×)", "[○]", "[×]", "【○】", "【×】"}
+_CHOICE_FORBIDDEN = {
+    "必ず",
+    "絶対",
+    "両方",
+    "双方",
+    "いずれも",
+    "どちらも",
+    "どちらでもない",
+}
 _PAGE_KINDS = {
     "chapter_cover",
     "prior_question_table",
@@ -122,6 +150,24 @@ def _int(value: Any, path: Path, label: str) -> int:
     return value
 
 
+def _contains_invisible(value: str) -> bool:
+    return any(unicodedata.category(character) in {"Cc", "Cf"} for character in value)
+
+
+def _normalized_choice(value: str) -> str:
+    normalized = unicodedata.normalize("NFKC", value).casefold().strip()
+    return re.sub(r"\s+", " ", normalized)
+
+
+def _has_repeating_answer_period(answers: tuple[str, ...]) -> bool:
+    for period in range(1, len(answers) // 2 + 1):
+        if len(answers) % period != 0:
+            continue
+        if all(answer == answers[index % period] for index, answer in enumerate(answers)):
+            return True
+    return False
+
+
 def _exact_keys(data: dict[str, Any], expected: set[str], path: Path, label: str) -> None:
     actual = set(data)
     if actual != expected:
@@ -146,7 +192,19 @@ def _load_yaml(path: Path) -> dict[str, Any]:
 
 def _load_manifest(path: Path) -> CatalogManifest:
     data = _load_yaml(path)
-    _exact_keys(data, {"version", "source", "audited_pages", "sections"}, path, "manifest")
+    _exact_keys(
+        data,
+        {
+            "version",
+            "source",
+            "audited_pages",
+            "sections",
+            "inventory",
+            "question_audit",
+        },
+        path,
+        "manifest",
+    )
     if _int(data["version"], path, "version") != 1:
         _fail(path, "version must be 1")
 
@@ -181,6 +239,71 @@ def _load_manifest(path: Path) -> CatalogManifest:
     if len(sections) != len(set(sections)):
         _fail(path, "sections contains duplicate paths")
 
+    inventory = _mapping(data["inventory"], path, "inventory")
+    _exact_keys(inventory, {"total", "editorial_status"}, path, "inventory")
+    expected_total = _int(inventory["total"], path, "inventory.total")
+    if expected_total < 1:
+        _fail(path, "inventory.total must be positive")
+    raw_status_counts = _mapping(
+        inventory["editorial_status"],
+        path,
+        "inventory.editorial_status",
+    )
+    _exact_keys(
+        raw_status_counts,
+        _EDITORIAL_STATUSES,
+        path,
+        "inventory.editorial_status",
+    )
+    expected_status_counts = {
+        cast(EditorialStatus, status): _int(
+            raw_status_counts[status],
+            path,
+            f"inventory.editorial_status.{status}",
+        )
+        for status in sorted(_EDITORIAL_STATUSES)
+    }
+    if any(count < 0 for count in expected_status_counts.values()):
+        _fail(path, "inventory.editorial_status counts must not be negative")
+    if sum(expected_status_counts.values()) != expected_total:
+        _fail(path, "inventory editorial status counts must equal total")
+
+    question_audit = _mapping(data["question_audit"], path, "question_audit")
+    _exact_keys(
+        question_audit,
+        {"answer_positions", "content_sha256"},
+        path,
+        "question_audit",
+    )
+    raw_answer_counts = _mapping(
+        question_audit["answer_positions"],
+        path,
+        "question_audit.answer_positions",
+    )
+    _exact_keys(
+        raw_answer_counts,
+        _CHOICE_LABELS,
+        path,
+        "question_audit.answer_positions",
+    )
+    expected_answer_counts = {
+        cast(ChoiceLabel, label): _int(
+            raw_answer_counts[label],
+            path,
+            f"question_audit.answer_positions.{label}",
+        )
+        for label in sorted(_CHOICE_LABELS)
+    }
+    if any(count < 0 for count in expected_answer_counts.values()):
+        _fail(path, "question_audit answer counts must not be negative")
+    question_audit_sha256 = _str(
+        question_audit["content_sha256"],
+        path,
+        "question_audit.content_sha256",
+    )
+    if not _SHA256.fullmatch(question_audit_sha256):
+        _fail(path, "question_audit.content_sha256 must be a lowercase SHA-256 digest")
+
     return CatalogManifest(
         source_title=_str(source["title"], path, "source.title"),
         source_sha256=sha256,
@@ -188,6 +311,10 @@ def _load_manifest(path: Path) -> CatalogManifest:
         last_page=last,
         audited_pages=audited,
         section_files=tuple(sections),
+        expected_total=expected_total,
+        expected_status_counts=expected_status_counts,
+        expected_answer_counts=expected_answer_counts,
+        question_audit_sha256=question_audit_sha256,
     )
 
 
@@ -304,22 +431,71 @@ def _load_section(path: Path, manifest: CatalogManifest) -> tuple[Principle, ...
         if status not in _EDITORIAL_STATUSES:
             _fail(path, f"{item_id}.editorial_status must be one of {sorted(_EDITORIAL_STATUSES)}")
 
-        question = (
-            _str(item["question"], path, f"{item_id}.question")
-            if "question" in item
-            else None
-        )
+        question: BinaryQuestion | None = None
+        if "question" in item:
+            question_data = _mapping(item["question"], path, f"{item_id}.question")
+            _exact_keys(
+                question_data,
+                {"prompt", "choices", "correct"},
+                path,
+                f"{item_id}.question",
+            )
+            prompt = _str(question_data["prompt"], path, f"{item_id}.question.prompt")
+            choices = _mapping(
+                question_data["choices"], path, f"{item_id}.question.choices"
+            )
+            _exact_keys(choices, _CHOICE_LABELS, path, f"{item_id}.question.choices")
+            choice_a = _str(choices["A"], path, f"{item_id}.question.choices.A")
+            choice_b = _str(choices["B"], path, f"{item_id}.question.choices.B")
+            correct = _str(
+                question_data["correct"], path, f"{item_id}.question.correct"
+            )
+            if correct not in _CHOICE_LABELS:
+                _fail(path, f"{item_id}.question.correct must be A or B")
+            if not prompt.endswith(_QUESTION_PROMPT_SUFFIX):
+                _fail(path, f"{item_id}.question.prompt must ask which conclusion is correct")
+            if any(phrase in prompt for phrase in _QUESTION_FORBIDDEN):
+                _fail(path, f"{item_id}.question.prompt uses a forbidden question form")
+            normalized_prompt = unicodedata.normalize("NFKC", prompt)
+            if any(cue in normalized_prompt for cue in _ANSWER_CUE_FORBIDDEN) or any(
+                cue in normalized_prompt for cue in _ANSWER_SYMBOL_CUES
+            ):
+                _fail(path, f"{item_id}.question.prompt reveals the answer")
+            if _contains_invisible(prompt):
+                _fail(path, f"{item_id}.question.prompt contains invisible characters")
+            normalized_choices = {
+                _normalized_choice(choice)
+                for choice in (choice_a, choice_b)
+            }
+            if len(normalized_choices) != 2:
+                _fail(path, f"{item_id}.question choices must be distinct")
+            if max(len(choice_a), len(choice_b)) > 40:
+                _fail(path, f"{item_id}.question choices must be 40 characters or fewer")
+            if abs(len(choice_a) - len(choice_b)) > 10:
+                _fail(path, f"{item_id}.question choices must be similar in length")
+            choice_text = f"{choice_a} {choice_b}"
+            if any(clue in choice_text for clue in _CHOICE_FORBIDDEN):
+                _fail(path, f"{item_id}.question choices contain a forbidden clue")
+            normalized_choice_text = unicodedata.normalize("NFKC", choice_text)
+            if (
+                any(cue in normalized_choice_text for cue in _ANSWER_CUE_FORBIDDEN)
+                or any(cue in normalized_choice_text for cue in _ANSWER_SYMBOL_CUES)
+                or choice_a.strip() in {"○", "×"}
+                or choice_b.strip() in {"○", "×"}
+            ):
+                _fail(path, f"{item_id}.question choices reveal the answer")
+            if _contains_invisible(choice_text):
+                _fail(path, f"{item_id}.question choices contain invisible characters")
+            question = BinaryQuestion(
+                prompt=prompt,
+                choice_a=choice_a,
+                choice_b=choice_b,
+                correct=cast(ChoiceLabel, correct),
+            )
         if status == "source_checked" and question is None:
             _fail(path, f"{item_id}.question is required for source_checked entries")
         if status != "source_checked" and question is not None:
             _fail(path, f"{item_id}.question is only allowed for source_checked entries")
-        if question is not None:
-            missing_prompts = [word for word in ("結論", "理由", "条件") if word not in question]
-            if missing_prompts:
-                _fail(
-                    path,
-                    f"{item_id}.question must explicitly ask for a conclusion, reason, and conditions",
-                )
 
         reason = _str(item["reason"], path, f"{item_id}.reason")
         conditions = _string_list(item["conditions"], path, f"{item_id}.conditions")
@@ -372,6 +548,34 @@ def _load_section(path: Path, manifest: CatalogManifest) -> tuple[Principle, ...
     return tuple(principles)
 
 
+def _question_audit_sha256(principles: tuple[Principle, ...]) -> str:
+    audited = [
+        {
+            "id": item.id,
+            "section_order": item.section_order,
+            "order": item.order,
+            "prompt": item.question.prompt,
+            "choices": {
+                "A": item.question.choice_a,
+                "B": item.question.choice_b,
+            },
+            "correct": item.question.correct,
+            "conclusion": item.conclusion,
+            "reason": item.reason,
+            "conditions": item.conditions,
+        }
+        for item in principles
+        if item.editorial_status == "source_checked" and item.question is not None
+    ]
+    canonical = json.dumps(
+        audited,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    return hashlib.sha256(canonical).hexdigest()
+
+
 def load_catalog(manifest_path: Path = MANIFEST_PATH) -> Catalog:
     manifest = _load_manifest(manifest_path)
     audit = _load_source_audit(manifest_path.parent / SOURCE_AUDIT_FILENAME, manifest)
@@ -382,6 +586,23 @@ def load_catalog(manifest_path: Path = MANIFEST_PATH) -> Catalog:
     )
     if not principles:
         _fail(manifest_path, "catalog must contain at least one principle")
+
+    actual_status_counts = {
+        cast(EditorialStatus, status): sum(
+            item.editorial_status == status for item in principles
+        )
+        for status in sorted(_EDITORIAL_STATUSES)
+    }
+    if len(principles) != manifest.expected_total:
+        _fail(
+            manifest_path,
+            f"inventory total mismatch: expected {manifest.expected_total}, got {len(principles)}",
+        )
+    if actual_status_counts != manifest.expected_status_counts:
+        _fail(
+            manifest_path,
+            "inventory editorial status counts do not match the catalog",
+        )
 
     ids = [item.id for item in principles]
     if len(ids) != len(set(ids)):
@@ -471,6 +692,42 @@ def load_catalog(manifest_path: Path = MANIFEST_PATH) -> Catalog:
     sorted_principles = tuple(
         sorted(principles, key=lambda item: (item.section_order, item.order, item.id))
     )
+    checked_questions = [
+        item.question
+        for item in sorted_principles
+        if item.editorial_status == "source_checked" and item.question is not None
+    ]
+    normalized_prompts = [
+        unicodedata.normalize("NFKC", question.prompt).casefold().strip()
+        for question in checked_questions
+    ]
+    if len(normalized_prompts) != len(set(normalized_prompts)):
+        _fail(manifest_path, "source-checked question prompts must be unique")
+    answer_counts = {
+        label: sum(question.correct == label for question in checked_questions)
+        for label in _CHOICE_LABELS
+    }
+    if answer_counts != manifest.expected_answer_counts:
+        _fail(manifest_path, "question audit answer positions do not match the catalog")
+    answer_runs: list[list[ChoiceLabel]] = []
+    for question in checked_questions:
+        if not answer_runs or answer_runs[-1][-1] != question.correct:
+            answer_runs.append([question.correct])
+        else:
+            answer_runs[-1].append(question.correct)
+    if answer_runs and max(map(len, answer_runs)) > 3:
+        _fail(manifest_path, "source-checked answer positions must not repeat over 3 times")
+    if len(checked_questions) >= 8 and len(answer_runs) < len(checked_questions) // 2:
+        _fail(manifest_path, "source-checked answer positions must not form a predictable pattern")
+    answer_sequence = tuple(question.correct for question in checked_questions)
+    if _has_repeating_answer_period(answer_sequence):
+        _fail(manifest_path, "source-checked answer positions must not repeat a fixed period")
+    actual_question_audit_sha256 = _question_audit_sha256(sorted_principles)
+    if actual_question_audit_sha256 != manifest.question_audit_sha256:
+        _fail(
+            manifest_path,
+            "question content differs from the independently audited snapshot",
+        )
     return Catalog(manifest=manifest, audit=audit, principles=sorted_principles)
 
 

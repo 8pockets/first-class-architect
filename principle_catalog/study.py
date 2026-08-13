@@ -139,7 +139,10 @@ def study_brief(item_id: str) -> str:
     return (
         f"# {item.principle}\n\n"
         f"項目ID: `{item.id}`\n\n"
-        f"## 確認問題（自作）\n\n{item.question}\n\n"
+        f"## 確認問題（自作・2択）\n\n{item.question.prompt}\n\n"
+        f"A. {item.question.choice_a}\n\n"
+        f"B. {item.question.choice_b}\n\n"
+        f"正解: **{item.question.correct}**\n\n"
         f"## 結論\n\n{item.conclusion}\n\n"
         f"## 理由\n\n{item.reason}\n\n"
         f"## 結論を左右する条件\n\n{conditions}\n"

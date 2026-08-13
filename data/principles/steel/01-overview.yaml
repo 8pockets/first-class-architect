@@ -82,7 +82,12 @@ principles:
   order: 5
   type: identification
   principle: 鋼材の接合方法
-  question: 鉄骨部材同士をつなぐ接合方法について、識別の結論、その理由及び結論を左右する条件を述べなさい。
+  question:
+    prompt: 鉄骨部材同士をつなぐ接合方法の種類について、正しい結論はどちらか。
+    choices:
+      A: リベット・ボルト・高力ボルトだけで、溶接は含まれない
+      B: リベット・ボルト・高力ボルト・溶接などがある
+    correct: B
   conclusion: 鋼材同士をつなぐ接合には、リベット接合・ボルト接合・高力ボルト接合・溶接接合などがある。
   reason: 鉄骨構造は部材を組み立てる構造で、部材同士を接合する必要があるため。
   conditions:
@@ -99,7 +104,12 @@ principles:
   order: 6
   type: principle
   principle: 鋼材の靭性と破断
-  question: 一般的な鋼材の靭性と破断の性質について、結論、その理由及び結論を左右する条件を説明しなさい。
+  question:
+    prompt: 教材が説明する一般的な鋼材の靭性と破断について、正しい結論はどちらか。
+    choices:
+      A: 急激に破断しやすく、脆性破壊しやすい
+      B: 急激に破断しにくく、脆性破壊しにくい
+    correct: B
   conclusion: 鋼材は急激に破断しにくく、脆性破壊しにくい。
   reason: 鋼材は伸びる材料で、靭性に富むため。
   conditions:

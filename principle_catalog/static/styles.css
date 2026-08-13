@@ -503,6 +503,66 @@ a:focus-visible {
   line-height: 1.75;
 }
 
+.binary-choices {
+  display: grid;
+  gap: 9px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.binary-choices li {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  padding: 10px 12px;
+  color: var(--ink);
+  background: #fffdf8;
+  border: 1px solid rgb(255 255 255 / 34%);
+  border-radius: 8px;
+}
+
+.choice-label {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  color: white;
+  background: var(--blue);
+  border-radius: 50%;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.choice-text {
+  min-width: 0;
+  padding-top: 2px;
+  overflow-wrap: anywhere;
+  line-height: 1.65;
+}
+
+.answer-key {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  margin: 13px 0 0;
+  padding: 5px 9px;
+  color: #f8f5ed;
+  background: rgb(255 255 255 / 10%);
+  border: 1px solid rgb(255 255 255 / 24%);
+  border-radius: 6px;
+  font-size: 0.73rem;
+}
+
+.answer-key strong {
+  color: #f6b58f;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.94rem;
+}
+
 .three-point {
   display: flex;
   flex: 1;

@@ -8,7 +8,12 @@ principles:
   order: 1
   type: identification
   principle: 熱影響部の位置と性質
-  question: 溶接部断面の熱影響部について、位置と性質を識別して結論を述べ、その理由と、この識別を用いる条件を説明しなさい。
+  question:
+    prompt: 母材と溶接金属の中間にあり、溶接熱で性質が変化した母材部分の名称として正しい結論はどちらか。
+    choices:
+      A: 熱影響部
+      B: 溶接金属
+    correct: A
   conclusion: 熱影響部は母材と溶接金属の中間にあり、溶接熱で組織・冶金的性質・機械的性質が変化した母材部分である。
   reason: 溶融には至らない周辺母材も溶接熱の影響を受けるため。
   conditions:
@@ -41,7 +46,12 @@ principles:
   order: 3
   type: identification
   principle: 溶着金属と溶接金属の構成
-  question: 溶融溶接部の断面で、溶着金属と溶接金属をそれぞれ識別して結論を述べ、両者が構成される理由と、識別条件を説明しなさい。
+  question:
+    prompt: 溶融した母材と溶接材料から移行した金属が融合・凝固した部分の名称として、正しい結論はどちらか。
+    choices:
+      A: 溶着金属
+      B: 溶接金属
+    correct: B
   conclusion: 溶着金属は溶接材料から溶接部へ移行した金属で、溶接金属は溶融した母材と溶着金属が融合・凝固した部分である。
   reason: 溶接では母材の一部と溶接棒などが熱で溶融し、融合後に凝固して接合されるため。
   conditions:

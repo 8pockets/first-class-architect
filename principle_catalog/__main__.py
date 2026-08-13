@@ -31,7 +31,7 @@ def _parser() -> argparse.ArgumentParser:
 
     brief = subcommands.add_parser(
         "study-brief",
-        help="show a source-checked question and its always-visible three-point answer",
+        help="show a source-checked binary question, answer, and three learning points",
     )
     brief.add_argument("item_id")
 
