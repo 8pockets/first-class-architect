@@ -31,6 +31,7 @@ class FakeElement extends EventTarget {
 
 const bootCatalog = () => {
   const disclosures = [new FakeElement(), new FakeElement(), new FakeElement()];
+  const principleLinks = [new FakeElement()];
   disclosures.forEach((disclosure) => {
     disclosure.open = true;
   });
@@ -50,6 +51,7 @@ const bootCatalog = () => {
       if (selector === ".principle-card") return cards;
       if (selector === "[data-catalog-section]") return sections;
       if (selector === "[data-disclosure]") return disclosures;
+      if (selector === "[data-principle-link]") return principleLinks;
       return [];
     },
   };
@@ -79,7 +81,16 @@ const bootCatalog = () => {
 
   vm.runInNewContext(script, { document, Event, window });
 
-  return { cards, disclosures, progress, reset, search, typeButtons, window };
+  return {
+    cards,
+    disclosures,
+    principleLinks,
+    progress,
+    reset,
+    search,
+    typeButtons,
+    window,
+  };
 };
 
 const open = (disclosure) => {
@@ -129,6 +140,15 @@ test("restoring the page from browser history closes every answer", () => {
   open(disclosures[2]);
 
   window.dispatchEvent(new Event("pageshow"));
+
+  assert.deepEqual(disclosures.map(({ open }) => open), [false, false, false]);
+});
+
+test("following a principle link closes the open answer", () => {
+  const { disclosures, principleLinks } = bootCatalog();
+  open(disclosures[1]);
+
+  principleLinks[0].dispatchEvent(new Event("click"));
 
   assert.deepEqual(disclosures.map(({ open }) => open), [false, false, false]);
 });

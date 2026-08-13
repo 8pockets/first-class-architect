@@ -16,6 +16,7 @@
   const cards = [...root.querySelectorAll(".principle-card")];
   const sections = [...root.querySelectorAll("[data-catalog-section]")];
   const disclosures = [...root.querySelectorAll("[data-disclosure]")];
+  const principleLinks = [...root.querySelectorAll("[data-principle-link]")];
   let activeType = "all";
 
   const normalize = (value) =>
@@ -65,6 +66,10 @@
         }
       }
     });
+  }
+
+  for (const link of principleLinks) {
+    link.addEventListener("click", closeDisclosures);
   }
 
   search.addEventListener("input", applyFilters);

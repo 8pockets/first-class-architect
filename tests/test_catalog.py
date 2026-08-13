@@ -300,6 +300,9 @@ def test_build_places_each_question_before_its_three_point_answer_and_searches_i
         assert disclosure.index("正解と解説を閉じる") < disclosure.index(
             '<p class="answer-key">'
         )
+        assert disclosure.count(
+            f'<span class="visually-hidden">：{escape(item.principle)}</span>'
+        ) == 2
         assert disclosure.index('<p class="answer-key">') < disclosure.index(
             "<dt>結論</dt>"
         )
@@ -311,6 +314,7 @@ def test_build_places_each_question_before_its_three_point_answer_and_searches_i
         assert " open" not in disclosure_opening
         assert 'name="answer-disclosure"' in disclosure_opening
         assert "data-disclosure" in disclosure_opening
+        assert "data-principle-link" in card
         assert f'<strong>{item.question.correct}</strong>' in card
         assert prompt in card
         assert choice_a in card
@@ -361,6 +365,7 @@ def test_answer_disclosure_has_visible_focus_state_and_prints_only_when_open(
     assert ".answer-disclosure > summary:focus-visible" in css
     assert ".answer-disclosure[open] .disclosure-label-closed" in css
     assert ".answer-disclosure:not([open]) .disclosure-label-open" in css
+    assert ".visually-hidden" in css
     print_rules = css.split("@media print", maxsplit=1)[1]
     assert ".answer-disclosure > summary" in print_rules
     assert ".answer-disclosure:not([open]) > .answer-content" in print_rules

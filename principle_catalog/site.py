@@ -102,8 +102,8 @@ def _card(item: Principle, progress: PublicProgress) -> str:
   </div>
   <details class="answer-disclosure" name="answer-disclosure" data-disclosure>
     <summary>
-      <span class="disclosure-label-closed">正解と解説を見る</span>
-      <span class="disclosure-label-open">正解と解説を閉じる</span>
+      <span class="disclosure-label-closed">正解と解説を見る<span class="visually-hidden">：{escape(item.principle)}</span></span>
+      <span class="disclosure-label-open">正解と解説を閉じる<span class="visually-hidden">：{escape(item.principle)}</span></span>
     </summary>
     <div class="answer-content">
       <p class="answer-key"><span>正解</span><strong>{escape(item.question.correct)}</strong></p>
@@ -125,7 +125,7 @@ def _card(item: Principle, progress: PublicProgress) -> str:
   </details>
   <footer class="card-source">
     <span>{escape(_source_label(item))}</span>
-    <a href="#{escape(item.id)}" aria-label="{escape(item.principle)}への固定リンク">#</a>
+    <a href="#{escape(item.id)}" data-principle-link aria-label="{escape(item.principle)}への固定リンク">#</a>
   </footer>
 </article>""".strip()
 
