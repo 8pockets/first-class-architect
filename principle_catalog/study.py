@@ -126,8 +126,8 @@ def sync_study_items(path: Path = LOCAL_STUDY_STATE) -> tuple[str, ...]:
     return tuple(added)
 
 
-def study_brief(item_id: str) -> str:
-    """Render the always-visible question and learning fields for one catalog item."""
+def study_brief(item_id: str, *, reveal: bool = False) -> str:
+    """Render one catalog question, optionally followed by its answer and explanation."""
 
     catalog = load_catalog()
     item = next((candidate for candidate in catalog.principles if candidate.id == item_id), None)
@@ -135,13 +135,18 @@ def study_brief(item_id: str) -> str:
         raise CatalogError(f"unknown catalog item: {item_id}")
     if item.editorial_status != "source_checked" or item.question is None:
         raise CatalogError(f"catalog item is not source-checked: {item_id}")
-    conditions = "\n".join(f"- {condition}" for condition in item.conditions)
-    return (
+    question = (
         f"# {item.principle}\n\n"
         f"項目ID: `{item.id}`\n\n"
         f"## 確認問題（自作・2択）\n\n{item.question.prompt}\n\n"
         f"A. {item.question.choice_a}\n\n"
-        f"B. {item.question.choice_b}\n\n"
+        f"B. {item.question.choice_b}\n"
+    )
+    if not reveal:
+        return question
+    conditions = "\n".join(f"- {condition}" for condition in item.conditions)
+    return (
+        f"{question}\n"
         f"正解: **{item.question.correct}**\n\n"
         f"## 結論\n\n{item.conclusion}\n\n"
         f"## 理由\n\n{item.reason}\n\n"

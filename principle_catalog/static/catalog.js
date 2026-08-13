@@ -15,12 +15,20 @@
 
   const cards = [...root.querySelectorAll(".principle-card")];
   const sections = [...root.querySelectorAll("[data-catalog-section]")];
+  const disclosures = [...root.querySelectorAll("[data-disclosure]")];
   let activeType = "all";
 
   const normalize = (value) =>
     value.normalize("NFKC").toLocaleLowerCase("ja-JP").trim();
 
+  const closeDisclosures = () => {
+    for (const disclosure of disclosures) {
+      disclosure.open = false;
+    }
+  };
+
   const applyFilters = () => {
+    closeDisclosures();
     const query = normalize(search.value);
     const activeProgress = progress.value;
     let count = 0;
@@ -42,6 +50,22 @@
     visibleCount.textContent = String(count);
     empty.hidden = count !== 0;
   };
+
+  closeDisclosures();
+  window.addEventListener("pageshow", closeDisclosures);
+
+  for (const disclosure of disclosures) {
+    disclosure.addEventListener("toggle", () => {
+      if (!disclosure.open) {
+        return;
+      }
+      for (const candidate of disclosures) {
+        if (candidate !== disclosure) {
+          candidate.open = false;
+        }
+      }
+    });
+  }
 
   search.addEventListener("input", applyFilters);
   progress.addEventListener("change", applyFilters);

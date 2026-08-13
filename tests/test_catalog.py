@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import json
 import shutil
+import subprocess
+import sys
 import unicodedata
 from html import escape
 from pathlib import Path
@@ -233,6 +235,9 @@ def test_build_publishes_only_source_checked_entries(tmp_path: Path) -> None:
     assert html.count('class="principle-card"') == published
     assert html.count("確認問題（自作・2択）") == published
     assert html.count('class="binary-choices"') == published
+    assert html.count('class="answer-disclosure"') == published
+    assert html.count("正解と解説を見る") == published
+    assert html.count("正解と解説を閉じる") == published
     assert html.count('class="answer-key"') == published
     assert all(item.principle in html for item in expected_published)
     assert all(
@@ -279,18 +284,33 @@ def test_build_places_each_question_before_its_three_point_answer_and_searches_i
             prompt
         )
         assert card_body.index(prompt) < card_body.index('<ul class="binary-choices">')
+        disclosure = card_body.split(
+            '<details class="answer-disclosure"', maxsplit=1
+        )[1].split("</details>", maxsplit=1)[0]
+        disclosure_opening = disclosure.split(">", maxsplit=1)[0]
         assert card_body.index('<ul class="binary-choices">') < card_body.index(
+            '<details class="answer-disclosure"'
+        )
+        assert card_body.index('<details class="answer-disclosure"') < card_body.index(
             '<p class="answer-key">'
         )
-        assert card_body.index('<p class="answer-key">') < card_body.index(
+        assert disclosure.index("正解と解説を見る") < disclosure.index(
+            '<p class="answer-key">'
+        )
+        assert disclosure.index("正解と解説を閉じる") < disclosure.index(
+            '<p class="answer-key">'
+        )
+        assert disclosure.index('<p class="answer-key">') < disclosure.index(
             "<dt>結論</dt>"
         )
-        assert card_body.index("<dt>結論</dt>") < card_body.index("<dt>理由</dt>")
-        assert card_body.index("<dt>理由</dt>") < card_body.index(
+        assert disclosure.index("<dt>結論</dt>") < disclosure.index("<dt>理由</dt>")
+        assert disclosure.index("<dt>理由</dt>") < disclosure.index(
             "<dt>結論を左右する条件</dt>"
         )
         assert "hidden" not in question_opening
-        assert "<details" not in card
+        assert " open" not in disclosure_opening
+        assert 'name="answer-disclosure"' in disclosure_opening
+        assert "data-disclosure" in disclosure_opening
         assert f'<strong>{item.question.correct}</strong>' in card
         assert prompt in card
         assert choice_a in card
@@ -298,6 +318,9 @@ def test_build_places_each_question_before_its_three_point_answer_and_searches_i
         assert escape(item.question.prompt.lower()) in search_text
         assert escape(item.question.choice_a.lower()) in search_text
         assert escape(item.question.choice_b.lower()) in search_text
+        assert escape(item.conclusion.lower()) in search_text
+        assert escape(item.reason.lower()) in search_text
+        assert all(escape(condition.lower()) in search_text for condition in item.conditions)
 
 
 def test_build_is_public_read_only_and_privacy_bounded(tmp_path: Path) -> None:
@@ -321,8 +344,26 @@ def test_build_is_public_read_only_and_privacy_bounded(tmp_path: Path) -> None:
     assert "data-answer" not in html
     assert "fetch(" not in script
     assert "localStorage" not in script
+    assert "sessionStorage" not in script
+    assert "document.cookie" not in script
     assert "http://" not in html + script + css
     assert "https://" not in script + css
+
+
+def test_answer_disclosure_has_visible_focus_state_and_prints_only_when_open(
+    tmp_path: Path,
+) -> None:
+    output = tmp_path / "site"
+    build_site(output, "https://8pockets.github.io/first-class-architect/")
+    css = (output / "assets/styles.css").read_text(encoding="utf-8")
+
+    assert ".answer-disclosure > summary" in css
+    assert ".answer-disclosure > summary:focus-visible" in css
+    assert ".answer-disclosure[open] .disclosure-label-closed" in css
+    assert ".answer-disclosure:not([open]) .disclosure-label-open" in css
+    print_rules = css.split("@media print", maxsplit=1)[1]
+    assert ".answer-disclosure > summary" in print_rules
+    assert ".answer-disclosure:not([open]) > .answer-content" in print_rules
 
 
 def test_nested_404_uses_repository_absolute_asset_urls(tmp_path: Path) -> None:
@@ -712,13 +753,29 @@ def test_public_progress_rejects_duplicate_local_ids(tmp_path: Path) -> None:
         public_progress_from_local(path)
 
 
-def test_study_brief_shows_binary_choices_and_answer_before_the_three_points() -> None:
+def test_study_brief_hides_answer_and_three_points_by_default() -> None:
     item = next(
         item for item in load_catalog().principles if item.editorial_status == "source_checked"
     )
     brief = study_brief(item.id)
 
     assert "## 確認問題（自作・2択）" in brief
+    assert item.question is not None
+    assert item.question.prompt in brief
+    assert f"A. {item.question.choice_a}" in brief
+    assert f"B. {item.question.choice_b}" in brief
+    assert "正解:" not in brief
+    assert "## 結論" not in brief
+    assert "## 理由" not in brief
+    assert "## 結論を左右する条件" not in brief
+
+
+def test_study_brief_reveal_shows_answer_before_the_three_points() -> None:
+    item = next(
+        item for item in load_catalog().principles if item.editorial_status == "source_checked"
+    )
+    brief = study_brief(item.id, reveal=True)
+
     assert "## 結論" in brief
     assert "## 理由" in brief
     assert "## 結論を左右する条件" in brief
@@ -731,6 +788,36 @@ def test_study_brief_shows_binary_choices_and_answer_before_the_three_points() -
     assert f"正解: **{item.question.correct}**" in brief
     assert item.conclusion in brief
     assert item.reason in brief
+
+
+def test_study_brief_cli_reveals_only_when_requested() -> None:
+    item = next(
+        item for item in load_catalog().principles if item.editorial_status == "source_checked"
+    )
+    hidden = subprocess.run(
+        [sys.executable, "-m", "principle_catalog", "study-brief", item.id],
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout
+    revealed = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "principle_catalog",
+            "study-brief",
+            item.id,
+            "--reveal",
+        ],
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout
+
+    assert "正解:" not in hidden
+    assert "## 結論" not in hidden
+    assert f"正解: **{item.question.correct}**" in revealed
+    assert "## 結論" in revealed
 
 
 def test_study_brief_rejects_items_without_a_source_checked_question() -> None:

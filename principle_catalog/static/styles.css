@@ -381,6 +381,7 @@ a:focus-visible {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 18px;
+  align-items: start;
 }
 
 .principle-card {
@@ -543,22 +544,69 @@ a:focus-visible {
   line-height: 1.65;
 }
 
+.answer-disclosure {
+  color: var(--ink);
+  background: var(--card);
+  border-bottom: 1px solid var(--line);
+}
+
+.answer-disclosure > summary {
+  box-sizing: border-box;
+  min-height: 52px;
+  padding: 15px 24px 15px 28px;
+  color: var(--blue);
+  background: #edf2f4;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 800;
+  list-style-position: inside;
+}
+
+.answer-disclosure > summary::marker {
+  color: var(--orange);
+}
+
+.answer-disclosure > summary:hover {
+  color: var(--blue-dark);
+  background: #e2ebef;
+}
+
+.answer-disclosure > summary:focus-visible {
+  position: relative;
+  z-index: 1;
+  outline: 3px solid var(--orange);
+  outline-offset: -3px;
+}
+
+.answer-disclosure[open] > summary {
+  border-bottom: 1px solid var(--line);
+}
+
+.answer-disclosure[open] .disclosure-label-closed,
+.answer-disclosure:not([open]) .disclosure-label-open {
+  display: none;
+}
+
+.answer-content {
+  padding-top: 1px;
+}
+
 .answer-key {
   display: flex;
   align-items: center;
   gap: 8px;
   width: fit-content;
-  margin: 13px 0 0;
+  margin: 17px 24px 0 28px;
   padding: 5px 9px;
-  color: #f8f5ed;
-  background: rgb(255 255 255 / 10%);
-  border: 1px solid rgb(255 255 255 / 24%);
+  color: var(--blue-dark);
+  background: #e3edf1;
+  border: 1px solid #c7d8df;
   border-radius: 6px;
   font-size: 0.73rem;
 }
 
 .answer-key strong {
-  color: #f6b58f;
+  color: #a9471d;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 0.94rem;
 }
@@ -611,6 +659,7 @@ a:focus-visible {
   justify-content: space-between;
   gap: 12px;
   min-height: 45px;
+  margin-top: auto;
   padding: 8px 18px 8px 28px;
   color: var(--ink-soft);
   background: #eee8dc;
@@ -754,6 +803,16 @@ a:focus-visible {
     padding: 16px 18px 16px 23px;
   }
 
+  .answer-disclosure > summary {
+    padding-right: 18px;
+    padding-left: 23px;
+  }
+
+  .answer-key {
+    margin-right: 18px;
+    margin-left: 23px;
+  }
+
   .three-point {
     padding: 2px 18px 8px 23px;
   }
@@ -809,5 +868,13 @@ a:focus-visible {
   .principle-card {
     break-inside: avoid;
     box-shadow: none;
+  }
+
+  .answer-disclosure > summary {
+    display: none;
+  }
+
+  .answer-disclosure:not([open]) > .answer-content {
+    display: none !important;
   }
 }

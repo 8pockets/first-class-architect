@@ -31,9 +31,14 @@ def _parser() -> argparse.ArgumentParser:
 
     brief = subcommands.add_parser(
         "study-brief",
-        help="show a source-checked binary question, answer, and three learning points",
+        help="show a source-checked binary question without revealing its answer",
     )
     brief.add_argument("item_id")
+    brief.add_argument(
+        "--reveal",
+        action="store_true",
+        help="include the answer, conclusion, reason, and conditions",
+    )
 
     build = subcommands.add_parser("build", help="build the static GitHub Pages site")
     build.add_argument("--output", type=Path, default=Path("_site"))
@@ -65,7 +70,7 @@ def main() -> int:
         print(f"updated {args.state} added={len(added)}")
         return 0
     if args.command == "study-brief":
-        print(study_brief(args.item_id), end="")
+        print(study_brief(args.item_id, reveal=args.reveal), end="")
         return 0
     published, planned = build_site(args.output, args.base_url)
     print(f"built {args.output} published={published} planned={planned}")
