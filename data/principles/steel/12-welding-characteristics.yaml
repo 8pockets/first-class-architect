@@ -8,7 +8,12 @@ principles:
   order: 1
   type: rule
   principle: 組立溶接のショートビード防止
-  question: 組立溶接の脚長及び最小ビード長について、結論、その理由及び結論を左右する条件を述べなさい。
+  question:
+    prompt: 板厚が6mmを超える組立溶接について、最小ビード長として正しい結論はどちらか。
+    choices:
+      A: 40mm以上とする
+      B: 30mm以上とする
+    correct: A
   conclusion: 組立溶接は脚長4mm以上とし、最小ビード長を板厚6mm以下では30mm、6mm超では40mmとする。
   reason: 極端に短いビードは周囲の冷たい鋼材で急冷・硬化し、靭性が低下して応力や低温で割れやすくなるため。
   conditions:
@@ -33,7 +38,12 @@ principles:
   order: 2
   type: principle
   principle: 梁継手のフランジ・ウェブ応力分担と溶接形式
-  question: H形鋼梁の継手・柱梁仕口におけるフランジとウェブの応力分担及び溶接形式について、結論、その理由及び結論を左右する条件を説明しなさい。
+  question:
+    prompt: H形鋼梁の継手・柱梁仕口でフランジが主に負担すると仮定する応力として、正しい結論はどちらか。
+    choices:
+      A: せん断力を主に負担する
+      B: 曲げモーメントを主に負担する
+    correct: B
   conclusion: 梁継手は曲げモーメントとせん断力に対して設計し、一般に曲げモーメントをフランジ、せん断力をウェブが負担すると仮定する。溶接仕口ではフランジを完全溶込み溶接、ウェブを両面すみ肉溶接とする。
   reason: 曲げモーメントは主に梁フランジから柱へ、せん断力は梁ウェブから柱へ伝達されるため。
   conditions:
@@ -105,7 +115,12 @@ principles:
   order: 6
   type: principle
   principle: 溶接接合の連続性と応力集中
-  question: 溶接接合の連続性が力の流れと応力集中に与える影響について、結論、その理由及び結論を左右する条件を説明しなさい。
+  question:
+    prompt: 教材が説明する一般的な溶接接合について、接合部の連続性が力の流れに与える影響として正しい結論はどちらか。
+    choices:
+      A: 力の流れが集中しにくい
+      B: 力の流れが集中しやすい
+    correct: A
   conclusion: 溶接接合は力の流れが集中しにくい。
   reason: 接合部が連続性に富むため。
   conditions:
@@ -134,7 +149,12 @@ principles:
   order: 8
   type: principle
   principle: 溶接熱とひずみ
-  question: 溶接施工時の熱が接合部のひずみに与える影響について、結論、その理由及び結論を左右する条件を説明しなさい。
+  question:
+    prompt: 溶接施工時の熱が接合部の変形に与える影響として、正しい結論はどちらか。
+    choices:
+      A: ひずみが生じにくい
+      B: ひずみが生じやすい
+    correct: B
   conclusion: 溶接接合はひずみが生じやすい。
   reason: 溶接時の熱によるため。
   conditions:

@@ -22,7 +22,12 @@ principles:
   order: 2
   type: principle
   principle: 鋼材の発錆と防錆処理
-  question: 一般的な鋼材に必要な防錆処理について、結論、その理由及び結論を左右する条件を説明しなさい。
+  question:
+    prompt: 教材が説明する一般的な鋼材の発錆への対応について、正しい結論はどちらか。
+    choices:
+      A: 防錆塗料やめっきによる処理は不要である
+      B: 防錆塗料やめっきによる処理が必要である
+    correct: B
   conclusion: 鋼材には防錆塗料やめっきなどの防錆処理が必要である。
   reason: 鋼材は錆びやすいため。
   conditions:
@@ -51,7 +56,12 @@ principles:
   order: 4
   type: principle
   principle: 鋼材強度と部材断面
-  question: 鋼材の材料強度が部材断面積に与える影響について、結論、その理由及び結論を左右する条件を説明しなさい。
+  question:
+    prompt: 教材が説明する鋼材の材料強度と部材断面積の関係について、正しい結論はどちらか。
+    choices:
+      A: 部材断面積を小さくできる
+      B: 部材断面積を大きくする必要がある
+    correct: A
   conclusion: 鋼材は部材断面積を小さくできる。
   reason: 材料強度が高いため。
   conditions:
@@ -66,7 +76,12 @@ principles:
   order: 5
   type: principle
   principle: 小さい鋼材断面とたわみ
-  question: 鋼部材の断面積が小さい場合のたわみについて、結論、その理由及び結論を左右する条件を説明しなさい。
+  question:
+    prompt: 断面積が小さい鋼部材のたわみやすさについて、正しい結論はどちらか。
+    choices:
+      A: たわみやすい
+      B: たわみにくい
+    correct: A
   conclusion: 鋼部材はたわみやすい。
   reason: 断面積を小さくできる反面、断面積が小さいため。
   conditions:
@@ -96,7 +111,12 @@ principles:
   order: 7
   type: principle
   principle: 薄い鋼部材と座屈
-  question: 鋼部材が薄い形である場合の座屈について、結論、その理由及び結論を左右する条件を説明しなさい。
+  question:
+    prompt: 薄い形の鋼部材の座屈しやすさについて、正しい結論はどちらか。
+    choices:
+      A: 座屈しやすい
+      B: 座屈しにくい
+    correct: A
   conclusion: 鋼部材は座屈しやすい。
   reason: 部材が薄い形になりやすいため。
   conditions:

@@ -8,7 +8,12 @@ principles:
   order: 1
   type: identification
   principle: ブローホールの識別
-  question: 溶接部に生じるブローホールについて、識別の結論、その理由及び結論を左右する条件を述べなさい。
+  question:
+    prompt: 溶着金属中にガスが残り、空洞が溶接金属内部に閉じている欠陥の名称として正しい結論はどちらか。
+    choices:
+      A: ブローホール
+      B: ピット
+    correct: A
   conclusion: ブローホールは、溶着金属中にガスが残ってできる内部の空洞である。
   reason: 溶着金属中にガスが残るため。
   conditions:
@@ -38,7 +43,12 @@ principles:
   order: 3
   type: identification
   principle: ピットの識別
-  question: 溶接部に生じるピットについて、識別の結論、その理由及び結論を左右する条件を述べなさい。
+  question:
+    prompt: ガスによる空洞が溶接部表面に開口している欠陥の名称として、正しい結論はどちらか。
+    choices:
+      A: ブローホール
+      B: ピット
+    correct: B
   conclusion: ピットは、ブローホールと同じ現象が表面に開口した表面欠陥である。
   reason: 内部の空洞が表面へ開口するため。
   conditions:
@@ -54,7 +64,12 @@ principles:
   order: 4
   type: identification
   principle: スラグ巻込みの識別
-  question: 溶接部に生じるスラグ巻込みについて、識別の結論、その理由及び結論を左右する条件を述べなさい。
+  question:
+    prompt: 非金属物質のスラグが浮上せず溶接金属内部に残る欠陥の名称として、正しい結論はどちらか。
+    choices:
+      A: スラグ巻込み
+      B: ブローホール
+    correct: A
   conclusion: スラグ巻込みは、非金属物質のスラグが溶接金属内部に残る内部欠陥である。
   reason: 溶着部に生じたスラグが浮上しないため。
   conditions:
@@ -69,7 +84,12 @@ principles:
   order: 5
   type: identification
   principle: アンダーカットの識別
-  question: 溶接部に生じるアンダーカットについて、識別の結論、その理由及び結論を左右する条件を述べなさい。
+  question:
+    prompt: 母材側に溶接金属が満たされず、溶接部表面に溝が残る欠陥の名称として正しい結論はどちらか。
+    choices:
+      A: ピット
+      B: アンダーカット
+    correct: B
   conclusion: アンダーカットは、母材側に溶接金属が満たされず溝として残る表面欠陥である。
   reason: 溶接速度が速い場合などに生じる。
   conditions:
@@ -84,7 +104,12 @@ principles:
   order: 6
   type: identification
   principle: スカラップとノンスカラップ
-  question: 溶接線が交差する部材接合部におけるスカラップとノンスカラップについて、識別の結論、その理由及び結論を左右する条件を述べなさい。
+  question:
+    prompt: 複数の溶接線の交差を避けるために設ける扇状切欠きの名称として、正しい結論はどちらか。
+    choices:
+      A: スカラップ
+      B: ノンスカラップ
+    correct: A
   conclusion: スカラップは溶接線の交差を避けるための扇状切欠きで、切欠きのないノンスカラップ工法を用いる場合もある。
   reason: 溶接線同士の交差を避けるため。
   conditions:

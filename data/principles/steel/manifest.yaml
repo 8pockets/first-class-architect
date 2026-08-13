@@ -64,6 +64,17 @@ audited_pages:
 - 213
 - 214
 - 215
+inventory:
+  total: 215
+  editorial_status:
+    draft: 2
+    source_checked: 116
+    source_gap: 97
+question_audit:
+  answer_positions:
+    A: 58
+    B: 58
+  content_sha256: e04c25d22d6c95b0eb3fe149fcbb4a8851e532019cfd32586f6eca3249e4c278
 sections:
 - 00-prior-question-knowledge.yaml
 - 01-overview.yaml

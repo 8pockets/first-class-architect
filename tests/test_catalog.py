@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import re
 import shutil
 import unicodedata
 from html import escape
@@ -15,6 +14,7 @@ from principle_catalog.catalog import (
     CatalogError,
     MANIFEST_PATH,
     PUBLIC_PROGRESS_PATH,
+    _has_repeating_answer_period,
     load_catalog,
     load_public_progress,
 )
@@ -34,6 +34,28 @@ def _copy_catalog(tmp_path: Path) -> Path:
     return root
 
 
+def _rewrite_item(
+    section: Path,
+    *,
+    source_checked: bool,
+    question: object = ...,
+) -> None:
+    document = yaml.safe_load(section.read_text(encoding="utf-8"))
+    item = next(
+        candidate
+        for candidate in document["principles"]
+        if (candidate["editorial_status"] == "source_checked") is source_checked
+    )
+    if question is ...:
+        item.pop("question", None)
+    else:
+        item["question"] = question
+    section.write_text(
+        yaml.safe_dump(document, allow_unicode=True, sort_keys=False),
+        encoding="utf-8",
+    )
+
+
 def test_manifest_covers_every_requested_pdf_page() -> None:
     catalog = load_catalog()
 
@@ -44,6 +66,13 @@ def test_manifest_covers_every_requested_pdf_page() -> None:
     assert catalog.audit.table_pages == tuple(range(159, 176))
     assert catalog.audit.table_row_count == 167
     assert len(catalog.audit.primary_question_codes) == 167
+    assert catalog.manifest.expected_total == 215
+    assert catalog.manifest.expected_status_counts == {
+        "draft": 2,
+        "source_checked": 116,
+        "source_gap": 97,
+    }
+    assert catalog.manifest.expected_answer_counts == {"A": 58, "B": 58}
 
 
 def test_every_audited_content_page_and_table_row_is_cataloged() -> None:
@@ -89,7 +118,7 @@ def test_existing_study_items_are_stable_catalog_ids() -> None:
     assert study_ids <= catalog_ids
 
 
-def test_source_checked_entries_have_complete_question_and_three_point_content() -> None:
+def test_source_checked_entries_have_balanced_binary_questions_and_three_point_content() -> None:
     checked = [
         item for item in load_catalog().principles if item.editorial_status == "source_checked"
     ]
@@ -98,21 +127,63 @@ def test_source_checked_entries_have_complete_question_and_three_point_content()
     for item in checked:
         assert item.principle
         assert item.question
-        assert "結論" in item.question
-        assert "理由" in item.question
-        assert "条件" in item.question
-        assert item.question != item.conclusion
+        assert item.question.prompt.endswith("正しい結論はどちらか。")
+        assert "説明しなさい" not in item.question.prompt
+        assert "述べなさい" not in item.question.prompt
+        assert item.question.choice_a
+        assert item.question.choice_b
+        assert item.question.choice_a != item.question.choice_b
+        assert item.question.correct in {"A", "B"}
+        assert max(len(item.question.choice_a), len(item.question.choice_b)) <= 40
+        assert abs(len(item.question.choice_a) - len(item.question.choice_b)) <= 10
+        assert not any(
+            clue in f"{item.question.choice_a} {item.question.choice_b}"
+            for clue in (
+                "必ず",
+                "絶対",
+                "両方",
+                "双方",
+                "いずれも",
+                "どちらも",
+                "どちらでもない",
+            )
+        )
         assert item.conclusion
         assert item.reason != "教材に記載なし"
         assert item.conditions
         assert "教材に記載なし" not in item.conditions
 
     normalized_questions = {
-        unicodedata.normalize("NFKC", item.question).casefold().strip()
+        unicodedata.normalize("NFKC", item.question.prompt).casefold().strip()
         for item in checked
         if item.question is not None
     }
     assert len(normalized_questions) == 116
+    answer_key = [item.question.correct for item in checked if item.question]
+    assert answer_key.count("A") == answer_key.count("B") == 58
+    runs: list[list[str]] = []
+    for label in answer_key:
+        if not runs or runs[-1][-1] != label:
+            runs.append([label])
+        else:
+            runs[-1].append(label)
+    assert max(map(len, runs)) <= 3
+    assert len(runs) >= 58
+    assert not _has_repeating_answer_period(tuple(answer_key))
+
+
+@pytest.mark.parametrize(
+    "answer_key",
+    [
+        tuple("AB" * 58),
+        tuple("AABB" * 29),
+        tuple(("ABBA" * 14 + "AB") * 2),
+    ],
+)
+def test_repeating_answer_position_patterns_are_rejected(
+    answer_key: tuple[str, ...],
+) -> None:
+    assert _has_repeating_answer_period(answer_key)
 
 
 def test_public_progress_is_exact_coarse_projection_of_local_state() -> None:
@@ -160,9 +231,17 @@ def test_build_publishes_only_source_checked_entries(tmp_path: Path) -> None:
     assert published == len(expected_published)
     assert planned == len(catalog.principles)
     assert html.count('class="principle-card"') == published
-    assert html.count("確認問題（自作）") == published
+    assert html.count("確認問題（自作・2択）") == published
+    assert html.count('class="binary-choices"') == published
+    assert html.count('class="answer-key"') == published
     assert all(item.principle in html for item in expected_published)
-    assert all(item.question in html for item in expected_published)
+    assert all(
+        item.question
+        and item.question.prompt in html
+        and item.question.choice_a in html
+        and item.question.choice_b in html
+        for item in expected_published
+    )
     assert all(f'id="{item.id}"' not in html for item in unpublished)
 
 
@@ -183,25 +262,42 @@ def test_build_places_each_question_before_its_three_point_answer_and_searches_i
         card = html.split(f'id="{item.id}"', maxsplit=1)[1].split(
             "</article>", maxsplit=1
         )[0]
-        question = escape(item.question)
+        card_body = card.split(">", maxsplit=1)[1]
+        prompt = escape(item.question.prompt)
+        choice_a = escape(item.question.choice_a)
+        choice_b = escape(item.question.choice_b)
         search_text = card.split('data-search="', maxsplit=1)[1].split('"', maxsplit=1)[0]
         question_opening = card.split('<div class="practice-question"', maxsplit=1)[
             1
         ].split(">", maxsplit=1)[0]
 
         heading = f"<h3>{escape(item.principle)}</h3>"
-        assert card.index(heading) < card.index('<div class="practice-question"')
-        assert card.index('<div class="practice-question"') < card.index(
+        assert card_body.index(heading) < card_body.index(
+            '<div class="practice-question"'
+        )
+        assert card_body.index('<div class="practice-question"') < card_body.index(
+            prompt
+        )
+        assert card_body.index(prompt) < card_body.index('<ul class="binary-choices">')
+        assert card_body.index('<ul class="binary-choices">') < card_body.index(
+            '<p class="answer-key">'
+        )
+        assert card_body.index('<p class="answer-key">') < card_body.index(
             "<dt>結論</dt>"
         )
-        assert card.index("<dt>結論</dt>") < card.index("<dt>理由</dt>")
-        assert card.index("<dt>理由</dt>") < card.index(
+        assert card_body.index("<dt>結論</dt>") < card_body.index("<dt>理由</dt>")
+        assert card_body.index("<dt>理由</dt>") < card_body.index(
             "<dt>結論を左右する条件</dt>"
         )
         assert "hidden" not in question_opening
         assert "<details" not in card
-        assert question in card
-        assert escape(item.question.lower()) in search_text
+        assert f'<strong>{item.question.correct}</strong>' in card
+        assert prompt in card
+        assert choice_a in card
+        assert choice_b in card
+        assert escape(item.question.prompt.lower()) in search_text
+        assert escape(item.question.choice_a.lower()) in search_text
+        assert escape(item.question.choice_b.lower()) in search_text
 
 
 def test_build_is_public_read_only_and_privacy_bounded(tmp_path: Path) -> None:
@@ -221,6 +317,8 @@ def test_build_is_public_read_only_and_privacy_bounded(tmp_path: Path) -> None:
     assert "consecutive_failures" not in html
     assert "recorded_at" not in html
     assert "<form" not in html
+    assert 'type="radio"' not in html
+    assert "data-answer" not in html
     assert "fetch(" not in script
     assert "localStorage" not in script
     assert "http://" not in html + script + css
@@ -288,12 +386,75 @@ def test_yaml_duplicate_keys_are_rejected(tmp_path: Path) -> None:
         load_public_progress(path)
 
 
+def test_catalog_inventory_deletion_is_rejected(tmp_path: Path) -> None:
+    root = _copy_catalog(tmp_path)
+    section = root / "01-overview.yaml"
+    document = yaml.safe_load(section.read_text(encoding="utf-8"))
+    deleted = next(
+        index
+        for index, item in enumerate(document["principles"])
+        if item["editorial_status"] == "source_gap"
+    )
+    document["principles"].pop(deleted)
+    section.write_text(
+        yaml.safe_dump(document, allow_unicode=True, sort_keys=False),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(CatalogError, match="inventory total mismatch"):
+        load_catalog(root / "manifest.yaml")
+
+
+def test_question_choice_swap_without_independent_reaudit_is_rejected(
+    tmp_path: Path,
+) -> None:
+    root = _copy_catalog(tmp_path)
+    section = root / "01-overview.yaml"
+    document = yaml.safe_load(section.read_text(encoding="utf-8"))
+    item = next(
+        candidate
+        for candidate in document["principles"]
+        if candidate["editorial_status"] == "source_checked"
+    )
+    choices = item["question"]["choices"]
+    choices["A"], choices["B"] = choices["B"], choices["A"]
+    section.write_text(
+        yaml.safe_dump(document, allow_unicode=True, sort_keys=False),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(CatalogError, match="independently audited snapshot"):
+        load_catalog(root / "manifest.yaml")
+
+
+def test_question_reordering_without_independent_reaudit_is_rejected(
+    tmp_path: Path,
+) -> None:
+    root = _copy_catalog(tmp_path)
+    section = root / "01-overview.yaml"
+    document = yaml.safe_load(section.read_text(encoding="utf-8"))
+    first, second = next(
+        (left, right)
+        for left, right in zip(
+            document["principles"],
+            document["principles"][1:],
+        )
+        if left.get("question") is not None and right.get("question") is not None
+    )
+    first["order"], second["order"] = second["order"], first["order"]
+    section.write_text(
+        yaml.safe_dump(document, allow_unicode=True, sort_keys=False),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(CatalogError, match="independently audited snapshot"):
+        load_catalog(root / "manifest.yaml")
+
+
 def test_source_checked_entry_without_a_question_is_rejected(tmp_path: Path) -> None:
     root = _copy_catalog(tmp_path)
     section = root / "01-overview.yaml"
-    text, replacements = re.subn(r"\n  question: [^\n]+", "", section.read_text(), count=1)
-    assert replacements == 1
-    section.write_text(text, encoding="utf-8")
+    _rewrite_item(section, source_checked=True)
 
     with pytest.raises(CatalogError, match="question is required"):
         load_catalog(root / "manifest.yaml")
@@ -302,32 +463,143 @@ def test_source_checked_entry_without_a_question_is_rejected(tmp_path: Path) -> 
 def test_unpublished_entry_with_a_question_is_rejected(tmp_path: Path) -> None:
     root = _copy_catalog(tmp_path)
     section = root / "01-overview.yaml"
-    text = section.read_text(encoding="utf-8")
-    target = "  principle: 柱脚形式と固定度の大小\n"
-    replacement = (
-        f"{target}"
-        "  question: 柱脚形式について、結論、その理由及び結論を左右する条件を説明しなさい。\n"
+    _rewrite_item(
+        section,
+        source_checked=False,
+        question={
+            "prompt": "柱脚形式の固定度について、正しい結論はどちらか。",
+            "choices": {
+                "A": "埋込み形式の固定度が最も高い",
+                "B": "露出形式の固定度が最も高い",
+            },
+            "correct": "A",
+        },
     )
-    assert target in text
-    section.write_text(text.replace(target, replacement, 1), encoding="utf-8")
 
     with pytest.raises(CatalogError, match="only allowed for source_checked"):
         load_catalog(root / "manifest.yaml")
 
 
-def test_question_without_all_three_requested_parts_is_rejected(tmp_path: Path) -> None:
+@pytest.mark.parametrize(
+    ("question", "error"),
+    [
+        ("この項目について説明しなさい。", "must be a mapping"),
+        (
+            {
+                "prompt": "接合方法について、正しい結論はどちらか。",
+                "choices": {"A": "ボルト接合を含む"},
+                "correct": "A",
+            },
+            "choices keys must be",
+        ),
+        (
+            {
+                "prompt": "接合方法について、正しい結論はどちらか。",
+                "choices": {"A": "ボルト接合を含む", "B": "溶接接合を含む"},
+                "correct": "C",
+            },
+            "correct must be A or B",
+        ),
+        (
+            {
+                "prompt": "接合方法について、正しい結論はどちらか。",
+                "choices": {"A": "ボルト接合を含む", "B": "ボルト接合を含む"},
+                "correct": "A",
+            },
+            "choices must be distinct",
+        ),
+        (
+            {
+                "prompt": "接合方法について、正しい結論はどちらか。",
+                "choices": {"A": "ボルト 接合を含む", "B": "ボルト  接合を含む"},
+                "correct": "A",
+            },
+            "choices must be distinct",
+        ),
+        (
+            {
+                "prompt": "接合方法について説明しなさい。",
+                "choices": {"A": "ボルト接合を含む", "B": "ボルト接合を含まない"},
+                "correct": "A",
+            },
+            "must ask which conclusion is correct",
+        ),
+        (
+            {
+                "prompt": "誤っている説明と正しい結論はどちらか。",
+                "choices": {"A": "ボルト接合を含む", "B": "ボルト接合を含まない"},
+                "correct": "A",
+            },
+            "forbidden question form",
+        ),
+        (
+            {
+                "prompt": "接合方法について、正しい結論はどちらか。",
+                "choices": {"A": "必ずボルト接合を含む", "B": "ボルト接合を含まない"},
+                "correct": "A",
+            },
+            "forbidden clue",
+        ),
+        (
+            {
+                "prompt": "接合方法について、正しい結論はどちらか。",
+                "choices": {"A": "両方", "B": "どちらでもない"},
+                "correct": "A",
+            },
+            "forbidden clue",
+        ),
+        (
+            {
+                "prompt": "接合方法について、正しい結論はどちらか。",
+                "choices": {"A": "ボルト接合を含む（正解）", "B": "ボルト接合を含まない"},
+                "correct": "A",
+            },
+            "reveal the answer",
+        ),
+        (
+            {
+                "prompt": "接合方法について、正しい結論はどちらか。",
+                "choices": {"A": "ボルト接合を含む（○）", "B": "ボルト接合を含まない"},
+                "correct": "A",
+            },
+            "reveal the answer",
+        ),
+        (
+            {
+                "prompt": "接合方法について、正しい結論はどちらか。",
+                "choices": {"A": "ボルト接合を含む\u200b", "B": "ボルト接合を含まない"},
+                "correct": "A",
+            },
+            "invisible characters",
+        ),
+        (
+            {
+                "prompt": "接合方法について、正しい結論はどちらか。",
+                "choices": {"A": "あ" * 41, "B": "接合方法に含まれない"},
+                "correct": "A",
+            },
+            "40 characters or fewer",
+        ),
+        (
+            {
+                "prompt": "接合方法について、正しい結論はどちらか。",
+                "choices": {"A": "含む", "B": "接合方法の一つとして分類に含まれている"},
+                "correct": "A",
+            },
+            "similar in length",
+        ),
+    ],
+)
+def test_invalid_binary_question_is_rejected(
+    tmp_path: Path,
+    question: object,
+    error: str,
+) -> None:
     root = _copy_catalog(tmp_path)
     section = root / "01-overview.yaml"
-    text, replacements = re.subn(
-        r"\n  question: [^\n]+",
-        "\n  question: この項目について説明しなさい。",
-        section.read_text(encoding="utf-8"),
-        count=1,
-    )
-    assert replacements == 1
-    section.write_text(text, encoding="utf-8")
+    _rewrite_item(section, source_checked=True, question=question)
 
-    with pytest.raises(CatalogError, match="conclusion, reason, and conditions"):
+    with pytest.raises(CatalogError, match=error):
         load_catalog(root / "manifest.yaml")
 
 
@@ -440,18 +712,23 @@ def test_public_progress_rejects_duplicate_local_ids(tmp_path: Path) -> None:
         public_progress_from_local(path)
 
 
-def test_study_brief_shows_the_question_before_the_three_point_answer() -> None:
+def test_study_brief_shows_binary_choices_and_answer_before_the_three_points() -> None:
     item = next(
         item for item in load_catalog().principles if item.editorial_status == "source_checked"
     )
     brief = study_brief(item.id)
 
-    assert "## 確認問題（自作）" in brief
+    assert "## 確認問題（自作・2択）" in brief
     assert "## 結論" in brief
     assert "## 理由" in brief
     assert "## 結論を左右する条件" in brief
-    assert brief.index("## 確認問題（自作）") < brief.index("## 結論")
-    assert item.question in brief
+    assert brief.index("## 確認問題（自作・2択）") < brief.index("正解:")
+    assert brief.index("正解:") < brief.index("## 結論")
+    assert item.question is not None
+    assert item.question.prompt in brief
+    assert f"A. {item.question.choice_a}" in brief
+    assert f"B. {item.question.choice_b}" in brief
+    assert f"正解: **{item.question.correct}**" in brief
     assert item.conclusion in brief
     assert item.reason in brief
 

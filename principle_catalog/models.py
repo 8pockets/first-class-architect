@@ -10,12 +10,21 @@ from typing import Literal
 PrincipleType = Literal["principle", "rule", "identification"]
 EditorialStatus = Literal["draft", "source_checked", "source_gap"]
 PublicProgress = Literal["unstarted", "learning", "reviewing", "retained_14d"]
+ChoiceLabel = Literal["A", "B"]
 
 
 @dataclass(frozen=True)
 class SourceRef:
     pages: tuple[int, ...]
     question_codes: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class BinaryQuestion:
+    prompt: str
+    choice_a: str
+    choice_b: str
+    correct: ChoiceLabel
 
 
 @dataclass(frozen=True)
@@ -27,7 +36,7 @@ class Principle:
     order: int
     type: PrincipleType
     principle: str
-    question: str | None
+    question: BinaryQuestion | None
     conclusion: str
     reason: str
     conditions: tuple[str, ...]
@@ -44,6 +53,10 @@ class CatalogManifest:
     last_page: int
     audited_pages: tuple[int, ...]
     section_files: tuple[Path, ...]
+    expected_total: int
+    expected_status_counts: dict[EditorialStatus, int]
+    expected_answer_counts: dict[ChoiceLabel, int]
+    question_audit_sha256: str
 
 
 @dataclass(frozen=True)
