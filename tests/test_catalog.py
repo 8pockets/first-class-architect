@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -56,6 +57,18 @@ def _rewrite_item(
         yaml.safe_dump(document, allow_unicode=True, sort_keys=False),
         encoding="utf-8",
     )
+
+
+def _css_declarations(css: str, selector: str) -> dict[str, str]:
+    match = re.search(rf"{re.escape(selector)}\s*\{{([^}}]*)\}}", css)
+    assert match is not None, f"missing CSS rule: {selector}"
+    declarations: dict[str, str] = {}
+    for raw in match.group(1).split(";"):
+        if ":" not in raw:
+            continue
+        name, value = raw.split(":", maxsplit=1)
+        declarations[name.strip()] = value.strip()
+    return declarations
 
 
 def test_manifest_covers_every_requested_pdf_page() -> None:
@@ -361,14 +374,29 @@ def test_answer_disclosure_has_visible_focus_state_and_prints_only_when_open(
     build_site(output, "https://8pockets.github.io/first-class-architect/")
     css = (output / "assets/styles.css").read_text(encoding="utf-8")
 
-    assert ".answer-disclosure > summary" in css
-    assert ".answer-disclosure > summary:focus-visible" in css
-    assert ".answer-disclosure[open] .disclosure-label-closed" in css
-    assert ".answer-disclosure:not([open]) .disclosure-label-open" in css
-    assert ".visually-hidden" in css
+    summary = _css_declarations(css, ".answer-disclosure > summary")
+    assert summary["min-height"] == "52px"
+    assert summary["cursor"] == "pointer"
+    focus = _css_declarations(css, ".answer-disclosure > summary:focus-visible")
+    assert focus["outline"] == "3px solid var(--orange)"
+    assert focus["outline-offset"] == "-3px"
+    labels = _css_declarations(
+        css,
+        ".answer-disclosure[open] .disclosure-label-closed,\n"
+        ".answer-disclosure:not([open]) .disclosure-label-open",
+    )
+    assert labels["display"] == "none"
+    visually_hidden = _css_declarations(css, ".visually-hidden")
+    assert visually_hidden["position"] == "absolute"
+    assert visually_hidden["clip"] == "rect(0 0 0 0)"
     print_rules = css.split("@media print", maxsplit=1)[1]
-    assert ".answer-disclosure > summary" in print_rules
-    assert ".answer-disclosure:not([open]) > .answer-content" in print_rules
+    print_summary = _css_declarations(print_rules, ".answer-disclosure > summary")
+    assert print_summary["display"] == "none"
+    print_closed = _css_declarations(
+        print_rules,
+        ".answer-disclosure:not([open]) > .answer-content",
+    )
+    assert print_closed["display"] == "none !important"
 
 
 def test_nested_404_uses_repository_absolute_asset_urls(tmp_path: Path) -> None:

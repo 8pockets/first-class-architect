@@ -152,3 +152,12 @@ test("following a principle link closes the open answer", () => {
 
   assert.deepEqual(disclosures.map(({ open }) => open), [false, false, false]);
 });
+
+test("moving through principle hashes closes the open answer", () => {
+  const { disclosures, window } = bootCatalog();
+  open(disclosures[0]);
+
+  window.dispatchEvent(new Event("hashchange"));
+
+  assert.deepEqual(disclosures.map(({ open }) => open), [false, false, false]);
+});

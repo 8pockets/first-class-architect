@@ -54,6 +54,7 @@
 
   closeDisclosures();
   window.addEventListener("pageshow", closeDisclosures);
+  window.addEventListener("hashchange", closeDisclosures);
 
   for (const disclosure of disclosures) {
     disclosure.addEventListener("toggle", () => {
