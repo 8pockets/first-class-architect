@@ -205,7 +205,7 @@ def _page(base_url: str) -> str:
 <html lang="ja">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>鉄骨構造 原理台帳</title>
   <meta name="description" content="{escape(summary)}">
   <link rel="canonical" href="{escape(canonical_url)}">

@@ -263,6 +263,29 @@ def test_build_publishes_only_source_checked_entries(tmp_path: Path) -> None:
     assert all(f'id="{item.id}"' not in html for item in unpublished)
 
 
+def test_every_generated_page_disables_page_zoom(tmp_path: Path) -> None:
+    output = tmp_path / "site"
+    build_site(output, "https://8pockets.github.io/first-class-architect/")
+    expected = (
+        '<meta name="viewport" content="width=device-width, initial-scale=1, '
+        'maximum-scale=1, user-scalable=no">'
+    )
+    pages = sorted(output.rglob("*.html"))
+
+    assert {page.relative_to(output).as_posix() for page in pages} == {
+        "404.html",
+        "index.html",
+    }
+    for page in pages:
+        html = page.read_text(encoding="utf-8")
+        assert html.count('name="viewport"') == 1
+        assert expected in html
+
+    css = (output / "assets/styles.css").read_text(encoding="utf-8")
+    root = _css_declarations(css, ":root")
+    assert root["touch-action"] == "pan-x pan-y"
+
+
 def test_build_places_each_question_before_its_three_point_answer_and_searches_it(
     tmp_path: Path,
 ) -> None:
