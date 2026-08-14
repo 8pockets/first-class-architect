@@ -1,5 +1,6 @@
 :root {
   color-scheme: light;
+  touch-action: pan-x pan-y;
   --paper: #f4f0e7;
   --paper-deep: #e9e2d5;
   --card: #fffdf8;
