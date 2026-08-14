@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import shutil
@@ -20,6 +21,7 @@ from principle_catalog.catalog import (
     _has_repeating_answer_period,
     load_catalog,
     load_public_progress,
+    validate_print_registry_history,
 )
 from principle_catalog.models import PublicProgressProjection
 from principle_catalog.progress import _coarse_status, public_progress_from_local
@@ -71,6 +73,23 @@ def _css_declarations(css: str, selector: str) -> dict[str, str]:
     return declarations
 
 
+def _print_registry_digest(assignments: dict[str, int]) -> str:
+    audited = [
+        {"id": item_id, "number": number}
+        for item_id, number in sorted(
+            assignments.items(),
+            key=lambda assignment: assignment[1],
+        )
+    ]
+    canonical = json.dumps(
+        audited,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    return hashlib.sha256(canonical).hexdigest()
+
+
 def test_manifest_covers_every_requested_pdf_page() -> None:
     catalog = load_catalog()
 
@@ -88,6 +107,97 @@ def test_manifest_covers_every_requested_pdf_page() -> None:
         "source_gap": 97,
     }
     assert catalog.manifest.expected_answer_counts == {"A": 58, "B": 58}
+
+
+def test_manifest_assigns_permanent_print_numbers_to_every_published_question() -> None:
+    catalog = load_catalog()
+    published = [
+        item
+        for item in catalog.principles
+        if item.editorial_status == "source_checked"
+    ]
+
+    assert catalog.manifest.next_print_number == 117
+    assert len(catalog.manifest.print_numbers) == 116
+    assert {item.id for item in published} <= set(catalog.manifest.print_numbers)
+    assert set(catalog.manifest.print_numbers.values()) == set(range(1, 117))
+    assert catalog.manifest.print_registry_sha256 == (
+        "7b2a0e8e18bccb17560dc97e56a9fdcd70d242e8f18db0aa58ba1357969894ec"
+    )
+
+
+def test_print_number_swap_without_registry_reaudit_is_rejected(
+    tmp_path: Path,
+) -> None:
+    root = _copy_catalog(tmp_path)
+    manifest_path = root / "manifest.yaml"
+    manifest = yaml.safe_load(manifest_path.read_text(encoding="utf-8"))
+    assignments = manifest["print_registry"]["assignments"]
+    first, second = list(assignments)[:2]
+    assignments[first], assignments[second] = assignments[second], assignments[first]
+    manifest_path.write_text(
+        yaml.safe_dump(manifest, allow_unicode=True, sort_keys=False),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(CatalogError, match="permanent print registry snapshot"):
+        load_catalog(manifest_path)
+
+
+def test_print_number_swap_is_rejected_even_after_snapshot_is_recomputed(
+    tmp_path: Path,
+) -> None:
+    root = _copy_catalog(tmp_path)
+    previous_manifest = tmp_path / "previous-manifest.yaml"
+    manifest_path = root / "manifest.yaml"
+    previous_manifest.write_text(
+        manifest_path.read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+    manifest = yaml.safe_load(manifest_path.read_text(encoding="utf-8"))
+    assignments = manifest["print_registry"]["assignments"]
+    first, second = list(assignments)[:2]
+    assignments[first], assignments[second] = assignments[second], assignments[first]
+    manifest["print_registry"]["content_sha256"] = _print_registry_digest(
+        assignments
+    )
+    manifest_path.write_text(
+        yaml.safe_dump(manifest, allow_unicode=True, sort_keys=False),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(CatalogError, match="existing print numbers must not change"):
+        validate_print_registry_history(previous_manifest, manifest_path)
+
+
+def test_new_print_number_cannot_be_reserved_for_an_unpublished_item(
+    tmp_path: Path,
+) -> None:
+    root = _copy_catalog(tmp_path)
+    previous_manifest = tmp_path / "previous-manifest.yaml"
+    manifest_path = root / "manifest.yaml"
+    previous_manifest.write_text(
+        manifest_path.read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+    catalog = load_catalog(manifest_path)
+    unpublished = next(
+        item
+        for item in catalog.principles
+        if item.editorial_status != "source_checked"
+    )
+    manifest = yaml.safe_load(manifest_path.read_text(encoding="utf-8"))
+    registry = manifest["print_registry"]
+    registry["assignments"][unpublished.id] = registry["next_number"]
+    registry["next_number"] += 1
+    registry["content_sha256"] = _print_registry_digest(registry["assignments"])
+    manifest_path.write_text(
+        yaml.safe_dump(manifest, allow_unicode=True, sort_keys=False),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(CatalogError, match="only be assigned to source-checked"):
+        validate_print_registry_history(previous_manifest, manifest_path)
 
 
 def test_every_audited_content_page_and_table_row_is_cataloged() -> None:
@@ -263,6 +373,37 @@ def test_build_publishes_only_source_checked_entries(tmp_path: Path) -> None:
     assert all(f'id="{item.id}"' not in html for item in unpublished)
 
 
+def test_build_embeds_each_permanent_print_number_in_its_question_card(
+    tmp_path: Path,
+) -> None:
+    output = tmp_path / "site"
+    build_site(output, "https://8pockets.github.io/first-class-architect/")
+    catalog = load_catalog()
+    html = (output / "index.html").read_text(encoding="utf-8")
+    published = [
+        item
+        for item in catalog.principles
+        if item.editorial_status == "source_checked"
+    ]
+    expected_labels = [
+        f"Q{catalog.manifest.print_numbers[item.id]:03d}" for item in published
+    ]
+    assert re.findall(
+        r'class="print-question-number" aria-hidden="true">(Q\d{3})</p>',
+        html,
+    ) == expected_labels
+
+    for item in published:
+        card = html.split(f'id="{item.id}"', maxsplit=1)[1].split(
+            "</article>", maxsplit=1
+        )[0]
+        number = catalog.manifest.print_numbers[item.id]
+        assert (
+            f'<p class="print-question-number" aria-hidden="true">Q{number:03d}</p>'
+            in card
+        )
+
+
 def test_every_generated_page_disables_page_zoom(tmp_path: Path) -> None:
     output = tmp_path / "site"
     build_site(output, "https://8pockets.github.io/first-class-architect/")
@@ -390,7 +531,7 @@ def test_build_is_public_read_only_and_privacy_bounded(tmp_path: Path) -> None:
     assert "https://" not in script + css
 
 
-def test_answer_disclosure_has_visible_focus_state_and_prints_only_when_open(
+def test_answer_disclosure_has_visible_focus_state(
     tmp_path: Path,
 ) -> None:
     output = tmp_path / "site"
@@ -412,14 +553,58 @@ def test_answer_disclosure_has_visible_focus_state_and_prints_only_when_open(
     visually_hidden = _css_declarations(css, ".visually-hidden")
     assert visually_hidden["position"] == "absolute"
     assert visually_hidden["clip"] == "rect(0 0 0 0)"
+
+
+def test_print_styles_make_a_compact_a4_two_column_question_sheet(
+    tmp_path: Path,
+) -> None:
+    output = tmp_path / "site"
+    build_site(output, "https://8pockets.github.io/first-class-architect/")
+    css = (output / "assets/styles.css").read_text(encoding="utf-8")
     print_rules = css.split("@media print", maxsplit=1)[1]
-    print_summary = _css_declarations(print_rules, ".answer-disclosure > summary")
-    assert print_summary["display"] == "none"
-    print_closed = _css_declarations(
+
+    page = _css_declarations(css, "@page")
+    assert page == {"size": "A4 portrait", "margin": "8mm"}
+    screen_number = _css_declarations(css, ".print-question-number")
+    assert screen_number["display"] == "none"
+    hidden = _css_declarations(css, "[hidden]")
+    assert hidden["display"] == "none !important"
+    catalog = _css_declarations(print_rules, ".catalog")
+    assert catalog["columns"] == "2"
+    assert catalog["column-gap"] == "2.5mm"
+    section = _css_declarations(
         print_rules,
-        ".answer-disclosure:not([open]) > .answer-content",
+        ".catalog-section,\n  .card-grid",
     )
-    assert print_closed["display"] == "none !important"
+    assert section["display"] == "contents"
+    card = _css_declarations(print_rules, ".principle-card")
+    assert card["break-inside"] == "avoid"
+    assert card["page-break-inside"] == "avoid"
+    question = _css_declarations(print_rules, ".practice-question")
+    assert question["grid-template-columns"] == "2.5em minmax(0, 1fr)"
+    assert question["column-gap"] == "0.8mm"
+    prompt = _css_declarations(print_rules, ".practice-question-text")
+    assert prompt["font-size"] == "9pt"
+    assert prompt["line-height"] == "1.32"
+    choices = _css_declarations(print_rules, ".binary-choices")
+    assert choices["line-height"] == "1.3"
+    marker = _css_declarations(print_rules, ".choice-label::before")
+    assert marker["content"] == '"□"'
+
+    hidden = _css_declarations(
+        print_rules,
+        ".skip-link,\n"
+        "  .site-header,\n"
+        "  .controls,\n"
+        "  .section-nav,\n"
+        "  .section-heading,\n"
+        "  .card-header,\n"
+        "  .answer-disclosure,\n"
+        "  .card-source,\n"
+        "  .empty-state,\n"
+        "  .site-footer",
+    )
+    assert hidden["display"] == "none !important"
 
 
 def test_nested_404_uses_repository_absolute_asset_urls(tmp_path: Path) -> None:

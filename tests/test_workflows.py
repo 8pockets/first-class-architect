@@ -77,3 +77,28 @@ def test_pages_uses_pinned_actions_and_no_auth_secrets() -> None:
     assert "uv sync --locked --group dev" in text
     assert "uv run --locked python -m principle_catalog validate" in text
     assert "--frozen" not in text
+
+
+def test_ci_and_pages_reject_changes_to_existing_print_numbers() -> None:
+    for path, job_name in ((CI_PATH, "validate"), (PAGES_PATH, "build")):
+        workflow = _workflow(path)
+        steps = workflow["jobs"][job_name]["steps"]
+        checkout = next(step for step in steps if step.get("name") == "Checkout")
+        assert checkout["with"]["fetch-depth"] == "0"
+        previous = next(
+            step for step in steps if step.get("name") == "Read previous print registry"
+        )
+        expected_sha = (
+            "${{ github.event.pull_request.base.sha || github.event.before }}"
+            if path == CI_PATH
+            else "${{ github.event.before }}"
+        )
+        assert previous["env"]["PREVIOUS_SHA"] == expected_sha
+        assert 'previous_sha="${PREVIOUS_SHA:-HEAD^}"' in previous["run"]
+        text = path.read_text(encoding="utf-8")
+        assert 'git show "${previous_sha}:data/principles/steel/manifest.yaml"' in text
+        assert (
+            "uv run --locked python -m principle_catalog verify-print-registry "
+            '--previous "${RUNNER_TEMP}/previous-manifest.yaml"'
+            in text
+        )

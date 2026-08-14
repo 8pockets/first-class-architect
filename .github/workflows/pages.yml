@@ -28,6 +28,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ github.sha }}
+          fetch-depth: 0
           persist-credentials: false
       - name: Set up Python
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
@@ -37,6 +38,14 @@ jobs:
         run: python -m pip install uv==0.11.21
       - name: Sync locked dependencies
         run: uv sync --locked --group dev
+      - name: Read previous print registry
+        env:
+          PREVIOUS_SHA: ${{ github.event.before }}
+        run: |
+          previous_sha="${PREVIOUS_SHA:-HEAD^}"
+          git show "${previous_sha}:data/principles/steel/manifest.yaml" > "${RUNNER_TEMP}/previous-manifest.yaml"
+      - name: Preserve permanent print numbers
+        run: uv run --locked python -m principle_catalog verify-print-registry --previous "${RUNNER_TEMP}/previous-manifest.yaml"
       - name: Validate catalog
         run: uv run --locked python -m principle_catalog validate
       - name: Run tests

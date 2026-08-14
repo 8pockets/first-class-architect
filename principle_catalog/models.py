@@ -57,6 +57,9 @@ class CatalogManifest:
     expected_status_counts: dict[EditorialStatus, int]
     expected_answer_counts: dict[ChoiceLabel, int]
     question_audit_sha256: str
+    next_print_number: int
+    print_numbers: dict[str, int]
+    print_registry_sha256: str
 
 
 @dataclass(frozen=True)

@@ -39,7 +39,16 @@ const bootCatalog = () => {
     new FakeElement({
       dataset: { search: "解説だけの語", type: "principle", progress: "unstarted" },
     }),
+    new FakeElement({
+      dataset: { search: "座屈の語", type: "principle", progress: "learning" },
+    }),
+    new FakeElement({
+      dataset: { search: "溶接の語", type: "rule", progress: "mastered" },
+    }),
   ];
+  cards[0].printNumber = "Q001";
+  cards[1].printNumber = "Q019";
+  cards[2].printNumber = "Q082";
   const sections = [
     {
       hidden: false,
@@ -133,6 +142,22 @@ test("search finds hidden explanation text without opening the answer", () => {
 
   assert.equal(disclosures[0].open, false);
   assert.equal(cards[0].hidden, false);
+});
+
+test("filtering hides nonmatches without renumbering or reordering cards", () => {
+  const { cards, search } = bootCatalog();
+  const originalCards = [...cards];
+  const originalNumbers = cards.map(({ printNumber }) => printNumber);
+  search.value = "溶接";
+
+  search.dispatchEvent(new Event("input"));
+
+  assert.deepEqual(cards.map(({ hidden }) => hidden), [true, true, false]);
+  assert.deepEqual(cards, originalCards);
+  assert.deepEqual(
+    cards.map(({ printNumber }) => printNumber),
+    originalNumbers,
+  );
 });
 
 test("restoring the page from browser history closes every answer", () => {
