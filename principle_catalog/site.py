@@ -65,7 +65,7 @@ def _binary_choices(item: Principle) -> str:
     )
 
 
-def _card(item: Principle, progress: PublicProgress) -> str:
+def _card(item: Principle, progress: PublicProgress, print_number: int) -> str:
     if item.question is None:
         raise ValueError(f"published principle has no confirmation question: {item.id}")
     search_text = " ".join(
@@ -96,6 +96,7 @@ def _card(item: Principle, progress: PublicProgress) -> str:
     <h3>{escape(item.principle)}</h3>
   </header>
   <div class="practice-question">
+    <p class="print-question-number" aria-hidden="true">Q{print_number:03d}</p>
     <p class="practice-question-label">確認問題（自作・2択）</p>
     <p class="practice-question-text">{escape(item.question.prompt)}</p>
     <ul class="binary-choices">{_binary_choices(item)}</ul>
@@ -145,7 +146,11 @@ def _section_nav(items: tuple[Principle, ...]) -> str:
     return "".join(links)
 
 
-def _sections(items: tuple[Principle, ...], progress: dict[str, PublicProgress]) -> str:
+def _sections(
+    items: tuple[Principle, ...],
+    progress: dict[str, PublicProgress],
+    print_numbers: dict[str, int],
+) -> str:
     grouped: dict[str, list[Principle]] = {}
     for item in items:
         grouped.setdefault(item.section_id, []).append(item)
@@ -153,7 +158,12 @@ def _sections(items: tuple[Principle, ...], progress: dict[str, PublicProgress])
     for section_items in grouped.values():
         first = section_items[0]
         cards = "\n".join(
-            _card(item, progress.get(item.id, "unstarted")) for item in section_items
+            _card(
+                item,
+                progress.get(item.id, "unstarted"),
+                print_numbers[item.id],
+            )
+            for item in section_items
         )
         rendered.append(
             f"""
@@ -266,7 +276,7 @@ def _page(base_url: str) -> str:
     <nav class="section-nav" aria-label="章・節から探す">{_section_nav(published)}</nav>
 
     <div id="catalog" class="catalog" data-catalog-root>
-      {_sections(published, projection.items)}
+      {_sections(published, projection.items, catalog.manifest.print_numbers)}
       <p class="empty-state" id="empty-state" hidden>条件に一致する原理がありません。</p>
     </div>
   </main>

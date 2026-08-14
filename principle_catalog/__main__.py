@@ -8,6 +8,7 @@ from pathlib import Path
 from principle_catalog.catalog import (
     load_catalog,
     load_public_progress,
+    validate_print_registry_history,
     validate_public_progress,
 )
 from principle_catalog.progress import write_public_progress
@@ -19,6 +20,12 @@ def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="principle-catalog")
     subcommands = parser.add_subparsers(dest="command", required=True)
     subcommands.add_parser("validate", help="validate canonical and public data")
+
+    verify_print_registry = subcommands.add_parser(
+        "verify-print-registry",
+        help="verify that existing permanent print numbers were not changed",
+    )
+    verify_print_registry.add_argument("--previous", type=Path, required=True)
 
     sync = subcommands.add_parser("sync-progress", help="refresh the public progress projection")
     sync.add_argument("--output", type=Path, default=Path("data/public_progress.yaml"))
@@ -64,6 +71,10 @@ def main() -> int:
     if args.command == "sync-progress":
         count = write_public_progress(args.output)
         print(f"wrote {args.output} projected_progress={count}")
+        return 0
+    if args.command == "verify-print-registry":
+        validate_print_registry_history(args.previous)
+        print(f"valid permanent print registry previous={args.previous}")
         return 0
     if args.command == "sync-study-items":
         added = sync_study_items(args.state)

@@ -168,6 +168,23 @@ def _has_repeating_answer_period(answers: tuple[str, ...]) -> bool:
     return False
 
 
+def _print_registry_sha256(print_numbers: dict[str, int]) -> str:
+    assignments = [
+        {"id": item_id, "number": number}
+        for item_id, number in sorted(
+            print_numbers.items(),
+            key=lambda assignment: assignment[1],
+        )
+    ]
+    canonical = json.dumps(
+        assignments,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    return hashlib.sha256(canonical).hexdigest()
+
+
 def _exact_keys(data: dict[str, Any], expected: set[str], path: Path, label: str) -> None:
     actual = set(data)
     if actual != expected:
@@ -190,6 +207,61 @@ def _load_yaml(path: Path) -> dict[str, Any]:
     return _mapping(loaded, path, "document")
 
 
+def _parse_print_registry(
+    registry: Any,
+    path: Path,
+) -> tuple[int, dict[str, int], str]:
+    print_registry = _mapping(registry, path, "print_registry")
+    _exact_keys(
+        print_registry,
+        {"next_number", "assignments", "content_sha256"},
+        path,
+        "print_registry",
+    )
+    next_print_number = _int(
+        print_registry["next_number"],
+        path,
+        "print_registry.next_number",
+    )
+    if next_print_number < 1:
+        _fail(path, "print_registry.next_number must be positive")
+    raw_print_numbers = _mapping(
+        print_registry["assignments"],
+        path,
+        "print_registry.assignments",
+    )
+    print_numbers: dict[str, int] = {}
+    for item_id, raw_number in raw_print_numbers.items():
+        if not _ID.fullmatch(item_id):
+            _fail(path, f"print_registry has invalid principle id: {item_id}")
+        number = _int(
+            raw_number,
+            path,
+            f"print_registry.assignments.{item_id}",
+        )
+        if number < 1:
+            _fail(path, "print registry numbers must be positive")
+        print_numbers[item_id] = number
+    numbers = sorted(print_numbers.values())
+    if len(numbers) != len(set(numbers)):
+        _fail(path, "print registry numbers must be unique")
+    if numbers != list(range(1, next_print_number)):
+        _fail(path, "print registry must be contiguous up to next_number")
+    print_registry_sha256 = _str(
+        print_registry["content_sha256"],
+        path,
+        "print_registry.content_sha256",
+    )
+    if not _SHA256.fullmatch(print_registry_sha256):
+        _fail(
+            path,
+            "print_registry.content_sha256 must be a lowercase SHA-256 digest",
+        )
+    if _print_registry_sha256(print_numbers) != print_registry_sha256:
+        _fail(path, "print numbers differ from the permanent print registry snapshot")
+    return next_print_number, print_numbers, print_registry_sha256
+
+
 def _load_manifest(path: Path) -> CatalogManifest:
     data = _load_yaml(path)
     _exact_keys(
@@ -201,6 +273,7 @@ def _load_manifest(path: Path) -> CatalogManifest:
             "sections",
             "inventory",
             "question_audit",
+            "print_registry",
         },
         path,
         "manifest",
@@ -304,6 +377,11 @@ def _load_manifest(path: Path) -> CatalogManifest:
     if not _SHA256.fullmatch(question_audit_sha256):
         _fail(path, "question_audit.content_sha256 must be a lowercase SHA-256 digest")
 
+    next_print_number, print_numbers, print_registry_sha256 = _parse_print_registry(
+        data["print_registry"],
+        path,
+    )
+
     return CatalogManifest(
         source_title=_str(source["title"], path, "source.title"),
         source_sha256=sha256,
@@ -315,6 +393,9 @@ def _load_manifest(path: Path) -> CatalogManifest:
         expected_status_counts=expected_status_counts,
         expected_answer_counts=expected_answer_counts,
         question_audit_sha256=question_audit_sha256,
+        next_print_number=next_print_number,
+        print_numbers=print_numbers,
+        print_registry_sha256=print_registry_sha256,
     )
 
 
@@ -609,6 +690,20 @@ def load_catalog(manifest_path: Path = MANIFEST_PATH) -> Catalog:
         duplicates = sorted(item_id for item_id in set(ids) if ids.count(item_id) > 1)
         _fail(manifest_path, f"duplicate principle IDs: {duplicates}")
     known = set(ids)
+    unknown_print_ids = sorted(set(manifest.print_numbers) - known)
+    if unknown_print_ids:
+        _fail(manifest_path, f"print registry has unknown IDs: {unknown_print_ids}")
+    missing_print_ids = sorted(
+        item.id
+        for item in principles
+        if item.editorial_status == "source_checked"
+        and item.id not in manifest.print_numbers
+    )
+    if missing_print_ids:
+        _fail(
+            manifest_path,
+            f"source-checked items without print numbers: {missing_print_ids}",
+        )
     normalized_names: dict[str, str] = {}
     for item in principles:
         normalized_name = unicodedata.normalize("NFKC", item.principle).strip()
@@ -729,6 +824,55 @@ def load_catalog(manifest_path: Path = MANIFEST_PATH) -> Catalog:
             "question content differs from the independently audited snapshot",
         )
     return Catalog(manifest=manifest, audit=audit, principles=sorted_principles)
+
+
+def validate_print_registry_history(
+    previous_manifest_path: Path,
+    current_manifest_path: Path = MANIFEST_PATH,
+) -> None:
+    current_catalog = load_catalog(current_manifest_path)
+    current = current_catalog.manifest
+    previous_data = _load_yaml(previous_manifest_path)
+    if "print_registry" in previous_data:
+        previous_next, previous_numbers, _ = _parse_print_registry(
+            previous_data["print_registry"],
+            previous_manifest_path,
+        )
+    else:
+        previous_next = 1
+        previous_numbers = {}
+
+    changed = sorted(
+        item_id
+        for item_id, number in previous_numbers.items()
+        if current.print_numbers.get(item_id) != number
+    )
+    if changed:
+        _fail(
+            current_manifest_path,
+            f"existing print numbers must not change or be removed: {changed}",
+        )
+
+    new_ids = set(current.print_numbers) - set(previous_numbers)
+    source_checked_ids = {
+        item.id
+        for item in current_catalog.principles
+        if item.editorial_status == "source_checked"
+    }
+    unpublished_new_ids = sorted(new_ids - source_checked_ids)
+    if unpublished_new_ids:
+        _fail(
+            current_manifest_path,
+            "new print numbers may only be assigned to source-checked items: "
+            f"{unpublished_new_ids}",
+        )
+    new_numbers = sorted(current.print_numbers[item_id] for item_id in new_ids)
+    expected_new_numbers = list(range(previous_next, current.next_print_number))
+    if new_numbers != expected_new_numbers:
+        _fail(
+            current_manifest_path,
+            "new print numbers must append from the previous next_number",
+        )
 
 
 def load_public_progress(path: Path = PUBLIC_PROGRESS_PATH) -> PublicProgressProjection:
