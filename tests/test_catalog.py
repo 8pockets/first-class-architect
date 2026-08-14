@@ -555,6 +555,20 @@ def test_answer_disclosure_has_visible_focus_state(
     assert visually_hidden["clip"] == "rect(0 0 0 0)"
 
 
+def test_screen_typography_prioritizes_the_practice_question(
+    tmp_path: Path,
+) -> None:
+    output = tmp_path / "site"
+    build_site(output, "https://8pockets.github.io/first-class-architect/")
+    css = (output / "assets/styles.css").read_text(encoding="utf-8")
+
+    title = _css_declarations(css, ".card-header h3")
+    question = _css_declarations(css, ".practice-question-text")
+
+    assert title["font-size"] == "clamp(0.9rem, 1.4vw, 1rem)"
+    assert question["font-size"] == "clamp(1.08rem, 1.7vw, 1.18rem)"
+
+
 def test_print_styles_make_a_compact_a4_two_column_question_sheet(
     tmp_path: Path,
 ) -> None:
