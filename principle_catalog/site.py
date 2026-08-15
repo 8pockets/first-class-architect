@@ -27,6 +27,13 @@ from principle_catalog.models import (
     PublicProgress,
     QuestionEdition,
 )
+from principle_catalog.research import (
+    ResearchQueryPair,
+    ResearchQueryRecord,
+    ResearchQueryRegistry,
+    google_search_url,
+    load_research_queries,
+)
 
 
 _OUTPUT_MARKER = ".principle-catalog-output"
@@ -62,6 +69,22 @@ _SUPPORT_LABELS = {
     "statement": "主張",
     "explanation": "説明",
     "conditions": "条件",
+}
+_RESEARCH_STATUS_LABELS = {
+    "draft": "未監査",
+    "source_gap": "根拠確認待ち",
+    "source_checked": "確認済み",
+}
+_RESEARCH_STATEMENT_LABELS = {
+    "verified": "記載確認",
+    "gap": "根拠不足",
+    "unreviewed": "未監査",
+}
+_RESEARCH_COMPLETENESS_LABELS = {
+    "complete": "記載あり",
+    "partial": "一部不足",
+    "missing": "記載なし",
+    "unreviewed": "未監査",
 }
 
 
@@ -568,8 +591,265 @@ def _source_kind_options(catalog: Catalog, items: tuple[Principle, ...]) -> str:
     )
 
 
-def _page(base_url: str) -> str:
-    catalog = load_catalog()
+def _research_search_link(
+    query: str,
+    label: str,
+    kind: str,
+    item_name: str,
+) -> str:
+    accessible_name = f"{item_name}：{label}。Googleで検索（別タブ）"
+    return f"""
+<div class="research-search-option">
+  <p>{escape(label)}</p>
+  <code>{escape(query)}</code>
+  <a href="{escape(google_search_url(query))}" target="_blank"
+    rel="external nofollow noopener noreferrer" referrerpolicy="no-referrer"
+    aria-label="{escape(accessible_name)}"
+    data-research-search="{escape(kind)}">Googleで検索（別タブ）</a>
+</div>""".strip()
+
+
+def _research_card(
+    catalog: Catalog,
+    item: Principle,
+    queries: ResearchQueryPair,
+) -> str:
+    conditions = (
+        "<ul>"
+        + "".join(f"<li>{escape(condition)}</li>" for condition in item.conditions)
+        + "</ul>"
+    )
+    return f"""
+<article class="research-card" id="{escape(item.code)}"
+  data-editorial-status="{escape(item.editorial_status)}">
+  <header class="research-card-header">
+    <div class="badge-row">
+      <span class="type-badge type-{escape(item.type)}">{_TYPE_LABELS[item.type]}</span>
+      <span class="research-status-badge">{escape(_RESEARCH_STATUS_LABELS[item.editorial_status])}</span>
+    </div>
+    <p class="card-id">{escape(item.code)}</p>
+    <h3>{escape(item.principle)}</h3>
+  </header>
+  <p class="research-card-warning"><strong>未確認：</strong>誤り・欠落を含む可能性があります。</p>
+  <dl class="provisional-three-point">
+    <div><dt>暫定結論</dt><dd>{escape(item.conclusion)}</dd></div>
+    <div><dt>暫定理由</dt><dd>{escape(item.reason)}</dd></div>
+    <div><dt>暫定条件</dt><dd>{conditions}</dd></div>
+  </dl>
+  <section class="research-searches" aria-label="自分で根拠を探す">
+    <div class="research-search-heading">
+      <p>SEARCH TRAILS</p>
+      <h4>自分で根拠を探す</h4>
+    </div>
+    {_research_search_link(queries.authoritative, "一次資料を優先して探す", "authoritative", item.principle)}
+    {_research_search_link(queries.explanation, "分かりやすい解説を探す", "explanation", item.principle)}
+    <p class="research-search-note">リンクを開くと、表示中の検索語がGoogleへ送信されます。Googleの検索結果は台帳の根拠ではありません。</p>
+  </section>
+  <footer class="card-source research-card-source">
+    <div class="source-provenance">
+      <span>教材内の掲載位置：{escape(_source_label(catalog, item))}</span>
+      <span>既存台帳の教材内確認（外部一次資料の確認結果ではありません）：主張 {escape(_RESEARCH_STATEMENT_LABELS[item.verification.statement_source])} / 理由 {escape(_RESEARCH_COMPLETENESS_LABELS[item.verification.explanation_completeness])} / 条件 {escape(_RESEARCH_COMPLETENESS_LABELS[item.verification.conditions_completeness])}</span>
+    </div>
+    <a href="#{escape(item.code)}" data-principle-link aria-label="{escape(item.principle)}への固定リンク">#</a>
+  </footer>
+</article>""".strip()
+
+
+def _research_transition(
+    item: Principle,
+    publication: ResearchQueryRecord,
+    base_url: str,
+) -> str:
+    return f"""
+<section class="research-transition legacy-route" id="{escape(publication.code)}"
+  data-research-transition>
+  <p>この調査項目は根拠確認を完了しました。</p>
+  <h2>{escape(item.principle)}</h2>
+  <a href="{escape(urljoin(base_url, f'./#{item.code}'))}">確認済みの学習カードを見る</a>
+</section>""".strip()
+
+
+def _research_migration_transition(
+    catalog: Catalog,
+    key: str,
+    publication: ResearchQueryRecord,
+    registry: ResearchQueryRegistry,
+    base_url: str,
+) -> str:
+    resolution = resolve_principle(catalog, key)
+    if resolution.is_split:
+        operation = "split"
+    elif resolution.migration is not None:
+        operation = resolution.migration.operation
+    else:
+        operation = "rename"
+    visible_targets: list[str] = []
+    unpublished_count = 0
+    for target in resolution.principles:
+        if target.editorial_status == "source_checked":
+            target_url = urljoin(base_url, f"./#{target.code}")
+            destination = "確認済みの学習カード"
+        elif target.id in registry.items:
+            target_url = f"#{registry.items[target.id].code}"
+            destination = "暫定調査カード"
+        else:
+            unpublished_count += 1
+            continue
+        visible_targets.append(
+            f'<li><a href="{escape(target_url)}">{escape(target.principle)}</a>'
+            f"<span>{destination}</span></li>"
+        )
+
+    if operation == "split":
+        message = "この調査項目は複数の項目へ分割されました。"
+    elif operation == "merge":
+        message = "この調査項目は別の項目へ統合されました。"
+    else:
+        message = "この調査項目は別の項目へ移行しました。"
+    destinations = (
+        f'<ul class="research-migration-targets">{"".join(visible_targets)}</ul>'
+        if visible_targets
+        else ""
+    )
+    unpublished = ""
+    if unpublished_count:
+        label = (
+            f"ほか{unpublished_count}件の移行先は根拠確認中のため未公開です。"
+            if visible_targets
+            else "移行先は根拠確認中のため未公開です。"
+        )
+        unpublished = (
+            f'<p data-unpublished-research-targets="{unpublished_count}">'
+            f"{label}</p>"
+        )
+    return f"""
+<section class="research-transition legacy-route" id="{escape(publication.code)}" data-research-migration="{operation}">
+  <p>{message}</p>
+  <h2>調査URLの移行先</h2>
+  {destinations}
+  {unpublished}
+</section>""".strip()
+
+
+def _research_sections(
+    catalog: Catalog,
+    registry: ResearchQueryRegistry,
+    base_url: str,
+) -> tuple[str, str, int]:
+    by_key = {item.id: item for item in catalog.principles}
+    visible = [
+        by_key[key]
+        for key in registry.items
+        if key in by_key and by_key[key].editorial_status != "source_checked"
+    ]
+    by_subtopic: dict[str, list[Principle]] = {}
+    for item in visible:
+        by_subtopic.setdefault(catalog.taxonomy.assignments[item.id], []).append(item)
+
+    nav: list[str] = []
+    sections: list[str] = []
+    for group in sorted(catalog.taxonomy.groups, key=lambda candidate: candidate.order):
+        for subtopic in sorted(group.subtopics, key=lambda candidate: candidate.order):
+            items = by_subtopic.get(subtopic.id, [])
+            if not items:
+                continue
+            nav.append(
+                f'<a href="#research-{escape(subtopic.id)}">'
+                f"{escape(subtopic.title)}<span>{len(items)}</span></a>"
+            )
+            cards = "\n".join(
+                _research_card(catalog, item, registry.items[item.id].current)
+                for item in items
+            )
+            sections.append(
+                f"""
+<section class="research-section" id="research-{escape(subtopic.id)}">
+  <div class="section-heading">
+    <p>{escape(subtopic.id)}</p>
+    <h2>{escape(subtopic.title)}</h2>
+    <span>{len(items)}件</span>
+  </div>
+  <div class="research-card-grid">{cards}</div>
+</section>""".strip()
+            )
+    transitions: list[str] = []
+    for key, publication in registry.items.items():
+        item = by_key.get(key)
+        if item is not None and item.editorial_status == "source_checked":
+            transitions.append(_research_transition(item, publication, base_url))
+        elif item is None:
+            transitions.append(
+                _research_migration_transition(
+                    catalog,
+                    key,
+                    publication,
+                    registry,
+                    base_url,
+                )
+            )
+    return "".join(nav), "\n".join((*sections, *transitions)), len(visible)
+
+
+def _research_page(
+    base_url: str,
+    catalog: Catalog,
+    registry: ResearchQueryRegistry,
+) -> str:
+    nav, sections, visible_count = _research_sections(catalog, registry, base_url)
+    canonical_url = urljoin(base_url, "research/")
+    stylesheet_url = urljoin(base_url, "assets/styles.css")
+    home_url = urljoin(base_url, "./")
+    summary = (
+        "根拠確認中の鉄骨構造項目について、暫定内容と一次資料・解説を探すための"
+        "検索語を明示する調査ページ。"
+    )
+    return f"""<!doctype html>
+<html lang="ja" class="research-document">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>根拠を調べる — 鉄骨構造 原理台帳</title>
+  <meta name="description" content="{escape(summary)}">
+  <meta name="robots" content="noindex,follow">
+  <link rel="canonical" href="{escape(canonical_url)}">
+  <link rel="stylesheet" href="{escape(stylesheet_url)}">
+</head>
+<body class="research-page">
+  <a class="skip-link" href="#research-items">調査項目へ移動</a>
+  <header class="site-header research-header">
+    <div class="eyebrow">FIRST-CLASS ARCHITECT / EVIDENCE REVIEW</div>
+    <p class="research-back-link"><a href="{escape(home_url)}">← 確認済みの原理台帳へ</a></p>
+    <h1>根拠を<br><span>調べる</span></h1>
+    <p class="lead">確認前の内容と、根拠候補へたどるための<strong>検索語</strong>を公開しています。</p>
+    <div class="hero-stats" aria-label="調査ページの項目数">
+      <div><strong>{visible_count}</strong><span>暫定項目</span></div>
+      <div><strong>2</strong><span>検索経路 / 項目</span></div>
+      <div><strong>0</strong><span>確定問題</span></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="research-warning" aria-labelledby="research-warning-title">
+      <p>PROVISIONAL CONTENT</p>
+      <h2 id="research-warning-title">ここは確認済み学習カードではありません</h2>
+      <p>掲載内容は根拠確認前の暫定情報です。誤り、条件不足、複数の論点の混同を含む可能性があります。試験知識として確定せず、リンク先の一次資料や信頼できる解説で該当箇所を確認してください。</p>
+      <p>検索語はCodexによる調査結果を反映した監査スナップショットです。検索や内容更新を自動実行する仕組みではありません。</p>
+    </section>
+
+    <nav class="section-nav research-nav" aria-label="調査分野から探す">{nav}</nav>
+    <div id="research-items" class="research-catalog">{sections}</div>
+  </main>
+
+  <footer class="site-footer">
+    <p>Googleの検索結果は根拠ではありません。確定には出典名・該当箇所・対応範囲の記録が必要です。</p>
+    <p>閲覧専用 / Cookie・外部解析なし / 検索語版：v{registry.version}</p>
+  </footer>
+</body>
+</html>
+"""
+
+
+def _page(base_url: str, catalog: Catalog, research_count: int) -> str:
     projection = load_public_progress()
     validate_public_progress(catalog, projection)
 
@@ -586,6 +866,7 @@ def _page(base_url: str) -> str:
     og_url = urljoin(base_url, "assets/og.png")
     stylesheet_url = urljoin(base_url, "assets/styles.css")
     script_url = urljoin(base_url, "assets/catalog.js")
+    research_url = urljoin(base_url, "research/")
     current_edition = catalog.question_editions.editions[
         catalog.question_editions.current
     ]
@@ -644,6 +925,15 @@ def _page(base_url: str) -> str:
   </header>
 
   <main>
+    <section class="research-entry" aria-labelledby="research-entry-title">
+      <div>
+        <p class="section-kicker">EVIDENCE REVIEW PILOT</p>
+        <h2 id="research-entry-title">耐火・特殊荷重の根拠を調べる</h2>
+        <p>根拠確認中の{research_count}件について、暫定内容とGoogleで自分で確認できる検索語を別ページに分けました。</p>
+      </div>
+      <a href="{escape(research_url)}">暫定項目を見る <span aria-hidden="true">→</span></a>
+    </section>
+
     <section class="controls" aria-labelledby="filter-title">
       <div>
         <p class="section-kicker">FIND A PRINCIPLE</p>
@@ -734,6 +1024,12 @@ def build_site(output: Path, base_url: str) -> tuple[int, int]:
     if not _BASE_URL.fullmatch(base_url):
         raise ValueError("base URL must be an HTTPS directory URL ending in /")
     catalog = load_catalog()
+    research_queries = load_research_queries(catalog)
+    research_count = sum(
+        item.id in research_queries.items
+        and item.editorial_status != "source_checked"
+        for item in catalog.principles
+    )
     published_count = sum(
         item.editorial_status == "source_checked" for item in catalog.principles
     )
@@ -742,9 +1038,16 @@ def build_site(output: Path, base_url: str) -> tuple[int, int]:
     with tempfile.TemporaryDirectory(prefix="principle-site-", dir=output.parent) as raw_temp:
         temp = Path(raw_temp)
         assets = temp / "assets"
+        research = temp / "research"
         assets.mkdir(parents=True)
-        (temp / "index.html").write_text(_page(base_url), encoding="utf-8")
-        (temp / "404.html").write_text(_page(base_url), encoding="utf-8")
+        research.mkdir(parents=True)
+        root_page = _page(base_url, catalog, research_count)
+        (temp / "index.html").write_text(root_page, encoding="utf-8")
+        (temp / "404.html").write_text(root_page, encoding="utf-8")
+        (research / "index.html").write_text(
+            _research_page(base_url, catalog, research_queries),
+            encoding="utf-8",
+        )
         (temp / ".nojekyll").write_text("", encoding="utf-8")
         (temp / _OUTPUT_MARKER).write_text(_OUTPUT_MARKER_CONTENT, encoding="utf-8")
         (assets / "styles.css").write_text(_asset_text("styles.css"), encoding="utf-8")

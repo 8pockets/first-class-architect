@@ -1,0 +1,50 @@
+version: 1
+items:
+  S-K6-FIRE-LOAD-FIXED-PLUS-LIVE-COMBUSTIBLES:
+    code: structure.steel.fire-load-fixed-plus-live-combustibles
+    query_history:
+    - revision: 1
+      authoritative: site:mlit.go.jp 耐火性能検証法 可燃物 発熱量 収納可燃物 内装用建築材料
+      explanation: 耐火設計 火災荷重 固定可燃物 積載可燃物 定義 木材等価
+  S-K6-STEEL-FIRE-STRENGTH-FIREPROOFING:
+    code: structure.steel.fire-strength-fireproofing
+    query_history:
+    - revision: 1
+      authoritative: site:kenken.go.jp 鋼構造部材 高温 耐力低下 耐火被覆 鋼材温度
+      explanation: 鋼材 300℃ 強度低下 耐火被覆 条件 鋼種 加熱時間
+  S-K6-FIREPROOFING-REQUIRED-ABOVE-250C:
+    code: structure.steel.fireproofing-required-above-250c
+    query_history:
+    - revision: 1
+      authoritative: site:kenken.go.jp 鋼材 250℃ 長時間 高温強度 耐火被覆
+      explanation: 鋼材 250℃ 長時間 強度低下 根拠 鋼種 加熱時間
+  S-K6-FIREPROOFING-BOARD-ATTACHMENT:
+    code: structure.steel.fireproofing-board-attachment
+    query_history:
+    - revision: 1
+      authoritative: site:mlit.go.jp 鉄骨 耐火板張り ALC板 けい酸カルシウム板 留付け
+      explanation: 張付け耐火被覆 ALC板 けい酸カルシウム板 工法 特徴
+  S-K6-FIREPROOFING-CAST-IN:
+    code: structure.steel.fireproofing-cast-in
+    query_history:
+    - revision: 1
+      authoritative: site:mlit.go.jp 鉄骨 耐火被覆 コンクリート 打込み 軽量コンクリート
+      explanation: 打込み耐火被覆 軽量コンクリート 工法 特徴 養生 ひび割れ
+  S-K6-FIREPROOFING-PLASTER-FINISH:
+    code: structure.steel.fireproofing-plaster-finish
+    query_history:
+    - revision: 1
+      authoritative: site:mlit.go.jp 鉄骨 ラス張り モルタル塗り 耐火被覆 鉄網モルタル
+      explanation: 塗仕上げ耐火被覆 ラス モルタル 工法 特徴 熟練
+  S-K6-FIREPROOFING-SPRAY-APPLIED:
+    code: structure.steel.fireproofing-spray-applied
+    query_history:
+    - revision: 1
+      authoritative: site:mlit.go.jp 鉄骨 耐火材吹付け ロックウール 飛散 耐火被覆
+      explanation: 吹付け耐火被覆 ロックウール 工法 特徴 雨水 剥落 屋内
+  S-K6-OVERHEAD-CRANE-SEISMIC-WEIGHT:
+    code: structure.steel.overhead-crane-seismic-weight
+    query_history:
+    - revision: 1
+      authoritative: site:aij.or.jp 鋼構造許容応力度設計規準 天井クレーン 走行レール 吊り荷 地震力
+      explanation: 天井走行クレーン 地震力 走行レール上端 吊り荷重量 特別な場合

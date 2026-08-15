@@ -6,6 +6,10 @@
 
 [鉄骨構造 原理台帳（GitHub Pages）](https://8pockets.github.io/first-class-architect/)
 
+[根拠を調べる（耐火・特殊荷重8件の暫定パイロット）](https://8pockets.github.io/first-class-architect/research/)
+
+調査ページは未確認内容を確認済み問題と分けて表示し、一次資料向け・解説向けのGoogle検索語を明示します。検索結果そのものは台帳の根拠ではありません。
+
 ## 現在の方針
 
 - 本質的な理解は、資料なしで理由を説明でき、条件変更後の結論を予測でき、数日後にも再現できる状態とする。
@@ -28,6 +32,7 @@
 - [鉄骨構造の原理台帳](./docs/principle-catalog.md)
 - [鉄骨構造台帳の内容レビュー](./docs/steel-catalog-content-review.md)
 - [鉄骨構造の導入層監査](./docs/steel-coverage-tier-audit.md)
+- [耐火・特殊荷重8項目の根拠監査](./docs/research/steel-fire-special-source-review.md)
 - [旧Wayfinderからの移行記録](./docs/migration.md)
 
 ## 意思決定の進め方

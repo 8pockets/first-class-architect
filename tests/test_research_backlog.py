@@ -84,7 +84,7 @@ def test_authoritative_source_backlog_uses_allowed_sources_and_private_keys() ->
     assert policy["allowed_source_kinds"] == list(
         catalog.manifest.authoritative_source_schema.allowed_kinds
     )
-    assert policy["unresolved_publication"] == "keep_private"
+    assert policy["unresolved_publication"] == "research_page_only"
     assert backlog["priority"] == 4
     assert backlog["required_supports"] == [
         "statement",
