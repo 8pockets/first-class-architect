@@ -75,12 +75,14 @@ def _identity_identifiers(catalog, published_keys: set[str]) -> set[str]:
     return identifiers
 
 
-def test_pages_render_all_taxonomy_groups_with_nested_subtopics(tmp_path: Path) -> None:
+def test_pages_omit_only_the_zero_public_fire_group_from_the_taxonomy_outline(
+    tmp_path: Path,
+) -> None:
     outline = _TaxonomyOutline()
     outline.feed(_built_html(tmp_path))
 
-    assert len(outline.group_depths) == 7
-    assert len(outline.subtopic_depths) == 37
+    assert len(outline.group_depths) == 6
+    assert len(outline.subtopic_depths) == 34
     assert min(outline.subtopic_depths) > min(outline.group_depths)
 
 
@@ -558,7 +560,7 @@ def test_legacy_route_notices_are_hidden_until_their_fragment_is_targeted(
     )
 
 
-def test_published_cards_show_correct_answer_and_semantic_facets_without_disclosure(
+def test_published_cards_put_correct_answer_and_semantic_facets_in_disclosure(
     tmp_path: Path,
 ) -> None:
     catalog = load_catalog()
@@ -569,10 +571,15 @@ def test_published_cards_show_correct_answer_and_semantic_facets_without_disclos
     }
     html = _built_html(tmp_path)
 
-    assert "<details" not in html
     for item in examples.values():
         card = _card_html(html, item.code)
         facets = display_facets(catalog, item)
+        assert '<details class="answer-disclosure" data-answer-disclosure>' in card
+        assert "<summary>" in card
+        disclosure_opening = card.split("<details", maxsplit=1)[1].split(
+            ">", maxsplit=1
+        )[0]
+        assert " open" not in disclosure_opening
         assert (
             f'<p class="answer-key"><span>正解</span>'
             f"<strong>{item.question.correct}</strong></p>" in card

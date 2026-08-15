@@ -21,7 +21,7 @@ def _card_openings(html: str) -> list[str]:
     return re.findall(r'<article class="principle-card"[^>]+>', html)
 
 
-def test_pages_default_to_all_cards_and_expose_cumulative_coverage_filters(
+def test_pages_default_to_all_cards_and_expose_single_and_cumulative_coverage_filters(
     tmp_path: Path,
 ) -> None:
     html = _built_html(tmp_path)
@@ -30,13 +30,17 @@ def test_pages_default_to_all_cards_and_expose_cumulative_coverage_filters(
     assert '<select id="coverage-filter">' in html
     assert '<span>導入層</span>' in html
     all_option = '<option value="all">全て</option>'
-    core_option = '<option value="1">骨格のみ</option>'
-    standard_option = '<option value="2">標準まで</option>'
-    assert all_option in html
-    assert core_option in html
-    assert standard_option in html
-    assert html.index(all_option) < html.index(core_option) < html.index(standard_option)
-    assert '<option value="3">' not in html
+    options = (
+        '<option value="all">全て</option>',
+        '<option value="core-only">骨格のみ</option>',
+        '<option value="standard-only">標準のみ</option>',
+        '<option value="advanced-only">発展のみ</option>',
+        '<option value="core+standard">骨格＋標準</option>',
+    )
+    assert all(option in html for option in options)
+    assert [html.index(option) for option in options] == sorted(
+        html.index(option) for option in options
+    )
 
     tiers = Counter(
         re.search(r'data-coverage-tier="([123])"', card).group(1)  # type: ignore[union-attr]
@@ -49,6 +53,7 @@ def test_pages_default_to_all_cards_and_expose_cumulative_coverage_filters(
     assert sum(tiers.values()) == 116
 
     expected_labels = {"1": "骨格", "2": "標準", "3": "発展"}
+    expected_slugs = {"1": "foundation", "2": "standard", "3": "advanced"}
     for card in cards:
         tier = re.search(r'data-coverage-tier="([123])"', card).group(1)  # type: ignore[union-attr]
         label = unescape(
@@ -59,6 +64,12 @@ def test_pages_default_to_all_cards_and_expose_cumulative_coverage_filters(
         )
         assert label == expected_labels[tier]
         assert label.casefold() in search_text
+    for tier, count in tiers.items():
+        badge = (
+            f'<span class="coverage-badge coverage-{expected_slugs[tier]}">'
+            f"{expected_labels[tier]}</span>"
+        )
+        assert html.count(badge) == count
 
     scheme = re.search(r'data-coverage-scheme="([^"]+)"', html)
     assert scheme is not None
@@ -90,6 +101,10 @@ def test_zero_public_fire_group_shows_only_aggregate_pending_coverage(
         '<p class="coverage-gap-notice">耐火・特殊荷重：根拠確認待ち8件</p>'
         in html
     )
+    assert 'href="#group-steel.fire-special"' not in html
+    assert 'id="group-steel.fire-special"' not in html
+    for subtopic_id in fire_subtopics:
+        assert f'id="subtopic-{subtopic_id}"' not in html
     for item in private_fire_items:
         assert item.id not in html
         assert item.code not in html

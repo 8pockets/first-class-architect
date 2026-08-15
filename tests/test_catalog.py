@@ -360,8 +360,11 @@ def test_build_publishes_only_source_checked_entries(tmp_path: Path) -> None:
     assert html.count("確認問題（自作・2択）") == published
     assert html.count('class="binary-choices"') == published
     assert html.count('class="answer-disclosure"') == published
-    assert "<details" not in html
-    assert "正解と解説を見る" not in html
+    assert html.count(
+        '<details class="answer-disclosure" data-answer-disclosure>'
+    ) == published
+    assert html.count("正解と解説を見る") == published
+    assert html.count("正解と解説を閉じる") == published
     assert html.count('class="answer-key"') == published
     assert all(item.principle in html for item in expected_published)
     assert all(
@@ -458,14 +461,24 @@ def test_build_places_each_question_before_its_three_point_answer_and_searches_i
         )
         assert card_body.index(prompt) < card_body.index('<ul class="binary-choices">')
         assert card_body.index('<ul class="binary-choices">') < card_body.index(
-            '<section class="answer-disclosure"'
+            '<details class="answer-disclosure"'
         )
-        assert card_body.index('<section class="answer-disclosure"') < card_body.index(
+        assert card_body.index('<details class="answer-disclosure"') < card_body.index(
             '<p class="answer-key">'
         )
         answer = card_body.split(
-            '<section class="answer-disclosure"', maxsplit=1
-        )[1].split("</section>", maxsplit=1)[0]
+            '<details class="answer-disclosure"', maxsplit=1
+        )[1].split("</details>", maxsplit=1)[0]
+        disclosure_opening = answer.split(">", maxsplit=1)[0]
+        assert answer.index("正解と解説を見る") < answer.index(
+            '<p class="answer-key">'
+        )
+        assert answer.index("正解と解説を閉じる") < answer.index(
+            '<p class="answer-key">'
+        )
+        assert answer.count(
+            f'<span class="visually-hidden">：{escape(item.principle)}</span>'
+        ) == 2
         assert answer.index('<p class="answer-key">') < answer.index(
             f"<dt>{escape(facets.primary.label)}</dt>"
         )
@@ -476,8 +489,10 @@ def test_build_places_each_question_before_its_three_point_answer_and_searches_i
             f"<dt>{escape(facets.tertiary.label)}</dt>"
         )
         assert "hidden" not in question_opening
-        assert "<details" not in card
-        assert "<summary" not in card
+        assert " open" not in disclosure_opening
+        assert "name=" not in disclosure_opening
+        assert "data-answer-disclosure" in disclosure_opening
+        assert "<summary" in card
         assert "data-principle-link" in card
         assert f'<strong>{item.question.correct}</strong>' in card
         assert prompt in card
@@ -509,7 +524,7 @@ def test_build_is_public_read_only_and_privacy_bounded(tmp_path: Path) -> None:
     assert "recorded_at" not in html
     assert "<form" not in html
     assert 'type="radio"' not in html
-    assert "data-answer" not in html
+    assert re.search(r"\sdata-answer=", html) is None
     assert "fetch(" not in script
     assert "localStorage" not in script
     assert "sessionStorage" not in script
@@ -518,7 +533,7 @@ def test_build_is_public_read_only_and_privacy_bounded(tmp_path: Path) -> None:
     assert "https://" not in script + css
 
 
-def test_answer_content_is_always_visible_without_a_disclosure_control(
+def test_answer_disclosure_is_closed_by_default_and_accessible_on_screen(
     tmp_path: Path,
 ) -> None:
     output = tmp_path / "site"
@@ -526,12 +541,68 @@ def test_answer_content_is_always_visible_without_a_disclosure_control(
     html = (output / "index.html").read_text(encoding="utf-8")
     css = (output / "assets/styles.css").read_text(encoding="utf-8")
 
-    assert html.count('<section class="answer-disclosure"') == 116
-    assert "<details" not in html
-    assert "<summary" not in html
-    assert "disclosure-label" not in html + css
+    assert html.count(
+        '<details class="answer-disclosure" data-answer-disclosure>'
+    ) == 116
+    assert html.count("<summary>") == 116
+    assert html.count('class="disclosure-label-closed"') == 116
+    assert html.count('class="disclosure-label-open"') == 116
+    assert (
+        '<details class="answer-disclosure" data-answer-disclosure open>' not in html
+    )
+    assert 'name="answer-disclosure"' not in html
     answer = _css_declarations(css, ".answer-disclosure")
     assert answer["background"] == "var(--card)"
+    summary = _css_declarations(css, ".answer-disclosure > summary")
+    assert summary["min-height"] == "52px"
+    assert summary["cursor"] == "pointer"
+    focus = _css_declarations(css, ".answer-disclosure > summary:focus-visible")
+    assert focus["outline"] == "3px solid var(--orange)"
+    assert focus["outline-offset"] == "-3px"
+    labels = _css_declarations(
+        css,
+        ".answer-disclosure[open] .disclosure-label-closed,\n"
+        ".answer-disclosure:not([open]) .disclosure-label-open",
+    )
+    assert labels["display"] == "none"
+    visually_hidden = _css_declarations(css, ".visually-hidden")
+    assert visually_hidden["position"] == "absolute"
+    assert visually_hidden["clip"] == "rect(0 0 0 0)"
+    mobile_rules = css.split("@media (max-width: 760px)", maxsplit=1)[1].split(
+        "@media (prefers-reduced-motion: reduce)", maxsplit=1
+    )[0]
+    mobile_summary = _css_declarations(
+        mobile_rules, ".answer-disclosure > summary"
+    )
+    assert mobile_summary["padding-right"] == "18px"
+    assert mobile_summary["padding-left"] == "23px"
+
+
+def test_controls_expose_one_accessible_visible_answer_bulk_toggle(
+    tmp_path: Path,
+) -> None:
+    output = tmp_path / "site"
+    build_site(output, "https://8pockets.github.io/first-class-architect/")
+    html = (output / "index.html").read_text(encoding="utf-8")
+    css = (output / "assets/styles.css").read_text(encoding="utf-8")
+
+    opening = (
+        '<button class="answer-toggle-button" id="toggle-visible-answers" '
+        'type="button" data-toggle-visible-answers aria-controls="catalog" '
+        'aria-pressed="false">'
+    )
+    assert html.count(opening) == 1
+    assert f"{opening}表示中の答えをすべて開く</button>" in html
+    button = _css_declarations(css, ".answer-toggle-button")
+    assert button["min-height"] == "44px"
+    assert button["cursor"] == "pointer"
+    mobile_rules = css.split("@media (max-width: 760px)", maxsplit=1)[1].split(
+        "@media (prefers-reduced-motion: reduce)", maxsplit=1
+    )[0]
+    mobile_button_rules = re.findall(
+        r"\.answer-toggle-button\s*\{([^}]*)\}", mobile_rules
+    )
+    assert any("width: 100%" in rule for rule in mobile_button_rules)
 
 
 def test_screen_typography_prioritizes_the_practice_question(
@@ -600,6 +671,7 @@ def test_print_styles_make_a_compact_a4_two_column_question_sheet(
         "  .site-footer",
     )
     assert hidden["display"] == "none !important"
+    assert ".answer-disclosure" in print_rules
 
 
 def test_nested_404_uses_repository_absolute_asset_urls(tmp_path: Path) -> None:
