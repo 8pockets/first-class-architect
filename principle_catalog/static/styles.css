@@ -794,6 +794,78 @@ a:focus-visible {
   margin-top: 5px;
 }
 
+.reference-search {
+  color: var(--ink);
+  background: #f8f5ee;
+  border-bottom: 1px solid var(--line);
+}
+
+.reference-search > summary {
+  box-sizing: border-box;
+  min-height: 46px;
+  padding: 12px 24px 12px 28px;
+  color: var(--blue);
+  background: #f1eee6;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 800;
+  list-style-position: inside;
+}
+
+.reference-search > summary::marker {
+  color: var(--gold);
+}
+
+.reference-search > summary:hover {
+  color: var(--blue-dark);
+  background: #e9e5dc;
+}
+
+.reference-search > summary:focus-visible {
+  position: relative;
+  z-index: 1;
+  outline: 3px solid var(--orange);
+  outline-offset: -3px;
+}
+
+.reference-search[open] > summary {
+  border-bottom: 1px solid var(--line);
+}
+
+.reference-search-content {
+  padding: 14px 24px 16px 28px;
+}
+
+.reference-search-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.reference-search .research-search-option {
+  gap: 7px;
+  padding: 11px;
+  border-radius: 8px;
+}
+
+.reference-search .research-search-option code {
+  padding: 7px 8px;
+  font-size: 0.69rem;
+  line-height: 1.5;
+}
+
+.reference-search .research-search-option a {
+  min-height: 40px;
+  padding: 6px 10px;
+  font-size: 0.75rem;
+}
+
+.reference-search-note {
+  margin: 10px 0 0;
+  color: var(--ink-soft);
+  font-size: 0.72rem;
+}
+
 .card-source {
   display: flex;
   align-items: center;
@@ -1354,6 +1426,20 @@ a:focus-visible {
     padding-left: 23px;
   }
 
+  .reference-search > summary {
+    padding-right: 18px;
+    padding-left: 23px;
+  }
+
+  .reference-search-content {
+    padding-right: 18px;
+    padding-left: 23px;
+  }
+
+  .reference-search-options {
+    grid-template-columns: 1fr;
+  }
+
   .answer-key {
     margin-right: 18px;
     margin-left: 23px;
@@ -1393,6 +1479,10 @@ a:focus-visible {
 
 @media print {
   .research-entry {
+    display: none !important;
+  }
+
+  .reference-search {
     display: none !important;
   }
 

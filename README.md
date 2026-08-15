@@ -6,9 +6,9 @@
 
 [鉄骨構造 原理台帳（GitHub Pages）](https://8pockets.github.io/first-class-architect/)
 
-[根拠を調べる（耐火・特殊荷重8件の暫定パイロット）](https://8pockets.github.io/first-class-architect/research/)
+[根拠を調べる（未確認100件）](https://8pockets.github.io/first-class-architect/research/)
 
-調査ページは未確認内容を確認済み問題と分けて表示し、一次資料向け・解説向けのGoogle検索語を明示します。検索結果そのものは台帳の根拠ではありません。
+調査ページは未確認内容を確認済み問題と分けて表示し、一次資料向け・解説向けのGoogle検索語を明示します。確認済み116件にも同じ二種類の参考検索を閉じた状態で用意します。検索結果そのものは台帳の根拠ではありません。
 
 ## 現在の方針
 

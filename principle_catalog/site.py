@@ -166,6 +166,25 @@ def _facet_list(facets: CardDisplayFacets) -> str:
     )
 
 
+def _reference_search(
+    item: Principle,
+    queries: ResearchQueryPair | None,
+) -> str:
+    if queries is None:
+        return ""
+    return f"""
+<details class="reference-search">
+  <summary>参考検索<span class="visually-hidden">：{escape(item.principle)}</span></summary>
+  <div class="reference-search-content">
+    <div class="reference-search-options">
+      {_research_search_link(queries.authoritative, "一次資料優先", "authoritative", item.principle)}
+      {_research_search_link(queries.explanation, "分かりやすい解説", "explanation", item.principle)}
+    </div>
+    <p class="reference-search-note">リンクを開くと、表示中の検索語がGoogleへ送信されます。Googleの検索結果は台帳の根拠ではありません。正式資料の該当箇所を確認してください。</p>
+  </div>
+</details>""".strip()
+
+
 def _card(
     catalog: Catalog,
     item: Principle,
@@ -176,6 +195,7 @@ def _card(
     legacy_search_aliases: tuple[str, ...],
     facets: CardDisplayFacets,
     taxonomy_context: tuple[str, ...],
+    research_queries: ResearchQueryPair | None,
 ) -> str:
     if item.question is None:
         raise ValueError(f"published principle has no confirmation question: {item.id}")
@@ -277,6 +297,7 @@ def _card(
       <dl class="three-point">{_facet_list(facets)}</dl>
     </div>
   </details>
+  {_reference_search(item, research_queries)}
   <footer class="card-source">
     <div class="source-provenance">
       <span>{escape(_source_label(catalog, item))}</span>
@@ -314,6 +335,7 @@ def _taxonomy_sections(
     edition: QuestionEdition,
     legacy_anchor_aliases: dict[str, tuple[str, ...]],
     legacy_search_aliases: dict[str, tuple[str, ...]],
+    research_queries: ResearchQueryRegistry,
 ) -> str:
     by_subtopic: dict[str, list[Principle]] = {}
     for item in items:
@@ -338,6 +360,11 @@ def _taxonomy_sections(
                     legacy_search_aliases[item.id],
                     display_facets(catalog, item),
                     (group.id, group.title, subtopic.id, subtopic.title),
+                    (
+                        research_queries.items[item.id].current
+                        if item.id in research_queries.items
+                        else None
+                    ),
                 )
                 for item in subtopic_items
             )
@@ -689,7 +716,10 @@ def _research_migration_transition(
         if target.editorial_status == "source_checked":
             target_url = urljoin(base_url, f"./#{target.code}")
             destination = "確認済みの学習カード"
-        elif target.id in registry.items:
+        elif (
+            target.id in registry.items
+            and registry.items[target.id].has_research_route
+        ):
             target_url = f"#{registry.items[target.id].code}"
             destination = "暫定調査カード"
         else:
@@ -738,9 +768,11 @@ def _research_sections(
 ) -> tuple[str, str, int]:
     by_key = {item.id: item for item in catalog.principles}
     visible = [
-        by_key[key]
-        for key in registry.items
-        if key in by_key and by_key[key].editorial_status != "source_checked"
+        item
+        for item in display_principles(catalog)
+        if item.id in registry.items
+        and registry.items[item.id].has_research_route
+        and item.editorial_status != "source_checked"
     ]
     by_subtopic: dict[str, list[Principle]] = {}
     for item in visible:
@@ -774,6 +806,8 @@ def _research_sections(
             )
     transitions: list[str] = []
     for key, publication in registry.items.items():
+        if not publication.has_research_route:
+            continue
         item = by_key.get(key)
         if item is not None and item.editorial_status == "source_checked":
             transitions.append(_research_transition(item, publication, base_url))
@@ -849,7 +883,11 @@ def _research_page(
 """
 
 
-def _page(base_url: str, catalog: Catalog, research_count: int) -> str:
+def _page(
+    base_url: str,
+    catalog: Catalog,
+    research_queries: ResearchQueryRegistry,
+) -> str:
     projection = load_public_progress()
     validate_public_progress(catalog, projection)
 
@@ -859,6 +897,12 @@ def _page(base_url: str, catalog: Catalog, research_count: int) -> str:
     type_counts = Counter(item.type for item in published)
     progress_counts = Counter(
         projection.items.get(item.id, "unstarted") for item in published
+    )
+    research_count = sum(
+        item.id in research_queries.items
+        and research_queries.items[item.id].has_research_route
+        and item.editorial_status != "source_checked"
+        for item in catalog.principles
     )
     group_count = len(catalog.taxonomy.groups)
     subtopic_count = sum(len(group.subtopics) for group in catalog.taxonomy.groups)
@@ -927,11 +971,11 @@ def _page(base_url: str, catalog: Catalog, research_count: int) -> str:
   <main>
     <section class="research-entry" aria-labelledby="research-entry-title">
       <div>
-        <p class="section-kicker">EVIDENCE REVIEW PILOT</p>
-        <h2 id="research-entry-title">耐火・特殊荷重の根拠を調べる</h2>
+        <p class="section-kicker">EVIDENCE REVIEW</p>
+        <h2 id="research-entry-title">根拠確認中の項目を調べる</h2>
         <p>根拠確認中の{research_count}件について、暫定内容とGoogleで自分で確認できる検索語を別ページに分けました。</p>
       </div>
-      <a href="{escape(research_url)}">暫定項目を見る <span aria-hidden="true">→</span></a>
+      <a href="{escape(research_url)}">根拠確認中の項目を見る <span aria-hidden="true">→</span></a>
     </section>
 
     <section class="controls" aria-labelledby="filter-title">
@@ -996,6 +1040,7 @@ def _page(base_url: str, catalog: Catalog, research_count: int) -> str:
           current_edition,
           legacy_anchor_aliases,
           legacy_search_aliases,
+          research_queries,
       )}
       <p class="empty-state" id="empty-state" hidden>条件に一致する原理がありません。</p>
     </div>
@@ -1025,11 +1070,6 @@ def build_site(output: Path, base_url: str) -> tuple[int, int]:
         raise ValueError("base URL must be an HTTPS directory URL ending in /")
     catalog = load_catalog()
     research_queries = load_research_queries(catalog)
-    research_count = sum(
-        item.id in research_queries.items
-        and item.editorial_status != "source_checked"
-        for item in catalog.principles
-    )
     published_count = sum(
         item.editorial_status == "source_checked" for item in catalog.principles
     )
@@ -1041,7 +1081,7 @@ def build_site(output: Path, base_url: str) -> tuple[int, int]:
         research = temp / "research"
         assets.mkdir(parents=True)
         research.mkdir(parents=True)
-        root_page = _page(base_url, catalog, research_count)
+        root_page = _page(base_url, catalog, research_queries)
         (temp / "index.html").write_text(root_page, encoding="utf-8")
         (temp / "404.html").write_text(root_page, encoding="utf-8")
         (research / "index.html").write_text(

@@ -13,9 +13,13 @@ from urllib.parse import parse_qs, urlencode, urlsplit
 import pytest
 import yaml
 
-from principle_catalog.catalog import CatalogError, load_catalog
+import principle_catalog.site as site_module
+from principle_catalog.catalog import CatalogError, display_principles, load_catalog
 from principle_catalog.research import (
     RESEARCH_QUERIES_PATH,
+    ResearchQueryRecord,
+    ResearchQueryRevision,
+    _release_content_sha256,
     google_search_url,
     load_research_queries,
 )
@@ -36,6 +40,15 @@ PILOT_KEYS = (
 INITIAL_PILOT_QUERY_SHA256 = (
     "85c4ce01e12b8e4b383f5d023f2c16d62ab5674a71e5495bf15c2fc80381c070"
 )
+INITIAL_ALL_QUERY_SHA256 = (
+    "2f6aba0d55cb02e5e97f93197588dce208d0d804403680e4b07951fd00b29fbe"
+)
+INITIAL_RESEARCH_RELEASES = (
+    (
+        "steel-search-v1",
+        "f79947bc249d6b978f1a1bf648ed20599916a334207e61d565a7952109c45743",
+    ),
+)
 
 
 def _build(tmp_path: Path) -> tuple[str, str, Path]:
@@ -49,6 +62,65 @@ def _build(tmp_path: Path) -> tuple[str, str, Path]:
 def _research_card(html: str, code: str) -> str:
     opening = f'<article class="research-card" id="{code}"'
     return html.split(opening, maxsplit=1)[1].split("</article>", maxsplit=1)[0]
+
+
+def _root_card(html: str, code: str) -> str:
+    opening = f'<article class="principle-card" id="{code}"'
+    return html.split(opening, maxsplit=1)[1].split("</article>", maxsplit=1)[0]
+
+
+def _write_query_history_registry(
+    path: Path,
+    catalog,
+    key: str,
+    history: tuple[ResearchQueryRevision, ...],
+) -> None:
+    code = catalog.identities.active[key].code
+    record = ResearchQueryRecord(
+        code=code,
+        research_route_history=("steel-search-v1",),
+        query_history=history,
+    )
+    releases = []
+    for revision in range(1, len(history) + 1):
+        release_id = f"steel-search-v{revision}"
+        revisions = {key: revision}
+        route_lengths = {key: 1}
+        releases.append(
+            {
+                "id": release_id,
+                "revisions": revisions,
+                "route_history_lengths": route_lengths,
+                "content_sha256": _release_content_sha256(
+                    release_id,
+                    {key: record},
+                    revisions,
+                    route_lengths,
+                ),
+            }
+        )
+    document = {
+        "version": 1,
+        "releases": releases,
+        "items": {
+            key: {
+                "code": code,
+                "research_route_history": ["steel-search-v1"],
+                "query_history": [
+                    {
+                        "revision": revision.revision,
+                        "authoritative": revision.authoritative,
+                        "explanation": revision.explanation,
+                    }
+                    for revision in history
+                ],
+            }
+        },
+    }
+    path.write_text(
+        yaml.safe_dump(document, allow_unicode=True, sort_keys=False),
+        encoding="utf-8",
+    )
 
 
 def _retire_research_item(
@@ -108,12 +180,22 @@ def test_research_queries_preserve_the_initial_fire_special_pilot_snapshot() -> 
     raw = yaml.safe_load(RESEARCH_QUERIES_PATH.read_text(encoding="utf-8"))
 
     assert registry.version == 1
+    # The first all-item publication contains active identities only. Future retired
+    # research routes should get a separate history assertion instead of weakening
+    # this immutable initial snapshot.
+    assert len(registry.items) == 216
+    assert set(registry.items) == set(catalog.identities.active)
     assert tuple(registry.items)[: len(PILOT_KEYS)] == PILOT_KEYS
     assert set(PILOT_KEYS) <= set(registry.items)
     assert set(backlog["topic_backlog"]["keys"]) <= set(registry.items)
-    assert set(raw) == {"version", "items"}
+    assert set(raw) == {"version", "releases", "items"}
     assert all(
-        set(record) == {"code", "query_history"}
+        set(release)
+        == {"id", "revisions", "route_history_lengths", "content_sha256"}
+        for release in raw["releases"]
+    )
+    assert all(
+        set(record) == {"code", "research_route_history", "query_history"}
         for record in raw["items"].values()
     )
     assert all(
@@ -122,6 +204,28 @@ def test_research_queries_preserve_the_initial_fire_special_pilot_snapshot() -> 
         for revision in record["query_history"]
     )
     identities = {**catalog.identities.retired, **catalog.identities.active}
+    pending_keys = {
+        item.id
+        for item in catalog.principles
+        if item.editorial_status != "source_checked"
+    }
+    route_keys = {
+        key for key, record in registry.items.items() if record.has_research_route
+    }
+    assert route_keys == pending_keys
+    assert all(
+        record.research_route_history == ("steel-search-v1",)
+        for key, record in registry.items.items()
+        if key in pending_keys
+    )
+    assert all(
+        record.research_route_history == ()
+        for key, record in registry.items.items()
+        if key not in pending_keys
+    )
+    assert tuple(
+        (release.id, release.content_sha256) for release in registry.releases
+    ) == INITIAL_RESEARCH_RELEASES
     for key, record in registry.items.items():
         assert record.code == identities[key].code
         assert tuple(revision.revision for revision in record.query_history) == tuple(
@@ -145,6 +249,27 @@ def test_research_queries_preserve_the_initial_fire_special_pilot_snapshot() -> 
         separators=(",", ":"),
     ).encode()
     assert hashlib.sha256(canonical).hexdigest() == INITIAL_PILOT_QUERY_SHA256
+
+    initial_all_items = [
+        {
+            "key": key,
+            "code": registry.items[key].code,
+            "revision": registry.items[key].query_history[0].revision,
+            "authoritative": registry.items[key].query_history[0].authoritative,
+            "explanation": registry.items[key].query_history[0].explanation,
+        }
+        for key in sorted(registry.items)
+    ]
+    canonical_all_items = json.dumps(
+        initial_all_items,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode()
+    assert (
+        hashlib.sha256(canonical_all_items).hexdigest()
+        == INITIAL_ALL_QUERY_SHA256
+    )
 
     all_queries = [
         query
@@ -176,8 +301,9 @@ def test_research_query_loader_rejects_unknown_keys_and_unsafe_queries(
     catalog = load_catalog()
     unknown = tmp_path / "unknown.yaml"
     unknown.write_text(
-        "version: 1\nitems:\n  S-K6-NOT-A-REAL-KEY:\n"
+        "version: 1\nreleases: []\nitems:\n  S-K6-NOT-A-REAL-KEY:\n"
         "    code: structure.steel.not-a-real-key\n"
+        "    research_route_history: []\n"
         "    query_history:\n"
         "    - revision: 1\n"
         "      authoritative: official source\n"
@@ -190,8 +316,9 @@ def test_research_query_loader_rejects_unknown_keys_and_unsafe_queries(
     unsafe = tmp_path / "unsafe.yaml"
     identity = catalog.identities.active[PILOT_KEYS[0]]
     unsafe.write_text(
-        f"version: 1\nitems:\n  {PILOT_KEYS[0]}:\n"
+        f"version: 1\nreleases: []\nitems:\n  {PILOT_KEYS[0]}:\n"
         f"    code: {identity.code}\n"
+        "    research_route_history: []\n"
         "    query_history:\n"
         "    - revision: 1\n"
         "      authoritative: https://example.com/source\n"
@@ -203,8 +330,9 @@ def test_research_query_loader_rejects_unknown_keys_and_unsafe_queries(
 
     reassigned = tmp_path / "reassigned.yaml"
     reassigned.write_text(
-        f"version: 1\nitems:\n  {PILOT_KEYS[0]}:\n"
+        f"version: 1\nreleases: []\nitems:\n  {PILOT_KEYS[0]}:\n"
         "    code: structure.steel.reassigned-public-code\n"
+        "    research_route_history: []\n"
         "    query_history:\n"
         "    - revision: 1\n"
         "      authoritative: official source\n"
@@ -220,19 +348,23 @@ def test_research_query_history_keeps_old_terms_and_uses_the_latest_revision(
 ) -> None:
     catalog = load_catalog()
     key = PILOT_KEYS[0]
-    code = catalog.identities.active[key].code
     history = tmp_path / "history.yaml"
-    history.write_text(
-        f"version: 1\nitems:\n  {key}:\n"
-        f"    code: {code}\n"
-        "    query_history:\n"
-        "    - revision: 1\n"
-        "      authoritative: original official fire source\n"
-        "      explanation: original fire explanation\n"
-        "    - revision: 2\n"
-        "      authoritative: revised official fire source\n"
-        "      explanation: revised fire explanation\n",
-        encoding="utf-8",
+    _write_query_history_registry(
+        history,
+        catalog,
+        key,
+        (
+            ResearchQueryRevision(
+                revision=1,
+                authoritative="original official fire source",
+                explanation="original fire explanation",
+            ),
+            ResearchQueryRevision(
+                revision=2,
+                authoritative="revised official fire source",
+                explanation="revised fire explanation",
+            ),
+        ),
     )
 
     record = load_research_queries(catalog, history).items[key]
@@ -243,6 +375,177 @@ def test_research_query_history_keeps_old_terms_and_uses_the_latest_revision(
     assert record.explanation == "revised fire explanation"
 
 
+def test_research_release_snapshots_reject_rewrites_and_unreleased_history(
+    tmp_path: Path,
+) -> None:
+    catalog = load_catalog()
+    raw = yaml.safe_load(RESEARCH_QUERIES_PATH.read_text(encoding="utf-8"))
+    key = PILOT_KEYS[0]
+
+    rewritten = tmp_path / "rewritten.yaml"
+    raw["items"][key]["query_history"][0]["authoritative"] += " 改変"
+    rewritten.write_text(
+        yaml.safe_dump(raw, allow_unicode=True, sort_keys=False),
+        encoding="utf-8",
+    )
+    with pytest.raises(CatalogError, match="permanent release snapshot"):
+        load_research_queries(catalog, rewritten)
+
+    history = tmp_path / "unreleased.yaml"
+    revisions = (
+        ResearchQueryRevision(1, "first official source", "first explanation"),
+        ResearchQueryRevision(2, "second official source", "second explanation"),
+    )
+    _write_query_history_registry(history, catalog, key, revisions)
+    uncovered = yaml.safe_load(history.read_text(encoding="utf-8"))
+    uncovered["releases"] = uncovered["releases"][:1]
+    history.write_text(
+        yaml.safe_dump(uncovered, allow_unicode=True, sort_keys=False),
+        encoding="utf-8",
+    )
+    with pytest.raises(CatalogError, match="final release must cover"):
+        load_research_queries(catalog, history)
+
+
+def test_research_release_watermarks_reject_drops_decreases_and_route_removal(
+    tmp_path: Path,
+) -> None:
+    catalog = load_catalog()
+    key = PILOT_KEYS[0]
+    history = tmp_path / "history.yaml"
+    revisions = (
+        ResearchQueryRevision(1, "first official source", "first explanation"),
+        ResearchQueryRevision(2, "second official source", "second explanation"),
+        ResearchQueryRevision(3, "third official source", "third explanation"),
+    )
+    _write_query_history_registry(history, catalog, key, revisions)
+
+    dropped = yaml.safe_load(history.read_text(encoding="utf-8"))
+    dropped["releases"][1]["revisions"] = {}
+    dropped_path = tmp_path / "dropped.yaml"
+    dropped_path.write_text(
+        yaml.safe_dump(dropped, allow_unicode=True, sort_keys=False),
+        encoding="utf-8",
+    )
+    with pytest.raises(CatalogError, match="must not drop"):
+        load_research_queries(catalog, dropped_path)
+
+    decreased = yaml.safe_load(history.read_text(encoding="utf-8"))
+    decreased["releases"][2]["revisions"][key] = 1
+    decreased_path = tmp_path / "decreased.yaml"
+    decreased_path.write_text(
+        yaml.safe_dump(decreased, allow_unicode=True, sort_keys=False),
+        encoding="utf-8",
+    )
+    with pytest.raises(CatalogError, match="must not decrease"):
+        load_research_queries(catalog, decreased_path)
+
+    current = yaml.safe_load(RESEARCH_QUERIES_PATH.read_text(encoding="utf-8"))
+    current["items"][key]["research_route_history"] = []
+    removed_route = tmp_path / "removed-route.yaml"
+    removed_route.write_text(
+        yaml.safe_dump(current, allow_unicode=True, sort_keys=False),
+        encoding="utf-8",
+    )
+    with pytest.raises(CatalogError, match="route-history length"):
+        load_research_queries(catalog, removed_route)
+
+    registry = load_research_queries(catalog)
+    route_release = current["releases"][0]
+    del route_release["route_history_lengths"][key]
+    changed_items = {
+        **registry.items,
+        key: replace(registry.items[key], research_route_history=()),
+    }
+    route_release["content_sha256"] = _release_content_sha256(
+        route_release["id"],
+        changed_items,
+        route_release["revisions"],
+        route_release["route_history_lengths"],
+    )
+    unpublished_route = tmp_path / "unpublished-route.yaml"
+    unpublished_route.write_text(
+        yaml.safe_dump(current, allow_unicode=True, sort_keys=False),
+        encoding="utf-8",
+    )
+    with pytest.raises(CatalogError, match="active unconfirmed"):
+        load_research_queries(catalog, unpublished_route)
+
+
+def test_research_registry_supports_a_route_only_release(tmp_path: Path) -> None:
+    catalog = load_catalog()
+    key = PILOT_KEYS[0]
+    code = catalog.identities.active[key].code
+    record = ResearchQueryRecord(
+        code=code,
+        research_route_history=("steel-search-v2",),
+        query_history=(
+            ResearchQueryRevision(
+                1,
+                "route only official source",
+                "route only explanation",
+            ),
+        ),
+    )
+    items = {key: record}
+    first_revisions = {key: 1}
+    first_routes: dict[str, int] = {}
+    second_routes = {key: 1}
+    document = {
+        "version": 1,
+        "releases": [
+            {
+                "id": "steel-search-v1",
+                "revisions": first_revisions,
+                "route_history_lengths": first_routes,
+                "content_sha256": _release_content_sha256(
+                    "steel-search-v1",
+                    items,
+                    first_revisions,
+                    first_routes,
+                ),
+            },
+            {
+                "id": "steel-search-v2",
+                "revisions": first_revisions,
+                "route_history_lengths": second_routes,
+                "content_sha256": _release_content_sha256(
+                    "steel-search-v2",
+                    items,
+                    first_revisions,
+                    second_routes,
+                ),
+            },
+        ],
+        "items": {
+            key: {
+                "code": code,
+                "research_route_history": ["steel-search-v2"],
+                "query_history": [
+                    {
+                        "revision": 1,
+                        "authoritative": record.authoritative,
+                        "explanation": record.explanation,
+                    }
+                ],
+            }
+        },
+    }
+    path = tmp_path / "route-only.yaml"
+    path.write_text(
+        yaml.safe_dump(document, allow_unicode=True, sort_keys=False),
+        encoding="utf-8",
+    )
+
+    registry = load_research_queries(catalog, path)
+
+    assert tuple(release.id for release in registry.releases) == (
+        "steel-search-v1",
+        "steel-search-v2",
+    )
+    assert registry.items[key].research_route_history == ("steel-search-v2",)
+
+
 def test_research_page_shows_exact_provisional_content_and_keeps_root_confirmed_only(
     tmp_path: Path,
 ) -> None:
@@ -251,22 +554,33 @@ def test_research_page_shows_exact_provisional_content_and_keeps_root_confirmed_
     by_key = {item.id: item for item in catalog.principles}
     registry = load_research_queries(catalog)
     visible_keys = tuple(
-        key
-        for key in registry.items
-        if key in by_key and by_key[key].editorial_status != "source_checked"
+        item.id
+        for item in display_principles(catalog)
+        if item.id in registry.items
+        and registry.items[item.id].has_research_route
+        and item.editorial_status != "source_checked"
+    )
+    confirmed_query_count = sum(
+        item.id in registry.items
+        for item in display_principles(catalog, published_only=True)
     )
 
     assert {
         page.relative_to(output).as_posix() for page in output.rglob("*.html")
     } == {"index.html", "404.html", "research/index.html"}
     assert root.count('class="principle-card"') == 116
+    assert root.count('class="reference-search"') == confirmed_query_count
     assert f'href="{BASE_URL}research/"' in root
     assert f"根拠確認中の{len(visible_keys)}件" in root
+    assert '<h2 id="research-entry-title">根拠確認中の項目を調べる</h2>' in root
+    assert "根拠確認中の項目を見る" in root
+    assert "耐火・特殊荷重の根拠を調べる" not in root
     assert '<meta name="robots" content="noindex,follow">' in research
     assert f'<link rel="canonical" href="{BASE_URL}research/">' in research
     assert f'href="{BASE_URL}"' in research
     assert research.count("誤り・欠落を含む可能性があります") == len(visible_keys)
     assert "Googleの検索結果は台帳の根拠ではありません" in research
+    assert 'data-research-transition' not in research
 
     codes = re.findall(r'<article class="research-card" id="([^"]+)"', research)
     assert codes == [by_key[key].code for key in visible_keys]
@@ -274,8 +588,7 @@ def test_research_page_shows_exact_provisional_content_and_keeps_root_confirmed_
         item = by_key[key]
         card = _research_card(research, item.code)
         assert item.id not in research
-        assert item.code not in root
-        assert item.principle not in root
+        assert f'<article class="principle-card" id="{item.code}"' not in root
         assert escape(item.principle) in card
         assert "<dt>暫定結論</dt>" in card
         assert escape(item.conclusion) in card
@@ -292,6 +605,30 @@ def test_research_page_shows_exact_provisional_content_and_keeps_root_confirmed_
         assert "外部一次資料の確認結果ではありません" in card
 
 
+def test_research_cards_use_canonical_display_order_not_registry_order() -> None:
+    catalog = load_catalog()
+    registry = load_research_queries(catalog)
+    reversed_registry = replace(
+        registry,
+        items=dict(reversed(tuple(registry.items.items()))),
+    )
+    research = _research_page(BASE_URL, catalog, reversed_registry)
+
+    actual_codes = re.findall(
+        r'<article class="research-card" id="([^"]+)"',
+        research,
+    )
+    expected_codes = [
+        item.code
+        for item in display_principles(catalog)
+        if item.id in registry.items
+        and registry.items[item.id].has_research_route
+        and item.editorial_status != "source_checked"
+    ]
+
+    assert actual_codes == expected_codes
+
+
 def test_root_research_entry_is_excluded_from_the_question_sheet(
     tmp_path: Path,
 ) -> None:
@@ -304,40 +641,176 @@ def test_root_research_entry_is_excluded_from_the_question_sheet(
     assert "display: none !important" in match.group(1)
 
 
-def test_google_links_round_trip_visible_queries_and_are_external_only(
+def test_confirmed_card_with_queries_adds_an_independent_collapsed_reference_search(
     tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    _, research, output = _build(tmp_path)
-    registry = load_research_queries(load_catalog())
-    expected_queries = {
-        query
-        for pair in registry.items.values()
-        for query in (pair.authoritative, pair.explanation)
-    }
+    catalog = load_catalog()
+    item = next(
+        candidate
+        for candidate in catalog.principles
+        if candidate.editorial_status == "source_checked"
+    )
+    registry = load_research_queries(catalog)
+    authoritative = "鉄骨構造 確認済み項目 一次資料 検索テスト"
+    explanation = "鉄骨構造 確認済み項目 分かりやすい解説 検索テスト"
+    confirmed_record = ResearchQueryRecord(
+        code=item.code,
+        research_route_history=(),
+        query_history=(
+            ResearchQueryRevision(
+                revision=1,
+                authoritative=authoritative,
+                explanation=explanation,
+            ),
+        ),
+    )
+    changed_registry = replace(
+        registry,
+        items={**registry.items, item.id: confirmed_record},
+    )
+    monkeypatch.setattr(
+        site_module,
+        "load_research_queries",
+        lambda actual_catalog: changed_registry,
+    )
+
+    root, _, output = _build(tmp_path)
+    card = _root_card(root, item.code)
+    reference_opening = '<details class="reference-search">'
+    reference = card.split(reference_opening, maxsplit=1)[1].split(
+        "</details>", maxsplit=1
+    )[0]
+
+    assert root.count('class="principle-card"') == 116
+    assert root.count('class="practice-question"') == 116
+    assert root.count(
+        '<details class="answer-disclosure" data-answer-disclosure>'
+    ) == 116
+    expected_reference_count = sum(
+        candidate.id in changed_registry.items
+        for candidate in display_principles(catalog, published_only=True)
+    )
+    assert root.count(reference_opening) == expected_reference_count
+    assert card.count(reference_opening) == 1
+    assert card.index("</details>") < card.index(reference_opening)
+    assert card.index(reference_opening) < card.index('<footer class="card-source">')
+    assert " open" not in reference_opening
+    assert "data-answer-disclosure" not in reference
+    assert '<summary>参考検索<span class="visually-hidden">' in reference
+    assert f"：{escape(item.principle)}</span>" in reference
+    assert "<p>一次資料優先</p>" in reference
+    assert "<p>分かりやすい解説</p>" in reference
+    assert f"<code>{escape(authoritative)}</code>" in reference
+    assert f"<code>{escape(explanation)}</code>" in reference
+    assert "表示中の検索語がGoogleへ送信されます。" in reference
+    assert "Googleの検索結果は台帳の根拠ではありません。" in reference
+
     links = re.findall(
-        r'<code>(.*?)</code>\s*<a href="([^"]+)" target="_blank"\s*'
+        r'<a href="([^"]+)" target="_blank"\s*'
         r'rel="([^"]+)" referrerpolicy="no-referrer"\s*'
         r'aria-label="([^"]+)"\s*'
         r'data-research-search="(authoritative|explanation)">',
-        research,
-        flags=re.DOTALL,
+        reference,
     )
+    assert len(links) == 2
+    expected = {
+        "authoritative": (authoritative, "一次資料優先"),
+        "explanation": (explanation, "分かりやすい解説"),
+    }
+    for href, rel, accessible_name, kind in links:
+        query, intent = expected[kind]
+        assert unescape(href) == google_search_url(query)
+        assert set(rel.split()) == {
+            "external",
+            "nofollow",
+            "noopener",
+            "noreferrer",
+        }
+        assert unescape(accessible_name) == (
+            f"{item.principle}：{intent}。Googleで検索（別タブ）"
+        )
 
-    assert len(links) == 16
-    assert {unescape(query) for query, _, _, _, _ in links} == expected_queries
-    assert len({unescape(label) for _, _, _, label, _ in links}) == 16
-    for raw_query, href, rel, accessible_name, kind in links:
+    print_rules = (output / "assets/styles.css").read_text(
+        encoding="utf-8"
+    ).split("@media print", maxsplit=1)[1]
+    hidden = re.search(r"\.reference-search\s*\{([^}]*)\}", print_rules)
+    assert hidden is not None
+    assert "display: none !important" in hidden.group(1)
+
+
+def test_google_links_round_trip_visible_queries_and_are_external_only(
+    tmp_path: Path,
+) -> None:
+    root, research, output = _build(tmp_path)
+    catalog = load_catalog()
+    by_key = {item.id: item for item in catalog.principles}
+    registry = load_research_queries(catalog)
+    provisional_records = {
+        key: record
+        for key, record in registry.items.items()
+        if key in by_key
+        and record.has_research_route
+        and by_key[key].editorial_status != "source_checked"
+    }
+    confirmed_records = {
+        key: record
+        for key, record in registry.items.items()
+        if key in by_key and by_key[key].editorial_status == "source_checked"
+    }
+    expected_research_queries = {
+        query
+        for pair in provisional_records.values()
+        for query in (pair.authoritative, pair.explanation)
+    }
+    expected_root_queries = {
+        query
+        for pair in confirmed_records.values()
+        for query in (pair.authoritative, pair.explanation)
+    }
+    expected_accessible_names: dict[str, str] = {}
+    for key, record in provisional_records.items():
+        expected_accessible_names[record.authoritative] = (
+            f"{by_key[key].principle}：一次資料を優先して探す。Googleで検索（別タブ）"
+        )
+        expected_accessible_names[record.explanation] = (
+            f"{by_key[key].principle}：分かりやすい解説を探す。Googleで検索（別タブ）"
+        )
+    for key, record in confirmed_records.items():
+        expected_accessible_names[record.authoritative] = (
+            f"{by_key[key].principle}：一次資料優先。Googleで検索（別タブ）"
+        )
+        expected_accessible_names[record.explanation] = (
+            f"{by_key[key].principle}：分かりやすい解説。Googleで検索（別タブ）"
+        )
+    link_pattern = (
+        r'<div class="research-search-option">\s*<p>[^<]+</p>\s*'
+        r'<code>(.*?)</code>\s*<a href="([^"]+)" target="_blank"\s*'
+        r'rel="([^"]+)" referrerpolicy="no-referrer"\s*'
+        r'aria-label="([^"]+)"\s*'
+        r'data-research-search="(authoritative|explanation)">'
+    )
+    links = re.findall(link_pattern, research, flags=re.DOTALL)
+    root_links = re.findall(link_pattern, root, flags=re.DOTALL)
+
+    assert len(links) == 2 * len(provisional_records)
+    assert len(root_links) == 2 * len(confirmed_records)
+    assert {
+        unescape(query) for query, _, _, _, _ in links
+    } == expected_research_queries
+    assert {
+        unescape(query) for query, _, _, _, _ in root_links
+    } == expected_root_queries
+    all_links = links + root_links
+    assert len({unescape(label) for _, _, _, label, _ in all_links}) == len(
+        all_links
+    )
+    for raw_query, href, rel, accessible_name, kind in all_links:
         query = unescape(raw_query)
         href = unescape(href)
         accessible_name = unescape(accessible_name)
         assert kind in {"authoritative", "explanation"}
-        expected_intent = (
-            "一次資料を優先して探す"
-            if kind == "authoritative"
-            else "分かりやすい解説を探す"
-        )
-        assert expected_intent in accessible_name
-        assert accessible_name.endswith("Googleで検索（別タブ）")
+        assert accessible_name == expected_accessible_names[query]
         assert href == f"https://www.google.com/search?{urlencode({'q': query})}"
         assert href == google_search_url(query)
         parsed = urlsplit(href)
@@ -470,6 +943,17 @@ def test_retired_research_split_exposes_only_previously_public_targets() -> None
         targets=(confirmed.id, never_public.id),
     )
     registry = load_research_queries(changed_catalog)
+    registry = replace(
+        registry,
+        items={
+            key: (
+                replace(record, research_route_history=())
+                if key == never_public.id
+                else record
+            )
+            for key, record in registry.items.items()
+        },
+    )
 
     research = _research_page(BASE_URL, changed_catalog, registry)
 
