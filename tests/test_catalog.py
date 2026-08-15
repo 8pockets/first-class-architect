@@ -558,7 +558,12 @@ def test_answer_disclosure_is_closed_by_default_and_accessible_on_screen(
     assert html.count(
         '<details class="answer-disclosure" data-answer-disclosure>'
     ) == 116
-    assert html.count("<summary>") == 116
+    assert len(
+        re.findall(
+            r'<details class="answer-disclosure" data-answer-disclosure>\s*<summary>',
+            html,
+        )
+    ) == 116
     assert html.count('class="disclosure-label-closed"') == 116
     assert html.count('class="disclosure-label-open"') == 116
     assert (

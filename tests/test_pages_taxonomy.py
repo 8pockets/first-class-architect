@@ -19,6 +19,11 @@ from principle_catalog.catalog import (
     resolve_principle,
 )
 from principle_catalog.models import AuthoritativeSource
+from principle_catalog.research import (
+    ResearchQueryRelease,
+    _release_content_sha256,
+    load_research_queries,
+)
 from principle_catalog.site import build_site
 
 
@@ -269,7 +274,43 @@ def test_issued_active_card_that_becomes_private_keeps_only_generic_routes(
             editions=future_editions,
         ),
     )
+    registry = load_research_queries(catalog)
+    release_id = f"steel-search-v{len(registry.releases) + 1}"
+    changed_record = replace(
+        registry.items[item.id],
+        research_route_history=(
+            *registry.items[item.id].research_route_history,
+            release_id,
+        ),
+    )
+    changed_items = {**registry.items, item.id: changed_record}
+    revisions = dict(registry.releases[-1].revisions)
+    route_history_lengths = {
+        **registry.releases[-1].route_history_lengths,
+        item.id: len(changed_record.research_route_history),
+    }
+    route_release = ResearchQueryRelease(
+        id=release_id,
+        revisions=revisions,
+        route_history_lengths=route_history_lengths,
+        content_sha256=_release_content_sha256(
+            release_id,
+            changed_items,
+            revisions,
+            route_history_lengths,
+        ),
+    )
+    changed_registry = replace(
+        registry,
+        items=changed_items,
+        releases=(*registry.releases, route_release),
+    )
     monkeypatch.setattr(site_module, "load_catalog", lambda: changed_catalog)
+    monkeypatch.setattr(
+        site_module,
+        "load_research_queries",
+        lambda actual_catalog: changed_registry,
+    )
 
     html = _built_html(tmp_path)
 
