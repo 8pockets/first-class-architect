@@ -19,6 +19,10 @@
   font-synthesis: none;
 }
 
+:root.research-document {
+  touch-action: auto;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -186,6 +190,63 @@ main {
   width: min(1160px, calc(100% - 32px));
   margin: 0 auto;
   padding: 54px 0 100px;
+}
+
+.research-entry {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 24px 36px;
+  align-items: center;
+  margin-bottom: 24px;
+  padding: clamp(22px, 4vw, 34px);
+  color: #f8f5ed;
+  background:
+    linear-gradient(125deg, rgb(255 255 255 / 7%) 0 1px, transparent 1px) 0 0 / 28px 28px,
+    #5d3428;
+  border: 1px solid #7b4a3a;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.research-entry .section-kicker {
+  margin-bottom: 7px;
+  color: #ffd2b9;
+}
+
+.research-entry h2,
+.research-entry p {
+  margin-top: 0;
+}
+
+.research-entry h2 {
+  margin-bottom: 8px;
+  font-family: "Hiragino Mincho ProN", "Yu Mincho", serif;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  line-height: 1.35;
+}
+
+.research-entry p:last-child {
+  margin-bottom: 0;
+  color: #f2ddd2;
+}
+
+.research-entry > a {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 10px 18px;
+  color: #4a261e;
+  background: #fff3e9;
+  border-radius: 999px;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.research-entry > a:hover {
+  background: white;
 }
 
 .controls {
@@ -855,6 +916,287 @@ a:focus-visible {
   margin: 0;
 }
 
+.research-page {
+  background:
+    linear-gradient(90deg, rgb(92 52 40 / 4%) 1px, transparent 1px) 0 0 / 28px 28px,
+    linear-gradient(rgb(92 52 40 / 4%) 1px, transparent 1px) 0 0 / 28px 28px,
+    #f5eee6;
+}
+
+.research-header {
+  background:
+    linear-gradient(120deg, rgb(255 255 255 / 8%) 0 1px, transparent 1px) 0 0 / 36px 36px,
+    linear-gradient(30deg, transparent 0 72%, rgb(255 255 255 / 7%) 72% 73%, transparent 73%),
+    #4b2d2a;
+}
+
+.research-back-link {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  margin: 0 0 28px;
+}
+
+.research-back-link a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  padding: 6px 12px;
+  color: #f7dfd2;
+  border: 1px solid rgb(255 255 255 / 26%);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.research-back-link a:hover {
+  color: #4b2d2a;
+  background: #fff3e9;
+}
+
+.research-warning {
+  padding: clamp(24px, 5vw, 42px);
+  color: #40241d;
+  background: #fff6e8;
+  border: 2px solid #b64c2d;
+  border-left-width: 8px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.research-warning > p:first-child {
+  margin: 0 0 6px;
+  color: #a33d22;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.research-warning h2 {
+  margin: 0 0 12px;
+  font-family: "Hiragino Mincho ProN", "Yu Mincho", serif;
+  font-size: clamp(1.45rem, 3.5vw, 2.25rem);
+  line-height: 1.35;
+}
+
+.research-warning p:not(:first-child) {
+  margin: 8px 0 0;
+}
+
+.research-nav {
+  margin-top: 24px;
+}
+
+.research-catalog {
+  margin-top: 52px;
+}
+
+.research-section {
+  scroll-margin-top: 18px;
+}
+
+.research-section + .research-section {
+  margin-top: 76px;
+}
+
+.research-card-grid {
+  display: grid;
+  gap: 24px;
+}
+
+.research-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--card);
+  border: 1px solid #cfb9a9;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgb(69 37 30 / 7%);
+  scroll-margin-top: 18px;
+}
+
+.research-card::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 5px;
+  background: #b64c2d;
+  content: "";
+}
+
+.research-card-header {
+  padding: 23px 26px 20px 30px;
+  border-bottom: 1px solid #e0d2c6;
+}
+
+.research-card-header h3 {
+  margin: 0;
+  font-family: "Hiragino Mincho ProN", "Yu Mincho", serif;
+  font-size: clamp(1.08rem, 2vw, 1.35rem);
+  line-height: 1.45;
+}
+
+.research-status-badge {
+  display: inline-flex;
+  min-height: 25px;
+  align-items: center;
+  padding: 3px 9px;
+  color: #672b1b;
+  background: #f5d5c5;
+  border: 1px solid #e5aa8e;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.research-card-warning {
+  margin: 0;
+  padding: 13px 26px 13px 30px;
+  color: #752d19;
+  background: #fff0e5;
+  border-bottom: 1px solid #e9c3ad;
+  font-size: 0.83rem;
+}
+
+.provisional-three-point {
+  margin: 0;
+  padding: 6px 26px 8px 30px;
+}
+
+.provisional-three-point > div {
+  display: grid;
+  grid-template-columns: 7.2em minmax(0, 1fr);
+  gap: 16px;
+  padding: 18px 0;
+  border-bottom: 1px solid #e6ddd4;
+}
+
+.provisional-three-point > div:last-child {
+  border-bottom: 0;
+}
+
+.provisional-three-point dt {
+  color: #a33d22;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.provisional-three-point dd {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.provisional-three-point ul {
+  margin: 0;
+  padding-left: 1.2em;
+}
+
+.research-searches {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  padding: 24px 26px 24px 30px;
+  background: #f1ece4;
+  border-top: 1px solid #d8cec2;
+}
+
+.research-search-heading,
+.research-search-note {
+  grid-column: 1 / -1;
+}
+
+.research-search-heading p,
+.research-search-heading h4 {
+  margin: 0;
+}
+
+.research-search-heading p {
+  color: #a33d22;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.research-search-heading h4 {
+  font-size: 1.05rem;
+}
+
+.research-search-option {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 10px;
+  padding: 17px;
+  background: #fffdf8;
+  border: 1px solid #cfc3b6;
+  border-radius: 10px;
+}
+
+.research-search-option p {
+  margin: 0;
+  color: #57352b;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.research-search-option code {
+  flex: 1;
+  padding: 10px 11px;
+  overflow-wrap: anywhere;
+  color: #253448;
+  background: #f1f4f5;
+  border-radius: 6px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.75rem;
+  line-height: 1.65;
+}
+
+.research-search-option a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 13px;
+  color: white;
+  background: var(--blue);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.research-search-option a:hover {
+  background: var(--blue-dark);
+}
+
+.research-search-option a:focus-visible {
+  outline-color: var(--blue-dark);
+}
+
+.research-search-note {
+  margin: 0;
+  color: #67594d;
+  font-size: 0.76rem;
+}
+
+.research-card-source {
+  border-top: 1px solid #d8cec2;
+}
+
+.research-transition {
+  margin-top: 32px;
+  padding: 22px 26px;
+  background: #edf4ef;
+  border: 1px solid #afc9b8;
+  border-left: 5px solid var(--green);
+  border-radius: 10px;
+}
+
 [hidden] {
   display: none !important;
 }
@@ -895,6 +1237,14 @@ a:focus-visible {
   main {
     width: min(100% - 24px, 1160px);
     padding-top: 22px;
+  }
+
+  .research-entry {
+    grid-template-columns: 1fr;
+  }
+
+  .research-entry > a {
+    width: 100%;
   }
 
   .controls {
@@ -943,12 +1293,56 @@ a:focus-visible {
     grid-column: 2;
   }
 
+  .research-section .section-heading {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .research-section .section-heading p {
+    grid-column: 1 / -1;
+    overflow-wrap: anywhere;
+  }
+
+  .research-section .section-heading h2 {
+    grid-row: 2;
+    grid-column: 1;
+  }
+
+  .research-section .section-heading span {
+    grid-row: 2;
+    grid-column: 2;
+  }
+
   .card-grid {
     grid-template-columns: 1fr;
   }
 
   .card-header {
     padding: 20px 18px 17px 23px;
+  }
+
+  .research-card-header {
+    padding: 20px 18px 17px 23px;
+  }
+
+  .research-card-warning {
+    padding-right: 18px;
+    padding-left: 23px;
+  }
+
+  .provisional-three-point {
+    padding-right: 18px;
+    padding-left: 23px;
+  }
+
+  .provisional-three-point > div {
+    grid-template-columns: 1fr;
+    gap: 5px;
+    padding: 14px 0;
+  }
+
+  .research-searches {
+    grid-template-columns: 1fr;
+    padding: 20px 18px 20px 23px;
   }
 
   .practice-question {
@@ -998,6 +1392,10 @@ a:focus-visible {
 }
 
 @media print {
+  .research-entry {
+    display: none !important;
+  }
+
   body {
     color: #000;
     background: white;

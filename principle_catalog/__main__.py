@@ -15,6 +15,7 @@ from principle_catalog.catalog import (
     validate_question_edition_history,
 )
 from principle_catalog.progress import write_public_progress
+from principle_catalog.research import load_research_queries
 from principle_catalog.site import build_site
 from principle_catalog.study import (
     new_study_candidates_from_path,
@@ -122,11 +123,13 @@ def main() -> int:
     args = _parser().parse_args()
     if args.command == "validate":
         catalog = load_catalog()
+        research_queries = load_research_queries(catalog)
         progress = load_public_progress()
         validate_public_progress(catalog, progress)
         print(
             f"valid principles={len(catalog.principles)} "
             f"source_checked={sum(item.editorial_status == 'source_checked' for item in catalog.principles)} "
+            f"research_queries={len(research_queries.items)} "
             f"projected_progress={len(progress.items)}"
         )
         return 0

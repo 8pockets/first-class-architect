@@ -405,19 +405,16 @@ def test_build_embeds_each_current_edition_reference_in_its_question_card(
         )
 
 
-def test_every_generated_page_disables_page_zoom(tmp_path: Path) -> None:
+def test_learning_pages_keep_the_existing_disabled_zoom_contract(
+    tmp_path: Path,
+) -> None:
     output = tmp_path / "site"
     build_site(output, "https://8pockets.github.io/first-class-architect/")
     expected = (
         '<meta name="viewport" content="width=device-width, initial-scale=1, '
         'maximum-scale=1, user-scalable=no">'
     )
-    pages = sorted(output.rglob("*.html"))
-
-    assert {page.relative_to(output).as_posix() for page in pages} == {
-        "404.html",
-        "index.html",
-    }
+    pages = [output / "index.html", output / "404.html"]
     for page in pages:
         html = page.read_text(encoding="utf-8")
         assert html.count('name="viewport"') == 1
@@ -426,6 +423,23 @@ def test_every_generated_page_disables_page_zoom(tmp_path: Path) -> None:
     css = (output / "assets/styles.css").read_text(encoding="utf-8")
     root = _css_declarations(css, ":root")
     assert root["touch-action"] == "pan-x pan-y"
+
+
+def test_research_page_allows_browser_zoom(tmp_path: Path) -> None:
+    output = tmp_path / "site"
+    build_site(output, "https://8pockets.github.io/first-class-architect/")
+    html = (output / "research/index.html").read_text(encoding="utf-8")
+    css = (output / "assets/styles.css").read_text(encoding="utf-8")
+
+    assert '<html lang="ja" class="research-document">' in html
+    assert (
+        '<meta name="viewport" content="width=device-width, initial-scale=1">'
+        in html
+    )
+    assert "maximum-scale" not in html
+    assert "user-scalable" not in html
+    research_root = _css_declarations(css, ":root.research-document")
+    assert research_root["touch-action"] == "auto"
 
 
 def test_build_places_each_question_before_its_three_point_answer_and_searches_it(

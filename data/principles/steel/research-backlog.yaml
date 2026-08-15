@@ -6,7 +6,7 @@ policy:
   - jis
   - aij
   - government_spec
-  unresolved_publication: keep_private
+  unresolved_publication: research_page_only
 public_coverage_backlog:
   priority: 1
   description: 本試験知識表のprimary question codeのうち、source_checked項目で未対応のものを優先して照合する。
