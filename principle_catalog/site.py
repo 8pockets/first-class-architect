@@ -233,6 +233,7 @@ def _card(
     <div class="badge-row">
       <span class="type-badge type-{escape(item.type)}">{_TYPE_LABELS[item.type]}</span>
       <span class="progress-badge progress-{escape(progress)}">{_PROGRESS_LABELS[progress]}</span>
+      <span class="coverage-badge coverage-{escape(coverage_tier.slug)}">{escape(coverage_tier.label)}</span>
     </div>
     <p class="card-id">{escape(item.code)} / {escape(question_reference)}</p>
     <h3>{escape(item.principle)}</h3>
@@ -243,12 +244,16 @@ def _card(
     <p class="practice-question-text">{escape(item.question.prompt)}</p>
     <ul class="binary-choices">{_binary_choices(item)}</ul>
   </div>
-  <section class="answer-disclosure" aria-label="正解と解説：{escape(item.principle)}">
+  <details class="answer-disclosure" data-answer-disclosure>
+    <summary>
+      <span class="disclosure-label-closed">正解と解説を見る<span class="visually-hidden">：{escape(item.principle)}</span></span>
+      <span class="disclosure-label-open">正解と解説を閉じる<span class="visually-hidden">：{escape(item.principle)}</span></span>
+    </summary>
     <div class="answer-content">
       <p class="answer-key"><span>正解</span><strong>{escape(item.question.correct)}</strong></p>
       <dl class="three-point">{_facet_list(facets)}</dl>
     </div>
-  </section>
+  </details>
   <footer class="card-source">
     <div class="source-provenance">
       <span>{escape(_source_label(catalog, item))}</span>
@@ -270,6 +275,8 @@ def _taxonomy_nav(catalog: Catalog, items: tuple[Principle, ...]) -> str:
             key in visible_keys and subtopic_id in subtopic_ids
             for key, subtopic_id in taxonomy.assignments.items()
         )
+        if count == 0:
+            continue
         links.append(
             f'<a href="#group-{escape(group.id)}">'
             f"{escape(group.title)}<span>{count}</span></a>"
@@ -334,6 +341,10 @@ def _taxonomy_sections(
             if group_count == 0 and pending_count
             else ""
         )
+        if group_count == 0:
+            if coverage_notice:
+                rendered_groups.append(coverage_notice)
+            continue
         rendered_subtopics_html = "\n".join(rendered_subtopics)
         rendered_groups.append(
             coverage_notice
@@ -670,11 +681,14 @@ def _page(base_url: str) -> str:
         <span>導入層</span>
         <select id="coverage-filter">
           <option value="all">全て</option>
-          <option value="1">骨格のみ</option>
-          <option value="2">標準まで</option>
+          <option value="core-only">骨格のみ</option>
+          <option value="standard-only">標準のみ</option>
+          <option value="advanced-only">発展のみ</option>
+          <option value="core+standard">骨格＋標準</option>
         </select>
       </label>
       <p class="result-summary" aria-live="polite"><strong id="visible-count">{len(published)}</strong>件を表示</p>
+      <button class="answer-toggle-button" id="toggle-visible-answers" type="button" data-toggle-visible-answers aria-controls="catalog" aria-pressed="false">表示中の答えをすべて開く</button>
       <button class="reset-button" id="reset-filters" type="button">条件をリセット</button>
     </section>
 

@@ -6,6 +6,7 @@
   const progress = document.querySelector("#progress-filter");
   const sourceKind = document.querySelector("#source-kind-filter");
   const coverage = document.querySelector("#coverage-filter");
+  const toggleVisibleAnswers = document.querySelector("#toggle-visible-answers");
   const typeButtons = [...document.querySelectorAll("[data-filter-type]")];
   const reset = document.querySelector("#reset-filters");
   const visibleCount = document.querySelector("#visible-count");
@@ -27,10 +28,54 @@
   const cards = [...root.querySelectorAll(".principle-card")];
   const sections = [...root.querySelectorAll("[data-catalog-section]")];
   const groups = [...root.querySelectorAll("[data-catalog-group]")];
+  const disclosures = [...root.querySelectorAll("[data-answer-disclosure]")];
+  const principleLinks = [...root.querySelectorAll("[data-principle-link]")];
   let activeType = "all";
+  let bulkAnswersOpen = false;
+
+  const coverageTiersByFilter = new Map([
+    ["all", [1, 2, 3]],
+    ["core-only", [1]],
+    ["standard-only", [2]],
+    ["advanced-only", [3]],
+    ["core+standard", [1, 2]],
+  ]);
 
   const normalize = (value) =>
     value.normalize("NFKC").toLocaleLowerCase("ja-JP").trim();
+
+  const matchesCoverageFilter = (filter, tier) =>
+    coverageTiersByFilter.get(filter)?.includes(tier) ?? false;
+
+  const updateBulkAnswerButton = (answersOpen) => {
+    if (!toggleVisibleAnswers) return;
+    toggleVisibleAnswers.textContent = answersOpen
+      ? "表示中の答えをすべて閉じる"
+      : "表示中の答えをすべて開く";
+    toggleVisibleAnswers.setAttribute("aria-pressed", String(answersOpen));
+  };
+
+  const visibleAnswerDisclosures = () =>
+    disclosures.filter((disclosure) => {
+      const card = disclosure.closest(".principle-card");
+      return card && !card.hidden;
+    });
+
+  const syncBulkAnswerButton = () => {
+    const visibleDisclosures = visibleAnswerDisclosures();
+    updateBulkAnswerButton(
+      visibleDisclosures.length > 0 &&
+        visibleDisclosures.every((disclosure) => disclosure.open),
+    );
+  };
+
+  const closeAnswers = () => {
+    for (const disclosure of disclosures) {
+      disclosure.open = false;
+    }
+    bulkAnswersOpen = false;
+    updateBulkAnswerButton(false);
+  };
 
   const updatePrintPositions = () => {
     let position = 0;
@@ -63,7 +108,42 @@
     document.getElementById(canonical)?.scrollIntoView();
   };
 
+  closeAnswers();
+
+  for (const disclosure of disclosures) {
+    disclosure.addEventListener("toggle", () => {
+      if (bulkAnswersOpen) return;
+      if (disclosure.open) {
+        for (const candidate of disclosures) {
+          if (candidate !== disclosure) candidate.open = false;
+        }
+      }
+      syncBulkAnswerButton();
+    });
+
+    disclosure.querySelector("summary")?.addEventListener("click", () => {
+      bulkAnswersOpen = false;
+      updateBulkAnswerButton(false);
+      for (const candidate of disclosures) {
+        if (candidate !== disclosure) candidate.open = false;
+      }
+    });
+  }
+
+  toggleVisibleAnswers?.addEventListener("click", () => {
+    const visibleDisclosures = visibleAnswerDisclosures();
+    const shouldOpen =
+      visibleDisclosures.length > 0 &&
+      visibleDisclosures.some((disclosure) => !disclosure.open);
+    bulkAnswersOpen = shouldOpen;
+    for (const disclosure of visibleDisclosures) {
+      disclosure.open = shouldOpen;
+    }
+    updateBulkAnswerButton(shouldOpen);
+  });
+
   const applyFilters = () => {
+    closeAnswers();
     const query = normalize(search.value);
     const activeProgress = progress.value;
     const activeSourceKind = sourceKind.value;
@@ -80,8 +160,8 @@
         activeSourceKind === "all" || sourceKinds.includes(activeSourceKind);
       const coverageTier = Number(card.dataset.coverageTier);
       const matchesCoverage =
-        activeCoverage === "all" ||
-        (Number.isInteger(coverageTier) && coverageTier <= Number(activeCoverage));
+        Number.isInteger(coverageTier) &&
+        matchesCoverageFilter(activeCoverage, coverageTier);
       const visible =
         matchesQuery &&
         matchesType &&
@@ -106,8 +186,16 @@
   };
 
   canonicalizeFragment();
-  window.addEventListener("hashchange", canonicalizeFragment);
+  window.addEventListener("pageshow", closeAnswers);
+  window.addEventListener("hashchange", () => {
+    closeAnswers();
+    canonicalizeFragment();
+  });
   window.addEventListener("beforeprint", updatePrintPositions);
+
+  for (const link of principleLinks) {
+    link.addEventListener("click", closeAnswers);
+  }
 
   search.addEventListener("input", applyFilters);
   progress.addEventListener("change", applyFilters);
