@@ -794,76 +794,41 @@ a:focus-visible {
   margin-top: 5px;
 }
 
-.reference-search {
-  color: var(--ink);
+.explanation-search-action {
+  padding: 14px 24px 16px 28px;
   background: #f8f5ee;
   border-bottom: 1px solid var(--line);
 }
 
-.reference-search > summary {
+.explanation-search-button {
+  display: inline-flex;
   box-sizing: border-box;
-  min-height: 46px;
-  padding: 12px 24px 12px 28px;
-  color: var(--blue);
-  background: #f1eee6;
-  cursor: pointer;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  color: white;
+  background: var(--blue);
+  border-radius: 8px;
   font-size: 0.8rem;
   font-weight: 800;
-  list-style-position: inside;
+  text-decoration: none;
 }
 
-.reference-search > summary::marker {
-  color: var(--gold);
+.explanation-search-button:hover {
+  background: var(--blue-dark);
 }
 
-.reference-search > summary:hover {
-  color: var(--blue-dark);
-  background: #e9e5dc;
+.explanation-search-button:focus-visible {
+  outline: 3px solid var(--blue-dark);
+  outline-offset: 3px;
 }
 
-.reference-search > summary:focus-visible {
-  position: relative;
-  z-index: 1;
-  outline: 3px solid var(--orange);
-  outline-offset: -3px;
-}
-
-.reference-search[open] > summary {
-  border-bottom: 1px solid var(--line);
-}
-
-.reference-search-content {
-  padding: 14px 24px 16px 28px;
-}
-
-.reference-search-options {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-}
-
-.reference-search .research-search-option {
-  gap: 7px;
-  padding: 11px;
-  border-radius: 8px;
-}
-
-.reference-search .research-search-option code {
-  padding: 7px 8px;
-  font-size: 0.69rem;
-  line-height: 1.5;
-}
-
-.reference-search .research-search-option a {
-  min-height: 40px;
-  padding: 6px 10px;
-  font-size: 0.75rem;
-}
-
-.reference-search-note {
-  margin: 10px 0 0;
-  color: var(--ink-soft);
-  font-size: 0.72rem;
+.research-card .explanation-search-action {
+  padding: 20px 26px 20px 30px;
+  background: #f1ece4;
+  border-top: 1px solid #d8cec2;
+  border-bottom: 0;
 }
 
 .card-source {
@@ -1167,95 +1132,6 @@ a:focus-visible {
   padding-left: 1.2em;
 }
 
-.research-searches {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-  padding: 24px 26px 24px 30px;
-  background: #f1ece4;
-  border-top: 1px solid #d8cec2;
-}
-
-.research-search-heading,
-.research-search-note {
-  grid-column: 1 / -1;
-}
-
-.research-search-heading p,
-.research-search-heading h4 {
-  margin: 0;
-}
-
-.research-search-heading p {
-  color: #a33d22;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.68rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-}
-
-.research-search-heading h4 {
-  font-size: 1.05rem;
-}
-
-.research-search-option {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  gap: 10px;
-  padding: 17px;
-  background: #fffdf8;
-  border: 1px solid #cfc3b6;
-  border-radius: 10px;
-}
-
-.research-search-option p {
-  margin: 0;
-  color: #57352b;
-  font-size: 0.78rem;
-  font-weight: 800;
-}
-
-.research-search-option code {
-  flex: 1;
-  padding: 10px 11px;
-  overflow-wrap: anywhere;
-  color: #253448;
-  background: #f1f4f5;
-  border-radius: 6px;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.75rem;
-  line-height: 1.65;
-}
-
-.research-search-option a {
-  display: inline-flex;
-  min-height: 44px;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 13px;
-  color: white;
-  background: var(--blue);
-  border-radius: 8px;
-  font-size: 0.8rem;
-  font-weight: 800;
-  text-decoration: none;
-}
-
-.research-search-option a:hover {
-  background: var(--blue-dark);
-}
-
-.research-search-option a:focus-visible {
-  outline-color: var(--blue-dark);
-}
-
-.research-search-note {
-  margin: 0;
-  color: #67594d;
-  font-size: 0.76rem;
-}
-
 .research-card-source {
   border-top: 1px solid #d8cec2;
 }
@@ -1412,9 +1288,13 @@ a:focus-visible {
     padding: 14px 0;
   }
 
-  .research-searches {
-    grid-template-columns: 1fr;
+  .explanation-search-action,
+  .research-card .explanation-search-action {
     padding: 20px 18px 20px 23px;
+  }
+
+  .explanation-search-button {
+    width: 100%;
   }
 
   .practice-question {
@@ -1424,20 +1304,6 @@ a:focus-visible {
   .answer-disclosure > summary {
     padding-right: 18px;
     padding-left: 23px;
-  }
-
-  .reference-search > summary {
-    padding-right: 18px;
-    padding-left: 23px;
-  }
-
-  .reference-search-content {
-    padding-right: 18px;
-    padding-left: 23px;
-  }
-
-  .reference-search-options {
-    grid-template-columns: 1fr;
   }
 
   .answer-key {
@@ -1482,7 +1348,8 @@ a:focus-visible {
     display: none !important;
   }
 
-  .reference-search {
+  .explanation-search-action,
+  .explanation-search-button {
     display: none !important;
   }
 

@@ -69,6 +69,18 @@ def _root_card(html: str, code: str) -> str:
     return html.split(opening, maxsplit=1)[1].split("</article>", maxsplit=1)[0]
 
 
+def _explanation_search_links(
+    html: str,
+) -> list[tuple[str, str, str, str]]:
+    return re.findall(
+        r'<a class="explanation-search-button" href="([^"]+)" target="_blank"\s*'
+        r'rel="([^"]+)" referrerpolicy="no-referrer"\s*'
+        r'aria-label="([^"]+)"\s*'
+        r'data-research-search="explanation">([^<]+)</a>',
+        html,
+    )
+
+
 def _write_query_history_registry(
     path: Path,
     catalog,
@@ -569,7 +581,7 @@ def test_research_page_shows_exact_provisional_content_and_keeps_root_confirmed_
         page.relative_to(output).as_posix() for page in output.rglob("*.html")
     } == {"index.html", "404.html", "research/index.html"}
     assert root.count('class="principle-card"') == 116
-    assert root.count('class="reference-search"') == confirmed_query_count
+    assert root.count('class="explanation-search-button"') == confirmed_query_count
     assert f'href="{BASE_URL}research/"' in root
     assert f"根拠確認中の{len(visible_keys)}件" in root
     assert '<h2 id="research-entry-title">根拠確認中の項目を調べる</h2>' in root
@@ -641,7 +653,7 @@ def test_root_research_entry_is_excluded_from_the_question_sheet(
     assert "display: none !important" in match.group(1)
 
 
-def test_confirmed_card_with_queries_adds_an_independent_collapsed_reference_search(
+def test_confirmed_card_with_queries_adds_one_always_visible_explanation_button(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
@@ -677,69 +689,54 @@ def test_confirmed_card_with_queries_adds_an_independent_collapsed_reference_sea
 
     root, _, output = _build(tmp_path)
     card = _root_card(root, item.code)
-    reference_opening = '<details class="reference-search">'
-    reference = card.split(reference_opening, maxsplit=1)[1].split(
-        "</details>", maxsplit=1
-    )[0]
+    action_opening = '<div class="explanation-search-action">'
+    action = card.split(action_opening, maxsplit=1)[1].split("</div>", maxsplit=1)[0]
 
     assert root.count('class="principle-card"') == 116
     assert root.count('class="practice-question"') == 116
     assert root.count(
         '<details class="answer-disclosure" data-answer-disclosure>'
     ) == 116
-    expected_reference_count = sum(
+    expected_button_count = sum(
         candidate.id in changed_registry.items
         for candidate in display_principles(catalog, published_only=True)
     )
-    assert root.count(reference_opening) == expected_reference_count
-    assert card.count(reference_opening) == 1
-    assert card.index("</details>") < card.index(reference_opening)
-    assert card.index(reference_opening) < card.index('<footer class="card-source">')
-    assert " open" not in reference_opening
-    assert "data-answer-disclosure" not in reference
-    assert '<summary>参考検索<span class="visually-hidden">' in reference
-    assert f"：{escape(item.principle)}</span>" in reference
-    assert "<p>一次資料優先</p>" in reference
-    assert "<p>分かりやすい解説</p>" in reference
-    assert f"<code>{escape(authoritative)}</code>" in reference
-    assert f"<code>{escape(explanation)}</code>" in reference
-    assert "表示中の検索語がGoogleへ送信されます。" in reference
-    assert "Googleの検索結果は台帳の根拠ではありません。" in reference
+    assert root.count(action_opening) == expected_button_count
+    assert root.count('class="explanation-search-button"') == expected_button_count
+    assert card.count(action_opening) == 1
+    assert card.count('class="explanation-search-button"') == 1
+    assert card.index("</details>") < card.index(action_opening)
+    assert card.index(action_opening) < card.index('<footer class="card-source">')
+    assert "<details" not in action
+    assert "<summary" not in action
+    assert "<code" not in action
+    assert authoritative not in action
+    assert "一次資料優先" not in action
 
-    links = re.findall(
-        r'<a href="([^"]+)" target="_blank"\s*'
-        r'rel="([^"]+)" referrerpolicy="no-referrer"\s*'
-        r'aria-label="([^"]+)"\s*'
-        r'data-research-search="(authoritative|explanation)">',
-        reference,
-    )
-    assert len(links) == 2
-    expected = {
-        "authoritative": (authoritative, "一次資料優先"),
-        "explanation": (explanation, "分かりやすい解説"),
+    links = _explanation_search_links(action)
+    assert len(links) == 1
+    href, rel, accessible_name, visible_label = links[0]
+    assert unescape(href) == google_search_url(explanation)
+    assert set(rel.split()) == {
+        "external",
+        "nofollow",
+        "noopener",
+        "noreferrer",
     }
-    for href, rel, accessible_name, kind in links:
-        query, intent = expected[kind]
-        assert unescape(href) == google_search_url(query)
-        assert set(rel.split()) == {
-            "external",
-            "nofollow",
-            "noopener",
-            "noreferrer",
-        }
-        assert unescape(accessible_name) == (
-            f"{item.principle}：{intent}。Googleで検索（別タブ）"
-        )
+    assert unescape(accessible_name) == (
+        f"{item.principle}：分かりやすい解説をGoogleで検索（別タブ）"
+    )
+    assert visible_label == "分かりやすい解説"
 
     print_rules = (output / "assets/styles.css").read_text(
         encoding="utf-8"
     ).split("@media print", maxsplit=1)[1]
-    hidden = re.search(r"\.reference-search\s*\{([^}]*)\}", print_rules)
+    hidden = re.search(r"\.explanation-search-button\s*\{([^}]*)\}", print_rules)
     assert hidden is not None
     assert "display: none !important" in hidden.group(1)
 
 
-def test_google_links_round_trip_visible_queries_and_are_external_only(
+def test_every_card_has_one_direct_explanation_search_and_no_visible_search_trails(
     tmp_path: Path,
 ) -> None:
     root, research, output = _build(tmp_path)
@@ -759,60 +756,59 @@ def test_google_links_round_trip_visible_queries_and_are_external_only(
         if key in by_key and by_key[key].editorial_status == "source_checked"
     }
     expected_research_queries = {
-        query
-        for pair in provisional_records.values()
-        for query in (pair.authoritative, pair.explanation)
+        record.explanation for record in provisional_records.values()
     }
     expected_root_queries = {
-        query
-        for pair in confirmed_records.values()
-        for query in (pair.authoritative, pair.explanation)
+        record.explanation for record in confirmed_records.values()
     }
-    expected_accessible_names: dict[str, str] = {}
-    for key, record in provisional_records.items():
-        expected_accessible_names[record.authoritative] = (
-            f"{by_key[key].principle}：一次資料を優先して探す。Googleで検索（別タブ）"
+    expected_accessible_names = {
+        record.explanation: (
+            f"{by_key[key].principle}：分かりやすい解説をGoogleで検索（別タブ）"
         )
-        expected_accessible_names[record.explanation] = (
-            f"{by_key[key].principle}：分かりやすい解説を探す。Googleで検索（別タブ）"
-        )
-    for key, record in confirmed_records.items():
-        expected_accessible_names[record.authoritative] = (
-            f"{by_key[key].principle}：一次資料優先。Googleで検索（別タブ）"
-        )
-        expected_accessible_names[record.explanation] = (
-            f"{by_key[key].principle}：分かりやすい解説。Googleで検索（別タブ）"
-        )
-    link_pattern = (
-        r'<div class="research-search-option">\s*<p>[^<]+</p>\s*'
-        r'<code>(.*?)</code>\s*<a href="([^"]+)" target="_blank"\s*'
-        r'rel="([^"]+)" referrerpolicy="no-referrer"\s*'
-        r'aria-label="([^"]+)"\s*'
-        r'data-research-search="(authoritative|explanation)">'
-    )
-    links = re.findall(link_pattern, research, flags=re.DOTALL)
-    root_links = re.findall(link_pattern, root, flags=re.DOTALL)
+        for key, record in registry.items.items()
+        if key in by_key
+    }
+    links = _explanation_search_links(research)
+    root_links = _explanation_search_links(root)
 
-    assert len(links) == 2 * len(provisional_records)
-    assert len(root_links) == 2 * len(confirmed_records)
-    assert {
-        unescape(query) for query, _, _, _, _ in links
-    } == expected_research_queries
-    assert {
-        unescape(query) for query, _, _, _, _ in root_links
-    } == expected_root_queries
+    assert len(links) == len(provisional_records) == 100
+    assert len(root_links) == len(confirmed_records) == 116
+    assert len(links) + len(root_links) == 216
+    assert research.count('href="https://www.google.com/search?') == 100
+    assert root.count('href="https://www.google.com/search?') == 116
+    for key in provisional_records:
+        card = _research_card(research, by_key[key].code)
+        assert card.count('class="explanation-search-button"') == 1
+        assert card.index("</dl>") < card.index(
+            '<div class="explanation-search-action">'
+        )
+        assert card.index('<div class="explanation-search-action">') < card.index(
+            '<footer class="card-source research-card-source">'
+        )
+    for key in confirmed_records:
+        card = _root_card(root, by_key[key].code)
+        assert card.count('class="explanation-search-button"') == 1
+    actual_research_queries = {
+        parse_qs(urlsplit(unescape(href)).query, strict_parsing=True)["q"][0]
+        for href, _, _, _ in links
+    }
+    actual_root_queries = {
+        parse_qs(urlsplit(unescape(href)).query, strict_parsing=True)["q"][0]
+        for href, _, _, _ in root_links
+    }
+    assert actual_research_queries == expected_research_queries
+    assert actual_root_queries == expected_root_queries
+
     all_links = links + root_links
-    assert len({unescape(label) for _, _, _, label, _ in all_links}) == len(
-        all_links
-    )
-    for raw_query, href, rel, accessible_name, kind in all_links:
-        query = unescape(raw_query)
+    assert len({unescape(label) for _, _, label, _ in all_links}) == 216
+    for href, rel, accessible_name, visible_label in all_links:
         href = unescape(href)
         accessible_name = unescape(accessible_name)
-        assert kind in {"authoritative", "explanation"}
+        query = parse_qs(urlsplit(href).query, strict_parsing=True)["q"][0]
         assert accessible_name == expected_accessible_names[query]
         assert href == f"https://www.google.com/search?{urlencode({'q': query})}"
         assert href == google_search_url(query)
+        assert visible_label == "分かりやすい解説"
         parsed = urlsplit(href)
         assert (parsed.scheme, parsed.netloc, parsed.path) == (
             "https",
@@ -822,13 +818,55 @@ def test_google_links_round_trip_visible_queries_and_are_external_only(
         assert parse_qs(parsed.query, strict_parsing=True) == {"q": [query]}
         assert set(rel.split()) == {"external", "nofollow", "noopener", "noreferrer"}
 
+    for html in (root, research):
+        assert 'data-research-search="authoritative"' not in html
+        assert 'class="reference-search"' not in html
+        assert 'class="research-searches"' not in html
+        assert "SEARCH TRAILS" not in html
+        assert "一次資料優先" not in html
+        assert "一次資料を優先して探す" not in html
+    for record in registry.items.values():
+        assert escape(record.authoritative) not in root
+        assert escape(record.authoritative) not in research
+        assert escape(record.explanation) not in root
+        assert escape(record.explanation) not in research
+
+    disclosure = (
+        "「分かりやすい解説」を開くと、項目ごとの解説向け検索語がGoogleへ"
+        "送信されます。Googleの検索結果は台帳の根拠ではありません。"
+    )
+    assert root.count(disclosure) == 1
+    assert research.count(disclosure) == 1
+    assert root.index(disclosure) < root.index('<section class="controls"')
+    warning = research.split(
+        '<section class="research-warning"', maxsplit=1
+    )[1].split("</section>", maxsplit=1)[0]
+    assert disclosure in warning
+
     css = (output / "assets/styles.css").read_text(encoding="utf-8")
     focus = re.search(
-        r"\.research-search-option a:focus-visible\s*\{([^}]*)\}",
+        r"\.explanation-search-button:focus-visible\s*\{([^}]*)\}",
         css,
     )
     assert focus is not None
-    assert "outline-color: var(--blue-dark)" in focus.group(1)
+    assert "outline: 3px solid var(--blue-dark)" in focus.group(1)
+    button = re.search(r"\.explanation-search-button\s*\{([^}]*)\}", css)
+    assert button is not None
+    assert "min-height: 44px" in button.group(1)
+    mobile_rules = css.split("@media (max-width: 760px)", maxsplit=1)[1].split(
+        "@media (prefers-reduced-motion", maxsplit=1
+    )[0]
+    mobile_button = re.search(
+        r"\.explanation-search-button\s*\{([^}]*)\}", mobile_rules
+    )
+    assert mobile_button is not None
+    assert "width: 100%" in mobile_button.group(1)
+    print_rules = css.split("@media print", maxsplit=1)[1]
+    print_button = re.search(
+        r"\.explanation-search-button\s*\{([^}]*)\}", print_rules
+    )
+    assert print_button is not None
+    assert "display: none !important" in print_button.group(1)
 
 
 def test_research_page_excludes_learning_and_private_state_features(

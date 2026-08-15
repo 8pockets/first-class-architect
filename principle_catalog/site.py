@@ -166,23 +166,22 @@ def _facet_list(facets: CardDisplayFacets) -> str:
     )
 
 
-def _reference_search(
+def _explanation_search_action(
     item: Principle,
     queries: ResearchQueryPair | None,
 ) -> str:
     if queries is None:
         return ""
+    accessible_name = (
+        f"{item.principle}：分かりやすい解説をGoogleで検索（別タブ）"
+    )
     return f"""
-<details class="reference-search">
-  <summary>参考検索<span class="visually-hidden">：{escape(item.principle)}</span></summary>
-  <div class="reference-search-content">
-    <div class="reference-search-options">
-      {_research_search_link(queries.authoritative, "一次資料優先", "authoritative", item.principle)}
-      {_research_search_link(queries.explanation, "分かりやすい解説", "explanation", item.principle)}
-    </div>
-    <p class="reference-search-note">リンクを開くと、表示中の検索語がGoogleへ送信されます。Googleの検索結果は台帳の根拠ではありません。正式資料の該当箇所を確認してください。</p>
-  </div>
-</details>""".strip()
+<div class="explanation-search-action">
+  <a class="explanation-search-button" href="{escape(google_search_url(queries.explanation))}" target="_blank"
+    rel="external nofollow noopener noreferrer" referrerpolicy="no-referrer"
+    aria-label="{escape(accessible_name)}"
+    data-research-search="explanation">分かりやすい解説</a>
+</div>""".strip()
 
 
 def _card(
@@ -297,7 +296,7 @@ def _card(
       <dl class="three-point">{_facet_list(facets)}</dl>
     </div>
   </details>
-  {_reference_search(item, research_queries)}
+  {_explanation_search_action(item, research_queries)}
   <footer class="card-source">
     <div class="source-provenance">
       <span>{escape(_source_label(catalog, item))}</span>
@@ -618,24 +617,6 @@ def _source_kind_options(catalog: Catalog, items: tuple[Principle, ...]) -> str:
     )
 
 
-def _research_search_link(
-    query: str,
-    label: str,
-    kind: str,
-    item_name: str,
-) -> str:
-    accessible_name = f"{item_name}：{label}。Googleで検索（別タブ）"
-    return f"""
-<div class="research-search-option">
-  <p>{escape(label)}</p>
-  <code>{escape(query)}</code>
-  <a href="{escape(google_search_url(query))}" target="_blank"
-    rel="external nofollow noopener noreferrer" referrerpolicy="no-referrer"
-    aria-label="{escape(accessible_name)}"
-    data-research-search="{escape(kind)}">Googleで検索（別タブ）</a>
-</div>""".strip()
-
-
 def _research_card(
     catalog: Catalog,
     item: Principle,
@@ -663,15 +644,7 @@ def _research_card(
     <div><dt>暫定理由</dt><dd>{escape(item.reason)}</dd></div>
     <div><dt>暫定条件</dt><dd>{conditions}</dd></div>
   </dl>
-  <section class="research-searches" aria-label="自分で根拠を探す">
-    <div class="research-search-heading">
-      <p>SEARCH TRAILS</p>
-      <h4>自分で根拠を探す</h4>
-    </div>
-    {_research_search_link(queries.authoritative, "一次資料を優先して探す", "authoritative", item.principle)}
-    {_research_search_link(queries.explanation, "分かりやすい解説を探す", "explanation", item.principle)}
-    <p class="research-search-note">リンクを開くと、表示中の検索語がGoogleへ送信されます。Googleの検索結果は台帳の根拠ではありません。</p>
-  </section>
+  {_explanation_search_action(item, queries)}
   <footer class="card-source research-card-source">
     <div class="source-provenance">
       <span>教材内の掲載位置：{escape(_source_label(catalog, item))}</span>
@@ -834,8 +807,8 @@ def _research_page(
     stylesheet_url = urljoin(base_url, "assets/styles.css")
     home_url = urljoin(base_url, "./")
     summary = (
-        "根拠確認中の鉄骨構造項目について、暫定内容と一次資料・解説を探すための"
-        "検索語を明示する調査ページ。"
+        "根拠確認中の鉄骨構造項目について、暫定内容と分かりやすい解説を探す"
+        "Google検索ボタンを掲載する調査ページ。"
     )
     return f"""<!doctype html>
 <html lang="ja" class="research-document">
@@ -854,10 +827,10 @@ def _research_page(
     <div class="eyebrow">FIRST-CLASS ARCHITECT / EVIDENCE REVIEW</div>
     <p class="research-back-link"><a href="{escape(home_url)}">← 確認済みの原理台帳へ</a></p>
     <h1>根拠を<br><span>調べる</span></h1>
-    <p class="lead">確認前の内容と、根拠候補へたどるための<strong>検索語</strong>を公開しています。</p>
+    <p class="lead">確認前の内容と、<strong>分かりやすい解説</strong>を探すボタンを公開しています。</p>
     <div class="hero-stats" aria-label="調査ページの項目数">
       <div><strong>{visible_count}</strong><span>暫定項目</span></div>
-      <div><strong>2</strong><span>検索経路 / 項目</span></div>
+      <div><strong>1</strong><span>検索ボタン / 項目</span></div>
       <div><strong>0</strong><span>確定問題</span></div>
     </div>
   </header>
@@ -867,6 +840,7 @@ def _research_page(
       <p>PROVISIONAL CONTENT</p>
       <h2 id="research-warning-title">ここは確認済み学習カードではありません</h2>
       <p>掲載内容は根拠確認前の暫定情報です。誤り、条件不足、複数の論点の混同を含む可能性があります。試験知識として確定せず、リンク先の一次資料や信頼できる解説で該当箇所を確認してください。</p>
+      <p class="search-disclosure">「分かりやすい解説」を開くと、項目ごとの解説向け検索語がGoogleへ送信されます。Googleの検索結果は台帳の根拠ではありません。</p>
       <p>検索語はCodexによる調査結果を反映した監査スナップショットです。検索や内容更新を自動実行する仕組みではありません。</p>
     </section>
 
@@ -875,7 +849,7 @@ def _research_page(
   </main>
 
   <footer class="site-footer">
-    <p>Googleの検索結果は根拠ではありません。確定には出典名・該当箇所・対応範囲の記録が必要です。</p>
+    <p>確認済みへの昇格には、正式資料の出典名・該当箇所・対応範囲の記録が必要です。</p>
     <p>閲覧専用 / Cookie・外部解析なし / 検索語版：v{registry.version}</p>
   </footer>
 </body>
@@ -973,7 +947,8 @@ def _page(
       <div>
         <p class="section-kicker">EVIDENCE REVIEW</p>
         <h2 id="research-entry-title">根拠確認中の項目を調べる</h2>
-        <p>根拠確認中の{research_count}件について、暫定内容とGoogleで自分で確認できる検索語を別ページに分けました。</p>
+        <p>根拠確認中の{research_count}件について、暫定内容と「分かりやすい解説」ボタンを別ページに分けました。</p>
+        <p class="search-disclosure">「分かりやすい解説」を開くと、項目ごとの解説向け検索語がGoogleへ送信されます。Googleの検索結果は台帳の根拠ではありません。</p>
       </div>
       <a href="{escape(research_url)}">根拠確認中の項目を見る <span aria-hidden="true">→</span></a>
     </section>
