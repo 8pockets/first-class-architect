@@ -11,12 +11,22 @@ from html import escape
 from pathlib import Path
 from urllib.parse import urljoin
 
+import principle_catalog.catalog as catalog_module
 from principle_catalog.catalog import (
+    display_facets,
+    display_principles,
     load_catalog,
     load_public_progress,
+    resolve_principle,
     validate_public_progress,
 )
-from principle_catalog.models import Principle, PublicProgress
+from principle_catalog.models import (
+    CardDisplayFacets,
+    Catalog,
+    Principle,
+    PublicProgress,
+    QuestionEdition,
+)
 
 
 _OUTPUT_MARKER = ".principle-catalog-output"
@@ -33,6 +43,26 @@ _PROGRESS_LABELS: dict[PublicProgress, str] = {
     "reviewing": "復習中",
     "retained_14d": "14日保持",
 }
+_PAGE_KIND_LABELS = {
+    "chapter_cover": "章扉",
+    "prior_question_table": "本試験知識表",
+    "teaching_material": "教材本文",
+    "worked_examples": "例題・解説",
+}
+_SOURCE_KIND_LABELS = {
+    "pdf": "PDF",
+    "law": "法令",
+    "notification": "告示",
+    "jis": "JIS",
+    "aij": "日本建築学会",
+    "government_spec": "官庁仕様",
+    **_PAGE_KIND_LABELS,
+}
+_SUPPORT_LABELS = {
+    "statement": "主張",
+    "explanation": "説明",
+    "conditions": "条件",
+}
 
 
 def _asset_text(name: str) -> str:
@@ -40,16 +70,49 @@ def _asset_text(name: str) -> str:
     return path.read_text(encoding="utf-8")
 
 
-def _source_label(item: Principle) -> str:
+def _page_kinds(catalog: Catalog, item: Principle) -> tuple[str, ...]:
+    return tuple(
+        dict.fromkeys(catalog.audit.kind_for_page(page) for page in item.source.pages)
+    )
+
+
+def _source_filter_kinds(catalog: Catalog, item: Principle) -> tuple[str, ...]:
+    return tuple(dict.fromkeys((*item.source.kinds, *_page_kinds(catalog, item))))
+
+
+def _source_label(catalog: Catalog, item: Principle) -> str:
     pages = "・".join(f"P{page}" for page in item.source.pages)
-    if not item.source.question_codes:
-        return pages
-    codes = "・".join(item.source.question_codes)
-    return f"{pages} / 問題コード {codes}"
+    parts = [f"PDF {pages}"]
+    if item.source.question_codes:
+        parts.append(f"問題コード {'・'.join(item.source.question_codes)}")
+    kinds = "・".join(
+        _PAGE_KIND_LABELS.get(kind, kind) for kind in _page_kinds(catalog, item)
+    )
+    parts.append(f"ページ種別 {kinds}")
+    return " / ".join(parts)
 
 
-def _condition_list(item: Principle) -> str:
-    return "".join(f"<li>{escape(condition)}</li>" for condition in item.conditions)
+def _authoritative_sources(item: Principle) -> str:
+    if not item.source.authoritative_sources:
+        return ""
+    rendered: list[str] = []
+    for source in item.source.authoritative_sources:
+        title = escape(source.title)
+        if source.url:
+            title = (
+                f'<a class="authority-link" href="{escape(source.url)}" '
+                f'rel="noopener noreferrer">{title}</a>'
+            )
+        supports = "・".join(_SUPPORT_LABELS[support] for support in source.supports)
+        rendered.append(
+            f"<li>{escape(_SOURCE_KIND_LABELS.get(source.kind, source.kind))}："
+            f"{title} / {escape(source.locator)} / 対応：{escape(supports)}</li>"
+        )
+    return (
+        '<ul class="authority-sources" aria-label="外部権威ソース">'
+        + "".join(rendered)
+        + "</ul>"
+    )
 
 
 def _binary_choices(item: Principle) -> str:
@@ -65,118 +128,433 @@ def _binary_choices(item: Principle) -> str:
     )
 
 
-def _card(item: Principle, progress: PublicProgress, print_number: int) -> str:
+def _facet_value(values: tuple[str, ...]) -> str:
+    if not values:
+        return "—"
+    if len(values) == 1:
+        return escape(values[0])
+    return "<ul>" + "".join(f"<li>{escape(value)}</li>" for value in values) + "</ul>"
+
+
+def _facet_list(facets: CardDisplayFacets) -> str:
+    return "".join(
+        f"<div><dt>{escape(facet.label)}</dt><dd>{_facet_value(facet.values)}</dd></div>"
+        for facet in (facets.primary, facets.secondary, facets.tertiary)
+    )
+
+
+def _card(
+    catalog: Catalog,
+    item: Principle,
+    progress: PublicProgress,
+    print_position: int,
+    question_reference: str,
+    legacy_anchor_aliases: tuple[str, ...],
+    legacy_search_aliases: tuple[str, ...],
+    facets: CardDisplayFacets,
+    taxonomy_context: tuple[str, ...],
+) -> str:
     if item.question is None:
         raise ValueError(f"published principle has no confirmation question: {item.id}")
+    coverage = catalog_module.coverage_assignment(catalog, item)
+    coverage_tier = catalog.coverage.tiers[coverage.tier]
+    page_kinds = _page_kinds(catalog, item)
+    source_kinds = _source_filter_kinds(catalog, item)
+    authoritative_search = tuple(
+        value
+        for source in item.source.authoritative_sources
+        for value in (
+            source.kind,
+            _SOURCE_KIND_LABELS.get(source.kind, source.kind),
+            source.title,
+            source.locator,
+            source.url or "",
+            *source.supports,
+        )
+    )
     search_text = " ".join(
         [
+            item.code,
+            item.id,
+            *legacy_search_aliases,
+            question_reference,
             item.principle,
             item.question.prompt,
             item.question.choice_a,
             item.question.choice_b,
-            item.conclusion,
-            item.reason,
-            *item.conditions,
-            item.section_title,
+            *(
+                value
+                for facet in (facets.primary, facets.secondary, facets.tertiary)
+                for value in facet.values
+            ),
+            *(
+                facet.label
+                for facet in (facets.primary, facets.secondary, facets.tertiary)
+            ),
+            *taxonomy_context,
+            *(f"P{page}" for page in item.source.pages),
+            *(str(page) for page in item.source.pages),
             *item.source.question_codes,
+            *page_kinds,
+            *(_PAGE_KIND_LABELS.get(kind, kind) for kind in page_kinds),
+            *item.source.kinds,
+            *(_SOURCE_KIND_LABELS.get(kind, kind) for kind in item.source.kinds),
+            *authoritative_search,
+            item.type,
+            _TYPE_LABELS[item.type],
+            item.editorial_status,
+            progress,
+            _PROGRESS_LABELS[progress],
+            item.verification.statement_source,
+            item.verification.explanation_completeness,
+            item.verification.conditions_completeness,
+            str(coverage.tier),
+            coverage_tier.slug,
+            coverage_tier.label,
         ]
     )
+    legacy_anchors = "".join(
+        f'<span id="{escape(alias)}" data-legacy-anchor '
+        f'data-canonical-fragment="{escape(item.code)}" aria-hidden="true"></span>'
+        for alias in legacy_anchor_aliases
+        if alias != item.code
+    )
     return f"""
-<article class="principle-card" id="{escape(item.id)}"
+<article class="principle-card" id="{escape(item.code)}"
   data-type="{escape(item.type)}"
-  data-section="{escape(item.section_id)}"
+  data-section="{escape(catalog.taxonomy.assignments[item.id])}"
   data-progress="{escape(progress)}"
-  data-search="{escape(search_text.lower())}">
+  data-source-kind="{escape(' '.join(source_kinds))}"
+  data-coverage-tier="{coverage.tier}"
+  data-coverage-label="{escape(coverage_tier.label)}"
+  data-search="{escape(search_text.casefold())}">
+  {legacy_anchors}
   <header class="card-header">
     <div class="badge-row">
       <span class="type-badge type-{escape(item.type)}">{_TYPE_LABELS[item.type]}</span>
       <span class="progress-badge progress-{escape(progress)}">{_PROGRESS_LABELS[progress]}</span>
     </div>
-    <p class="card-id">{escape(item.id)}</p>
+    <p class="card-id">{escape(item.code)} / {escape(question_reference)}</p>
     <h3>{escape(item.principle)}</h3>
   </header>
   <div class="practice-question">
-    <p class="print-question-number" aria-hidden="true">Q{print_number:03d}</p>
+    <p class="print-question-number" aria-hidden="true"><span data-print-position>問{print_position}</span> [{escape(question_reference)}]</p>
     <p class="practice-question-label">確認問題（自作・2択）</p>
     <p class="practice-question-text">{escape(item.question.prompt)}</p>
     <ul class="binary-choices">{_binary_choices(item)}</ul>
   </div>
-  <details class="answer-disclosure" name="answer-disclosure" data-disclosure>
-    <summary>
-      <span class="disclosure-label-closed">正解と解説を見る<span class="visually-hidden">：{escape(item.principle)}</span></span>
-      <span class="disclosure-label-open">正解と解説を閉じる<span class="visually-hidden">：{escape(item.principle)}</span></span>
-    </summary>
+  <section class="answer-disclosure" aria-label="正解と解説：{escape(item.principle)}">
     <div class="answer-content">
       <p class="answer-key"><span>正解</span><strong>{escape(item.question.correct)}</strong></p>
-      <dl class="three-point">
-        <div>
-          <dt>結論</dt>
-          <dd>{escape(item.conclusion)}</dd>
-        </div>
-        <div>
-          <dt>理由</dt>
-          <dd>{escape(item.reason)}</dd>
-        </div>
-        <div>
-          <dt>結論を左右する条件</dt>
-          <dd><ul>{_condition_list(item)}</ul></dd>
-        </div>
-      </dl>
+      <dl class="three-point">{_facet_list(facets)}</dl>
     </div>
-  </details>
+  </section>
   <footer class="card-source">
-    <span>{escape(_source_label(item))}</span>
-    <a href="#{escape(item.id)}" data-principle-link aria-label="{escape(item.principle)}への固定リンク">#</a>
+    <div class="source-provenance">
+      <span>{escape(_source_label(catalog, item))}</span>
+      <span>主張根拠 {escape(item.verification.statement_source)} / 説明 {escape(item.verification.explanation_completeness)} / 条件 {escape(item.verification.conditions_completeness)}</span>
+      {_authoritative_sources(item)}
+    </div>
+    <a href="#{escape(item.code)}" data-principle-link aria-label="{escape(item.principle)}への固定リンク">#</a>
   </footer>
 </article>""".strip()
 
 
-def _section_nav(items: tuple[Principle, ...]) -> str:
-    seen: set[str] = set()
+def _taxonomy_nav(catalog: Catalog, items: tuple[Principle, ...]) -> str:
+    taxonomy = catalog.taxonomy
+    visible_keys = {item.id for item in items}
     links: list[str] = []
-    for item in items:
-        if item.section_id in seen:
-            continue
-        seen.add(item.section_id)
-        count = sum(1 for candidate in items if candidate.section_id == item.section_id)
+    for group in sorted(taxonomy.groups, key=lambda candidate: candidate.order):
+        subtopic_ids = {subtopic.id for subtopic in group.subtopics}
+        count = sum(
+            key in visible_keys and subtopic_id in subtopic_ids
+            for key, subtopic_id in taxonomy.assignments.items()
+        )
         links.append(
-            f'<a href="#section-{escape(item.section_id)}">'
-            f"{escape(item.section_title)}<span>{count}</span></a>"
+            f'<a href="#group-{escape(group.id)}">'
+            f"{escape(group.title)}<span>{count}</span></a>"
         )
     return "".join(links)
 
 
-def _sections(
+def _taxonomy_sections(
+    catalog: Catalog,
     items: tuple[Principle, ...],
     progress: dict[str, PublicProgress],
-    print_numbers: dict[str, int],
+    edition: QuestionEdition,
+    legacy_anchor_aliases: dict[str, tuple[str, ...]],
+    legacy_search_aliases: dict[str, tuple[str, ...]],
 ) -> str:
-    grouped: dict[str, list[Principle]] = {}
+    by_subtopic: dict[str, list[Principle]] = {}
     for item in items:
-        grouped.setdefault(item.section_id, []).append(item)
-    rendered: list[str] = []
-    for section_items in grouped.values():
-        first = section_items[0]
-        cards = "\n".join(
-            _card(
-                item,
-                progress.get(item.id, "unstarted"),
-                print_numbers[item.id],
+        by_subtopic.setdefault(catalog.taxonomy.assignments[item.id], []).append(item)
+
+    rendered_groups: list[str] = []
+    for group in sorted(catalog.taxonomy.groups, key=lambda candidate: candidate.order):
+        subtopic_ids = {subtopic.id for subtopic in group.subtopics}
+        rendered_subtopics: list[str] = []
+        group_count = 0
+        for subtopic in sorted(group.subtopics, key=lambda candidate: candidate.order):
+            subtopic_items = by_subtopic.get(subtopic.id, [])
+            group_count += len(subtopic_items)
+            cards = "\n".join(
+                _card(
+                    catalog,
+                    item,
+                    progress.get(item.id, "unstarted"),
+                    edition.assignments[item.id],
+                    edition.reference(item.id),
+                    legacy_anchor_aliases[item.id],
+                    legacy_search_aliases[item.id],
+                    display_facets(catalog, item),
+                    (group.id, group.title, subtopic.id, subtopic.title),
+                )
+                for item in subtopic_items
             )
-            for item in section_items
-        )
-        rendered.append(
-            f"""
-<section class="catalog-section" id="section-{escape(first.section_id)}" data-catalog-section>
+            rendered_subtopics.append(
+                f"""
+<section class="catalog-section" id="subtopic-{escape(subtopic.id)}"
+  data-catalog-section data-taxonomy-subtopic="{escape(subtopic.id)}">
   <div class="section-heading">
-    <p>{escape(first.section_id)}</p>
-    <h2>{escape(first.section_title)}</h2>
-    <span>{len(section_items)}件</span>
+    <p>{escape(subtopic.id)}</p>
+    <h3>{escape(subtopic.title)}</h3>
+    <span>{len(subtopic_items)}件</span>
   </div>
   <div class="card-grid">{cards}</div>
 </section>""".strip()
+            )
+        pending_count = sum(
+            item.editorial_status != "source_checked"
+            and catalog.taxonomy.assignments[item.id] in subtopic_ids
+            for item in catalog.principles
         )
-    return "\n".join(rendered)
+        coverage_notice = (
+            f'<p class="coverage-gap-notice">{escape(group.title)}：'
+            f"根拠確認待ち{pending_count}件</p>"
+            if group_count == 0 and pending_count
+            else ""
+        )
+        rendered_subtopics_html = "\n".join(rendered_subtopics)
+        rendered_groups.append(
+            coverage_notice
+            +
+            f"""
+<section class="catalog-group" id="group-{escape(group.id)}"
+  data-catalog-group data-taxonomy-group="{escape(group.id)}">
+  <div class="section-heading">
+    <p>{escape(group.id)}</p>
+    <h2>{escape(group.title)}</h2>
+    <span>{group_count}件</span>
+  </div>
+  {rendered_subtopics_html}
+</section>""".strip()
+        )
+    return "\n".join(rendered_groups)
+
+
+def _identity_identifiers(
+    catalog: Catalog,
+    published_keys: set[str],
+) -> tuple[str, ...]:
+    identifiers: set[str] = set()
+    issued_keys = {
+        key
+        for edition in catalog.question_editions.editions.values()
+        for key in edition.assignments
+    }
+    for identity in catalog.identities.active.values():
+        if identity.key in published_keys or identity.key in issued_keys:
+            identifiers.update((identity.key, identity.code, *identity.aliases))
+    for identity in catalog.identities.retired.values():
+        if identity.key in issued_keys:
+            identifiers.update((identity.key, identity.code, *identity.aliases))
+    return tuple(sorted(identifiers))
+
+
+def _migration_notice(
+    identifier: str,
+    targets: tuple[Principle, ...],
+    published_keys: set[str],
+    *,
+    is_split: bool,
+) -> str:
+    target_items: list[str] = []
+    pending_count = 0
+    for item in targets:
+        if item.id in published_keys:
+            label = f"{item.code} — {item.principle}"
+            target_items.append(
+                f'<li><a href="#{escape(item.code)}">{escape(label)}</a></li>'
+            )
+        else:
+            pending_count += 1
+    if pending_count:
+        pending_message = (
+            f"ほか{pending_count}件は根拠確認中のため非公開"
+            if is_split
+            else "対象項目は根拠確認中のため非公開"
+        )
+        target_items.append(f'<li class="pending-targets">{pending_message}</li>')
+    data_attribute = "data-split-migration" if is_split else "data-unpublished-route"
+    heading = (
+        "旧IDは複数の原理に分割されました"
+        if is_split
+        else "この項目は現在非公開です"
+    )
+    identifier_label = (
+        f"<p>識別子：<code>{escape(identifier)}</code></p>" if is_split else ""
+    )
+    return f"""
+<section class="migration-notice legacy-route" id="{escape(identifier)}" {data_attribute}>
+  {identifier_label}
+  <h2>{heading}</h2>
+  <ul>{"".join(target_items)}</ul>
+</section>""".strip()
+
+
+def _identity_routes(
+    catalog: Catalog,
+) -> tuple[
+    dict[str, tuple[str, ...]],
+    dict[str, tuple[str, ...]],
+    str,
+]:
+    published_keys = {
+        item.id
+        for item in display_principles(catalog, published_only=True)
+    }
+    anchor_aliases: dict[str, set[str]] = {
+        item.id: set() for item in catalog.principles
+    }
+    search_aliases: dict[str, set[str]] = {
+        item.id: set() for item in catalog.principles
+    }
+    notices: list[str] = []
+    for identifier in _identity_identifiers(catalog, published_keys):
+        resolution = resolve_principle(catalog, identifier)
+        for item in resolution.principles:
+            if item.id in published_keys:
+                search_aliases[item.id].add(identifier)
+        if resolution.is_split:
+            notices.append(
+                _migration_notice(
+                    identifier,
+                    resolution.principles,
+                    published_keys,
+                    is_split=True,
+                )
+            )
+            continue
+        item = resolution.require_one()
+        if item.id not in published_keys:
+            notices.append(
+                _migration_notice(
+                    identifier,
+                    resolution.principles,
+                    published_keys,
+                    is_split=False,
+                )
+            )
+        elif identifier != item.code:
+            anchor_aliases[item.id].add(identifier)
+    return (
+        {key: tuple(sorted(values)) for key, values in anchor_aliases.items()},
+        {key: tuple(sorted(values)) for key, values in search_aliases.items()},
+        "\n".join(notices),
+    )
+
+
+def _legacy_section_routes(
+    catalog: Catalog,
+    published: tuple[Principle, ...],
+) -> str:
+    active_by_key = {item.id: item for item in catalog.principles}
+    published_keys = {item.id for item in published}
+    targets_by_section: dict[str, set[str]] = {}
+    for edition in catalog.question_editions.editions.values():
+        if edition.status != "archived":
+            continue
+        for legacy_key in edition.assignments:
+            resolution = resolve_principle(catalog, legacy_key)
+            legacy_section = (
+                active_by_key[legacy_key].section_id
+                if legacy_key in active_by_key
+                else catalog.migration.retired[legacy_key].legacy_section
+            )
+            targets_by_section.setdefault(legacy_section, set()).update(
+                resolution.keys
+            )
+
+    routes: list[str] = []
+    for section_id in sorted(targets_by_section):
+        targets = targets_by_section[section_id]
+        by_subtopic: dict[str, list[Principle]] = {}
+        for key in targets:
+            item = active_by_key[key]
+            subtopic_id = catalog.taxonomy.assignments[key]
+            by_subtopic.setdefault(subtopic_id, []).append(item)
+        destinations: list[str] = []
+        for group in sorted(catalog.taxonomy.groups, key=lambda candidate: candidate.order):
+            for subtopic in sorted(group.subtopics, key=lambda candidate: candidate.order):
+                items = by_subtopic.get(subtopic.id)
+                if not items:
+                    continue
+                public_count = sum(item.id in published_keys for item in items)
+                pending_count = len(items) - public_count
+                label = f"{group.title} / {subtopic.title}"
+                if public_count:
+                    destination = (
+                        f'<a href="#subtopic-{escape(subtopic.id)}">'
+                        f"{escape(label)}</a>"
+                    )
+                else:
+                    destination = escape(label)
+                status_parts = []
+                if public_count:
+                    status_parts.append(f"公開{public_count}件")
+                if pending_count:
+                    status_parts.append(f"公開準備中{pending_count}件")
+                destinations.append(
+                    f'<li data-subtopic-destination="{escape(subtopic.id)}">'
+                    f"{destination}<span>{' / '.join(status_parts)}</span></li>"
+                )
+        heading = (
+            "本試験知識（横断）の再分類先"
+            if section_id == "K6-00"
+            else f"{section_id}の再分類先"
+        )
+        routes.append(
+            f"""
+<section class="redistribution-index legacy-route" id="section-{escape(section_id)}" data-section-migration>
+  <p>旧セクション：{escape(section_id)}</p>
+  <h2>{escape(heading)}</h2>
+  <p>旧セクションの項目は、判断に使う主題ごとの小項目へ再分類しました。</p>
+  <ul>{"".join(destinations)}</ul>
+</section>""".strip()
+        )
+    return "\n".join(routes)
+
+
+def _source_kind_options(catalog: Catalog, items: tuple[Principle, ...]) -> str:
+    present = {
+        kind
+        for item in items
+        for kind in _source_filter_kinds(catalog, item)
+    }
+    ordered = (
+        "pdf",
+        "law",
+        "notification",
+        "jis",
+        "aij",
+        "government_spec",
+        *catalog.audit.page_kinds,
+    )
+    return "".join(
+        f'<option value="{escape(kind)}">{escape(_SOURCE_KIND_LABELS.get(kind, kind))}</option>'
+        for kind in dict.fromkeys(ordered)
+        if kind in present
+    )
 
 
 def _page(base_url: str) -> str:
@@ -184,29 +562,41 @@ def _page(base_url: str) -> str:
     projection = load_public_progress()
     validate_public_progress(catalog, projection)
 
-    published = tuple(
-        item for item in catalog.principles if item.editorial_status == "source_checked"
-    )
+    published = display_principles(catalog, published_only=True)
     if not published:
         raise ValueError("no source-checked principles are available for publication")
     type_counts = Counter(item.type for item in published)
     progress_counts = Counter(
         projection.items.get(item.id, "unstarted") for item in published
     )
+    group_count = len(catalog.taxonomy.groups)
+    subtopic_count = sum(len(group.subtopics) for group in catalog.taxonomy.groups)
     canonical_url = urljoin(base_url, "./")
     og_url = urljoin(base_url, "assets/og.png")
     stylesheet_url = urljoin(base_url, "assets/styles.css")
     script_url = urljoin(base_url, "assets/catalog.js")
+    current_edition = catalog.question_editions.editions[
+        catalog.question_editions.current
+    ]
+    (
+        legacy_anchor_aliases,
+        legacy_search_aliases,
+        identity_route_notices,
+    ) = _identity_routes(catalog)
+    legacy_section_routes = _legacy_section_routes(catalog, published)
     summary = (
         f"PDF P{catalog.manifest.first_page}-P{catalog.manifest.last_page}の鉄骨構造を、"
-        "自作2択問題・結論・理由・条件で整理した原理台帳。"
+        "自作2択問題・正解・内容別の三点で整理した原理台帳。"
     )
     stats = json.dumps(
         {
             "published": len(published),
             "planned": len(catalog.principles),
+            "groups": group_count,
+            "subtopics": subtopic_count,
             "types": dict(type_counts),
             "progress": dict(progress_counts),
+            "coverage_scheme": catalog.coverage.current,
         },
         ensure_ascii=False,
         separators=(",", ":"),
@@ -236,9 +626,9 @@ def _page(base_url: str) -> str:
     <p class="lead">2択から結論を選び、<strong>理由・条件</strong>までつなげて理解する。</p>
     <div class="scope-note">対象：2026 構造・文章問題 / PDF P{catalog.manifest.first_page}-P{catalog.manifest.last_page}</div>
     <div class="hero-stats" aria-label="台帳の進捗">
-      <div><strong>{len(published)}</strong><span>出典確認済み</span></div>
-      <div><strong>{len(catalog.principles)}</strong><span>台帳化済み</span></div>
-      <div><strong>{len({item.section_id for item in published})}</strong><span>公開セクション</span></div>
+      <div><strong>{len(published)}</strong><span>公開項目</span></div>
+      <div><strong>{group_count}</strong><span>大項目</span></div>
+      <div><strong>{subtopic_count}</strong><span>小項目</span></div>
     </div>
   </header>
 
@@ -269,21 +659,47 @@ def _page(base_url: str) -> str:
           <option value="retained_14d">14日保持</option>
         </select>
       </label>
+      <label class="select-field">
+        <span>出典種別</span>
+        <select id="source-kind-filter">
+          <option value="all">すべて</option>
+          {_source_kind_options(catalog, published)}
+        </select>
+      </label>
+      <label class="select-field">
+        <span>導入層</span>
+        <select id="coverage-filter">
+          <option value="all">全て</option>
+          <option value="1">骨格のみ</option>
+          <option value="2">標準まで</option>
+        </select>
+      </label>
       <p class="result-summary" aria-live="polite"><strong id="visible-count">{len(published)}</strong>件を表示</p>
       <button class="reset-button" id="reset-filters" type="button">条件をリセット</button>
     </section>
 
-    <nav class="section-nav" aria-label="章・節から探す">{_section_nav(published)}</nav>
+    <nav class="section-nav" aria-label="分野から探す">{_taxonomy_nav(catalog, published)}</nav>
 
-    <div id="catalog" class="catalog" data-catalog-root>
-      {_sections(published, projection.items, catalog.manifest.print_numbers)}
+    {legacy_section_routes}
+    {identity_route_notices}
+
+    <div id="catalog" class="catalog" data-catalog-root
+      data-coverage-scheme="{escape(catalog.coverage.current)}">
+      {_taxonomy_sections(
+          catalog,
+          published,
+          projection.items,
+          current_edition,
+          legacy_anchor_aliases,
+          legacy_search_aliases,
+      )}
       <p class="empty-state" id="empty-state" hidden>条件に一致する原理がありません。</p>
     </div>
   </main>
 
   <footer class="site-footer">
     <p>2択問題は台帳の内容から作成した自作です。原典の問題文・図版・PDFは掲載していません。</p>
-    <p>閲覧専用 / Cookie・外部解析なし</p>
+    <p>閲覧専用 / Cookie・外部解析なし / 導入層版：{escape(catalog.coverage.current)}</p>
   </footer>
   <script type="application/json" id="catalog-stats">{stats}</script>
 </body>

@@ -39,6 +39,13 @@ principles:
 - id: S-K6-STIFFENER-ROLE-BY-POSITION-AND-STRESS
   order: 3
   type: identification
+  display_content:
+    definition: スチフナはウェブの座屈を防ぐ補強材で、荷重点・支持点や中間部に材軸直角方向へ設ける。中間スチフナはせん断力によるウェブのせん断座屈、水平スチフナは曲げ圧縮によるウェブの局部座屈を抑える。
+    distinguishing_conditions:
+    - H形鋼梁・柱のウェブ補強
+    - 荷重点・支持点・中間部・曲げ圧縮域で役割を識別
+    confusable_points:
+    - 「曲げ圧縮によるウェブの局部座屈を抑える」とは区別する。
   principle: スチフナの配置と局部座屈防止の役割
   question:
     prompt: H形鋼梁・柱のウェブへ設ける中間スチフナについて、抑える座屈として正しい結論はどちらか。

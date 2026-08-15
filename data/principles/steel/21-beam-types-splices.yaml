@@ -7,14 +7,21 @@ principles:
 - id: S-K6-BEAM-SPLICE-METHODS-FIELD-SHOP
   order: 1
   type: identification
-  principle: 梁継手の接合方法と現場・工場の使い分け
+  display_content:
+    definition: 梁継手には高力ボルト継手、高力ボルトと溶接の併用継手、溶接継手があり、現場継手は高力ボルト接合、工場仕口は溶接接合とすることが多い。
+    distinguishing_conditions:
+    - 鉄骨梁の継手・仕口
+    - 現場接合か工場製作かを区別する
+    confusable_points:
+    - 「現場は溶接、工場は高力ボルトを用いる」とは区別する。
+  principle: 現場継手と工場仕口の接合方法
   question:
     prompt: 鉄骨梁の現場継手と工場仕口について、一般的な接合方法の組合せとして正しい結論はどちらか。
     choices:
       A: 現場は高力ボルト、工場は溶接を用いる
       B: 現場は溶接、工場は高力ボルトを用いる
     correct: A
-  conclusion: 梁継手には高力ボルト継手、高力ボルトと溶接の併用継手、溶接継手があり、現場継手は高力ボルト接合、品質を安定させやすい工場仕口は溶接接合とすることが多い。
+  conclusion: 梁継手には高力ボルト継手、高力ボルトと溶接の併用継手、溶接継手があり、現場継手は高力ボルト接合、工場仕口は溶接接合とすることが多い。
   reason: 現場溶接は施工条件の影響を受けやすく、工場溶接は品質を安定させやすいため。
   conditions:
   - 鉄骨梁の継手・仕口
@@ -22,6 +29,7 @@ principles:
   source:
     pages:
     - 196
+    - 206
     question_codes: []
   prerequisites:
   - S-K6-STEEL-CONNECTION-TYPE-IDENTIFICATION

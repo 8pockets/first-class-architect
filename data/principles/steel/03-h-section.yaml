@@ -7,6 +7,17 @@ principles:
 - id: S-K6-NO-LATERAL-BUCKLING-SECTION-ALLOWABLE-BENDING
   order: 1
   type: rule
+  display_content:
+    rule: 鋼管・箱形断面、又は弱軸曲げを受ける対称H形断面は、幅厚比・径厚比の制限を満たせば、材長にかかわらず許容曲げ応力度を許容引張応力度と同じ値にできる。
+    applicability:
+    - 横座屈のおそれがない断面・曲げ軸
+    - 幅厚比又は径厚比の制限を満足
+    - H形鋼が弱軸まわりに曲げを受ける場合
+    - 教材図の横座屈による低減を要しない扱い
+    - 角形鋼管または円形鋼管
+    - 幅厚比制限に従い、局部座屈しない場合
+    numbers_exceptions:
+    - 鋼管・箱形断面、又は弱軸曲げを受ける対称H形断面は、幅厚比・径厚比の制限を満たせば、材長にかかわらず許容曲げ応力度を許容引張応力度と同じ値にできる。
   principle: 横座屈しない断面の許容曲げ応力度
   question:
     prompt: 幅厚比・径厚比の制限を満たし横座屈のおそれがない断面・曲げ軸の許容曲げ応力度について、正しい結論はどちらか。
@@ -41,13 +52,20 @@ principles:
     - '25163'
     - '26173'
     - '29302'
-  prerequisites:
+  prerequisites: []
+  related:
   - S-K6-20-LOCAL-BUCKLING
   - S-K6-WIDTH-THICKNESS-LIMIT-MEANING
   editorial_status: source_checked
 - id: S-K6-BEAM-LATERAL-BUCKLING-COUNTERMEASURES
   order: 2
   type: rule
+  display_content:
+    rule: 横座屈対策は、圧縮フランジの支点間距離を短くする、小梁・横補剛材を設ける、箱形鋼を用いる、弱軸まわりの細長比を小さくすることである。
+    applicability:
+    - 横座屈のおそれがある梁
+    - H形鋼梁
+    numbers_exceptions: []
   principle: 横座屈の抑制方法
   question:
     prompt: 横座屈のおそれがあるH形鋼梁で、圧縮フランジの支点間距離をどうするかについて、正しい結論はどちらか。
@@ -104,6 +122,11 @@ principles:
 - id: S-K6-H-SECTION-STRONG-AXIS-LATERAL-RESTRAINT
   order: 4
   type: rule
+  display_content:
+    rule: 強軸まわりに曲げを受けるH形鋼は、横補剛材を設けるか許容圧縮応力度を低減する。
+    applicability:
+    - H形鋼が強軸まわりに曲げを受ける場合
+    numbers_exceptions: []
   principle: 強軸曲げを受けるH形鋼の横座屈対応
   question:
     prompt: 強軸曲げを受けるH形鋼で、許容圧縮応力度を低減せずに横座屈へ対応する場合、正しい結論はどちらか。
@@ -148,24 +171,26 @@ principles:
 - id: S-K6-STEEL-COMPRESSION-CAPACITY-BUCKLING
   order: 6
   type: principle
-  principle: 座屈の有無と圧縮耐力
+  principle: 圧縮耐力の座屈支配
   question:
-    prompt: 引張耐力より小さい荷重で座屈する鋼部材の圧縮耐力評価について、正しい結論はどちらか。
+    prompt: 鋼製圧縮材の耐力と座屈の関係について、正しい結論はどちらか。
     choices:
-      A: 引張時の耐力を圧縮耐力とみなす
-      B: 座屈時の耐力を圧縮耐力とみなす
+      A: 座屈の有無にかかわらず、圧縮耐力は引張耐力と同等とする。
+      B: 座屈しなければ引張耐力と同等だが、先に座屈する場合は座屈時の耐力とする。
     correct: B
-  conclusion: 座屈しなければ圧縮耐力は引張耐力と同じだが、それより小さい荷重で座屈する場合は座屈時の耐力を圧縮耐力とみなす。
-  reason: 鋼材は圧縮力を受けると座屈する場合があるため。
+  conclusion: 座屈のおそれがなければ圧縮耐力・許容圧縮応力度は引張側と同等だが、それより小さい荷重で座屈する場合は座屈時の耐力まで低減する。
+  reason: 鋼材は圧縮力を受けると座屈する場合があり、座屈しない場合だけ座屈による耐力低減を考慮する必要がないため。
   conditions:
   - 圧縮力を受ける鋼部材
-  - 座屈耐力と引張耐力を比較する場合
+  - 座屈耐力と引張側の耐力・許容応力度を比較する場合
   source:
     pages:
+    - 164
     - 178
     - 182
     - 193
     question_codes:
+    - '02153'
     - '04164'
     - 07182
     - '21151'

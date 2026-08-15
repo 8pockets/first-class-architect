@@ -1,0 +1,121 @@
+version: 1
+aliases:
+  S-K6-BOX-COLUMN-H-BEAM-RIGID-JOINT-WELD-TYPES:
+  - S-K6-BEAM-FLANGE-WEB-FORCE-SHARING
+  - S-K6-BOX-COLUMN-H-BEAM-WELD-TYPES
+  structure.steel.box-column-h-beam-rigid-joint-weld-types:
+  - S-K6-BEAM-FLANGE-WEB-FORCE-SHARING
+  - S-K6-BOX-COLUMN-H-BEAM-WELD-TYPES
+  S-K6-BRACE-FRAME-HYSTERESIS-BY-SLENDERNESS:
+  - S-K6-BRACE-HYSTERESIS-BY-SLENDERNESS
+  - S-K6-MOMENT-FRAME-HYSTERESIS
+  structure.steel.brace-frame-hysteresis-by-slenderness:
+  - S-K6-BRACE-HYSTERESIS-BY-SLENDERNESS
+  - S-K6-MOMENT-FRAME-HYSTERESIS
+  S-K6-BRACE-HORIZONTAL-LOAD-TO-AXIAL-FORCE:
+  - S-K6-BRACE-HORIZONTAL-LOAD-AXIAL-FORCE
+  - S-K6-VERTICAL-HORIZONTAL-BRACE-ROLES
+  structure.steel.brace-horizontal-load-to-axial-force:
+  - S-K6-BRACE-HORIZONTAL-LOAD-AXIAL-FORCE
+  - S-K6-VERTICAL-HORIZONTAL-BRACE-ROLES
+  S-K6-BRACED-FRAME-ULTIMATE-CAPACITY-COMPONENTS:
+  - S-K6-BRACED-FRAME-COLUMN-BRACE-CAPACITY-SUM
+  - S-K6-X-BRACE-TENSION-COMPRESSION-CAPACITY
+  structure.steel.braced-frame-ultimate-capacity-components:
+  - S-K6-BRACED-FRAME-COLUMN-BRACE-CAPACITY-SUM
+  - S-K6-X-BRACE-TENSION-COMPRESSION-CAPACITY
+  S-K6-COMPRESSION-ALLOWABLE-WITHOUT-BUCKLING:
+  - S-K6-STEEL-COMPRESSION-CAPACITY-BUCKLING
+  structure.steel.compression-allowable-without-buckling:
+  - S-K6-STEEL-COMPRESSION-CAPACITY-BUCKLING
+  S-K6-COMPRESSION-BRACE-BUCKLING-CAPACITY:
+  - S-K6-BRACE-TENSION-YIELD-COMPRESSION-BUCKLING
+  structure.steel.compression-brace-buckling-capacity:
+  - S-K6-BRACE-TENSION-YIELD-COMPRESSION-BUCKLING
+  S-K6-SHOP-JOINT-FIELD-SPLICE-IDENTIFICATION:
+  - S-K6-JOINT-SPLICE-LOCATION-FABRICATION
+  - S-K6-BEAM-SPLICE-METHODS-FIELD-SHOP
+  structure.steel.shop-joint-field-splice-identification:
+  - S-K6-JOINT-SPLICE-LOCATION-FABRICATION
+  - S-K6-BEAM-SPLICE-METHODS-FIELD-SHOP
+  S-K6-STEEL-HIGH-STRENGTH-SMALLER-SECTION:
+  - S-K6-HIGHER-STRENGTH-STEEL-REDUCES-DEPTH-ONLY-STRENGTH-GOVERNS
+  structure.steel.high-strength-smaller-section:
+  - S-K6-HIGHER-STRENGTH-STEEL-REDUCES-DEPTH-ONLY-STRENGTH-GOVERNS
+  S-K6-STEEL-SMALL-SECTION-DEFLECTION:
+  - S-K6-HIGH-STRENGTH-STEEL-BEAM-DEFLECTION-CHECK
+  structure.steel.small-section-deflection:
+  - S-K6-HIGH-STRENGTH-STEEL-BEAM-DEFLECTION-CHECK
+  S-K6-WRAPPED-BASE-MOMENT-AND-SHEAR-DISTRIBUTION:
+  - S-K6-WRAPPED-BASE-MOMENT-DISTRIBUTION
+  - S-K6-WRAPPED-BASE-SHEAR-Q2-GREATER-THAN-Q1
+  structure.steel.wrapped-base-moment-and-shear-distribution:
+  - S-K6-WRAPPED-BASE-MOMENT-DISTRIBUTION
+  - S-K6-WRAPPED-BASE-SHEAR-Q2-GREATER-THAN-Q1
+retired:
+  S-K6-BOX-COLUMN-H-BEAM-RIGID-JOINT-WELD-TYPES:
+    operation: split
+    legacy_section: K6-12
+    targets:
+    - S-K6-BEAM-FLANGE-WEB-FORCE-SHARING
+    - S-K6-BOX-COLUMN-H-BEAM-WELD-TYPES
+    progress_policy: reset_targets_to_unstarted
+  S-K6-BRACE-FRAME-HYSTERESIS-BY-SLENDERNESS:
+    operation: split
+    legacy_section: K6-38
+    targets:
+    - S-K6-BRACE-HYSTERESIS-BY-SLENDERNESS
+    - S-K6-MOMENT-FRAME-HYSTERESIS
+    progress_policy: reset_targets_to_unstarted
+  S-K6-BRACE-HORIZONTAL-LOAD-TO-AXIAL-FORCE:
+    operation: split
+    legacy_section: K6-24
+    targets:
+    - S-K6-BRACE-HORIZONTAL-LOAD-AXIAL-FORCE
+    - S-K6-VERTICAL-HORIZONTAL-BRACE-ROLES
+    progress_policy: reset_targets_to_unstarted
+  S-K6-BRACED-FRAME-ULTIMATE-CAPACITY-COMPONENTS:
+    operation: split
+    legacy_section: K6-28
+    targets:
+    - S-K6-BRACED-FRAME-COLUMN-BRACE-CAPACITY-SUM
+    - S-K6-X-BRACE-TENSION-COMPRESSION-CAPACITY
+    progress_policy: reset_targets_to_unstarted
+  S-K6-COMPRESSION-ALLOWABLE-WITHOUT-BUCKLING:
+    operation: merge
+    legacy_section: K6-00
+    targets:
+    - S-K6-STEEL-COMPRESSION-CAPACITY-BUCKLING
+    progress_policy: preserve_active_target_only
+  S-K6-COMPRESSION-BRACE-BUCKLING-CAPACITY:
+    operation: merge
+    legacy_section: K6-00
+    targets:
+    - S-K6-BRACE-TENSION-YIELD-COMPRESSION-BUCKLING
+    progress_policy: preserve_active_target_only
+  S-K6-SHOP-JOINT-FIELD-SPLICE-IDENTIFICATION:
+    operation: split
+    legacy_section: K6-31
+    targets:
+    - S-K6-JOINT-SPLICE-LOCATION-FABRICATION
+    - S-K6-BEAM-SPLICE-METHODS-FIELD-SHOP
+    progress_policy: reset_targets_to_unstarted
+  S-K6-STEEL-HIGH-STRENGTH-SMALLER-SECTION:
+    operation: merge
+    legacy_section: K6-06
+    targets:
+    - S-K6-HIGHER-STRENGTH-STEEL-REDUCES-DEPTH-ONLY-STRENGTH-GOVERNS
+    progress_policy: preserve_active_target_only
+  S-K6-STEEL-SMALL-SECTION-DEFLECTION:
+    operation: merge
+    legacy_section: K6-06
+    targets:
+    - S-K6-HIGH-STRENGTH-STEEL-BEAM-DEFLECTION-CHECK
+    progress_policy: preserve_active_target_only
+  S-K6-WRAPPED-BASE-MOMENT-AND-SHEAR-DISTRIBUTION:
+    operation: split
+    legacy_section: K6-00
+    targets:
+    - S-K6-WRAPPED-BASE-MOMENT-DISTRIBUTION
+    - S-K6-WRAPPED-BASE-SHEAR-Q2-GREATER-THAN-Q1
+    progress_policy: reset_targets_to_unstarted

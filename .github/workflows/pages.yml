@@ -46,6 +46,47 @@ jobs:
           git show "${previous_sha}:data/principles/steel/manifest.yaml" > "${RUNNER_TEMP}/previous-manifest.yaml"
       - name: Preserve permanent print numbers
         run: uv run --locked python -m principle_catalog verify-print-registry --previous "${RUNNER_TEMP}/previous-manifest.yaml"
+      - name: Read previous question editions
+        env:
+          PREVIOUS_SHA: ${{ github.event.before }}
+        run: |
+          previous_sha="${PREVIOUS_SHA:-HEAD^}"
+          previous_editions="${RUNNER_TEMP}/previous-question-editions.yaml"
+          if git cat-file -e "${previous_sha}:data/principles/steel/question-editions.yaml" 2>/dev/null; then
+            git show "${previous_sha}:data/principles/steel/question-editions.yaml" > "${previous_editions}"
+          else
+            cp data/principles/steel/question-editions.yaml "${previous_editions}"
+          fi
+      - name: Preserve issued question editions
+        run: uv run --locked python -m principle_catalog verify-question-editions --previous "${RUNNER_TEMP}/previous-question-editions.yaml"
+      - name: Read previous coverage tiers
+        env:
+          PREVIOUS_SHA: ${{ github.event.before }}
+        run: |
+          previous_sha="${PREVIOUS_SHA:-HEAD^}"
+          previous_coverage="${RUNNER_TEMP}/previous-coverage-tiers.yaml"
+          if git cat-file -e "${previous_sha}:data/principles/steel/coverage-tiers.yaml" 2>/dev/null; then
+            git show "${previous_sha}:data/principles/steel/coverage-tiers.yaml" > "${previous_coverage}"
+          else
+            cp data/principles/steel/coverage-tiers.yaml "${previous_coverage}"
+          fi
+      - name: Preserve coverage tier schemes
+        run: uv run --locked python -m principle_catalog verify-coverage-tiers --previous "${RUNNER_TEMP}/previous-coverage-tiers.yaml"
+      - name: Read previous identity history
+        env:
+          PREVIOUS_SHA: ${{ github.event.before }}
+        run: |
+          previous_sha="${PREVIOUS_SHA:-HEAD^}"
+          for filename in identities.yaml migration.yaml; do
+            previous_file="${RUNNER_TEMP}/previous-${filename}"
+            if git cat-file -e "${previous_sha}:data/principles/steel/${filename}" 2>/dev/null; then
+              git show "${previous_sha}:data/principles/steel/${filename}" > "${previous_file}"
+            else
+              cp "data/principles/steel/${filename}" "${previous_file}"
+            fi
+          done
+      - name: Preserve identity and migration history
+        run: uv run --locked python -m principle_catalog verify-identity-history --previous-identities "${RUNNER_TEMP}/previous-identities.yaml" --previous-migration "${RUNNER_TEMP}/previous-migration.yaml"
       - name: Validate catalog
         run: uv run --locked python -m principle_catalog validate
       - name: Run tests

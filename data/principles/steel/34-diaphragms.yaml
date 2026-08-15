@@ -34,6 +34,12 @@ principles:
 - id: S-K6-INTERNAL-DIAPHRAGM-CONSTRUCTION
   order: 2
   type: identification
+  display_content:
+    definition: 内ダイアフラムは柱内部の梁上下フランジ位置へ設け、角形鋼管では一度柱を切断してダイアフラムを溶接した後、柱を再び溶接接合する。
+    distinguishing_conditions:
+    - 角形鋼管柱の内ダイアフラム形式
+    confusable_points:
+    - 「柱を切断せずに内部へ直接取り付ける」とは区別する。
   principle: 内ダイアフラム形式の製作手順
   question:
     prompt: 角形鋼管柱の内部へ梁上下フランジ位置の内ダイアフラムを取り付けるとき、製作手順として正しい結論はどちらか。

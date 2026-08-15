@@ -19,6 +19,8 @@ from principle_catalog.catalog import (
     MANIFEST_PATH,
     PUBLIC_PROGRESS_PATH,
     _has_repeating_answer_period,
+    display_facets,
+    display_principles,
     load_catalog,
     load_public_progress,
     validate_print_registry_history,
@@ -100,26 +102,23 @@ def test_manifest_covers_every_requested_pdf_page() -> None:
     assert catalog.audit.table_pages == tuple(range(159, 176))
     assert catalog.audit.table_row_count == 167
     assert len(catalog.audit.primary_question_codes) == 167
-    assert catalog.manifest.expected_total == 215
+    assert catalog.manifest.expected_total == 216
     assert catalog.manifest.expected_status_counts == {
         "draft": 2,
         "source_checked": 116,
-        "source_gap": 97,
+        "source_gap": 98,
     }
     assert catalog.manifest.expected_answer_counts == {"A": 58, "B": 58}
 
 
-def test_manifest_assigns_permanent_print_numbers_to_every_published_question() -> None:
+def test_manifest_preserves_the_archived_r1_print_registry() -> None:
     catalog = load_catalog()
-    published = [
-        item
-        for item in catalog.principles
-        if item.editorial_status == "source_checked"
-    ]
+    archived = catalog.question_editions.editions["K6-R1"]
 
     assert catalog.manifest.next_print_number == 117
     assert len(catalog.manifest.print_numbers) == 116
-    assert {item.id for item in published} <= set(catalog.manifest.print_numbers)
+    assert archived.status == "archived"
+    assert archived.assignments == catalog.manifest.print_numbers
     assert set(catalog.manifest.print_numbers.values()) == set(range(1, 117))
     assert catalog.manifest.print_registry_sha256 == (
         "7b2a0e8e18bccb17560dc97e56a9fdcd70d242e8f18db0aa58ba1357969894ec"
@@ -234,7 +233,10 @@ def test_catalog_has_unique_ordered_ids_and_valid_prerequisites() -> None:
     reason="private local study state is intentionally absent in CI",
 )
 def test_existing_study_items_are_stable_catalog_ids() -> None:
-    catalog_ids = {item.id for item in load_catalog().principles}
+    catalog = load_catalog()
+    catalog_ids = {item.id for item in catalog.principles} | set(
+        catalog.migration.retired
+    )
     state = json.loads(LOCAL_STUDY_STATE.read_text(encoding="utf-8"))
     study_ids = {
         item["id"] for item in state["items"] if item["id"].startswith("S-K6-")
@@ -244,9 +246,8 @@ def test_existing_study_items_are_stable_catalog_ids() -> None:
 
 
 def test_source_checked_entries_have_balanced_binary_questions_and_three_point_content() -> None:
-    checked = [
-        item for item in load_catalog().principles if item.editorial_status == "source_checked"
-    ]
+    catalog = load_catalog()
+    checked = list(display_principles(catalog, published_only=True))
 
     assert len(checked) == 116
     for item in checked:
@@ -359,8 +360,8 @@ def test_build_publishes_only_source_checked_entries(tmp_path: Path) -> None:
     assert html.count("確認問題（自作・2択）") == published
     assert html.count('class="binary-choices"') == published
     assert html.count('class="answer-disclosure"') == published
-    assert html.count("正解と解説を見る") == published
-    assert html.count("正解と解説を閉じる") == published
+    assert "<details" not in html
+    assert "正解と解説を見る" not in html
     assert html.count('class="answer-key"') == published
     assert all(item.principle in html for item in expected_published)
     assert all(
@@ -370,36 +371,33 @@ def test_build_publishes_only_source_checked_entries(tmp_path: Path) -> None:
         and item.question.choice_b in html
         for item in expected_published
     )
-    assert all(f'id="{item.id}"' not in html for item in unpublished)
+    assert all(f'id="{item.code}"' not in html for item in unpublished)
 
 
-def test_build_embeds_each_permanent_print_number_in_its_question_card(
+def test_build_embeds_each_current_edition_reference_in_its_question_card(
     tmp_path: Path,
 ) -> None:
     output = tmp_path / "site"
     build_site(output, "https://8pockets.github.io/first-class-architect/")
     catalog = load_catalog()
     html = (output / "index.html").read_text(encoding="utf-8")
-    published = [
-        item
-        for item in catalog.principles
-        if item.editorial_status == "source_checked"
-    ]
-    expected_labels = [
-        f"Q{catalog.manifest.print_numbers[item.id]:03d}" for item in published
-    ]
+    published = list(display_principles(catalog, published_only=True))
+    current = catalog.question_editions.editions[catalog.question_editions.current]
+    expected_labels = [current.reference(item.id) for item in published]
     assert re.findall(
-        r'class="print-question-number" aria-hidden="true">(Q\d{3})</p>',
+        r'class="print-question-number" aria-hidden="true">'
+        r'<span data-print-position>問\d+</span> \[(K6-R\d+ Q\d{3})\]</p>',
         html,
     ) == expected_labels
 
     for item in published:
-        card = html.split(f'id="{item.id}"', maxsplit=1)[1].split(
+        card = html.split(f'id="{item.code}"', maxsplit=1)[1].split(
             "</article>", maxsplit=1
         )[0]
-        number = catalog.manifest.print_numbers[item.id]
+        reference = current.reference(item.id)
         assert (
-            f'<p class="print-question-number" aria-hidden="true">Q{number:03d}</p>'
+            f'<span data-print-position>問{current.assignments[item.id]}</span> '
+            f'[{reference}]'
             in card
         )
 
@@ -433,15 +431,13 @@ def test_build_places_each_question_before_its_three_point_answer_and_searches_i
     output = tmp_path / "site"
     build_site(output, "https://8pockets.github.io/first-class-architect/")
     html = (output / "index.html").read_text(encoding="utf-8")
-    published = [
-        item
-        for item in load_catalog().principles
-        if item.editorial_status == "source_checked"
-    ]
+    catalog = load_catalog()
+    published = display_principles(catalog, published_only=True)
 
     for item in published:
         assert item.question is not None
-        card = html.split(f'id="{item.id}"', maxsplit=1)[1].split(
+        facets = display_facets(catalog, item)
+        card = html.split(f'id="{item.code}"', maxsplit=1)[1].split(
             "</article>", maxsplit=1
         )[0]
         card_body = card.split(">", maxsplit=1)[1]
@@ -461,36 +457,27 @@ def test_build_places_each_question_before_its_three_point_answer_and_searches_i
             prompt
         )
         assert card_body.index(prompt) < card_body.index('<ul class="binary-choices">')
-        disclosure = card_body.split(
-            '<details class="answer-disclosure"', maxsplit=1
-        )[1].split("</details>", maxsplit=1)[0]
-        disclosure_opening = disclosure.split(">", maxsplit=1)[0]
         assert card_body.index('<ul class="binary-choices">') < card_body.index(
-            '<details class="answer-disclosure"'
+            '<section class="answer-disclosure"'
         )
-        assert card_body.index('<details class="answer-disclosure"') < card_body.index(
+        assert card_body.index('<section class="answer-disclosure"') < card_body.index(
             '<p class="answer-key">'
         )
-        assert disclosure.index("正解と解説を見る") < disclosure.index(
-            '<p class="answer-key">'
+        answer = card_body.split(
+            '<section class="answer-disclosure"', maxsplit=1
+        )[1].split("</section>", maxsplit=1)[0]
+        assert answer.index('<p class="answer-key">') < answer.index(
+            f"<dt>{escape(facets.primary.label)}</dt>"
         )
-        assert disclosure.index("正解と解説を閉じる") < disclosure.index(
-            '<p class="answer-key">'
+        assert answer.index(f"<dt>{escape(facets.primary.label)}</dt>") < answer.index(
+            f"<dt>{escape(facets.secondary.label)}</dt>"
         )
-        assert disclosure.count(
-            f'<span class="visually-hidden">：{escape(item.principle)}</span>'
-        ) == 2
-        assert disclosure.index('<p class="answer-key">') < disclosure.index(
-            "<dt>結論</dt>"
-        )
-        assert disclosure.index("<dt>結論</dt>") < disclosure.index("<dt>理由</dt>")
-        assert disclosure.index("<dt>理由</dt>") < disclosure.index(
-            "<dt>結論を左右する条件</dt>"
+        assert answer.index(f"<dt>{escape(facets.secondary.label)}</dt>") < answer.index(
+            f"<dt>{escape(facets.tertiary.label)}</dt>"
         )
         assert "hidden" not in question_opening
-        assert " open" not in disclosure_opening
-        assert 'name="answer-disclosure"' in disclosure_opening
-        assert "data-disclosure" in disclosure_opening
+        assert "<details" not in card
+        assert "<summary" not in card
         assert "data-principle-link" in card
         assert f'<strong>{item.question.correct}</strong>' in card
         assert prompt in card
@@ -499,9 +486,9 @@ def test_build_places_each_question_before_its_three_point_answer_and_searches_i
         assert escape(item.question.prompt.lower()) in search_text
         assert escape(item.question.choice_a.lower()) in search_text
         assert escape(item.question.choice_b.lower()) in search_text
-        assert escape(item.conclusion.lower()) in search_text
-        assert escape(item.reason.lower()) in search_text
-        assert all(escape(condition.lower()) in search_text for condition in item.conditions)
+        for facet in (facets.primary, facets.secondary, facets.tertiary):
+            assert escape(facet.label.lower()) in search_text
+            assert all(escape(value.lower()) in search_text for value in facet.values)
 
 
 def test_build_is_public_read_only_and_privacy_bounded(tmp_path: Path) -> None:
@@ -531,28 +518,20 @@ def test_build_is_public_read_only_and_privacy_bounded(tmp_path: Path) -> None:
     assert "https://" not in script + css
 
 
-def test_answer_disclosure_has_visible_focus_state(
+def test_answer_content_is_always_visible_without_a_disclosure_control(
     tmp_path: Path,
 ) -> None:
     output = tmp_path / "site"
     build_site(output, "https://8pockets.github.io/first-class-architect/")
+    html = (output / "index.html").read_text(encoding="utf-8")
     css = (output / "assets/styles.css").read_text(encoding="utf-8")
 
-    summary = _css_declarations(css, ".answer-disclosure > summary")
-    assert summary["min-height"] == "52px"
-    assert summary["cursor"] == "pointer"
-    focus = _css_declarations(css, ".answer-disclosure > summary:focus-visible")
-    assert focus["outline"] == "3px solid var(--orange)"
-    assert focus["outline-offset"] == "-3px"
-    labels = _css_declarations(
-        css,
-        ".answer-disclosure[open] .disclosure-label-closed,\n"
-        ".answer-disclosure:not([open]) .disclosure-label-open",
-    )
-    assert labels["display"] == "none"
-    visually_hidden = _css_declarations(css, ".visually-hidden")
-    assert visually_hidden["position"] == "absolute"
-    assert visually_hidden["clip"] == "rect(0 0 0 0)"
+    assert html.count('<section class="answer-disclosure"') == 116
+    assert "<details" not in html
+    assert "<summary" not in html
+    assert "disclosure-label" not in html + css
+    answer = _css_declarations(css, ".answer-disclosure")
+    assert answer["background"] == "var(--card)"
 
 
 def test_screen_typography_prioritizes_the_practice_question(
@@ -565,7 +544,7 @@ def test_screen_typography_prioritizes_the_practice_question(
     title = _css_declarations(css, ".card-header h3")
     question = _css_declarations(css, ".practice-question-text")
 
-    assert title["font-size"] == "clamp(0.9rem, 1.4vw, 1rem)"
+    assert title["font-size"] == "clamp(0.6rem, 1.4vw, 1rem)"
     assert question["font-size"] == "clamp(1.08rem, 1.7vw, 1.18rem)"
 
 
@@ -588,7 +567,7 @@ def test_print_styles_make_a_compact_a4_two_column_question_sheet(
     assert catalog["column-gap"] == "2.5mm"
     section = _css_declarations(
         print_rules,
-        ".catalog-section,\n  .card-grid",
+        ".catalog-group,\n  .catalog-section,\n  .card-grid",
     )
     assert section["display"] == "contents"
     card = _css_declarations(print_rules, ".principle-card")
@@ -615,6 +594,8 @@ def test_print_styles_make_a_compact_a4_two_column_question_sheet(
         "  .card-header,\n"
         "  .answer-disclosure,\n"
         "  .card-source,\n"
+        "  .migration-notice,\n"
+        "  .redistribution-index,\n"
         "  .empty-state,\n"
         "  .site-footer",
     )
@@ -723,7 +704,7 @@ def test_question_choice_swap_without_independent_reaudit_is_rejected(
         load_catalog(root / "manifest.yaml")
 
 
-def test_question_reordering_without_independent_reaudit_is_rejected(
+def test_physical_yaml_reordering_does_not_change_the_issued_display_order(
     tmp_path: Path,
 ) -> None:
     root = _copy_catalog(tmp_path)
@@ -743,8 +724,12 @@ def test_question_reordering_without_independent_reaudit_is_rejected(
         encoding="utf-8",
     )
 
-    with pytest.raises(CatalogError, match="independently audited snapshot"):
-        load_catalog(root / "manifest.yaml")
+    catalog = load_catalog(root / "manifest.yaml")
+    current = catalog.question_editions.editions[catalog.question_editions.current]
+
+    assert [item.id for item in display_principles(catalog, published_only=True)] == [
+        key for key, _ in sorted(current.assignments.items(), key=lambda entry: entry[1])
+    ]
 
 
 def test_source_checked_entry_without_a_question_is_rejected(tmp_path: Path) -> None:
@@ -1008,7 +993,7 @@ def test_public_progress_rejects_duplicate_local_ids(tmp_path: Path) -> None:
         public_progress_from_local(path)
 
 
-def test_study_brief_hides_answer_and_three_points_by_default() -> None:
+def test_study_brief_always_shows_answer_and_three_points() -> None:
     item = next(
         item for item in load_catalog().principles if item.editorial_status == "source_checked"
     )
@@ -1019,18 +1004,35 @@ def test_study_brief_hides_answer_and_three_points_by_default() -> None:
     assert item.question.prompt in brief
     assert f"A. {item.question.choice_a}" in brief
     assert f"B. {item.question.choice_b}" in brief
-    assert "正解:" not in brief
-    assert "## 結論" not in brief
-    assert "## 理由" not in brief
-    assert "## 結論を左右する条件" not in brief
+    assert f"正解: **{item.question.correct}**" in brief
+    assert "## 結論" in brief
+    assert "## 理由" in brief
+    assert "## 結論を左右する条件" in brief
 
 
-def test_study_brief_reveal_shows_answer_before_the_three_points() -> None:
+def test_study_brief_keeps_an_empty_typed_third_facet_visible() -> None:
+    catalog = load_catalog()
+    item = next(
+        candidate
+        for candidate in catalog.principles
+        if candidate.editorial_status == "source_checked"
+        and not display_facets(catalog, candidate).tertiary.values
+    )
+    tertiary = display_facets(catalog, item).tertiary
+
+    brief = study_brief(item.id)
+
+    assert f"## {tertiary.label}\n\n—" in brief
+
+
+def test_study_brief_reveal_is_a_backward_compatible_noop() -> None:
     item = next(
         item for item in load_catalog().principles if item.editorial_status == "source_checked"
     )
     brief = study_brief(item.id, reveal=True)
+    default = study_brief(item.id)
 
+    assert brief == default
     assert "## 結論" in brief
     assert "## 理由" in brief
     assert "## 結論を左右する条件" in brief
@@ -1045,7 +1047,7 @@ def test_study_brief_reveal_shows_answer_before_the_three_points() -> None:
     assert item.reason in brief
 
 
-def test_study_brief_cli_reveals_only_when_requested() -> None:
+def test_study_brief_cli_reveal_flag_keeps_the_same_visible_content() -> None:
     item = next(
         item for item in load_catalog().principles if item.editorial_status == "source_checked"
     )
@@ -1069,8 +1071,9 @@ def test_study_brief_cli_reveals_only_when_requested() -> None:
         text=True,
     ).stdout
 
-    assert "正解:" not in hidden
-    assert "## 結論" not in hidden
+    assert hidden == revealed
+    assert f"正解: **{item.question.correct}**" in hidden
+    assert "## 結論" in hidden
     assert f"正解: **{item.question.correct}**" in revealed
     assert "## 結論" in revealed
 

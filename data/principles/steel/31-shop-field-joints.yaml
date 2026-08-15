@@ -30,26 +30,29 @@ principles:
     - '29183'
   prerequisites: []
   editorial_status: source_checked
-- id: S-K6-SHOP-JOINT-FIELD-SPLICE-IDENTIFICATION
+- id: S-K6-JOINT-SPLICE-LOCATION-FABRICATION
   order: 2
   type: identification
-  principle: 仕口と継手の位置・施工場所・接合方法
+  display_content:
+    definition: 柱梁接合部に設ける仕口は一般に工場で製作し、柱・梁の中間に設ける継手は一般に現場で施工する。
+    distinguishing_conditions:
+    - 鉄骨柱梁の仕口と柱・梁中間継手を区別
+    confusable_points:
+    - 「一般に現場で製作する」とは区別する。
+  principle: 仕口・継手の位置と製作場所
   question:
     prompt: 鉄骨の柱梁接合部に設ける仕口について、一般的な製作場所として正しい結論はどちらか。
     choices:
-      A: 一般に工場で製作する
-      B: 一般に現場で製作する
-    correct: A
-  conclusion: 柱梁接合部の仕口は一般に工場で溶接製作し、柱・梁の中間に設ける継手は一般に現場施工とする。現場継手は溶接より気象条件の影響を受けにくい高力ボルト接合が一般的である。
-  reason: 工場では溶接品質を管理しやすく、現場では高力ボルト接合が気象条件の影響を受けにくいため。
+      A: 一般に現場で製作する
+      B: 一般に工場で製作する
+    correct: B
+  conclusion: 柱梁接合部に設ける仕口は一般に工場で製作し、柱・梁の中間に設ける継手は一般に現場で施工する。
+  reason: 柱梁接合部は工場で品質を管理して製作し、運搬できる部材単位を現場の継手で接続するため。
   conditions:
   - 鉄骨柱梁の仕口と柱・梁中間継手を区別
   source:
     pages:
     - 206
-    question_codes:
-    - '05153'
-    - '19152'
-    - '26261'
+    question_codes: []
   prerequisites: []
   editorial_status: source_checked

@@ -2,7 +2,7 @@
 
 2027年の一級建築士学科試験に向けて、本番で使える理解を作り、働きながら継続できる学習方法を設計するプロジェクトです。
 
-現在は、鉄骨部材の座屈と塑性変形能力を題材にした構造パイロットを進めながら、PDF P158〜P215の鉄骨構造を原理単位で台帳化しています。自作2択問題とA/Bを先に表示し、選んだ後に正解、結論、理由、条件を一括で開いて復習します。
+現在は、鉄骨部材の座屈と塑性変形能力を題材にした構造パイロットを進めながら、PDF P158〜P215の鉄骨構造を知識単位で台帳化しています。GitHub Pagesでは、自作2択問題とA/Bに加えて、正解と内容別の三点（原理は結論・理由・条件、規定は規定・適用範囲・数値／例外、識別は定義・識別条件・混同注意）を常に読める形で公開します。
 
 [鉄骨構造 原理台帳（GitHub Pages）](https://8pockets.github.io/first-class-architect/)
 
@@ -26,6 +26,8 @@
 - [毎朝の学習セット自動準備](./docs/morning-study-set-automation.md)
 - [教材とパイロット範囲](./docs/materials.md)
 - [鉄骨構造の原理台帳](./docs/principle-catalog.md)
+- [鉄骨構造台帳の内容レビュー](./docs/steel-catalog-content-review.md)
+- [鉄骨構造の導入層監査](./docs/steel-coverage-tier-audit.md)
 - [旧Wayfinderからの移行記録](./docs/migration.md)
 
 ## 意思決定の進め方

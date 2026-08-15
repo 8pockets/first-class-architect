@@ -7,6 +7,12 @@ principles:
 - id: S-K6-WELD-DEFECT-BLOWHOLE
   order: 1
   type: identification
+  display_content:
+    definition: ブローホールは、溶着金属中にガスが残ってできる内部の空洞である。
+    distinguishing_conditions:
+    - 空洞が溶接金属内部に閉じている場合
+    confusable_points:
+    - 「ピット」とは区別する。
   principle: ブローホールの識別
   question:
     prompt: 溶着金属中にガスが残り、空洞が溶接金属内部に閉じている欠陥の名称として正しい結論はどちらか。
@@ -42,6 +48,12 @@ principles:
 - id: S-K6-WELD-DEFECT-PIT
   order: 3
   type: identification
+  display_content:
+    definition: ピットは、ブローホールと同じ現象が表面に開口した表面欠陥である。
+    distinguishing_conditions:
+    - ガスによる空洞が溶接部表面に開口している場合
+    confusable_points:
+    - 「ブローホール」とは区別する。
   principle: ピットの識別
   question:
     prompt: ガスによる空洞が溶接部表面に開口している欠陥の名称として、正しい結論はどちらか。
@@ -63,6 +75,12 @@ principles:
 - id: S-K6-WELD-DEFECT-SLAG-INCLUSION
   order: 4
   type: identification
+  display_content:
+    definition: スラグ巻込みは、非金属物質のスラグが溶接金属内部に残る内部欠陥である。
+    distinguishing_conditions:
+    - 溶接金属内部にスラグが残る場合
+    confusable_points:
+    - 「ブローホール」とは区別する。
   principle: スラグ巻込みの識別
   question:
     prompt: 非金属物質のスラグが浮上せず溶接金属内部に残る欠陥の名称として、正しい結論はどちらか。
@@ -83,6 +101,12 @@ principles:
 - id: S-K6-WELD-DEFECT-UNDERCUT
   order: 5
   type: identification
+  display_content:
+    definition: アンダーカットは、母材側に溶接金属が満たされず溝として残る表面欠陥である。
+    distinguishing_conditions:
+    - 溶接部表面の母材側に溝が残る場合
+    confusable_points:
+    - 「ピット」とは区別する。
   principle: アンダーカットの識別
   question:
     prompt: 母材側に溶接金属が満たされず、溶接部表面に溝が残る欠陥の名称として正しい結論はどちらか。
@@ -103,6 +127,12 @@ principles:
 - id: S-K6-WELD-SCALLOP-DEFINITION
   order: 6
   type: identification
+  display_content:
+    definition: スカラップは溶接線の交差を避けるための扇状切欠きで、切欠きのないノンスカラップ工法を用いる場合もある。
+    distinguishing_conditions:
+    - 複数の溶接線が交差する部材接合部
+    confusable_points:
+    - 「ノンスカラップ」とは区別する。
   principle: スカラップとノンスカラップ
   question:
     prompt: 複数の溶接線の交差を避けるために設ける扇状切欠きの名称として、正しい結論はどちらか。

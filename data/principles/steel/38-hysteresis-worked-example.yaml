@@ -4,20 +4,20 @@ section:
   title: 演習：荷重変形履歴
   order: 39
 principles:
-- id: S-K6-BRACE-FRAME-HYSTERESIS-BY-SLENDERNESS
+- id: S-K6-BRACE-HYSTERESIS-BY-SLENDERNESS
   order: 1
   type: principle
-  principle: 筋かい細長比と架構の履歴特性
+  principle: 筋かい細長比による履歴特性の差
   question:
     prompt: 同じ基準強度で細長比が小さいX形筋かい架構を細長比が大きい場合と比べるとき、エネルギー吸収能力として正しい結論はどちらか。
     choices:
       A: エネルギー吸収能力は小さい
       B: エネルギー吸収能力は大きい
     correct: B
-  conclusion: 細長比が大きいX形筋かい架構は小荷重で変形が進み原点付近のエネルギー吸収が小さい。細長比が小さいX形筋かい架構は圧縮筋かいが座屈しにくく、座屈後曲げ抵抗とエネルギー吸収が大きいが、繰返しで耐力が低下する。ラーメン架構は変形増大とともにループ・強度・吸収能力が増え、平行四辺形状に近似できる。
+  conclusion: 細長比が大きいX形筋かい架構は小荷重で変形が進み原点付近のエネルギー吸収が小さい。細長比が小さいX形筋かい架構は圧縮筋かいが座屈しにくく、座屈後曲げ抵抗とエネルギー吸収が大きいが、繰返しで耐力が低下する。
   reason: 大細長比材は圧縮を負担できず、引張降伏後に伸びた筋かいが再び効くまで抵抗できない一方、小細長比材は圧縮座屈しにくく座屈後抵抗も大きいため。
   conditions:
-  - X形筋かい架構とラーメン架構の繰返し荷重
+  - X形筋かい架構へ繰返し水平荷重が作用する場合
   - 同じ基準強度で筋かい細長比の大小を比較
   source:
     pages:
@@ -27,6 +27,29 @@ principles:
     - 05181
   prerequisites:
   - S-K6-18-SLENDERNESS
+  editorial_status: source_checked
+- id: S-K6-MOMENT-FRAME-HYSTERESIS
+  order: 101
+  type: principle
+  principle: ラーメン架構の履歴特性
+  question:
+    prompt: 鉄骨造ラーメン架構の荷重・変形履歴について、一般的な模式化として正しい結論はどちらか。
+    choices:
+      A: 変形が増えるとループ・強度・エネルギー吸収能力が増え、平行四辺形状に近似できる。
+      B: 変形が増えると履歴ループの面積がゼロへ近づき、直線状に近似できる。
+    correct: A
+  conclusion: ラーメン架構は変形増大とともに履歴ループ・強度・エネルギー吸収能力が増え、その履歴を平行四辺形状に近似できる。
+  reason: 柱・梁端部の塑性化に伴って履歴ループが拡大し、ループで囲まれる面積が大きくなるため。
+  conditions:
+  - 鉄骨造ラーメン架構へ繰返し水平荷重が作用する場合
+  - 荷重・変形履歴を模式化する場合
+  source:
+    pages:
+    - 214
+    - 215
+    question_codes:
+    - 05181
+  prerequisites: []
   editorial_status: source_checked
 - id: S-K6-HYSTERESIS-LOOP-AREA-ENERGY-ABSORPTION
   order: 2
@@ -48,6 +71,13 @@ principles:
 - id: S-K6-BRACE-SHARE-SEISMIC-STRESS-AMPLIFICATION
   order: 3
   type: rule
+  display_content:
+    rule: ラーメン・筋かい併用架構で筋かい水平力分担率βが5/7以上なら地震時応力を1.5倍、5/7未満なら1+0.7β倍に割り増す。
+    applicability:
+    - ラーメン架構と筋かい架構の併用
+    - βは筋かいの水平力分担率
+    numbers_exceptions:
+    - ラーメン・筋かい併用架構で筋かい水平力分担率βが5/7以上なら地震時応力を1.5倍、5/7未満なら1+0.7β倍に割り増す。
   principle: 筋かい水平力分担率による地震時応力割増し
   question:
     prompt: ラーメン・筋かい併用架構で筋かい水平力分担率βが5/7を上回る場合、地震時応力の割増し方法として正しい結論はどちらか。

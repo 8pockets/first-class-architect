@@ -11,28 +11,13 @@ import yaml
 from principle_catalog.catalog import CatalogError, load_catalog
 from principle_catalog.models import PublicProgress
 from principle_catalog.study import LOCAL_STUDY_STATE
-
-
-_STATUS_PROJECTION: dict[str, PublicProgress] = {
-    "not_started": "unstarted",
-    "learning": "learning",
-    "in_progress": "learning",
-    "interrupted": "learning",
-    "failed": "learning",
-    "reviewing": "reviewing",
-    "review_due": "reviewing",
-    "retest_due": "reviewing",
-    "failed_retest_due": "reviewing",
-    "retained_14d": "retained_14d",
-    "completed_14d": "retained_14d",
-}
+from principle_catalog.study_status import coarse_study_status
 
 
 def _coarse_status(item: dict[str, Any]) -> PublicProgress:
-    status = item.get("status")
-    if not isinstance(status, str) or status not in _STATUS_PROJECTION:
-        raise CatalogError(f"unknown local study status: {status!r}")
-    return _STATUS_PROJECTION[status]
+    """Backward-compatible internal seam for existing callers and tests."""
+
+    return coarse_study_status(item)
 
 
 def public_progress_from_local(
@@ -47,7 +32,9 @@ def public_progress_from_local(
     if not isinstance(data, dict) or not isinstance(data.get("items"), list):
         raise CatalogError(f"{study_state_path}: items must be a list")
 
-    catalog_items = {item.id: item for item in load_catalog().principles}
+    catalog = load_catalog()
+    catalog_items = {item.id: item for item in catalog.principles}
+    retired_catalog_ids = set(catalog.migration.retired)
     projected: dict[str, PublicProgress] = {}
     seen: set[str] = set()
     for raw in data["items"]:
@@ -58,6 +45,10 @@ def public_progress_from_local(
             raise CatalogError(f"{study_state_path}: duplicate study item {item_id}")
         seen.add(item_id)
         if item_id not in catalog_items:
+            if item_id in retired_catalog_ids:
+                # Historical private records remain keyed and are never silently
+                # inherited by split/merged active cards.
+                continue
             if item_id.startswith("S-K6-"):
                 raise CatalogError(f"{study_state_path}: unknown steel catalog item {item_id}")
             continue

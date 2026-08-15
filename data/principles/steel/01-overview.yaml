@@ -81,6 +81,12 @@ principles:
 - id: S-K6-STEEL-CONNECTION-TYPE-IDENTIFICATION
   order: 5
   type: identification
+  display_content:
+    definition: 鋼材同士をつなぐ接合には、リベット接合・ボルト接合・高力ボルト接合・溶接接合などがある。
+    distinguishing_conditions:
+    - 鉄骨部材同士を接合する場合
+    confusable_points:
+    - 「リベット・ボルト・高力ボルトだけで、溶接は含まれない」とは区別する。
   principle: 鋼材の接合方法
   question:
     prompt: 鉄骨部材同士をつなぐ接合方法の種類について、正しい結論はどちらか。

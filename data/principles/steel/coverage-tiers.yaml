@@ -1,0 +1,148 @@
+version: 1
+current: steel-coverage-v1
+tiers:
+  1:
+    slug: foundation
+    label: 骨格
+  2:
+    slug: standard
+    label: 標準
+  3:
+    slug: advanced
+    label: 発展
+schemes:
+  steel-coverage-v1:
+    status: current
+    content_sha256: 2a10b30fe54b4f608db1e2dcdcfbc31f8a6dacc249e8d426ff05b76e9ae53a7d
+    constraints:
+      tier_counts:
+        1: 32
+        2: 42
+        3: 42
+      answer_counts:
+        1: {A: 16, B: 16}
+        2: {A: 21, B: 21}
+        3: {A: 21, B: 21}
+      type_counts:
+        1: {principle: 19, rule: 7, identification: 6}
+        2: {principle: 25, rule: 9, identification: 8}
+        3: {principle: 25, rule: 9, identification: 8}
+      max_same_answer_run: 3
+      foundation_covers_all_published_subtopics: true
+    assignments:
+      S-K6-FRAME-H-SECTION-AXIS-ROLE: {tier: 1, introduction_order: 1, reasons: [coverage_representative]}
+      S-K6-ELASTIC-DEFLECTION-NOT-REDUCED-BY-HIGHER-STEEL-GRADE: {tier: 1, introduction_order: 2, reasons: [coverage_representative]}
+      S-K6-STEEL-CONNECTION-TYPE-IDENTIFICATION: {tier: 1, introduction_order: 3, reasons: [coverage_representative, prerequisite, basic_identification]}
+      S-K6-WELD-METAL-COMPOSITION: {tier: 1, introduction_order: 4, reasons: [coverage_representative, prerequisite, basic_identification]}
+      S-K6-BRACE-HORIZONTAL-LOAD-AXIAL-FORCE: {tier: 1, introduction_order: 5, reasons: [coverage_representative, prerequisite]}
+      S-K6-BOX-COLUMN-H-BEAM-WELD-TYPES: {tier: 1, introduction_order: 6, reasons: [coverage_representative]}
+      S-K6-STEEL-DUCTILITY-PREVENTS-BRITTLE-FRACTURE: {tier: 1, introduction_order: 7, reasons: [coverage_representative]}
+      S-K6-18-SLENDERNESS: {tier: 1, introduction_order: 8, reasons: [coverage_representative, prerequisite]}
+      S-K6-FRICTION-JOINT-PRE-SLIP-FORCE-TRANSFER: {tier: 1, introduction_order: 9, reasons: [coverage_representative, prerequisite]}
+      S-K6-WELD-THROAT-ALLOWABLE-SHEAR-INDEPENDENT-OF-JOINT-FORM: {tier: 1, introduction_order: 10, reasons: [coverage_representative]}
+      S-K6-BRACE-CAPACITY-DESIGN-JOINT-OVERSTRENGTH: {tier: 1, introduction_order: 11, reasons: [coverage_representative]}
+      S-K6-INTERNAL-DIAPHRAGM-CONSTRUCTION: {tier: 1, introduction_order: 12, reasons: [coverage_representative, basic_identification]}
+      S-K6-NO-LATERAL-BUCKLING-SECTION-ALLOWABLE-BENDING: {tier: 1, introduction_order: 13, reasons: [coverage_representative]}
+      S-K6-HIGH-STRENGTH-BOLT-ALLOWABLE-SHEAR-TABLE: {tier: 1, introduction_order: 14, reasons: [coverage_representative]}
+      S-K6-END-TABS-SECURE-SOUND-WELD-ENDS: {tier: 1, introduction_order: 15, reasons: [coverage_representative, prerequisite]}
+      S-K6-BRACE-TENSION-YIELD-COMPRESSION-BUCKLING: {tier: 1, introduction_order: 16, reasons: [coverage_representative, prerequisite]}
+      S-K6-BEAM-SPLICE-METHODS-FIELD-SHOP: {tier: 1, introduction_order: 17, reasons: [coverage_representative, basic_identification]}
+      S-K6-STEEL-ALLOWABLE-STRESS-DURATION: {tier: 1, introduction_order: 18, reasons: [coverage_representative]}
+      S-K6-LATERAL-BRACING-ENABLES-FULL-PLASTIC-MOMENT: {tier: 1, introduction_order: 19, reasons: [coverage_representative, prerequisite]}
+      S-K6-F10T-TENSILE-STRENGTH-MEANING: {tier: 1, introduction_order: 20, reasons: [coverage_representative, basic_identification]}
+      S-K6-WELD-SCALLOP-DEFINITION: {tier: 1, introduction_order: 21, reasons: [coverage_representative, prerequisite, basic_identification]}
+      S-K6-ANGLE-CHANNEL-BRACE-EFFECTIVE-AREA: {tier: 1, introduction_order: 22, reasons: [coverage_representative, prerequisite]}
+      S-K6-EXPOSED-BASE-MODEL-BY-DESIGN-TARGET: {tier: 1, introduction_order: 23, reasons: [coverage_representative, prerequisite]}
+      S-K6-STEEL-CORROSION-PROTECTION: {tier: 1, introduction_order: 24, reasons: [coverage_representative]}
+      S-K6-20-LOCAL-BUCKLING: {tier: 1, introduction_order: 25, reasons: [coverage_representative, prerequisite]}
+      S-K6-REFERENCE-FATIGUE-STRENGTH-JOINT-TYPE: {tier: 1, introduction_order: 26, reasons: [coverage_representative]}
+      S-K6-FILLET-WELD-EFFECTIVE-LENGTH: {tier: 1, introduction_order: 27, reasons: [coverage_representative]}
+      S-K6-BUCKLING-RESTRAINED-BRACE-FORCE-ROLES: {tier: 1, introduction_order: 28, reasons: [coverage_representative]}
+      S-K6-WRAPPED-BASE-MOMENT-DISTRIBUTION: {tier: 1, introduction_order: 29, reasons: [coverage_representative, prerequisite]}
+      S-K6-WELD-HEAT-DISTORTION: {tier: 1, introduction_order: 30, reasons: [coverage_representative, prerequisite]}
+      S-K6-EMBEDDED-BASE-FORCE-TRANSFER: {tier: 1, introduction_order: 31, reasons: [coverage_representative]}
+      S-K6-COMBINED-BOLT-WELD-CONSTRUCTION-ORDER: {tier: 1, introduction_order: 32, reasons: [coverage_representative]}
+      S-K6-FLOOR-HORIZONTAL-TRUSS-SECONDARY-BEAM-AXIAL-FORCE: {tier: 2, introduction_order: 33, reasons: [standard_application]}
+      S-K6-NO-SCALLOP-IMPROVES-BEAM-END-DUCTILITY: {tier: 2, introduction_order: 34, reasons: [standard_application]}
+      S-K6-HIGHER-STRENGTH-STEEL-REDUCES-DEPTH-ONLY-STRENGTH-GOVERNS: {tier: 2, introduction_order: 35, reasons: [standard_application]}
+      S-K6-ORDINARY-BOLT-SHEAR-TRANSFER: {tier: 2, introduction_order: 36, reasons: [standard_application, prerequisite]}
+      S-K6-HEAT-AFFECTED-ZONE-IDENTIFICATION: {tier: 2, introduction_order: 37, reasons: [standard_application, basic_identification]}
+      S-K6-GUSSET-PLATE-MEMBER-CONNECTION: {tier: 2, introduction_order: 38, reasons: [standard_application, prerequisite, basic_identification]}
+      S-K6-SQUARE-TUBE-COLUMN-DIAPHRAGM-TYPES: {tier: 2, introduction_order: 39, reasons: [standard_application, prerequisite, basic_identification]}
+      S-K6-LIMIT-SLENDERNESS-STRENGTH-RELATION: {tier: 2, introduction_order: 40, reasons: [standard_application, prerequisite]}
+      S-K6-HIGH-STRENGTH-BOLT-STRESS-DISTRIBUTION: {tier: 2, introduction_order: 41, reasons: [standard_application]}
+      S-K6-STEEL-END-TAB-TACK-WELD-TO-BACKING: {tier: 2, introduction_order: 42, reasons: [standard_application]}
+      S-K6-BRACE-TO-HOLLOW-COLUMN-DIAPHRAGM-REINFORCEMENT: {tier: 2, introduction_order: 43, reasons: [standard_application]}
+      S-K6-THROUGH-DIAPHRAGM-THICKNESS-MISMATCH-PREVENTION: {tier: 2, introduction_order: 44, reasons: [standard_application]}
+      S-K6-STEEL-COMPRESSION-CAPACITY-BUCKLING: {tier: 2, introduction_order: 45, reasons: [standard_application]}
+      S-K6-FRICTION-SURFACE-PREPARATION: {tier: 2, introduction_order: 46, reasons: [standard_application]}
+      S-K6-PARTIAL-PENETRATION-EFFECTIVE-THROAT-DEDUCTION: {tier: 2, introduction_order: 47, reasons: [standard_application]}
+      S-K6-BRACE-BOLT-COUNT-INCREASES-EFFECTIVE-AREA: {tier: 2, introduction_order: 48, reasons: [standard_application]}
+      S-K6-COLUMN-SPLICE-NEAR-MIDSTORY: {tier: 2, introduction_order: 49, reasons: [standard_application]}
+      S-K6-FRAME-COLUMN-BUCKLING-LENGTH-RESTRAINT: {tier: 2, introduction_order: 50, reasons: [standard_application]}
+      S-K6-FRICTION-JOINT-SHEAR-TENSION-INTERACTION: {tier: 2, introduction_order: 51, reasons: [standard_application]}
+      S-K6-WELD-DEFECT-SLAG-INCLUSION: {tier: 2, introduction_order: 52, reasons: [standard_application, basic_identification]}
+      S-K6-BRACE-SLENDERNESS-AND-DEFORMATION-CAPACITY: {tier: 2, introduction_order: 53, reasons: [standard_application]}
+      S-K6-EXPOSED-BASE-ANCHOR-EMBEDMENT-LENGTH: {tier: 2, introduction_order: 54, reasons: [standard_application]}
+      S-K6-18-ELASTIC-STRENGTH: {tier: 2, introduction_order: 55, reasons: [standard_application]}
+      S-K6-TORSHEAR-BOLT-PINTAIL-SECONDARY-TIGHTENING: {tier: 2, introduction_order: 56, reasons: [standard_application, prerequisite]}
+      S-K6-MOMENT-FRAME-HYSTERESIS: {tier: 2, introduction_order: 57, reasons: [standard_application]}
+      S-K6-DUCTILE-ANCHOR-BOLT-TYPES-AND-YIELD-SEQUENCE: {tier: 2, introduction_order: 58, reasons: [standard_application, basic_identification]}
+      S-K6-BEAM-LATERAL-BUCKLING-COUNTERMEASURES: {tier: 2, introduction_order: 59, reasons: [standard_application, prerequisite]}
+      S-K6-FRICTION-JOINT-REPEATED-LOAD-BELOW-SLIP: {tier: 2, introduction_order: 60, reasons: [standard_application]}
+      S-K6-WELD-NDT-INTERNAL-VS-SURFACE-DEFECTS: {tier: 2, introduction_order: 61, reasons: [standard_application, basic_identification]}
+      S-K6-X-BRACE-TENSION-COMPRESSION-CAPACITY: {tier: 2, introduction_order: 62, reasons: [standard_application]}
+      S-K6-WRAPPED-BASE-HEIGHT-AND-TOP-CONFINEMENT: {tier: 2, introduction_order: 63, reasons: [standard_application]}
+      S-K6-FULL-PLASTIC-LATERAL-BRACING-PLACEMENT-METHODS: {tier: 2, introduction_order: 64, reasons: [standard_application, prerequisite, basic_identification]}
+      S-K6-PREHEAT-PREVENTS-LOW-TEMPERATURE-CRACKING: {tier: 2, introduction_order: 65, reasons: [standard_application, prerequisite]}
+      S-K6-H-SECTION-STRONG-AXIS-LATERAL-RESTRAINT: {tier: 2, introduction_order: 66, reasons: [standard_application]}
+      S-K6-MULTIPASS-HEAT-INPUT-INTERPASS-UPPER-CONTROL: {tier: 2, introduction_order: 67, reasons: [standard_application, prerequisite]}
+      S-K6-LATERAL-BRACE-STRENGTH-AND-STIFFNESS: {tier: 2, introduction_order: 68, reasons: [standard_application]}
+      S-K6-TACK-WELD-MINIMUM-BEAD: {tier: 2, introduction_order: 69, reasons: [standard_application]}
+      S-K6-HIGHER-STRENGTH-REQUIRES-MORE-UNIFORM-BRACING: {tier: 2, introduction_order: 70, reasons: [standard_application]}
+      S-K6-PREHEAT-LOWER-BOUND-VS-INTERPASS-UPPER-BOUND: {tier: 2, introduction_order: 71, reasons: [standard_application]}
+      S-K6-WIDTH-THICKNESS-LIMIT-MEANING: {tier: 2, introduction_order: 72, reasons: [standard_application, prerequisite, basic_identification]}
+      S-K6-LATERAL-LOCAL-BUCKLING-INTERACTION: {tier: 2, introduction_order: 73, reasons: [standard_application]}
+      S-K6-WIDTH-THICKNESS-LIMIT-DECREASES-WITH-STRENGTH: {tier: 2, introduction_order: 74, reasons: [standard_application]}
+      S-K6-ORDINARY-BOLT-CLEARANCE-LOOSENING: {tier: 3, introduction_order: 75, reasons: [integrated_judgment]}
+      S-K6-FULL-PENETRATION-WELD-EFFECTIVE-LENGTH: {tier: 3, introduction_order: 76, reasons: [exception_detail]}
+      S-K6-VERTICAL-HORIZONTAL-BRACE-ROLES: {tier: 3, introduction_order: 77, reasons: [exception_detail]}
+      S-K6-BEAM-END-STRENGTH-SECTION-LOSS-AND-TUBE-DEFORMATION: {tier: 3, introduction_order: 78, reasons: [exception_detail]}
+      S-K6-HIGH-STRENGTH-STEEL-BEAM-DEFLECTION-CHECK: {tier: 3, introduction_order: 79, reasons: [exception_detail]}
+      S-K6-ORDINARY-BOLTS-PROHIBITED-FOR-REPEATED-LOAD: {tier: 3, introduction_order: 80, reasons: [integrated_judgment]}
+      S-K6-WELD-CONTINUOUS-STRESS-FLOW: {tier: 3, introduction_order: 81, reasons: [exception_detail]}
+      S-K6-BRACE-SIDE-FILLET-WELD-FORCE-TRANSFER: {tier: 3, introduction_order: 82, reasons: [exception_detail]}
+      S-K6-SN490-BEAM-COLUMN-JOINT-OVERSTRENGTH: {tier: 3, introduction_order: 83, reasons: [integrated_judgment]}
+      S-K6-H-SECTION-COLUMN-WEAK-AXIS-GOVERNS-BUCKLING: {tier: 3, introduction_order: 84, reasons: [exception_detail]}
+      S-K6-FRICTION-JOINT-POST-SLIP-RUPTURE-MODEL: {tier: 3, introduction_order: 85, reasons: [integrated_judgment]}
+      S-K6-WELD-BACKING-BAR-ROOT-GAP: {tier: 3, introduction_order: 86, reasons: [exception_detail]}
+      S-K6-BRACE-ECCENTRIC-JOINT-EFFECTS: {tier: 3, introduction_order: 87, reasons: [exception_detail]}
+      S-K6-BEAM-FLANGE-WEB-FORCE-SHARING: {tier: 3, introduction_order: 88, reasons: [exception_detail]}
+      S-K6-WIDER-FLANGE-REDUCES-BRACING-DEMAND: {tier: 3, introduction_order: 89, reasons: [integrated_judgment]}
+      S-K6-HIGH-STRENGTH-BOLT-SLIP-RIGIDITY: {tier: 3, introduction_order: 90, reasons: [exception_detail]}
+      S-K6-WELD-BACK-GOUGING-PURPOSE: {tier: 3, introduction_order: 91, reasons: [exception_detail]}
+      S-K6-DOUBLE-ANGLE-BRACE-REDUCES-ECCENTRICITY: {tier: 3, introduction_order: 92, reasons: [integrated_judgment]}
+      S-K6-HORIZONTAL-HAUNCH-REDUCES-BEAM-END-STRESS: {tier: 3, introduction_order: 93, reasons: [exception_detail]}
+      S-K6-BUILT-UP-COLUMN-NON-SOLID-AXIS-SLENDERNESS-INCREASE: {tier: 3, introduction_order: 94, reasons: [exception_detail]}
+      S-K6-F14T-CLAMPING-FORCE-REDUCES-BOLT-COUNT: {tier: 3, introduction_order: 95, reasons: [exception_detail]}
+      S-K6-WELD-DEFECT-BLOWHOLE: {tier: 3, introduction_order: 96, reasons: [exception_detail, prerequisite]}
+      S-K6-BRACE-HYSTERESIS-BY-SLENDERNESS: {tier: 3, introduction_order: 97, reasons: [integrated_judgment]}
+      S-K6-JOINT-SPLICE-LOCATION-FABRICATION: {tier: 3, introduction_order: 98, reasons: [exception_detail]}
+      S-K6-FIRST-STAGE-BENDING-CHECK-NOT-PLASTIC-BRACING-CHECK: {tier: 3, introduction_order: 99, reasons: [integrated_judgment]}
+      S-K6-ALUMINUM-FRICTION-JOINT-GALVANIZED-BOLTS: {tier: 3, introduction_order: 100, reasons: [exception_detail]}
+      S-K6-WELD-DEFECT-UNDERCUT: {tier: 3, introduction_order: 101, reasons: [exception_detail]}
+      S-K6-ECCENTRIC-K-BRACE-ENERGY-DISSIPATION: {tier: 3, introduction_order: 102, reasons: [exception_detail]}
+      S-K6-COLUMN-SPLICE-MINIMUM-DESIGN-STRENGTH: {tier: 3, introduction_order: 103, reasons: [exception_detail]}
+      S-K6-STIFFENER-ROLE-BY-POSITION-AND-STRESS: {tier: 3, introduction_order: 104, reasons: [exception_detail]}
+      S-K6-TORSHEAR-BOLT-ROTATION-MARKING-INSPECTION: {tier: 3, introduction_order: 105, reasons: [exception_detail]}
+      S-K6-WELD-DEFECT-PIT: {tier: 3, introduction_order: 106, reasons: [exception_detail]}
+      S-K6-BRACE-SHARE-SEISMIC-STRESS-AMPLIFICATION: {tier: 3, introduction_order: 107, reasons: [exception_detail]}
+      S-K6-EXPOSED-BASE-RC-ANALOGY-FOR-AXIAL-AND-BENDING: {tier: 3, introduction_order: 108, reasons: [exception_detail]}
+      S-K6-STEEL-THIN-SECTION-BUCKLING: {tier: 3, introduction_order: 109, reasons: [exception_detail]}
+      S-K6-WELD-PASS-AND-MULTIPASS-IDENTIFICATION: {tier: 3, introduction_order: 110, reasons: [integrated_judgment]}
+      S-K6-ANCHOR-BOLT-RESISTANCE-TYPES: {tier: 3, introduction_order: 111, reasons: [exception_detail]}
+      S-K6-COLUMN-WEB-WIDTH-THICKNESS-STRICTER-THAN-BEAM: {tier: 3, introduction_order: 112, reasons: [integrated_judgment]}
+      S-K6-EXPOSED-BASE-PLATE-MINIMUM-THICKNESS: {tier: 3, introduction_order: 113, reasons: [exception_detail]}
+      S-K6-ENCASED-BASE-BOTTOM-PIN-MOMENT-TRANSFER: {tier: 3, introduction_order: 114, reasons: [exception_detail]}
+      S-K6-WRAPPED-BASE-DUCTILE-FAILURE-MODE: {tier: 3, introduction_order: 115, reasons: [exception_detail]}
+      S-K6-WRAPPED-BASE-SHEAR-Q2-GREATER-THAN-Q1: {tier: 3, introduction_order: 116, reasons: [exception_detail]}

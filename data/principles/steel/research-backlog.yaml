@@ -1,0 +1,80 @@
+version: 1
+policy:
+  allowed_source_kinds:
+  - law
+  - notification
+  - jis
+  - aij
+  - government_spec
+  unresolved_publication: keep_private
+public_coverage_backlog:
+  priority: 1
+  description: 本試験知識表のprimary question codeのうち、source_checked項目で未対応のものを優先して照合する。
+  count: 30
+  primary_question_codes:
+  - '05162'
+  - '06161'
+  - '23302'
+  - '19251'
+  - '05164'
+  - '23171'
+  - '06164'
+  - '28151'
+  - '25193'
+  - '05161'
+  - '18182'
+  - '23153'
+  - '05151'
+  - '02172'
+  - '20165'
+  - '23172'
+  - '03161'
+  - '01173'
+  - '24163'
+  - '07263'
+  - '18184'
+  - '23164'
+  - '29164'
+  - '20181'
+  - '24162'
+  - '27171'
+  - '24184'
+  - '18173'
+  - '19154'
+  - '18165'
+topic_backlog:
+  priority: 2
+  description: 公開項目が0件の耐火・特殊荷重を、教材本文と権威出典の両方で確認する。
+  subtopics:
+  - steel.fire-special.high-temperature-fire-load
+  - steel.fire-special.fireproofing-methods
+  - steel.fire-special.special-loads-equipment
+  keys:
+  - S-K6-FIRE-LOAD-FIXED-PLUS-LIVE-COMBUSTIBLES
+  - S-K6-STEEL-FIRE-STRENGTH-FIREPROOFING
+  - S-K6-FIREPROOFING-REQUIRED-ABOVE-250C
+  - S-K6-FIREPROOFING-BOARD-ATTACHMENT
+  - S-K6-FIREPROOFING-CAST-IN
+  - S-K6-FIREPROOFING-PLASTER-FINISH
+  - S-K6-FIREPROOFING-SPRAY-APPLIED
+  - S-K6-OVERHEAD-CRANE-SEISMIC-WEIGHT
+source_gap_backlog:
+  priority: 3
+  description: 教材P170及びP200〜204では柱耐力との合算根拠を確認できなかったため、許可された権威出典で再確認する。
+  required_supports:
+  - statement
+  - explanation
+  - conditions
+  keys:
+  - S-K6-BRACED-FRAME-COLUMN-BRACE-CAPACITY-SUM
+authoritative_source_backlog:
+  priority: 4
+  description: 本試験知識表だけでは説明根拠が不足する溶接許容応力度3件を、許可された権威出典で再確認する。
+  required_supports:
+  - statement
+  - explanation
+  - conditions
+  keys:
+  - S-K6-DISSIMILAR-STEEL-WELD-WEAKER-BASE-GOVERNS
+  - S-K6-WELD-ALLOWABLE-STRESS-FULL-PENETRATION
+  - S-K6-WELD-ALLOWABLE-STRESS-NONFULL-PENETRATION

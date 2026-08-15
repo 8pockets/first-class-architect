@@ -62,6 +62,13 @@ principles:
 - id: S-K6-WELD-PASS-AND-MULTIPASS-IDENTIFICATION
   order: 3
   type: identification
+  display_content:
+    definition: 溶接棒を一周させる一回の溶接作業を1パスといい、開先を埋めるため複数回のパスを行う施工を多パス溶接という。
+    distinguishing_conditions:
+    - 開先溶接
+    - 一回で開先全体を充填できない場合
+    confusable_points:
+    - 「1パス溶接」とは区別する。
   principle: 1パスと多パス溶接
   question:
     prompt: 開先を埋めるために複数回のパスを行う溶接施工の名称として、正しい結論はどちらか。

@@ -7,6 +7,15 @@ principles:
 - id: S-K6-TACK-WELD-MINIMUM-BEAD
   order: 1
   type: rule
+  display_content:
+    rule: 組立溶接は脚長4mm以上とし、最小ビード長を板厚6mm以下では30mm、6mm超では40mmとする。
+    applicability:
+    - 組立溶接
+    - 板厚6mm以下又は6mm超
+    - 板厚6mm超は40mm以上
+    - 板厚6mm以下は30mm以上
+    numbers_exceptions:
+    - 組立溶接は脚長4mm以上とし、最小ビード長を板厚6mm以下では30mm、6mm超では40mmとする。
   principle: 組立溶接のショートビード防止
   question:
     prompt: 板厚が6mmを超える組立溶接について、最小ビード長として正しい結論はどちらか。
@@ -34,30 +43,47 @@ principles:
   prerequisites:
   - S-K6-PREHEAT-PREVENTS-LOW-TEMPERATURE-CRACKING
   editorial_status: source_checked
-- id: S-K6-BOX-COLUMN-H-BEAM-RIGID-JOINT-WELD-TYPES
+- id: S-K6-BEAM-FLANGE-WEB-FORCE-SHARING
   order: 2
   type: principle
-  principle: 梁継手のフランジ・ウェブ応力分担と溶接形式
+  principle: 梁継手のフランジ・ウェブ応力分担
   question:
     prompt: H形鋼梁の継手・柱梁仕口でフランジが主に負担すると仮定する応力として、正しい結論はどちらか。
     choices:
       A: せん断力を主に負担する
       B: 曲げモーメントを主に負担する
     correct: B
-  conclusion: 梁継手は曲げモーメントとせん断力に対して設計し、一般に曲げモーメントをフランジ、せん断力をウェブが負担すると仮定する。溶接仕口ではフランジを完全溶込み溶接、ウェブを両面すみ肉溶接とする。
+  conclusion: 梁継手は曲げモーメントとせん断力に対して設計し、一般に曲げモーメントをフランジ、せん断力をウェブが負担すると仮定する。
   reason: 曲げモーメントは主に梁フランジから柱へ、せん断力は梁ウェブから柱へ伝達されるため。
   conditions:
   - H形鋼梁の継手・柱梁仕口
-  - 教材図の溶接仕口
+  - フランジ・ウェブの応力分担を仮定して設計する場合
+  source:
+    pages:
+    - 187
+    - 207
+    question_codes: []
+  prerequisites: []
+  editorial_status: source_checked
+- id: S-K6-BOX-COLUMN-H-BEAM-WELD-TYPES
+  order: 102
+  type: principle
+  principle: 角形鋼管柱・H形鋼梁仕口の溶接形式
+  question:
+    prompt: 箱形断面柱へH形鋼梁を剛接合する場合の一般的な溶接形式として、正しい結論はどちらか。
+    choices:
+      A: フランジを両面すみ肉溶接、ウェブを完全溶込み溶接とする。
+      B: フランジを完全溶込み溶接、ウェブを両面すみ肉溶接とする。
+    correct: B
+  conclusion: 箱形断面柱へH形鋼梁を剛接合する溶接仕口では、フランジを完全溶込み溶接、ウェブを両面すみ肉溶接とする。
+  reason: 曲げモーメントを主に伝えるフランジには完全溶込み溶接を、せん断力を主に伝えるウェブにはすみ肉溶接を用いるため。
+  conditions:
   - 箱形断面柱とH形鋼梁の剛接合
-  - 組立H形鋼を作る場合、または角形鋼管にH形鋼を溶接する場合
   - 梁側のフランジ・ウェブ接合形式を選ぶ場合
   source:
     pages:
     - 167
     - 187
-    - 196
-    - 207
     question_codes:
     - '20172'
     - '23173'

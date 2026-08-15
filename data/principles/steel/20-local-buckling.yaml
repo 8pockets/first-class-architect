@@ -151,6 +151,12 @@ principles:
 - id: S-K6-WIDTH-THICKNESS-LIMIT-MEANING
   order: 6
   type: identification
+  display_content:
+    definition: 『幅厚比の制限に従う』とは、局部座屈しないための幅厚比を満たすことを意味し、制限が厳しいほど許容される幅厚比は小さい。
+    distinguishing_conditions:
+    - 幅厚比制限の大小を解釈する場合
+    confusable_points:
+    - 「制限が厳しいほど許容される幅厚比は大きい」とは区別する。
   principle: 幅厚比制限の意味
   question:
     prompt: 幅厚比制限の厳しさを解釈するとき、許容される幅厚比との関係として正しい結論はどちらか。

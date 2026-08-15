@@ -52,6 +52,7 @@ principles:
     - 208
     question_codes:
     - '27171'
-  prerequisites:
+  prerequisites: []
+  related:
   - S-K6-LATERAL-BRACING-ENABLES-FULL-PLASTIC-MOMENT
   editorial_status: source_gap

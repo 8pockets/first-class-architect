@@ -1,0 +1,681 @@
+version: 1
+active:
+  S-K6-18-ELASTIC-STRENGTH:
+    code: structure.steel.compression-elastic-buckling-strength-independence
+    aliases: []
+  S-K6-18-SLENDERNESS:
+    code: structure.steel.compression-member-slenderness
+    aliases: []
+  S-K6-19-LATERAL-BUCKLING:
+    code: structure.steel.beam-lateral-buckling
+    aliases: []
+  S-K6-20-LOCAL-BUCKLING:
+    code: structure.steel.member-local-buckling-width-thickness
+    aliases: []
+  S-K6-ALUMINUM-FRICTION-JOINT-GALVANIZED-BOLTS:
+    code: structure.steel.aluminum-friction-joint-galvanized-bolts
+    aliases: []
+  S-K6-ANCHOR-BOLT-RESISTANCE-TYPES:
+    code: structure.steel.anchor-bolt-resistance-types
+    aliases: []
+  S-K6-ANGLE-CHANNEL-BRACE-EFFECTIVE-AREA:
+    code: structure.steel.angle-channel-brace-effective-area
+    aliases: []
+  S-K6-BEAM-END-MOMENT-STRENGTH-FLANGE-PLUS-WEB:
+    code: structure.steel.beam-end-moment-strength-flange-plus-web
+    aliases: []
+  S-K6-BEAM-END-STRENGTH-SECTION-LOSS-AND-TUBE-DEFORMATION:
+    code: structure.steel.beam-end-strength-section-loss-and-tube-deformation
+    aliases: []
+  S-K6-BEAM-FLANGE-WEB-FORCE-SHARING:
+    code: structure.steel.beam-flange-web-force-sharing
+    aliases: []
+  S-K6-BEAM-LATERAL-BUCKLING-COUNTERMEASURES:
+    code: structure.steel.beam-lateral-buckling-countermeasures
+    aliases: []
+  S-K6-BEAM-SECTION-SHAPE-LATERAL-BUCKLING:
+    code: structure.steel.beam-section-shape-lateral-buckling
+    aliases: []
+  S-K6-BEAM-SPLICE-METHODS-FIELD-SHOP:
+    code: structure.steel.beam-splice-methods-field-shop
+    aliases: []
+  S-K6-BEAM-TYPES-ROLLED-BUILT-UP:
+    code: structure.steel.beam-types-rolled-built-up
+    aliases: []
+  S-K6-BOLT-EDGE-DISTANCE-TERM-IDENTIFICATION:
+    code: structure.steel.bolt-edge-distance-term-identification
+    aliases: []
+  S-K6-BOLT-MAXIMUM-EDGE-DISTANCE:
+    code: structure.steel.bolt-maximum-edge-distance
+    aliases: []
+  S-K6-BOLT-MINIMUM-EDGE-DISTANCE:
+    code: structure.steel.bolt-minimum-edge-distance
+    aliases: []
+  S-K6-BOX-COLUMN-FIELD-BUTT-WELD-WITH-BACKING:
+    code: structure.steel.box-column-field-butt-weld-with-backing
+    aliases: []
+  S-K6-BOX-COLUMN-H-BEAM-WELD-TYPES:
+    code: structure.steel.box-column-h-beam-weld-types
+    aliases: []
+  S-K6-BRACE-BALANCED-DIRECTIONAL-LAYOUT:
+    code: structure.steel.brace-balanced-directional-layout
+    aliases: []
+  S-K6-BRACE-BOLT-COUNT-INCREASES-EFFECTIVE-AREA:
+    code: structure.steel.brace-bolt-count-increases-effective-area
+    aliases: []
+  S-K6-BRACE-CAPACITY-DESIGN-JOINT-OVERSTRENGTH:
+    code: structure.steel.brace-capacity-design-joint-overstrength
+    aliases: []
+  S-K6-BRACE-ECCENTRIC-JOINT-EFFECTS:
+    code: structure.steel.brace-eccentric-joint-effects
+    aliases: []
+  S-K6-BRACE-HORIZONTAL-LOAD-AXIAL-FORCE:
+    code: structure.steel.brace-horizontal-load-axial-force
+    aliases: []
+  S-K6-BRACE-HYSTERESIS-BY-SLENDERNESS:
+    code: structure.steel.brace-hysteresis-by-slenderness
+    aliases: []
+  S-K6-BRACE-SECTION-USE-IDENTIFICATION:
+    code: structure.steel.brace-section-use-identification
+    aliases: []
+  S-K6-BRACE-SHARE-SEISMIC-STRESS-AMPLIFICATION:
+    code: structure.steel.brace-share-seismic-stress-amplification
+    aliases: []
+  S-K6-BRACE-SIDE-FILLET-WELD-FORCE-TRANSFER:
+    code: structure.steel.brace-side-fillet-weld-force-transfer
+    aliases: []
+  S-K6-BRACE-SLENDERNESS-AND-DEFORMATION-CAPACITY:
+    code: structure.steel.brace-slenderness-and-deformation-capacity
+    aliases: []
+  S-K6-BRACE-TENSION-YIELD-COMPRESSION-BUCKLING:
+    code: structure.steel.brace-tension-yield-compression-buckling
+    aliases: []
+  S-K6-BRACE-TO-HOLLOW-COLUMN-DIAPHRAGM-REINFORCEMENT:
+    code: structure.steel.brace-to-hollow-column-diaphragm-reinforcement
+    aliases: []
+  S-K6-BRACED-FRAME-COLUMN-BRACE-CAPACITY-SUM:
+    code: structure.steel.braced-frame-column-brace-capacity-sum
+    aliases: []
+  S-K6-BUCKLING-RESTRAINED-BRACE-FORCE-ROLES:
+    code: structure.steel.buckling-restrained-brace-force-roles
+    aliases: []
+  S-K6-BUILT-UP-COLUMN-NON-SOLID-AXIS-SLENDERNESS-INCREASE:
+    code: structure.steel.built-up-column-non-solid-axis-slenderness-increase
+    aliases: []
+  S-K6-BUILT-UP-H-SECTION-FLANGE-WEB-FILLET:
+    code: structure.steel.built-up-h-section-flange-web-fillet
+    aliases: []
+  S-K6-COLUMN-BASE-NOTIFICATION-1456:
+    code: structure.steel.column-base-notification-1456
+    aliases: []
+  S-K6-COLUMN-BASE-TYPES-FIXITY-ORDER:
+    code: structure.steel.column-base-types-fixity-order
+    aliases: []
+  S-K6-COLUMN-SPLICE-MINIMUM-DESIGN-STRENGTH:
+    code: structure.steel.column-splice-minimum-design-strength
+    aliases: []
+  S-K6-COLUMN-SPLICE-NEAR-MIDSTORY:
+    code: structure.steel.column-splice-near-midstory
+    aliases: []
+  S-K6-COLUMN-WEB-WIDTH-THICKNESS-STRICTER-THAN-BEAM:
+    code: structure.steel.column-web-width-thickness-stricter-than-beam
+    aliases: []
+  S-K6-COMBINED-BOLT-WELD-CONSTRUCTION-ORDER:
+    code: structure.steel.combined-bolt-weld-construction-order
+    aliases: []
+  S-K6-DIAPHRAGM-FLANGE-MISALIGNMENT-LIMIT:
+    code: structure.steel.diaphragm-flange-misalignment-limit
+    aliases: []
+  S-K6-DISSIMILAR-STEEL-WELD-WEAKER-BASE-GOVERNS:
+    code: structure.steel.dissimilar-steel-weld-weaker-base-governs
+    aliases: []
+  S-K6-DOUBLE-ANGLE-BRACE-REDUCES-ECCENTRICITY:
+    code: structure.steel.double-angle-brace-reduces-eccentricity
+    aliases: []
+  S-K6-DUCTILE-ANCHOR-BOLT-TYPES-AND-YIELD-SEQUENCE:
+    code: structure.steel.ductile-anchor-bolt-types-and-yield-sequence
+    aliases: []
+  S-K6-ECCENTRIC-K-BRACE-ENERGY-DISSIPATION:
+    code: structure.steel.eccentric-k-brace-energy-dissipation
+    aliases: []
+  S-K6-EFFECTIVE-SLENDERNESS-MAXIMUMS:
+    code: structure.steel.effective-slenderness-maximums
+    aliases: []
+  S-K6-ELASTIC-DEFLECTION-NOT-REDUCED-BY-HIGHER-STEEL-GRADE:
+    code: structure.steel.elastic-deflection-not-reduced-by-higher-steel-grade
+    aliases: []
+  S-K6-EMBEDDED-BASE-EFFECTIVE-FIXED-POINT:
+    code: structure.steel.embedded-base-effective-fixed-point
+    aliases: []
+  S-K6-EMBEDDED-BASE-FORCE-TRANSFER:
+    code: structure.steel.embedded-base-force-transfer
+    aliases: []
+  S-K6-EMBEDDED-BASE-MINIMUM-DEPTH:
+    code: structure.steel.embedded-base-minimum-depth
+    aliases: []
+  S-K6-ENCASED-BASE-BOTTOM-PIN-MOMENT-TRANSFER:
+    code: structure.steel.encased-base-bottom-pin-moment-transfer
+    aliases: []
+  S-K6-END-TABS-SECURE-SOUND-WELD-ENDS:
+    code: structure.steel.end-tabs-secure-sound-weld-ends
+    aliases: []
+  S-K6-EXISTING-RIVET-JOINT-WELDED-EXTENSION-LOAD-SHARING:
+    code: structure.steel.existing-rivet-joint-welded-extension-load-sharing
+    aliases: []
+  S-K6-EXPOSED-BASE-ANCHOR-AREA-RATIO:
+    code: structure.steel.exposed-base-anchor-area-ratio
+    aliases: []
+  S-K6-EXPOSED-BASE-ANCHOR-EMBEDMENT-LENGTH:
+    code: structure.steel.exposed-base-anchor-embedment-length
+    aliases: []
+  S-K6-EXPOSED-BASE-ANCHOR-HOLE-CLEARANCE:
+    code: structure.steel.exposed-base-anchor-hole-clearance
+    aliases: []
+  S-K6-EXPOSED-BASE-ANCHOR-LOCKING:
+    code: structure.steel.exposed-base-anchor-locking
+    aliases: []
+  S-K6-EXPOSED-BASE-CAPACITY-DESIGN-DS-PENALTY:
+    code: structure.steel.exposed-base-capacity-design-ds-penalty
+    aliases: []
+  S-K6-EXPOSED-BASE-MODEL-BY-DESIGN-TARGET:
+    code: structure.steel.exposed-base-model-by-design-target
+    aliases: []
+  S-K6-EXPOSED-BASE-PLATE-MINIMUM-THICKNESS:
+    code: structure.steel.exposed-base-plate-minimum-thickness
+    aliases: []
+  S-K6-EXPOSED-BASE-RC-ANALOGY-FOR-AXIAL-AND-BENDING:
+    code: structure.steel.exposed-base-rc-analogy-for-axial-and-bending
+    aliases: []
+  S-K6-EXPOSED-BASE-SHEAR-CAPACITY-NOT-ADDITIVE:
+    code: structure.steel.exposed-base-shear-capacity-not-additive
+    aliases: []
+  S-K6-F10T-TENSILE-STRENGTH-MEANING:
+    code: structure.steel.f10t-tensile-strength-meaning
+    aliases: []
+  S-K6-F14T-CLAMPING-FORCE-REDUCES-BOLT-COUNT:
+    code: structure.steel.f14t-clamping-force-reduces-bolt-count
+    aliases: []
+  S-K6-FA-H-BEAM-FLANGE-WEB-WIDTH-THICKNESS-LIMITS:
+    code: structure.steel.fa-h-beam-flange-web-width-thickness-limits
+    aliases: []
+  S-K6-FATIGUE-CHECK-CYCLE-THRESHOLD:
+    code: structure.steel.fatigue-check-cycle-threshold
+    aliases: []
+  S-K6-FILLER-PLATE-EQUALIZES-THICKNESS:
+    code: structure.steel.filler-plate-equalizes-thickness
+    aliases: []
+  S-K6-FILLET-WELD-ANATOMY:
+    code: structure.steel.fillet-weld-anatomy
+    aliases: []
+  S-K6-FILLET-WELD-DEFINITION-REPEATED-STRESS:
+    code: structure.steel.fillet-weld-definition-repeated-stress
+    aliases: []
+  S-K6-FILLET-WELD-EFFECTIVE-AREA:
+    code: structure.steel.fillet-weld-effective-area
+    aliases: []
+  S-K6-FILLET-WELD-EFFECTIVE-LENGTH:
+    code: structure.steel.fillet-weld-effective-length
+    aliases: []
+  S-K6-FILLET-WELD-SIZE-EFFECTIVE-THROAT:
+    code: structure.steel.fillet-weld-size-effective-throat
+    aliases: []
+  S-K6-FIRE-LOAD-FIXED-PLUS-LIVE-COMBUSTIBLES:
+    code: structure.steel.fire-load-fixed-plus-live-combustibles
+    aliases: []
+  S-K6-FIREPROOFING-BOARD-ATTACHMENT:
+    code: structure.steel.fireproofing-board-attachment
+    aliases: []
+  S-K6-FIREPROOFING-CAST-IN:
+    code: structure.steel.fireproofing-cast-in
+    aliases: []
+  S-K6-FIREPROOFING-PLASTER-FINISH:
+    code: structure.steel.fireproofing-plaster-finish
+    aliases: []
+  S-K6-FIREPROOFING-REQUIRED-ABOVE-250C:
+    code: structure.steel.fireproofing-required-above-250c
+    aliases: []
+  S-K6-FIREPROOFING-SPRAY-APPLIED:
+    code: structure.steel.fireproofing-spray-applied
+    aliases: []
+  S-K6-FIRST-STAGE-BENDING-CHECK-NOT-PLASTIC-BRACING-CHECK:
+    code: structure.steel.first-stage-bending-check-not-plastic-bracing-check
+    aliases: []
+  S-K6-FLOOR-HORIZONTAL-TRUSS-SECONDARY-BEAM-AXIAL-FORCE:
+    code: structure.steel.floor-horizontal-truss-secondary-beam-axial-force
+    aliases: []
+  S-K6-FRAME-COLUMN-BUCKLING-LENGTH-RESTRAINT:
+    code: structure.steel.frame-column-buckling-length-restraint
+    aliases: []
+  S-K6-FRAME-H-SECTION-AXIS-ROLE:
+    code: structure.steel.frame-h-section-axis-role
+    aliases: []
+  S-K6-FRICTION-JOINT-GAP-FILLER-RULE:
+    code: structure.steel.friction-joint-gap-filler-rule
+    aliases: []
+  S-K6-FRICTION-JOINT-POST-SLIP-RUPTURE-MODEL:
+    code: structure.steel.friction-joint-post-slip-rupture-model
+    aliases: []
+  S-K6-FRICTION-JOINT-PRE-SLIP-FORCE-TRANSFER:
+    code: structure.steel.friction-joint-pre-slip-force-transfer
+    aliases: []
+  S-K6-FRICTION-JOINT-REPEATED-LOAD-BELOW-SLIP:
+    code: structure.steel.friction-joint-repeated-load-below-slip
+    aliases: []
+  S-K6-FRICTION-JOINT-SHEAR-TENSION-INTERACTION:
+    code: structure.steel.friction-joint-shear-tension-interaction
+    aliases: []
+  S-K6-FRICTION-JOINT-SLIP-COEFFICIENT:
+    code: structure.steel.friction-joint-slip-coefficient
+    aliases: []
+  S-K6-FRICTION-SURFACE-PREPARATION:
+    code: structure.steel.friction-surface-preparation
+    aliases: []
+  S-K6-FULL-PENETRATION-WELD-ANATOMY:
+    code: structure.steel.full-penetration-weld-anatomy
+    aliases: []
+  S-K6-FULL-PENETRATION-WELD-DEFINITION-REPEATED-STRESS:
+    code: structure.steel.full-penetration-weld-definition-repeated-stress
+    aliases: []
+  S-K6-FULL-PENETRATION-WELD-EFFECTIVE-LENGTH:
+    code: structure.steel.full-penetration-weld-effective-length
+    aliases: []
+  S-K6-FULL-PENETRATION-WELD-EFFECTIVE-THROAT:
+    code: structure.steel.full-penetration-weld-effective-throat
+    aliases: []
+  S-K6-FULL-PLASTIC-LATERAL-BRACING-PLACEMENT-METHODS:
+    code: structure.steel.full-plastic-lateral-bracing-placement-methods
+    aliases: []
+  S-K6-GUSSET-PLATE-MEMBER-CONNECTION:
+    code: structure.steel.gusset-plate-member-connection
+    aliases: []
+  S-K6-H-BEAM-ALLOWABLE-BENDING-INPUTS:
+    code: structure.steel.h-beam-allowable-bending-inputs
+    aliases: []
+  S-K6-H-SECTION-AXIS-LATERAL-BUCKLING:
+    code: structure.steel.h-section-axis-lateral-buckling
+    aliases: []
+  S-K6-H-SECTION-COLUMN-WEAK-AXIS-GOVERNS-BUCKLING:
+    code: structure.steel.h-section-column-weak-axis-governs-buckling
+    aliases: []
+  S-K6-H-SECTION-FLANGE-BENDING:
+    code: structure.steel.h-section-flange-bending
+    aliases: []
+  S-K6-H-SECTION-STRONG-AXIS-LATERAL-RESTRAINT:
+    code: structure.steel.h-section-strong-axis-lateral-restraint
+    aliases: []
+  S-K6-H-SECTION-STRONG-WEAK-AXIS-RIGIDITY:
+    code: structure.steel.h-section-strong-weak-axis-rigidity
+    aliases: []
+  S-K6-H-SECTION-WEB-SHEAR:
+    code: structure.steel.h-section-web-shear
+    aliases: []
+  S-K6-HEAT-AFFECTED-ZONE-IDENTIFICATION:
+    code: structure.steel.heat-affected-zone-identification
+    aliases: []
+  S-K6-HIGH-STRENGTH-BOLT-ALLOWABLE-SHEAR-TABLE:
+    code: structure.steel.high-strength-bolt-allowable-shear-table
+    aliases: []
+  S-K6-HIGH-STRENGTH-BOLT-CONNECTION-TYPES:
+    code: structure.steel.high-strength-bolt-connection-types
+    aliases: []
+  S-K6-HIGH-STRENGTH-BOLT-CONSTRUCTION-ADVANTAGE:
+    code: structure.steel.high-strength-bolt-construction-advantage
+    aliases: []
+  S-K6-HIGH-STRENGTH-BOLT-HOLE-CLEARANCE:
+    code: structure.steel.high-strength-bolt-hole-clearance
+    aliases: []
+  S-K6-HIGH-STRENGTH-BOLT-MINIMUM-PITCH:
+    code: structure.steel.high-strength-bolt-minimum-pitch
+    aliases: []
+  S-K6-HIGH-STRENGTH-BOLT-PRODUCT-TYPES:
+    code: structure.steel.high-strength-bolt-product-types
+    aliases: []
+  S-K6-HIGH-STRENGTH-BOLT-SLIP-RIGIDITY:
+    code: structure.steel.high-strength-bolt-slip-rigidity
+    aliases: []
+  S-K6-HIGH-STRENGTH-BOLT-STRESS-DISTRIBUTION:
+    code: structure.steel.high-strength-bolt-stress-distribution
+    aliases: []
+  S-K6-HIGH-STRENGTH-BOLT-TENSILE-STRENGTH-RATIO:
+    code: structure.steel.high-strength-bolt-tensile-strength-ratio
+    aliases: []
+  S-K6-HIGH-STRENGTH-STEEL-BEAM-DEFLECTION-CHECK:
+    code: structure.steel.high-strength-steel-beam-deflection-check
+    aliases: []
+  S-K6-HIGHER-STRENGTH-REQUIRES-MORE-UNIFORM-BRACING:
+    code: structure.steel.higher-strength-requires-more-uniform-bracing
+    aliases: []
+  S-K6-HIGHER-STRENGTH-STEEL-REDUCES-DEPTH-ONLY-STRENGTH-GOVERNS:
+    code: structure.steel.higher-strength-steel-reduces-depth-only-strength-governs
+    aliases: []
+  S-K6-HORIZONTAL-HAUNCH-REDUCES-BEAM-END-STRESS:
+    code: structure.steel.horizontal-haunch-reduces-beam-end-stress
+    aliases: []
+  S-K6-HYSTERESIS-LOOP-AREA-ENERGY-ABSORPTION:
+    code: structure.steel.hysteresis-loop-area-energy-absorption
+    aliases: []
+  S-K6-INTERNAL-DIAPHRAGM-CONSTRUCTION:
+    code: structure.steel.internal-diaphragm-construction
+    aliases: []
+  S-K6-JOINT-SPLICE-LOCATION-FABRICATION:
+    code: structure.steel.joint-splice-location-fabrication
+    aliases: []
+  S-K6-LATERAL-BRACE-STRENGTH-AND-STIFFNESS:
+    code: structure.steel.lateral-brace-strength-and-stiffness
+    aliases: []
+  S-K6-LATERAL-BRACING-ENABLES-FULL-PLASTIC-MOMENT:
+    code: structure.steel.lateral-bracing-enables-full-plastic-moment
+    aliases: []
+  S-K6-LATERAL-LOCAL-BUCKLING-INTERACTION:
+    code: structure.steel.lateral-local-buckling-interaction
+    aliases: []
+  S-K6-LIMIT-SLENDERNESS-STRENGTH-RELATION:
+    code: structure.steel.limit-slenderness-strength-relation
+    aliases: []
+  S-K6-METAL-TOUCH-SPLICE-DIRECT-TRANSFER-FRACTIONS:
+    code: structure.steel.metal-touch-splice-direct-transfer-fractions
+    aliases: []
+  S-K6-MINIMIZE-WELD-DISTORTION-AND-RESIDUAL-STRESS:
+    code: structure.steel.minimize-weld-distortion-and-residual-stress
+    aliases: []
+  S-K6-MIXED-BUTT-FILLET-WELD-LOAD-SHARING:
+    code: structure.steel.mixed-butt-fillet-weld-load-sharing
+    aliases: []
+  S-K6-MIXED-WELD-ORDINARY-BOLT-LOAD-SHARING:
+    code: structure.steel.mixed-weld-ordinary-bolt-load-sharing
+    aliases: []
+  S-K6-MOMENT-FRAME-HYSTERESIS:
+    code: structure.steel.moment-frame-hysteresis
+    aliases: []
+  S-K6-MULTIPASS-HEAT-INPUT-INTERPASS-UPPER-CONTROL:
+    code: structure.steel.multipass-heat-input-interpass-upper-control
+    aliases: []
+  S-K6-NO-LATERAL-BUCKLING-SECTION-ALLOWABLE-BENDING:
+    code: structure.steel.no-lateral-buckling-section-allowable-bending
+    aliases: []
+  S-K6-NO-SCALLOP-IMPROVES-BEAM-END-DUCTILITY:
+    code: structure.steel.no-scallop-improves-beam-end-ductility
+    aliases: []
+  S-K6-NONSEISMIC-TRUSS-JOINT-MINIMUM-STRENGTH:
+    code: structure.steel.nonseismic-truss-joint-minimum-strength
+    aliases: []
+  S-K6-ORDINARY-BOLT-CLEARANCE-LOOSENING:
+    code: structure.steel.ordinary-bolt-clearance-loosening
+    aliases: []
+  S-K6-ORDINARY-BOLT-HOLE-CLEARANCE:
+    code: structure.steel.ordinary-bolt-hole-clearance
+    aliases: []
+  S-K6-ORDINARY-BOLT-HOLE-DIAMETER-AIJ:
+    code: structure.steel.ordinary-bolt-hole-diameter-aij
+    aliases: []
+  S-K6-ORDINARY-BOLT-SHEAR-TRANSFER:
+    code: structure.steel.ordinary-bolt-shear-transfer
+    aliases: []
+  S-K6-ORDINARY-BOLT-THREAD-PROJECTION:
+    code: structure.steel.ordinary-bolt-thread-projection
+    aliases: []
+  S-K6-ORDINARY-BOLT-WASHER-UNDER-NUT:
+    code: structure.steel.ordinary-bolt-washer-under-nut
+    aliases: []
+  S-K6-ORDINARY-BOLTS-PROHIBITED-FOR-REPEATED-LOAD:
+    code: structure.steel.ordinary-bolts-prohibited-for-repeated-load
+    aliases: []
+  S-K6-OVERHEAD-CRANE-SEISMIC-WEIGHT:
+    code: structure.steel.overhead-crane-seismic-weight
+    aliases: []
+  S-K6-PARTIAL-PENETRATION-EFFECTIVE-THROAT-DEDUCTION:
+    code: structure.steel.partial-penetration-effective-throat-deduction
+    aliases: []
+  S-K6-PARTIAL-PENETRATION-WELD-APPLICABILITY:
+    code: structure.steel.partial-penetration-weld-applicability
+    aliases: []
+  S-K6-PREHEAT-LOWER-BOUND-VS-INTERPASS-UPPER-BOUND:
+    code: structure.steel.preheat-lower-bound-vs-interpass-upper-bound
+    aliases: []
+  S-K6-PREHEAT-PREVENTS-LOW-TEMPERATURE-CRACKING:
+    code: structure.steel.preheat-prevents-low-temperature-cracking
+    aliases: []
+  S-K6-REFERENCE-FATIGUE-STRENGTH-JOINT-TYPE:
+    code: structure.steel.reference-fatigue-strength-joint-type
+    aliases: []
+  S-K6-SN490-BEAM-COLUMN-JOINT-OVERSTRENGTH:
+    code: structure.steel.sn490-beam-column-joint-overstrength
+    aliases: []
+  S-K6-SPLICE-FRICTION-JOINT-SELECTION:
+    code: structure.steel.splice-friction-joint-selection
+    aliases: []
+  S-K6-SPLICE-PLATE-TRANSFERS-FORCE:
+    code: structure.steel.splice-plate-transfers-force
+    aliases: []
+  S-K6-SQUARE-TUBE-COLUMN-DIAPHRAGM-TYPES:
+    code: structure.steel.square-tube-column-diaphragm-types
+    aliases: []
+  S-K6-STEEL-ALLOWABLE-STRESS-DURATION:
+    code: structure.steel.allowable-stress-duration
+    aliases: []
+  S-K6-STEEL-BEAM-COMMON-SECTIONS:
+    code: structure.steel.beam-common-sections
+    aliases: []
+  S-K6-STEEL-BEAM-DEFLECTION-CHECK:
+    code: structure.steel.beam-deflection-check
+    aliases: []
+  S-K6-STEEL-BEAM-DEFLECTION-CHECK-OMISSION:
+    code: structure.steel.beam-deflection-check-omission
+    aliases: []
+  S-K6-STEEL-BEAM-DEFLECTION-LIMITS:
+    code: structure.steel.beam-deflection-limits
+    aliases: []
+  S-K6-STEEL-BEAM-DEPTH-SPAN-RANGE:
+    code: structure.steel.beam-depth-span-range
+    aliases: []
+  S-K6-STEEL-BEAM-DESIGN-ACTIONS:
+    code: structure.steel.beam-design-actions
+    aliases: []
+  S-K6-STEEL-BUCKLING-MODE-IDENTIFICATION:
+    code: structure.steel.buckling-mode-identification
+    aliases: []
+  S-K6-STEEL-COMPRESSION-CAPACITY-BUCKLING:
+    code: structure.steel.compression-capacity-buckling
+    aliases: []
+  S-K6-STEEL-CONNECTION-TYPE-IDENTIFICATION:
+    code: structure.steel.connection-type-identification
+    aliases: []
+  S-K6-STEEL-CORROSION-PROTECTION:
+    code: structure.steel.corrosion-protection
+    aliases: []
+  S-K6-STEEL-DIAMETER-THICKNESS-RATIO-SMALLER-PREFERRED:
+    code: structure.steel.diameter-thickness-ratio-smaller-preferred
+    aliases: []
+  S-K6-STEEL-DUCTILITY-PREVENTS-BRITTLE-FRACTURE:
+    code: structure.steel.ductility-prevents-brittle-fracture
+    aliases: []
+  S-K6-STEEL-END-TAB-RETENTION-CONDITIONS:
+    code: structure.steel.end-tab-retention-conditions
+    aliases: []
+  S-K6-STEEL-END-TAB-TACK-WELD-TO-BACKING:
+    code: structure.steel.end-tab-tack-weld-to-backing
+    aliases: []
+  S-K6-STEEL-F-VALUE-DEFINITION:
+    code: structure.steel.f-value-definition
+    aliases: []
+  S-K6-STEEL-FIRE-STRENGTH-FIREPROOFING:
+    code: structure.steel.fire-strength-fireproofing
+    aliases: []
+  S-K6-STEEL-LONG-TERM-BEARING-ALLOWABLE-STRESS:
+    code: structure.steel.long-term-bearing-allowable-stress
+    aliases: []
+  S-K6-STEEL-MATERIAL-STRENGTH-JIS-FACTOR:
+    code: structure.steel.material-strength-jis-factor
+    aliases: []
+  S-K6-STEEL-STRUCTURE-DEFINITION:
+    code: structure.steel.structure-definition
+    aliases: []
+  S-K6-STEEL-THIN-SECTION-BUCKLING:
+    code: structure.steel.thin-section-buckling
+    aliases: []
+  S-K6-STEEL-YIELD-RATIO-SMALLER-PREFERRED:
+    code: structure.steel.yield-ratio-smaller-preferred
+    aliases: []
+  S-K6-STEEL-YOUNGS-MODULUS-STRENGTH-INDEPENDENT:
+    code: structure.steel.youngs-modulus-strength-independent
+    aliases: []
+  S-K6-STEEL-YOUNGS-MODULUS-VS-CONCRETE:
+    code: structure.steel.youngs-modulus-vs-concrete
+    aliases: []
+  S-K6-STIFFENER-ROLE-BY-POSITION-AND-STRESS:
+    code: structure.steel.stiffener-role-by-position-and-stress
+    aliases: []
+  S-K6-TACK-WELD-MINIMUM-BEAD:
+    code: structure.steel.tack-weld-minimum-bead
+    aliases: []
+  S-K6-THROUGH-DIAPHRAGM-CONSTRUCTION-AND-WELD:
+    code: structure.steel.through-diaphragm-construction-and-weld
+    aliases: []
+  S-K6-THROUGH-DIAPHRAGM-THICKNESS-MISMATCH-PREVENTION:
+    code: structure.steel.through-diaphragm-thickness-mismatch-prevention
+    aliases: []
+  S-K6-TORSHEAR-BOLT-PINTAIL-SECONDARY-TIGHTENING:
+    code: structure.steel.torshear-bolt-pintail-secondary-tightening
+    aliases: []
+  S-K6-TORSHEAR-BOLT-ROTATION-MARKING-INSPECTION:
+    code: structure.steel.torshear-bolt-rotation-marking-inspection
+    aliases: []
+  S-K6-TRUSS-MEMBER-IN-OUT-PLANE-BUCKLING-LENGTH:
+    code: structure.steel.truss-member-in-out-plane-buckling-length
+    aliases: []
+  S-K6-UNIFORM-BRACING-SLENDERNESS-FORMULAS:
+    code: structure.steel.uniform-bracing-slenderness-formulas
+    aliases: []
+  S-K6-VERTICAL-HORIZONTAL-BRACE-ROLES:
+    code: structure.steel.vertical-horizontal-brace-roles
+    aliases: []
+  S-K6-WELD-ALLOWABLE-STRESS-FULL-PENETRATION:
+    code: structure.steel.weld-allowable-stress-full-penetration
+    aliases: []
+  S-K6-WELD-ALLOWABLE-STRESS-NONFULL-PENETRATION:
+    code: structure.steel.weld-allowable-stress-nonfull-penetration
+    aliases: []
+  S-K6-WELD-BACK-GOUGING-PURPOSE:
+    code: structure.steel.weld-back-gouging-purpose
+    aliases: []
+  S-K6-WELD-BACKING-BAR-ROOT-GAP:
+    code: structure.steel.weld-backing-bar-root-gap
+    aliases: []
+  S-K6-WELD-BASIC-SYMBOL-SHAPES:
+    code: structure.steel.weld-basic-symbol-shapes
+    aliases: []
+  S-K6-WELD-BEAD-DEFINITION:
+    code: structure.steel.weld-bead-definition
+    aliases: []
+  S-K6-WELD-CONSTRUCTION-DEFECT-RISK:
+    code: structure.steel.weld-construction-defect-risk
+    aliases: []
+  S-K6-WELD-CONTINUOUS-STRESS-FLOW:
+    code: structure.steel.weld-continuous-stress-flow
+    aliases: []
+  S-K6-WELD-DEFECT-BLOWHOLE:
+    code: structure.steel.weld-defect-blowhole
+    aliases: []
+  S-K6-WELD-DEFECT-OVERLAP:
+    code: structure.steel.weld-defect-overlap
+    aliases: []
+  S-K6-WELD-DEFECT-PIT:
+    code: structure.steel.weld-defect-pit
+    aliases: []
+  S-K6-WELD-DEFECT-SLAG-INCLUSION:
+    code: structure.steel.weld-defect-slag-inclusion
+    aliases: []
+  S-K6-WELD-DEFECT-UNDERCUT:
+    code: structure.steel.weld-defect-undercut
+    aliases: []
+  S-K6-WELD-FORM-FLEXIBILITY:
+    code: structure.steel.weld-form-flexibility
+    aliases: []
+  S-K6-WELD-HEAT-DISTORTION:
+    code: structure.steel.weld-heat-distortion
+    aliases: []
+  S-K6-WELD-INSPECTION-DIFFICULTY:
+    code: structure.steel.weld-inspection-difficulty
+    aliases: []
+  S-K6-WELD-METAL-COMPOSITION:
+    code: structure.steel.weld-metal-composition
+    aliases: []
+  S-K6-WELD-NDT-INTERNAL-VS-SURFACE-DEFECTS:
+    code: structure.steel.weld-ndt-internal-vs-surface-defects
+    aliases: []
+  S-K6-WELD-NO-CONSTRUCTION-NOISE:
+    code: structure.steel.weld-no-construction-noise
+    aliases: []
+  S-K6-WELD-NO-SECTION-LOSS-HIGH-RIGIDITY:
+    code: structure.steel.weld-no-section-loss-high-rigidity
+    aliases: []
+  S-K6-WELD-PASS-AND-MULTIPASS-IDENTIFICATION:
+    code: structure.steel.weld-pass-and-multipass-identification
+    aliases: []
+  S-K6-WELD-SCALLOP-DEFINITION:
+    code: structure.steel.weld-scallop-definition
+    aliases: []
+  S-K6-WELD-SYMBOL-ARROW-SIDE-POSITION:
+    code: structure.steel.weld-symbol-arrow-side-position
+    aliases: []
+  S-K6-WELD-THROAT-ALLOWABLE-SHEAR-INDEPENDENT-OF-JOINT-FORM:
+    code: structure.steel.weld-throat-allowable-shear-independent-of-joint-form
+    aliases: []
+  S-K6-WELD-TYPE-IDENTIFICATION:
+    code: structure.steel.weld-type-identification
+    aliases: []
+  S-K6-WIDER-FLANGE-REDUCES-BRACING-DEMAND:
+    code: structure.steel.wider-flange-reduces-bracing-demand
+    aliases: []
+  S-K6-WIDTH-THICKNESS-LIMIT-DECREASES-WITH-STRENGTH:
+    code: structure.steel.width-thickness-limit-decreases-with-strength
+    aliases: []
+  S-K6-WIDTH-THICKNESS-LIMIT-MEANING:
+    code: structure.steel.width-thickness-limit-meaning
+    aliases: []
+  S-K6-WRAPPED-BASE-DUCTILE-FAILURE-MODE:
+    code: structure.steel.wrapped-base-ductile-failure-mode
+    aliases: []
+  S-K6-WRAPPED-BASE-HEIGHT-AND-TOP-CONFINEMENT:
+    code: structure.steel.wrapped-base-height-and-top-confinement
+    aliases: []
+  S-K6-WRAPPED-BASE-MOMENT-DISTRIBUTION:
+    code: structure.steel.wrapped-base-moment-distribution
+    aliases: []
+  S-K6-WRAPPED-BASE-SHEAR-Q2-GREATER-THAN-Q1:
+    code: structure.steel.wrapped-base-shear-q2-greater-than-q1
+    aliases: []
+  S-K6-X-BRACE-TENSION-COMPRESSION-CAPACITY:
+    code: structure.steel.x-brace-tension-compression-capacity
+    aliases: []
+retired:
+  S-K6-BOX-COLUMN-H-BEAM-RIGID-JOINT-WELD-TYPES:
+    code: structure.steel.box-column-h-beam-rigid-joint-weld-types
+    aliases: []
+  S-K6-BRACE-FRAME-HYSTERESIS-BY-SLENDERNESS:
+    code: structure.steel.brace-frame-hysteresis-by-slenderness
+    aliases: []
+  S-K6-BRACE-HORIZONTAL-LOAD-TO-AXIAL-FORCE:
+    code: structure.steel.brace-horizontal-load-to-axial-force
+    aliases: []
+  S-K6-BRACED-FRAME-ULTIMATE-CAPACITY-COMPONENTS:
+    code: structure.steel.braced-frame-ultimate-capacity-components
+    aliases: []
+  S-K6-COMPRESSION-ALLOWABLE-WITHOUT-BUCKLING:
+    code: structure.steel.compression-allowable-without-buckling
+    aliases: []
+  S-K6-COMPRESSION-BRACE-BUCKLING-CAPACITY:
+    code: structure.steel.compression-brace-buckling-capacity
+    aliases: []
+  S-K6-SHOP-JOINT-FIELD-SPLICE-IDENTIFICATION:
+    code: structure.steel.shop-joint-field-splice-identification
+    aliases: []
+  S-K6-STEEL-HIGH-STRENGTH-SMALLER-SECTION:
+    code: structure.steel.high-strength-smaller-section
+    aliases: []
+  S-K6-STEEL-SMALL-SECTION-DEFLECTION:
+    code: structure.steel.small-section-deflection
+    aliases: []
+  S-K6-WRAPPED-BASE-MOMENT-AND-SHEAR-DISTRIBUTION:
+    code: structure.steel.wrapped-base-moment-and-shear-distribution
+    aliases: []

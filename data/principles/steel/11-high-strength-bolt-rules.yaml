@@ -28,6 +28,18 @@ principles:
 - id: S-K6-HIGH-STRENGTH-BOLT-ALLOWABLE-SHEAR-TABLE
   order: 2
   type: rule
+  display_content:
+    rule: ボルト張力Tに対し、一面摩擦は長期0.3T・短期0.45T、二面摩擦は長期0.6T・短期0.9Tとする。
+    applicability:
+    - 高力ボルト摩擦接合
+    - 一面摩擦か二面摩擦かを区別
+    - 長期か短期かを区別
+    - 同一径・同一等級の高力ボルト
+    - 同じすべり係数
+    - 一面又は二面せん断
+    - 長期又は短期
+    numbers_exceptions:
+    - ボルト張力Tに対し、一面摩擦は長期0.3T・短期0.45T、二面摩擦は長期0.6T・短期0.9Tとする。
   principle: 摩擦面数・荷重期間と高力ボルト許容せん断耐力
   question:
     prompt: ボルト張力をTとする二面摩擦の高力ボルト摩擦接合について、長期許容せん断耐力として正しい結論はどちらか。
@@ -91,6 +103,13 @@ principles:
 - id: S-K6-F10T-TENSILE-STRENGTH-MEANING
   order: 4
   type: identification
+  display_content:
+    definition: F10Tの引張強さは1,000-1,200N/mm²で、記号中の10は引張強さ約10tf/cm²を表し、せん断強さではない。
+    distinguishing_conditions:
+    - F10T高力ボルト
+    - F10Tの等級表示を読む場合
+    confusable_points:
+    - 「せん断強さ約10tf/cm²を示す」とは区別する。
   principle: F10Tの記号と引張強さ
   question:
     prompt: F10T高力ボルトの等級表示に含まれる「10」が示す強度として正しい結論はどちらか。

@@ -27,6 +27,13 @@ principles:
 - id: S-K6-LATERAL-BRACE-STRENGTH-AND-STIFFNESS
   order: 2
   type: rule
+  display_content:
+    rule: 横補剛材は強度と剛性の両方を持たせ、圧縮側合力の2%以上の集中横力に耐え、剛性は圧縮側合力の5倍を横補剛区間長で除した値以上を目安とする。
+    applicability:
+    - 許容応力度設計における中間支点の横補剛材
+    - 圧縮部分の支点に設ける補剛材
+    numbers_exceptions:
+    - 横補剛材は強度と剛性の両方を持たせ、圧縮側合力の2%以上の集中横力に耐え、剛性は圧縮側合力の5倍を横補剛区間長で除した値以上を目安とする。
   principle: 中間横補剛材に必要な強度と剛性
   question:
     prompt: 許容応力度設計で必要強度を持つ中間横補剛材について、圧縮部分の支点での剛性の扱いとして正しい結論はどちらか。
@@ -55,6 +62,14 @@ principles:
 - id: S-K6-FULL-PLASTIC-LATERAL-BRACING-PLACEMENT-METHODS
   order: 3
   type: identification
+  display_content:
+    definition: 保有耐力横補剛には、梁全長へ均等配置する方法と、梁端など曲げモーメントが大きい部分へ多く配置する方法がある。
+    distinguishing_conditions:
+    - 強軸曲げを受けるH形鋼梁
+    - 保有耐力横補剛
+    - 横補剛材の配置形式を識別する場合
+    confusable_points:
+    - 「配置方式は全長均等配置の一種である」とは区別する。
   principle: 保有耐力横補剛の配置方法
   question:
     prompt: 強軸曲げを受けるH形鋼梁の保有耐力横補剛について、配置方法として正しい結論はどちらか。
