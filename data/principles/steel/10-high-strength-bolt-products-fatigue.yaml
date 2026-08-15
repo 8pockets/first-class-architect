@@ -29,6 +29,14 @@ principles:
 - id: S-K6-REFERENCE-FATIGUE-STRENGTH-JOINT-TYPE
   order: 2
   type: rule
+  display_content:
+    rule: 2×10^6回で疲労破壊する応力範囲を基準疲労強さとし、高力ボルト摩擦接合部は140N/mm²、完全溶込み溶接継手は100N/mm²である。
+    applicability:
+    - 基準疲労強さ
+    - 高力ボルト摩擦接合部又は完全溶込み溶接継手
+    - 継手部の基準疲労強さを比較する場合
+    numbers_exceptions:
+    - 2×10^6回で疲労破壊する応力範囲を基準疲労強さとし、高力ボルト摩擦接合部は140N/mm²、完全溶込み溶接継手は100N/mm²である。
   principle: 接合形式別の基準疲労強さ
   question:
     prompt: 2×10^6回で疲労破壊する応力範囲を基準疲労強さとするとき、高力ボルト摩擦接合部と完全溶込み溶接継手の大小関係として正しい結論はどちらか。
@@ -90,6 +98,12 @@ principles:
 - id: S-K6-TORSHEAR-BOLT-ROTATION-MARKING-INSPECTION
   order: 5
   type: rule
+  display_content:
+    rule: 共回り・軸回りの有無は、一次締め後のマーキングで確認し、ピンテール破断では判定しない。
+    applicability:
+    - トルシア形高力ボルトの締付け後の目視検査
+    numbers_exceptions:
+    - 共回り・軸回りの有無は、一次締め後のマーキングで確認し、ピンテール破断では判定しない。
   principle: トルシア形高力ボルトの共回り・軸回り検査
   question:
     prompt: トルシア形高力ボルトの締付け後に共回り・軸回りの有無を確認するとき、用いる検査方法として正しい結論はどちらか。

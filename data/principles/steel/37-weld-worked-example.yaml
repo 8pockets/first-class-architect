@@ -7,6 +7,12 @@ principles:
 - id: S-K6-HEAT-AFFECTED-ZONE-IDENTIFICATION
   order: 1
   type: identification
+  display_content:
+    definition: 熱影響部は母材と溶接金属の中間にあり、溶接熱で組織・冶金的性質・機械的性質が変化した母材部分である。
+    distinguishing_conditions:
+    - 溶接部断面の母材近傍
+    confusable_points:
+    - 「溶接金属」とは区別する。
   principle: 熱影響部の位置と性質
   question:
     prompt: 母材と溶接金属の中間にあり、溶接熱で性質が変化した母材部分の名称として正しい結論はどちらか。
@@ -45,6 +51,12 @@ principles:
 - id: S-K6-WELD-METAL-COMPOSITION
   order: 3
   type: identification
+  display_content:
+    definition: 溶着金属は溶接材料から溶接部へ移行した金属で、溶接金属は溶融した母材と溶着金属が融合・凝固した部分である。
+    distinguishing_conditions:
+    - 溶融溶接部の断面を識別する場合
+    confusable_points:
+    - 「溶着金属」とは区別する。
   principle: 溶着金属と溶接金属の構成
   question:
     prompt: 溶融した母材と溶接材料から移行した金属が融合・凝固した部分の名称として、正しい結論はどちらか。

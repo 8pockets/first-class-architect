@@ -18,7 +18,8 @@ principles:
     question_codes:
     - '01172'
     - '06161'
-  prerequisites:
+  prerequisites: []
+  related:
   - S-K6-FULL-PENETRATION-WELD-DEFINITION-REPEATED-STRESS
   editorial_status: source_gap
 - id: S-K6-FRAME-H-SECTION-AXIS-ROLE
@@ -46,6 +47,13 @@ principles:
 - id: S-K6-WELD-THROAT-ALLOWABLE-SHEAR-INDEPENDENT-OF-JOINT-FORM
   order: 3
   type: rule
+  display_content:
+    rule: 同じ基準強度なら、完全溶込み・部分溶込み・すみ肉の各溶接で、のど断面の許容せん断応力度は等しい。長期はF/(1.5√3)、短期はF/√3である。
+    applicability:
+    - 接合される鋼材の基準強度Fが同じ
+    - のど断面のせん断
+    numbers_exceptions:
+    - 長期はF/(1.5√3)、短期はF/√3である。
   principle: 溶接継目の形式と許容せん断応力度
   question:
     prompt: 接合鋼材の基準強度Fが同じとき、完全溶込み・部分溶込み・すみ肉溶接ののど断面について、正しい結論はどちらか。
@@ -73,6 +81,11 @@ principles:
 - id: S-K6-ORDINARY-BOLTS-PROHIBITED-FOR-REPEATED-LOAD
   order: 4
   type: rule
+  display_content:
+    rule: クレーン走行桁など振動・衝撃・繰返し応力を受ける接合部には、普通ボルトを使用しない。
+    applicability:
+    - 振動・衝撃又は繰返し応力を受ける部材接合部
+    numbers_exceptions: []
   principle: 振動・衝撃・繰返し応力部のボルト選定
   question:
     prompt: クレーン走行桁など、振動・衝撃又は繰返し応力を受ける接合部のボルト選定として、正しい結論はどちらか。
@@ -95,6 +108,11 @@ principles:
 - id: S-K6-ALUMINUM-FRICTION-JOINT-GALVANIZED-BOLTS
   order: 5
   type: rule
+  display_content:
+    rule: アルミニウム合金材の摩擦接合には、一般に溶融亜鉛めっき高力ボルトを用いる。
+    applicability:
+    - アルミニウム合金材の摩擦接合
+    numbers_exceptions: []
   principle: アルミニウム合金材の高力ボルト選定
   question:
     prompt: アルミニウム合金材を摩擦接合する場合、一般的に用いる高力ボルトとして、正しい結論はどちらか。
@@ -137,6 +155,14 @@ principles:
 - id: S-K6-PARTIAL-PENETRATION-EFFECTIVE-THROAT-DEDUCTION
   order: 7
   type: rule
+  display_content:
+    rule: 被覆アーク溶接で開先角度60度未満のレ形・K形・V形・X形部分溶込み溶接は、有効のど厚を開先深さから3mm減じる。
+    applicability:
+    - 被覆アーク溶接
+    - 開先角度60度未満
+    - 部分溶込み溶接
+    numbers_exceptions:
+    - 被覆アーク溶接で開先角度60度未満のレ形・K形・V形・X形部分溶込み溶接は、有効のど厚を開先深さから3mm減じる。
   principle: 部分溶込み溶接の有効のど厚
   question:
     prompt: 被覆アーク溶接で開先角度60度未満のレ形・K形・V形・X形部分溶込み溶接について、正しい結論はどちらか。
@@ -241,6 +267,14 @@ principles:
 - id: S-K6-WELD-NDT-INTERNAL-VS-SURFACE-DEFECTS
   order: 12
   type: identification
+  display_content:
+    definition: 完全溶込み溶接の内部欠陥は超音波探傷で検査する。浸透探傷は表面開口欠陥だけを検出でき、磁粉探傷を内部欠陥検出に用いるとはしない。
+    distinguishing_conditions:
+    - 完全溶込み溶接部
+    - 特記がない場合
+    - 内部欠陥又は表面開口欠陥
+    confusable_points:
+    - 「内部欠陥は浸透探傷、表面開口欠陥は超音波探傷で検出する」とは区別する。
   principle: 溶接欠陥の位置と非破壊試験
   question:
     prompt: 特記がない完全溶込み溶接部で、内部欠陥と表面開口欠陥に用いる試験方法の組合せとして、正しい結論はどちらか。
@@ -262,45 +296,26 @@ principles:
     - '22171'
   prerequisites: []
   editorial_status: source_checked
-- id: S-K6-COMPRESSION-ALLOWABLE-WITHOUT-BUCKLING
-  order: 13
-  type: principle
-  principle: 座屈しない圧縮材の許容応力度
-  question:
-    prompt: 座屈のおそれがない圧縮材の許容圧縮応力度について、正しい結論はどちらか。
-    choices:
-      A: 許容引張応力度より小さい値となる。
-      B: 許容引張応力度と同等の値となる。
-    correct: B
-  conclusion: 座屈のおそれがない圧縮材の許容圧縮応力度は、許容引張応力度と同等の値となる。
-  reason: 座屈による耐力低減を考慮する必要がないため。
-  conditions:
-  - 圧縮材に座屈のおそれがない
-  source:
-    pages:
-    - 164
-    question_codes:
-    - '02153'
-  prerequisites: []
-  editorial_status: source_checked
 - id: S-K6-HIGHER-STRENGTH-STEEL-REDUCES-DEPTH-ONLY-STRENGTH-GOVERNS
   order: 14
   type: principle
-  principle: 強度支配梁での高強度鋼による梁せい縮小
+  principle: 強度支配部材での高強度鋼による断面縮小
   question:
     prompt: 断面が曲げ強度で決まり、曲げ剛性に余裕がある梁をSN400BからSN490Bへ変更する場合、正しい結論はどちらか。
     choices:
       A: 梁せいを小さくできる。
       B: 梁せいを小さくできない。
     correct: A
-  conclusion: たわみではなく曲げ応力度が断面を決め、曲げ剛性に余裕がある梁なら、SN400BをSN490Bへ替えて梁せいを小さくできる場合がある。
-  reason: 高強度鋼は許容応力度を大きくでき、梁せい縮小で断面係数が下がっても応力度を許容値内に保てるため。
+  conclusion: 鋼材は材料強度が高いため断面を小さくできる。特に、たわみではなく曲げ応力度が断面を決め、曲げ剛性に余裕がある梁なら、SN400BをSN490Bへ替えて梁せいを小さくできる場合がある。
+  reason: 高強度鋼は許容応力度を大きくでき、断面縮小で断面係数が下がっても応力度を許容値内に保てるため。
   conditions:
+  - 高強度鋼による部材断面の縮小を検討する場合
   - 曲げ剛性に余裕がある
   - 断面が強度で決まっている
   source:
     pages:
     - 164
+    - 181
     question_codes:
     - '03173'
     - '28173'
@@ -452,7 +467,8 @@ principles:
     question_codes:
     - '04174'
     - '30184'
-  prerequisites:
+  prerequisites: []
+  related:
   - S-K6-SQUARE-TUBE-COLUMN-DIAPHRAGM-TYPES
   editorial_status: source_checked
 - id: S-K6-FRICTION-JOINT-GAP-FILLER-RULE
@@ -531,27 +547,6 @@ principles:
     question_codes:
     - '07151'
     - '21182'
-  prerequisites: []
-  editorial_status: source_checked
-- id: S-K6-COMPRESSION-BRACE-BUCKLING-CAPACITY
-  order: 26
-  type: principle
-  principle: 圧縮筋かいの座屈耐力
-  question:
-    prompt: 圧縮力を負担する筋かいの耐力を算定する場合、正しい結論はどちらか。
-    choices:
-      A: 座屈耐力を考慮しない。
-      B: 座屈耐力を考慮する。
-    correct: B
-  conclusion: 圧縮力を負担する筋かいは座屈耐力を考慮して耐力を算定する。
-  reason: 筋かいが座屈すると耐力が劣化し、架構のエネルギー吸収能力も低下するため。
-  conditions:
-  - 圧縮力を負担する筋かい
-  source:
-    pages:
-    - 170
-    question_codes:
-    - '26153'
   prerequisites: []
   editorial_status: source_checked
 - id: S-K6-ECCENTRIC-K-BRACE-ENERGY-DISSIPATION
@@ -698,6 +693,12 @@ principles:
 - id: S-K6-DUCTILE-ANCHOR-BOLT-TYPES-AND-YIELD-SEQUENCE
   order: 34
   type: identification
+  display_content:
+    definition: ABR（転造ねじ）・ABM（切削ねじ）は、ねじ部破断に先立ち軸部全断面が降伏・塑性変形する伸び能力を持つ。
+    distinguishing_conditions:
+    - 露出形式柱脚の伸び能力のあるアンカーボルト
+    confusable_points:
+    - 「軸部全断面が降伏する前に、ねじ部が破断する」とは区別する。
   principle: 伸び能力のあるアンカーボルト
   question:
     prompt: 露出形式柱脚に用いるABR・ABMの、伸び能力を確保する降伏と破断の順序として、正しい結論はどちらか。
@@ -741,6 +742,12 @@ principles:
 - id: S-K6-ANCHOR-BOLT-RESISTANCE-TYPES
   order: 36
   type: identification
+  display_content:
+    definition: アンカーボルトは支圧抵抗型と付着抵抗型に分類される。前者は棒表面付着と先端支圧、後者は接着剤とボルト・穿孔面の固着で抵抗する。
+    distinguishing_conditions:
+    - 引張力を受けるアンカーボルト
+    confusable_points:
+    - 「支圧抵抗型は接着剤の固着、付着抵抗型は棒表面付着と先端支圧で抵抗する」とは区別する。
   principle: アンカーボルトの引張支持抵抗形式
   question:
     prompt: 引張力を受けるアンカーボルトで、支圧抵抗型と付着抵抗型の抵抗機構の組合せとして、正しい結論はどちらか。
@@ -797,18 +804,18 @@ principles:
     - '24184'
   prerequisites: []
   editorial_status: source_gap
-- id: S-K6-WRAPPED-BASE-MOMENT-AND-SHEAR-DISTRIBUTION
+- id: S-K6-WRAPPED-BASE-MOMENT-DISTRIBUTION
   order: 39
   type: principle
-  principle: 根巻き柱脚の曲げ・せん断分布
+  principle: 根巻き柱脚内の曲げモーメント分布
   question:
-    prompt: 一般的な根巻き形式柱脚で、根巻き部のせん断力Q2と上部鉄骨柱のせん断力Q1を比較した場合、正しい結論はどちらか。
+    prompt: 一般的な根巻き形式柱脚で、鉄骨柱の曲げモーメント分布として正しい結論はどちらか。
     choices:
-      A: Q2はQ1より小さい。
-      B: Q2はQ1より大きい。
-    correct: B
-  conclusion: 鉄骨柱の曲げモーメントは根巻きRC頂部で最大となりベースプレートへ向かって小さくなる。根巻き部のせん断力Q2は上部鉄骨柱のQ1より大きい。
-  reason: 根巻きRCと露出柱脚部分も曲げを分担し、根巻き頂部からベースプレートまでの距離が反曲点から頂部までより短いため。
+      A: 根巻きRC頂部で最大となり、ベースプレートへ向かって小さくなる。
+      B: ベースプレートで最大となり、根巻きRC頂部へ向かって小さくなる。
+    correct: A
+  conclusion: 鉄骨柱の曲げモーメントは根巻きRC頂部で最大となり、ベースプレートへ向かって小さくなる。
+  reason: 根巻きRCと露出柱脚としての部分も曲げモーメントを分担するため。
   conditions:
   - 一般的な根巻き形式柱脚
   source:
@@ -817,6 +824,29 @@ principles:
     question_codes:
     - '29162'
   prerequisites: []
+  editorial_status: source_checked
+- id: S-K6-WRAPPED-BASE-SHEAR-Q2-GREATER-THAN-Q1
+  order: 139
+  type: principle
+  principle: 根巻き柱脚の上部・根巻き部せん断力の関係
+  question:
+    prompt: 一般的な根巻き形式柱脚で、根巻き部のせん断力Q2と上部鉄骨柱のせん断力Q1を比較した場合、正しい結論はどちらか。
+    choices:
+      A: Q2はQ1より小さい。
+      B: Q2はQ1より大きい。
+    correct: B
+  conclusion: 根巻き部に作用するせん断力Q2は、根巻きRCより上部の鉄骨柱に作用するせん断力Q1より大きい。
+  reason: 根巻きRC頂部からベースプレート下面までの距離が、柱の反曲点から根巻きRC頂部までの距離より短いため。
+  conditions:
+  - 一般的な根巻き形式柱脚
+  - Q1を根巻きRCより上部、Q2を根巻き部のせん断力とする
+  source:
+    pages:
+    - 174
+    question_codes:
+    - '29162'
+  prerequisites:
+  - S-K6-WRAPPED-BASE-MOMENT-DISTRIBUTION
   editorial_status: source_checked
 - id: S-K6-BOX-COLUMN-FIELD-BUTT-WELD-WITH-BACKING
   order: 40
@@ -838,6 +868,12 @@ principles:
 - id: S-K6-COLUMN-SPLICE-MINIMUM-DESIGN-STRENGTH
   order: 41
   type: rule
+  display_content:
+    rule: 柱継手は存在応力を伝えられるだけでなく、存在応力が小さくても柱断面の許容耐力の1/2以上の耐力を確保する。
+    applicability:
+    - 柱継手の許容応力度設計
+    numbers_exceptions:
+    - 柱継手は存在応力を伝えられるだけでなく、存在応力が小さくても柱断面の許容耐力の1/2以上の耐力を確保する。
   principle: 柱継手の最低設計耐力
   question:
     prompt: 柱継手の許容応力度設計で、存在応力が小さい場合にも確保する最低耐力として、正しい結論はどちらか。
@@ -875,21 +911,24 @@ principles:
 - id: S-K6-HIGH-STRENGTH-STEEL-BEAM-DEFLECTION-CHECK
   order: 43
   type: principle
-  principle: 高張力鋼梁の鉛直たわみ
+  principle: 高強度鋼で小断面化した梁のたわみ確認
   question:
     prompt: 高張力鋼を用い、長期設計応力から小断面の梁を選んで強度を満たした場合、鉛直たわみについて、正しい結論はどちらか。
     choices:
       A: 強度を満たせば鉛直たわみの確認を省略できる。
       B: 強度を満たしても鉛直たわみが大きくならないか確認する。
     correct: B
-  conclusion: 高張力鋼で長期応力から梁断面を決めるときは、強度を満たしても鉛直たわみが大きくならないよう確認する。
-  reason: 高強度化で小断面を選べてもヤング係数は大きくならず、断面剛性が小さいとたわみが増えるため。
+  conclusion: 高張力鋼で小断面の梁を選ぶと、強度を満たしても断面剛性が小さく、鉛直たわみが大きくなる場合があるため確認する。
+  reason: 高強度化で小断面を選べてもヤング係数は大きくならず、断面が小さければ曲げ剛性が低下するため。
   conditions:
   - 高張力鋼梁
   - 長期設計応力から小断面を選ぶ場合
+  - 強度を満たした後に使用性を確認する場合
   source:
     pages:
+    - 164
     - 175
+    - 181
     question_codes:
     - '19163'
   prerequisites: []
@@ -960,6 +999,13 @@ principles:
 - id: S-K6-SN490-BEAM-COLUMN-JOINT-OVERSTRENGTH
   order: 47
   type: rule
+  display_content:
+    rule: SN490B級の柱梁仕口は、最大曲げ強度を梁の全塑性モーメントの1.2倍以上とする。
+    applicability:
+    - 保有耐力時に部材塑性化を期待
+    - SN490B級の柱・梁仕口
+    numbers_exceptions:
+    - SN490B級の柱梁仕口は、最大曲げ強度を梁の全塑性モーメントの1.2倍以上とする。
   principle: SN490B柱梁仕口の最大曲げ強度
   question:
     prompt: 保有耐力時に部材の塑性化を期待するSN490B級の柱梁仕口で、必要な最大曲げ強度として、正しい結論はどちらか。
@@ -1002,5 +1048,6 @@ principles:
     - '25184'
   prerequisites:
   - S-K6-END-TABS-SECURE-SOUND-WELD-ENDS
+  related:
   - S-K6-TACK-WELD-MINIMUM-BEAD
   editorial_status: source_checked

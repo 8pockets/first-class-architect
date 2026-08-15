@@ -7,6 +7,14 @@ principles:
 - id: S-K6-BRACE-CAPACITY-DESIGN-JOINT-OVERSTRENGTH
   order: 1
   type: rule
+  display_content:
+    rule: 筋かい端部・接合部の破断耐力を、使用する筋かい断面の軸部降伏耐力より十分大きくし、炭素鋼では1.2倍以上、ステンレス鋼では1.5倍以上とする。
+    applicability:
+    - 軸力を負担する筋かい
+    - 採用断面が必要断面より大きい場合も実断面で降伏耐力を算定
+    - 耐震ブレースの接合部・端部
+    numbers_exceptions:
+    - 筋かい端部・接合部の破断耐力を、使用する筋かい断面の軸部降伏耐力より十分大きくし、炭素鋼では1.2倍以上、ステンレス鋼では1.5倍以上とする。
   principle: 筋かい端部・接合部の保有耐力接合
   question:
     prompt: 炭素鋼の耐震ブレース端部・接合部を保有耐力接合とするとき、破断耐力と実断面の軸部降伏耐力との関係として正しい結論はどちらか。
@@ -52,25 +60,54 @@ principles:
     - 06182
   prerequisites: []
   editorial_status: source_gap
-- id: S-K6-BRACE-HORIZONTAL-LOAD-TO-AXIAL-FORCE
+- id: S-K6-BRACE-HORIZONTAL-LOAD-AXIAL-FORCE
   order: 3
   type: principle
-  principle: ブレースの水平力伝達と鉛直・水平ブレースの役割
+  principle: ブレースによる水平力から軸力への変換
   question:
-    prompt: 鉄骨造の鉛直面に設ける鉛直ブレースについて、主に抑える変形として正しい結論はどちらか。
+    prompt: ブレースが風圧力・地震力などの水平力へ抵抗する仕組みとして、正しい結論はどちらか。
     choices:
-      A: 水平面の変形を抑える
-      B: 壁面の水平変形を抑える
-    correct: B
-  conclusion: ブレースは風圧力・地震力などの水平力を引張・圧縮の軸力へ変えて柱梁の応力を低減する。鉛直ブレースは壁面の水平変形、水平ブレースは水平面の変形を抑える。
-  reason: 斜材が水平力を軸方向力として負担し、鉛直面または水平面の剛性を高めるため。
+      A: 斜材の引張・圧縮の軸力へ変換して負担する。
+      B: 斜材の曲げモーメントだけで負担する。
+    correct: A
+  conclusion: ブレースは風圧力・地震力などの水平力を引張・圧縮の軸力へ変えて柱・梁の応力を低減する。
+  reason: 斜材が水平力の成分を材軸方向力として負担するため。
   conditions:
-  - 鉄骨造の鉛直面または水平面へ斜材を設ける場合
+  - 鉄骨造へ斜材を設けて水平力へ抵抗する場合
   source:
     pages:
     - 199
     question_codes: []
   prerequisites: []
+  editorial_status: source_checked
+- id: S-K6-VERTICAL-HORIZONTAL-BRACE-ROLES
+  order: 103
+  type: identification
+  display_content:
+    definition: 鉛直ブレースは壁面の水平変形を抑え、水平ブレースは水平面の剛性を高めて水平面の変形を抑える。
+    distinguishing_conditions:
+    - 鉄骨造の鉛直面または水平面へ斜材を設ける場合
+    - 鉛直ブレースと水平ブレースを区別する場合
+    confusable_points:
+    - 「水平面の変形を抑える」とは区別する。
+  principle: 鉛直ブレースと水平ブレースの配置面別役割
+  question:
+    prompt: 鉄骨造の鉛直面に設ける鉛直ブレースについて、主に抑える変形として正しい結論はどちらか。
+    choices:
+      A: 水平面の変形を抑える。
+      B: 壁面の水平変形を抑える。
+    correct: B
+  conclusion: 鉛直ブレースは壁面の水平変形を抑え、水平ブレースは水平面の剛性を高めて水平面の変形を抑える。
+  reason: 鉛直面または水平面へ配置した斜材が、その配置面の剛性を高めるため。
+  conditions:
+  - 鉄骨造の鉛直面または水平面へ斜材を設ける場合
+  - 鉛直ブレースと水平ブレースを区別する場合
+  source:
+    pages:
+    - 199
+    question_codes: []
+  prerequisites:
+  - S-K6-BRACE-HORIZONTAL-LOAD-AXIAL-FORCE
   editorial_status: source_checked
 - id: S-K6-BRACE-SECTION-USE-IDENTIFICATION
   order: 4

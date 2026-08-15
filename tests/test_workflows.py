@@ -102,3 +102,98 @@ def test_ci_and_pages_reject_changes_to_existing_print_numbers() -> None:
             '--previous "${RUNNER_TEMP}/previous-manifest.yaml"'
             in text
         )
+
+
+def test_ci_and_pages_preserve_every_issued_question_edition() -> None:
+    for path, job_name in ((CI_PATH, "validate"), (PAGES_PATH, "build")):
+        workflow = _workflow(path)
+        steps = workflow["jobs"][job_name]["steps"]
+        previous = next(
+            step for step in steps if step.get("name") == "Read previous question editions"
+        )
+        expected_sha = (
+            "${{ github.event.pull_request.base.sha || github.event.before }}"
+            if path == CI_PATH
+            else "${{ github.event.before }}"
+        )
+        assert previous["env"]["PREVIOUS_SHA"] == expected_sha
+        text = path.read_text(encoding="utf-8")
+        assert (
+            'git cat-file -e "${previous_sha}:'
+            'data/principles/steel/question-editions.yaml"'
+            in text
+        )
+        assert (
+            'git show "${previous_sha}:'
+            'data/principles/steel/question-editions.yaml"'
+            in text
+        )
+        assert (
+            "uv run --locked python -m principle_catalog verify-question-editions "
+            '--previous "${RUNNER_TEMP}/previous-question-editions.yaml"'
+            in text
+        )
+
+
+def test_ci_and_pages_preserve_identity_and_migration_history() -> None:
+    for path, job_name in ((CI_PATH, "validate"), (PAGES_PATH, "build")):
+        workflow = _workflow(path)
+        steps = workflow["jobs"][job_name]["steps"]
+        previous = next(
+            step for step in steps if step.get("name") == "Read previous identity history"
+        )
+        expected_sha = (
+            "${{ github.event.pull_request.base.sha || github.event.before }}"
+            if path == CI_PATH
+            else "${{ github.event.before }}"
+        )
+        assert previous["env"]["PREVIOUS_SHA"] == expected_sha
+        text = path.read_text(encoding="utf-8")
+        assert "for filename in identities.yaml migration.yaml; do" in text
+        assert (
+            'git cat-file -e "${previous_sha}:'
+            'data/principles/steel/${filename}"'
+            in text
+        )
+        assert (
+            'git show "${previous_sha}:'
+            'data/principles/steel/${filename}"'
+            in text
+        )
+        assert (
+            "uv run --locked python -m principle_catalog verify-identity-history "
+            '--previous-identities "${RUNNER_TEMP}/previous-identities.yaml" '
+            '--previous-migration "${RUNNER_TEMP}/previous-migration.yaml"'
+            in text
+        )
+
+
+def test_ci_and_pages_preserve_every_coverage_tier_scheme() -> None:
+    for path, job_name in ((CI_PATH, "validate"), (PAGES_PATH, "build")):
+        workflow = _workflow(path)
+        steps = workflow["jobs"][job_name]["steps"]
+        previous = next(
+            step for step in steps if step.get("name") == "Read previous coverage tiers"
+        )
+        expected_sha = (
+            "${{ github.event.pull_request.base.sha || github.event.before }}"
+            if path == CI_PATH
+            else "${{ github.event.before }}"
+        )
+        assert previous["env"]["PREVIOUS_SHA"] == expected_sha
+        text = path.read_text(encoding="utf-8")
+        assert (
+            'git cat-file -e "${previous_sha}:'
+            'data/principles/steel/coverage-tiers.yaml"'
+            in text
+        )
+        assert (
+            'git show "${previous_sha}:'
+            'data/principles/steel/coverage-tiers.yaml"'
+            in text
+        )
+        assert (
+            "uv run --locked python -m principle_catalog verify-coverage-tiers "
+            '--previous "${RUNNER_TEMP}/previous-coverage-tiers.yaml"'
+            in text
+        )

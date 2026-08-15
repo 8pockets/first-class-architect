@@ -38,6 +38,13 @@ principles:
 - id: S-K6-FRICTION-SURFACE-PREPARATION
   order: 2
   type: rule
+  display_content:
+    rule: 摩擦面は黒皮・塗料・油・塵埃を除去し、浮き錆ではない赤錆程度に処理する。
+    applicability:
+    - 通常の高力ボルト摩擦接合面
+    - 高力ボルト摩擦接合の摩擦面
+    numbers_exceptions:
+    - 所定のすべり係数0.45を確保する。
   principle: 摩擦接合面の表面状態
   question:
     prompt: 通常の高力ボルト摩擦接合で、摩擦面の表面状態について、正しい結論はどちらか。
@@ -94,6 +101,13 @@ principles:
 - id: S-K6-SQUARE-TUBE-COLUMN-DIAPHRAGM-TYPES
   order: 4
   type: identification
+  display_content:
+    definition: 梁が取り付く柱部分には仕口剛性を高めるダイアフラムを設け、角形鋼管柱の形式は外ダイアフラム、通しダイアフラム、内ダイアフラムの3種類である。
+    distinguishing_conditions:
+    - 角形鋼管柱と梁の仕口
+    - 柱梁接合部の図を識別する場合
+    confusable_points:
+    - 「仕口剛性を低くする」とは区別する。
   principle: 柱梁仕口のダイアフラムの役割と形式
   question:
     prompt: 角形鋼管柱と梁の仕口に設けるダイアフラムの役割について、正しい結論はどちらか。
@@ -125,6 +139,13 @@ principles:
 - id: S-K6-GUSSET-PLATE-MEMBER-CONNECTION
   order: 5
   type: identification
+  display_content:
+    definition: ガセットプレートは、柱梁の隅角部やトラス節点などに集まる部材を接合するための鋼板である。
+    distinguishing_conditions:
+    - ブレース納まり・トラス節点など複数部材の接合部
+    - 柱と筋かい、またはトラス部材などが一点付近へ集まる接合部
+    confusable_points:
+    - 「集まる部材を接合せず個別に支持する」とは区別する。
   principle: ガセットプレートの用途
   question:
     prompt: 柱梁の隅角部やトラス節点に用いるガセットプレートの用途について、正しい結論はどちらか。

@@ -50,6 +50,15 @@ principles:
 - id: S-K6-EXPOSED-BASE-ANCHOR-EMBEDMENT-LENGTH
   order: 3
   type: rule
+  display_content:
+    rule: 所定の構造計算を行わない場合、定着長さはアンカーボルト径の20倍以上とし、先端をかぎ状に折り曲げるか定着金物を設ける。
+    applicability:
+    - 露出形式柱脚
+    - 付着力を考慮した安全確認を別途行わない場合
+    - 露出柱脚
+    - 露出形式柱脚のアンカーボルト
+    numbers_exceptions:
+    - 所定の構造計算を行わない場合、定着長さはアンカーボルト径の20倍以上とし、先端をかぎ状に折り曲げるか定着金物を設ける。
   principle: 露出柱脚アンカーボルトの定着長さ
   question:
     prompt: 付着力を考慮した安全確認を別途行わない露出柱脚で、アンカーボルトの定着長さについて、正しい結論はどちらか。
@@ -100,6 +109,13 @@ principles:
 - id: S-K6-EXPOSED-BASE-PLATE-MINIMUM-THICKNESS
   order: 5
   type: rule
+  display_content:
+    rule: ベースプレート厚さはアンカーボルト径の1.3倍以上とする。
+    applicability:
+    - 露出形式柱脚
+    - 露出柱脚
+    numbers_exceptions:
+    - ベースプレート厚さはアンカーボルト径の1.3倍以上とする。
   principle: 露出柱脚ベースプレートの厚さ
   question:
     prompt: 露出柱脚のベースプレート厚さとアンカーボルト径の関係について、正しい結論はどちらか。
@@ -149,6 +165,13 @@ principles:
 - id: S-K6-WRAPPED-BASE-HEIGHT-AND-TOP-CONFINEMENT
   order: 7
   type: rule
+  display_content:
+    rule: 根巻き高さは柱の大きい見付け幅の2.5倍以上とし、上端部の帯筋を密に配置する。
+    applicability:
+    - 根巻き形式柱脚
+    - 根巻き柱脚
+    numbers_exceptions:
+    - 根巻き高さは柱の大きい見付け幅の2.5倍以上とし、上端部の帯筋を密に配置する。
   principle: 根巻き柱脚の高さと上端拘束
   question:
     prompt: 根巻き柱脚の根巻き高さと柱の大きい見付け幅の関係について、正しい結論はどちらか。

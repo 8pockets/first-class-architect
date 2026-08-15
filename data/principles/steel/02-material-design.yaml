@@ -7,6 +7,15 @@ principles:
 - id: S-K6-STEEL-ALLOWABLE-STRESS-DURATION
   order: 1
   type: rule
+  display_content:
+    rule: 長期の圧縮・引張・曲げ許容応力度はF/1.5、長期せん断はF/(1.5√3)、短期の圧縮・引張・曲げはF、短期せん断はF/√3とする。
+    applicability:
+    - 構造用鋼材
+    - 座屈による低減を別途要しない応力度
+    - 長期荷重
+    - 鋼材母材
+    numbers_exceptions:
+    - 長期の圧縮・引張・曲げ許容応力度はF/1.5、長期せん断はF/(1.5√3)、短期の圧縮・引張・曲げはF、短期せん断はF/√3とする。
   principle: 構造用鋼材の長期・短期許容応力度
   question:
     prompt: 座屈による低減を別途要しない構造用鋼材で、長期と短期の許容応力度の関係について、正しい結論はどちらか。
@@ -82,8 +91,9 @@ principles:
     - '28154'
     - '30152'
   prerequisites:
-  - S-K6-FULL-PENETRATION-WELD-DEFINITION-REPEATED-STRESS
   - S-K6-STEEL-F-VALUE-DEFINITION
+  related:
+  - S-K6-FULL-PENETRATION-WELD-DEFINITION-REPEATED-STRESS
   editorial_status: source_gap
 - id: S-K6-WELD-ALLOWABLE-STRESS-NONFULL-PENETRATION
   order: 4
@@ -110,8 +120,9 @@ principles:
     - '28154'
     - '30152'
   prerequisites:
-  - S-K6-FILLET-WELD-DEFINITION-REPEATED-STRESS
   - S-K6-STEEL-F-VALUE-DEFINITION
+  related:
+  - S-K6-FILLET-WELD-DEFINITION-REPEATED-STRESS
   editorial_status: source_gap
 - id: S-K6-STEEL-DIAMETER-THICKNESS-RATIO-SMALLER-PREFERRED
   order: 5

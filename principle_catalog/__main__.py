@@ -8,12 +8,19 @@ from pathlib import Path
 from principle_catalog.catalog import (
     load_catalog,
     load_public_progress,
+    validate_coverage_tier_history,
+    validate_identity_history,
     validate_print_registry_history,
     validate_public_progress,
+    validate_question_edition_history,
 )
 from principle_catalog.progress import write_public_progress
 from principle_catalog.site import build_site
-from principle_catalog.study import study_brief, sync_study_items
+from principle_catalog.study import (
+    new_study_candidates_from_path,
+    study_brief,
+    sync_study_items,
+)
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -27,6 +34,49 @@ def _parser() -> argparse.ArgumentParser:
     )
     verify_print_registry.add_argument("--previous", type=Path, required=True)
 
+    verify_question_editions = subcommands.add_parser(
+        "verify-question-editions",
+        help="verify that previously issued question editions were not changed",
+    )
+    verify_question_editions.add_argument("--previous", type=Path, required=True)
+    verify_question_editions.add_argument(
+        "--current",
+        type=Path,
+        default=Path("data/principles/steel/question-editions.yaml"),
+    )
+
+    verify_identity_history = subcommands.add_parser(
+        "verify-identity-history",
+        help="verify that existing identity and migration routes were preserved",
+    )
+    verify_identity_history.add_argument(
+        "--previous-identities", type=Path, required=True
+    )
+    verify_identity_history.add_argument(
+        "--previous-migration", type=Path, required=True
+    )
+    verify_identity_history.add_argument(
+        "--current-identities",
+        type=Path,
+        default=Path("data/principles/steel/identities.yaml"),
+    )
+    verify_identity_history.add_argument(
+        "--current-migration",
+        type=Path,
+        default=Path("data/principles/steel/migration.yaml"),
+    )
+
+    verify_coverage_tiers = subcommands.add_parser(
+        "verify-coverage-tiers",
+        help="verify that previously issued coverage schemes were not changed",
+    )
+    verify_coverage_tiers.add_argument("--previous", type=Path, required=True)
+    verify_coverage_tiers.add_argument(
+        "--current",
+        type=Path,
+        default=Path("data/principles/steel/coverage-tiers.yaml"),
+    )
+
     sync = subcommands.add_parser("sync-progress", help="refresh the public progress projection")
     sync.add_argument("--output", type=Path, default=Path("data/public_progress.yaml"))
 
@@ -36,15 +86,27 @@ def _parser() -> argparse.ArgumentParser:
     )
     sync_study.add_argument("--state", type=Path, default=Path(".study/state.json"))
 
+    new_candidates = subcommands.add_parser(
+        "new-study-candidates",
+        help=(
+            "list eligible new items only; the existing urgent/review queue "
+            "remains authoritative"
+        ),
+    )
+    new_candidates.add_argument(
+        "--state", type=Path, default=Path(".study/state.json")
+    )
+    new_candidates.add_argument("--ceiling", type=int, choices=(1, 2, 3))
+
     brief = subcommands.add_parser(
         "study-brief",
-        help="show a source-checked binary question without revealing its answer",
+        help="show a source-checked binary question and its visible explanation",
     )
-    brief.add_argument("item_id")
+    brief.add_argument("item_id", help="immutable key, public code, or legacy alias")
     brief.add_argument(
         "--reveal",
         action="store_true",
-        help="include the answer, conclusion, reason, and conditions",
+        help="deprecated compatibility flag; full content is always visible",
     )
 
     build = subcommands.add_parser("build", help="build the static GitHub Pages site")
@@ -76,9 +138,42 @@ def main() -> int:
         validate_print_registry_history(args.previous)
         print(f"valid permanent print registry previous={args.previous}")
         return 0
+    if args.command == "verify-question-editions":
+        validate_question_edition_history(args.previous, args.current)
+        print(f"valid question editions previous={args.previous}")
+        return 0
+    if args.command == "verify-identity-history":
+        validate_identity_history(
+            args.previous_identities,
+            args.previous_migration,
+            args.current_identities,
+            args.current_migration,
+        )
+        print(
+            "valid identity history "
+            f"previous_identities={args.previous_identities} "
+            f"previous_migration={args.previous_migration}"
+        )
+        return 0
+    if args.command == "verify-coverage-tiers":
+        validate_coverage_tier_history(args.previous, args.current)
+        print(f"valid coverage tiers previous={args.previous}")
+        return 0
     if args.command == "sync-study-items":
         added = sync_study_items(args.state)
         print(f"updated {args.state} added={len(added)}")
+        return 0
+    if args.command == "new-study-candidates":
+        candidates = new_study_candidates_from_path(
+            args.state,
+            ceiling=args.ceiling,
+        )
+        print(
+            "eligible new items only; urgent/review queue remains authoritative "
+            f"count={len(candidates)}"
+        )
+        for item in candidates:
+            print(item.id)
         return 0
     if args.command == "study-brief":
         print(study_brief(args.item_id, reveal=args.reveal), end="")

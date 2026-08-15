@@ -1,0 +1,376 @@
+version: 1
+display_schema:
+  source_fields:
+    primary: conclusion
+    rationale: reason
+    qualifiers: conditions
+  types:
+    principle:
+      primary_label: 結論
+      rationale_label: 理由
+      qualifiers_label: 結論を左右する条件
+    rule:
+      primary_label: 規定
+      rationale_label: 適用範囲
+      qualifiers_label: 数値・例外
+    identification:
+      primary_label: 定義
+      rationale_label: 識別条件
+      qualifiers_label: 混同注意
+groups:
+- id: steel.framework
+  title: 架構・鋼材・許容応力度
+  order: 1
+  subtopics:
+  - id: steel.framework.h-section
+    title: 架構形式・H形鋼断面
+    order: 1
+  - id: steel.framework.steel-properties
+    title: 鉄骨構造・鋼材特性
+    order: 2
+  - id: steel.framework.strength-allowable-stress
+    title: 基準強度・材料強度・許容応力度
+    order: 3
+  - id: steel.framework.corrosion-protection
+    title: 腐食・防錆
+    order: 4
+- id: steel.beam-column
+  title: 梁・柱・座屈
+  order: 2
+  subtopics:
+  - id: steel.beam-column.beam-types-design-actions
+    title: 梁の種類・断面・設計応力
+    order: 1
+  - id: steel.beam-column.strength-section-deflection
+    title: 高強度化・断面縮小・たわみ
+    order: 2
+  - id: steel.beam-column.global-buckling-slenderness
+    title: 圧縮材・全体座屈・細長比
+    order: 3
+  - id: steel.beam-column.lateral-buckling
+    title: 横座屈の機構・断面条件
+    order: 4
+  - id: steel.beam-column.lateral-bracing
+    title: 横補剛・保有耐力設計
+    order: 5
+  - id: steel.beam-column.local-buckling-width-thickness
+    title: 局部座屈・幅厚比・スチフナ
+    order: 6
+- id: steel.bolt
+  title: ボルト接合
+  order: 3
+  subtopics:
+  - id: steel.bolt.connection-types-ordinary
+    title: 接合形式・普通ボルト
+    order: 1
+  - id: steel.bolt.friction-mechanism
+    title: 高力ボルト摩擦接合の機構
+    order: 2
+  - id: steel.bolt.capacity-layout-surface
+    title: 高力ボルトの耐力・配置・摩擦面
+    order: 3
+  - id: steel.bolt.products-tightening-inspection
+    title: ボルト製品・締付け・検査
+    order: 4
+  - id: steel.bolt.cyclic-fatigue
+    title: 繰返し荷重・疲労
+    order: 5
+- id: steel.weld
+  title: 溶接接合
+  order: 4
+  subtopics:
+  - id: steel.weld.types-components-characteristics
+    title: 溶接の種類・構成・特徴
+    order: 1
+  - id: steel.weld.allowable-stress
+    title: 溶接部の許容応力度
+    order: 2
+  - id: steel.weld.full-penetration
+    title: 完全溶込み溶接
+    order: 3
+  - id: steel.weld.fillet-partial
+    title: すみ肉・部分溶込み溶接
+    order: 4
+  - id: steel.weld.symbols-defects-ndt
+    title: 溶接記号・欠陥・非破壊検査
+    order: 5
+  - id: steel.weld.heat-passes-quality
+    title: 溶接熱・パス・施工管理
+    order: 6
+  - id: steel.weld.combined-connections
+    title: 併用接合
+    order: 7
+- id: steel.brace
+  title: ブレース・耐震
+  order: 5
+  subtopics:
+  - id: steel.brace.roles-load-path-layout
+    title: ブレースの役割・荷重経路・配置
+    order: 1
+  - id: steel.brace.connections
+    title: ブレース・トラス接合
+    order: 2
+  - id: steel.brace.eccentricity-effective-area
+    title: 偏心・有効断面
+    order: 3
+  - id: steel.brace.buckling-ultimate-capacity
+    title: 座屈・終局耐力
+    order: 4
+  - id: steel.brace.hysteresis-special-seismic
+    title: 履歴特性・特殊ブレース・地震応力
+    order: 5
+- id: steel.joint-base
+  title: 柱脚・仕口・継手
+  order: 6
+  subtopics:
+  - id: steel.joint-base.beam-column-joints
+    title: 柱梁仕口・梁端
+    order: 1
+  - id: steel.joint-base.diaphragms
+    title: ダイアフラム
+    order: 2
+  - id: steel.joint-base.splices-shop-field
+    title: 柱・梁の継手、工場・現場接合
+    order: 3
+  - id: steel.joint-base.column-base-common
+    title: 柱脚形式・共通規定
+    order: 4
+  - id: steel.joint-base.exposed-base
+    title: 露出柱脚
+    order: 5
+  - id: steel.joint-base.wrapped-base
+    title: 根巻き柱脚
+    order: 6
+  - id: steel.joint-base.embedded-base
+    title: 埋込み柱脚
+    order: 7
+- id: steel.fire-special
+  title: 耐火・特殊荷重
+  order: 7
+  subtopics:
+  - id: steel.fire-special.high-temperature-fire-load
+    title: 高温時挙動・火災荷重
+    order: 1
+  - id: steel.fire-special.fireproofing-methods
+    title: 耐火被覆工法
+    order: 2
+  - id: steel.fire-special.special-loads-equipment
+    title: 特殊荷重・付帯設備
+    order: 3
+assignments:
+  S-K6-18-ELASTIC-STRENGTH: steel.beam-column.global-buckling-slenderness
+  S-K6-18-SLENDERNESS: steel.beam-column.global-buckling-slenderness
+  S-K6-19-LATERAL-BUCKLING: steel.beam-column.lateral-buckling
+  S-K6-20-LOCAL-BUCKLING: steel.beam-column.local-buckling-width-thickness
+  S-K6-ALUMINUM-FRICTION-JOINT-GALVANIZED-BOLTS: steel.bolt.products-tightening-inspection
+  S-K6-ANCHOR-BOLT-RESISTANCE-TYPES: steel.joint-base.exposed-base
+  S-K6-ANGLE-CHANNEL-BRACE-EFFECTIVE-AREA: steel.brace.eccentricity-effective-area
+  S-K6-BEAM-END-MOMENT-STRENGTH-FLANGE-PLUS-WEB: steel.joint-base.beam-column-joints
+  S-K6-BEAM-END-STRENGTH-SECTION-LOSS-AND-TUBE-DEFORMATION: steel.joint-base.beam-column-joints
+  S-K6-BEAM-FLANGE-WEB-FORCE-SHARING: steel.joint-base.beam-column-joints
+  S-K6-BEAM-LATERAL-BUCKLING-COUNTERMEASURES: steel.beam-column.lateral-buckling
+  S-K6-BEAM-SECTION-SHAPE-LATERAL-BUCKLING: steel.beam-column.lateral-buckling
+  S-K6-BEAM-SPLICE-METHODS-FIELD-SHOP: steel.joint-base.splices-shop-field
+  S-K6-BEAM-TYPES-ROLLED-BUILT-UP: steel.beam-column.beam-types-design-actions
+  S-K6-BOLT-EDGE-DISTANCE-TERM-IDENTIFICATION: steel.bolt.capacity-layout-surface
+  S-K6-BOLT-MAXIMUM-EDGE-DISTANCE: steel.bolt.capacity-layout-surface
+  S-K6-BOLT-MINIMUM-EDGE-DISTANCE: steel.bolt.capacity-layout-surface
+  S-K6-BOX-COLUMN-FIELD-BUTT-WELD-WITH-BACKING: steel.joint-base.splices-shop-field
+  S-K6-BOX-COLUMN-H-BEAM-WELD-TYPES: steel.joint-base.beam-column-joints
+  S-K6-BRACE-BALANCED-DIRECTIONAL-LAYOUT: steel.brace.roles-load-path-layout
+  S-K6-BRACE-BOLT-COUNT-INCREASES-EFFECTIVE-AREA: steel.brace.eccentricity-effective-area
+  S-K6-BRACE-CAPACITY-DESIGN-JOINT-OVERSTRENGTH: steel.brace.connections
+  S-K6-BRACE-ECCENTRIC-JOINT-EFFECTS: steel.brace.eccentricity-effective-area
+  S-K6-BRACE-HORIZONTAL-LOAD-AXIAL-FORCE: steel.brace.roles-load-path-layout
+  S-K6-BRACE-HYSTERESIS-BY-SLENDERNESS: steel.brace.hysteresis-special-seismic
+  S-K6-BRACE-SECTION-USE-IDENTIFICATION: steel.brace.roles-load-path-layout
+  S-K6-BRACE-SHARE-SEISMIC-STRESS-AMPLIFICATION: steel.brace.hysteresis-special-seismic
+  S-K6-BRACE-SIDE-FILLET-WELD-FORCE-TRANSFER: steel.brace.connections
+  S-K6-BRACE-SLENDERNESS-AND-DEFORMATION-CAPACITY: steel.brace.buckling-ultimate-capacity
+  S-K6-BRACE-TENSION-YIELD-COMPRESSION-BUCKLING: steel.brace.buckling-ultimate-capacity
+  S-K6-BRACE-TO-HOLLOW-COLUMN-DIAPHRAGM-REINFORCEMENT: steel.brace.connections
+  S-K6-BRACED-FRAME-COLUMN-BRACE-CAPACITY-SUM: steel.brace.buckling-ultimate-capacity
+  S-K6-BUCKLING-RESTRAINED-BRACE-FORCE-ROLES: steel.brace.hysteresis-special-seismic
+  S-K6-BUILT-UP-COLUMN-NON-SOLID-AXIS-SLENDERNESS-INCREASE: steel.beam-column.global-buckling-slenderness
+  S-K6-BUILT-UP-H-SECTION-FLANGE-WEB-FILLET: steel.weld.fillet-partial
+  S-K6-COLUMN-BASE-NOTIFICATION-1456: steel.joint-base.column-base-common
+  S-K6-COLUMN-BASE-TYPES-FIXITY-ORDER: steel.joint-base.column-base-common
+  S-K6-COLUMN-SPLICE-MINIMUM-DESIGN-STRENGTH: steel.joint-base.splices-shop-field
+  S-K6-COLUMN-SPLICE-NEAR-MIDSTORY: steel.joint-base.splices-shop-field
+  S-K6-COLUMN-WEB-WIDTH-THICKNESS-STRICTER-THAN-BEAM: steel.beam-column.local-buckling-width-thickness
+  S-K6-COMBINED-BOLT-WELD-CONSTRUCTION-ORDER: steel.weld.combined-connections
+  S-K6-DIAPHRAGM-FLANGE-MISALIGNMENT-LIMIT: steel.joint-base.diaphragms
+  S-K6-DISSIMILAR-STEEL-WELD-WEAKER-BASE-GOVERNS: steel.weld.allowable-stress
+  S-K6-DOUBLE-ANGLE-BRACE-REDUCES-ECCENTRICITY: steel.brace.eccentricity-effective-area
+  S-K6-DUCTILE-ANCHOR-BOLT-TYPES-AND-YIELD-SEQUENCE: steel.joint-base.exposed-base
+  S-K6-ECCENTRIC-K-BRACE-ENERGY-DISSIPATION: steel.brace.hysteresis-special-seismic
+  S-K6-EFFECTIVE-SLENDERNESS-MAXIMUMS: steel.beam-column.global-buckling-slenderness
+  S-K6-ELASTIC-DEFLECTION-NOT-REDUCED-BY-HIGHER-STEEL-GRADE: steel.beam-column.strength-section-deflection
+  S-K6-EMBEDDED-BASE-EFFECTIVE-FIXED-POINT: steel.joint-base.embedded-base
+  S-K6-EMBEDDED-BASE-FORCE-TRANSFER: steel.joint-base.embedded-base
+  S-K6-EMBEDDED-BASE-MINIMUM-DEPTH: steel.joint-base.embedded-base
+  S-K6-ENCASED-BASE-BOTTOM-PIN-MOMENT-TRANSFER: steel.joint-base.wrapped-base
+  S-K6-END-TABS-SECURE-SOUND-WELD-ENDS: steel.weld.full-penetration
+  S-K6-EXISTING-RIVET-JOINT-WELDED-EXTENSION-LOAD-SHARING: steel.weld.combined-connections
+  S-K6-EXPOSED-BASE-ANCHOR-AREA-RATIO: steel.joint-base.exposed-base
+  S-K6-EXPOSED-BASE-ANCHOR-EMBEDMENT-LENGTH: steel.joint-base.exposed-base
+  S-K6-EXPOSED-BASE-ANCHOR-HOLE-CLEARANCE: steel.joint-base.exposed-base
+  S-K6-EXPOSED-BASE-ANCHOR-LOCKING: steel.joint-base.exposed-base
+  S-K6-EXPOSED-BASE-CAPACITY-DESIGN-DS-PENALTY: steel.joint-base.exposed-base
+  S-K6-EXPOSED-BASE-MODEL-BY-DESIGN-TARGET: steel.joint-base.exposed-base
+  S-K6-EXPOSED-BASE-PLATE-MINIMUM-THICKNESS: steel.joint-base.exposed-base
+  S-K6-EXPOSED-BASE-RC-ANALOGY-FOR-AXIAL-AND-BENDING: steel.joint-base.exposed-base
+  S-K6-EXPOSED-BASE-SHEAR-CAPACITY-NOT-ADDITIVE: steel.joint-base.exposed-base
+  S-K6-F10T-TENSILE-STRENGTH-MEANING: steel.bolt.products-tightening-inspection
+  S-K6-F14T-CLAMPING-FORCE-REDUCES-BOLT-COUNT: steel.bolt.products-tightening-inspection
+  S-K6-FA-H-BEAM-FLANGE-WEB-WIDTH-THICKNESS-LIMITS: steel.beam-column.local-buckling-width-thickness
+  S-K6-FATIGUE-CHECK-CYCLE-THRESHOLD: steel.bolt.cyclic-fatigue
+  S-K6-FILLER-PLATE-EQUALIZES-THICKNESS: steel.joint-base.splices-shop-field
+  S-K6-FILLET-WELD-ANATOMY: steel.weld.fillet-partial
+  S-K6-FILLET-WELD-DEFINITION-REPEATED-STRESS: steel.weld.fillet-partial
+  S-K6-FILLET-WELD-EFFECTIVE-AREA: steel.weld.fillet-partial
+  S-K6-FILLET-WELD-EFFECTIVE-LENGTH: steel.weld.fillet-partial
+  S-K6-FILLET-WELD-SIZE-EFFECTIVE-THROAT: steel.weld.fillet-partial
+  S-K6-FIRE-LOAD-FIXED-PLUS-LIVE-COMBUSTIBLES: steel.fire-special.high-temperature-fire-load
+  S-K6-FIREPROOFING-BOARD-ATTACHMENT: steel.fire-special.fireproofing-methods
+  S-K6-FIREPROOFING-CAST-IN: steel.fire-special.fireproofing-methods
+  S-K6-FIREPROOFING-PLASTER-FINISH: steel.fire-special.fireproofing-methods
+  S-K6-FIREPROOFING-REQUIRED-ABOVE-250C: steel.fire-special.high-temperature-fire-load
+  S-K6-FIREPROOFING-SPRAY-APPLIED: steel.fire-special.fireproofing-methods
+  S-K6-FIRST-STAGE-BENDING-CHECK-NOT-PLASTIC-BRACING-CHECK: steel.beam-column.lateral-bracing
+  S-K6-FLOOR-HORIZONTAL-TRUSS-SECONDARY-BEAM-AXIAL-FORCE: steel.brace.roles-load-path-layout
+  S-K6-FRAME-COLUMN-BUCKLING-LENGTH-RESTRAINT: steel.beam-column.global-buckling-slenderness
+  S-K6-FRAME-H-SECTION-AXIS-ROLE: steel.framework.h-section
+  S-K6-FRICTION-JOINT-GAP-FILLER-RULE: steel.bolt.capacity-layout-surface
+  S-K6-FRICTION-JOINT-POST-SLIP-RUPTURE-MODEL: steel.bolt.friction-mechanism
+  S-K6-FRICTION-JOINT-PRE-SLIP-FORCE-TRANSFER: steel.bolt.friction-mechanism
+  S-K6-FRICTION-JOINT-REPEATED-LOAD-BELOW-SLIP: steel.bolt.cyclic-fatigue
+  S-K6-FRICTION-JOINT-SHEAR-TENSION-INTERACTION: steel.bolt.capacity-layout-surface
+  S-K6-FRICTION-JOINT-SLIP-COEFFICIENT: steel.bolt.capacity-layout-surface
+  S-K6-FRICTION-SURFACE-PREPARATION: steel.bolt.friction-mechanism
+  S-K6-FULL-PENETRATION-WELD-ANATOMY: steel.weld.full-penetration
+  S-K6-FULL-PENETRATION-WELD-DEFINITION-REPEATED-STRESS: steel.weld.full-penetration
+  S-K6-FULL-PENETRATION-WELD-EFFECTIVE-LENGTH: steel.weld.full-penetration
+  S-K6-FULL-PENETRATION-WELD-EFFECTIVE-THROAT: steel.weld.full-penetration
+  S-K6-FULL-PLASTIC-LATERAL-BRACING-PLACEMENT-METHODS: steel.beam-column.lateral-bracing
+  S-K6-GUSSET-PLATE-MEMBER-CONNECTION: steel.brace.connections
+  S-K6-H-BEAM-ALLOWABLE-BENDING-INPUTS: steel.beam-column.lateral-buckling
+  S-K6-H-SECTION-AXIS-LATERAL-BUCKLING: steel.beam-column.lateral-buckling
+  S-K6-H-SECTION-COLUMN-WEAK-AXIS-GOVERNS-BUCKLING: steel.beam-column.global-buckling-slenderness
+  S-K6-H-SECTION-FLANGE-BENDING: steel.framework.h-section
+  S-K6-H-SECTION-STRONG-AXIS-LATERAL-RESTRAINT: steel.beam-column.lateral-bracing
+  S-K6-H-SECTION-STRONG-WEAK-AXIS-RIGIDITY: steel.framework.h-section
+  S-K6-H-SECTION-WEB-SHEAR: steel.framework.h-section
+  S-K6-HEAT-AFFECTED-ZONE-IDENTIFICATION: steel.weld.types-components-characteristics
+  S-K6-HIGH-STRENGTH-BOLT-ALLOWABLE-SHEAR-TABLE: steel.bolt.capacity-layout-surface
+  S-K6-HIGH-STRENGTH-BOLT-CONNECTION-TYPES: steel.bolt.friction-mechanism
+  S-K6-HIGH-STRENGTH-BOLT-CONSTRUCTION-ADVANTAGE: steel.bolt.friction-mechanism
+  S-K6-HIGH-STRENGTH-BOLT-HOLE-CLEARANCE: steel.bolt.capacity-layout-surface
+  S-K6-HIGH-STRENGTH-BOLT-MINIMUM-PITCH: steel.bolt.capacity-layout-surface
+  S-K6-HIGH-STRENGTH-BOLT-PRODUCT-TYPES: steel.bolt.products-tightening-inspection
+  S-K6-HIGH-STRENGTH-BOLT-SLIP-RIGIDITY: steel.bolt.friction-mechanism
+  S-K6-HIGH-STRENGTH-BOLT-STRESS-DISTRIBUTION: steel.bolt.friction-mechanism
+  S-K6-HIGH-STRENGTH-BOLT-TENSILE-STRENGTH-RATIO: steel.bolt.friction-mechanism
+  S-K6-HIGH-STRENGTH-STEEL-BEAM-DEFLECTION-CHECK: steel.beam-column.strength-section-deflection
+  S-K6-HIGHER-STRENGTH-REQUIRES-MORE-UNIFORM-BRACING: steel.beam-column.lateral-bracing
+  S-K6-HIGHER-STRENGTH-STEEL-REDUCES-DEPTH-ONLY-STRENGTH-GOVERNS: steel.beam-column.strength-section-deflection
+  S-K6-HORIZONTAL-HAUNCH-REDUCES-BEAM-END-STRESS: steel.joint-base.beam-column-joints
+  S-K6-HYSTERESIS-LOOP-AREA-ENERGY-ABSORPTION: steel.brace.hysteresis-special-seismic
+  S-K6-INTERNAL-DIAPHRAGM-CONSTRUCTION: steel.joint-base.diaphragms
+  S-K6-JOINT-SPLICE-LOCATION-FABRICATION: steel.joint-base.splices-shop-field
+  S-K6-LATERAL-BRACE-STRENGTH-AND-STIFFNESS: steel.beam-column.lateral-bracing
+  S-K6-LATERAL-BRACING-ENABLES-FULL-PLASTIC-MOMENT: steel.beam-column.lateral-bracing
+  S-K6-LATERAL-LOCAL-BUCKLING-INTERACTION: steel.beam-column.local-buckling-width-thickness
+  S-K6-LIMIT-SLENDERNESS-STRENGTH-RELATION: steel.beam-column.global-buckling-slenderness
+  S-K6-METAL-TOUCH-SPLICE-DIRECT-TRANSFER-FRACTIONS: steel.joint-base.splices-shop-field
+  S-K6-MINIMIZE-WELD-DISTORTION-AND-RESIDUAL-STRESS: steel.weld.heat-passes-quality
+  S-K6-MIXED-BUTT-FILLET-WELD-LOAD-SHARING: steel.weld.combined-connections
+  S-K6-MIXED-WELD-ORDINARY-BOLT-LOAD-SHARING: steel.weld.combined-connections
+  S-K6-MOMENT-FRAME-HYSTERESIS: steel.brace.hysteresis-special-seismic
+  S-K6-MULTIPASS-HEAT-INPUT-INTERPASS-UPPER-CONTROL: steel.weld.heat-passes-quality
+  S-K6-NO-LATERAL-BUCKLING-SECTION-ALLOWABLE-BENDING: steel.beam-column.lateral-buckling
+  S-K6-NO-SCALLOP-IMPROVES-BEAM-END-DUCTILITY: steel.joint-base.beam-column-joints
+  S-K6-NONSEISMIC-TRUSS-JOINT-MINIMUM-STRENGTH: steel.brace.connections
+  S-K6-ORDINARY-BOLT-CLEARANCE-LOOSENING: steel.bolt.connection-types-ordinary
+  S-K6-ORDINARY-BOLT-HOLE-CLEARANCE: steel.bolt.connection-types-ordinary
+  S-K6-ORDINARY-BOLT-HOLE-DIAMETER-AIJ: steel.bolt.connection-types-ordinary
+  S-K6-ORDINARY-BOLT-SHEAR-TRANSFER: steel.bolt.connection-types-ordinary
+  S-K6-ORDINARY-BOLT-THREAD-PROJECTION: steel.bolt.connection-types-ordinary
+  S-K6-ORDINARY-BOLT-WASHER-UNDER-NUT: steel.bolt.connection-types-ordinary
+  S-K6-ORDINARY-BOLTS-PROHIBITED-FOR-REPEATED-LOAD: steel.bolt.connection-types-ordinary
+  S-K6-OVERHEAD-CRANE-SEISMIC-WEIGHT: steel.fire-special.special-loads-equipment
+  S-K6-PARTIAL-PENETRATION-EFFECTIVE-THROAT-DEDUCTION: steel.weld.fillet-partial
+  S-K6-PARTIAL-PENETRATION-WELD-APPLICABILITY: steel.weld.fillet-partial
+  S-K6-PREHEAT-LOWER-BOUND-VS-INTERPASS-UPPER-BOUND: steel.weld.heat-passes-quality
+  S-K6-PREHEAT-PREVENTS-LOW-TEMPERATURE-CRACKING: steel.weld.heat-passes-quality
+  S-K6-REFERENCE-FATIGUE-STRENGTH-JOINT-TYPE: steel.bolt.cyclic-fatigue
+  S-K6-SN490-BEAM-COLUMN-JOINT-OVERSTRENGTH: steel.joint-base.beam-column-joints
+  S-K6-SPLICE-FRICTION-JOINT-SELECTION: steel.joint-base.splices-shop-field
+  S-K6-SPLICE-PLATE-TRANSFERS-FORCE: steel.joint-base.splices-shop-field
+  S-K6-SQUARE-TUBE-COLUMN-DIAPHRAGM-TYPES: steel.joint-base.diaphragms
+  S-K6-STEEL-ALLOWABLE-STRESS-DURATION: steel.framework.strength-allowable-stress
+  S-K6-STEEL-BEAM-COMMON-SECTIONS: steel.beam-column.beam-types-design-actions
+  S-K6-STEEL-BEAM-DEFLECTION-CHECK: steel.beam-column.strength-section-deflection
+  S-K6-STEEL-BEAM-DEFLECTION-CHECK-OMISSION: steel.beam-column.strength-section-deflection
+  S-K6-STEEL-BEAM-DEFLECTION-LIMITS: steel.beam-column.strength-section-deflection
+  S-K6-STEEL-BEAM-DEPTH-SPAN-RANGE: steel.beam-column.beam-types-design-actions
+  S-K6-STEEL-BEAM-DESIGN-ACTIONS: steel.beam-column.beam-types-design-actions
+  S-K6-STEEL-BUCKLING-MODE-IDENTIFICATION: steel.beam-column.global-buckling-slenderness
+  S-K6-STEEL-COMPRESSION-CAPACITY-BUCKLING: steel.beam-column.global-buckling-slenderness
+  S-K6-STEEL-CONNECTION-TYPE-IDENTIFICATION: steel.bolt.connection-types-ordinary
+  S-K6-STEEL-CORROSION-PROTECTION: steel.framework.corrosion-protection
+  S-K6-STEEL-DIAMETER-THICKNESS-RATIO-SMALLER-PREFERRED: steel.beam-column.local-buckling-width-thickness
+  S-K6-STEEL-DUCTILITY-PREVENTS-BRITTLE-FRACTURE: steel.framework.steel-properties
+  S-K6-STEEL-END-TAB-RETENTION-CONDITIONS: steel.weld.full-penetration
+  S-K6-STEEL-END-TAB-TACK-WELD-TO-BACKING: steel.weld.full-penetration
+  S-K6-STEEL-F-VALUE-DEFINITION: steel.framework.strength-allowable-stress
+  S-K6-STEEL-FIRE-STRENGTH-FIREPROOFING: steel.fire-special.high-temperature-fire-load
+  S-K6-STEEL-LONG-TERM-BEARING-ALLOWABLE-STRESS: steel.framework.strength-allowable-stress
+  S-K6-STEEL-MATERIAL-STRENGTH-JIS-FACTOR: steel.framework.strength-allowable-stress
+  S-K6-STEEL-STRUCTURE-DEFINITION: steel.framework.steel-properties
+  S-K6-STEEL-THIN-SECTION-BUCKLING: steel.beam-column.local-buckling-width-thickness
+  S-K6-STEEL-YIELD-RATIO-SMALLER-PREFERRED: steel.framework.steel-properties
+  S-K6-STEEL-YOUNGS-MODULUS-STRENGTH-INDEPENDENT: steel.framework.steel-properties
+  S-K6-STEEL-YOUNGS-MODULUS-VS-CONCRETE: steel.framework.steel-properties
+  S-K6-STIFFENER-ROLE-BY-POSITION-AND-STRESS: steel.beam-column.local-buckling-width-thickness
+  S-K6-TACK-WELD-MINIMUM-BEAD: steel.weld.heat-passes-quality
+  S-K6-THROUGH-DIAPHRAGM-CONSTRUCTION-AND-WELD: steel.joint-base.diaphragms
+  S-K6-THROUGH-DIAPHRAGM-THICKNESS-MISMATCH-PREVENTION: steel.joint-base.diaphragms
+  S-K6-TORSHEAR-BOLT-PINTAIL-SECONDARY-TIGHTENING: steel.bolt.products-tightening-inspection
+  S-K6-TORSHEAR-BOLT-ROTATION-MARKING-INSPECTION: steel.bolt.products-tightening-inspection
+  S-K6-TRUSS-MEMBER-IN-OUT-PLANE-BUCKLING-LENGTH: steel.beam-column.global-buckling-slenderness
+  S-K6-UNIFORM-BRACING-SLENDERNESS-FORMULAS: steel.beam-column.lateral-bracing
+  S-K6-VERTICAL-HORIZONTAL-BRACE-ROLES: steel.brace.roles-load-path-layout
+  S-K6-WELD-ALLOWABLE-STRESS-FULL-PENETRATION: steel.weld.allowable-stress
+  S-K6-WELD-ALLOWABLE-STRESS-NONFULL-PENETRATION: steel.weld.allowable-stress
+  S-K6-WELD-BACK-GOUGING-PURPOSE: steel.weld.full-penetration
+  S-K6-WELD-BACKING-BAR-ROOT-GAP: steel.weld.full-penetration
+  S-K6-WELD-BASIC-SYMBOL-SHAPES: steel.weld.symbols-defects-ndt
+  S-K6-WELD-BEAD-DEFINITION: steel.weld.types-components-characteristics
+  S-K6-WELD-CONSTRUCTION-DEFECT-RISK: steel.weld.symbols-defects-ndt
+  S-K6-WELD-CONTINUOUS-STRESS-FLOW: steel.weld.types-components-characteristics
+  S-K6-WELD-DEFECT-BLOWHOLE: steel.weld.symbols-defects-ndt
+  S-K6-WELD-DEFECT-OVERLAP: steel.weld.symbols-defects-ndt
+  S-K6-WELD-DEFECT-PIT: steel.weld.symbols-defects-ndt
+  S-K6-WELD-DEFECT-SLAG-INCLUSION: steel.weld.symbols-defects-ndt
+  S-K6-WELD-DEFECT-UNDERCUT: steel.weld.symbols-defects-ndt
+  S-K6-WELD-FORM-FLEXIBILITY: steel.weld.types-components-characteristics
+  S-K6-WELD-HEAT-DISTORTION: steel.weld.heat-passes-quality
+  S-K6-WELD-INSPECTION-DIFFICULTY: steel.weld.symbols-defects-ndt
+  S-K6-WELD-METAL-COMPOSITION: steel.weld.types-components-characteristics
+  S-K6-WELD-NDT-INTERNAL-VS-SURFACE-DEFECTS: steel.weld.symbols-defects-ndt
+  S-K6-WELD-NO-CONSTRUCTION-NOISE: steel.weld.types-components-characteristics
+  S-K6-WELD-NO-SECTION-LOSS-HIGH-RIGIDITY: steel.weld.types-components-characteristics
+  S-K6-WELD-PASS-AND-MULTIPASS-IDENTIFICATION: steel.weld.heat-passes-quality
+  S-K6-WELD-SCALLOP-DEFINITION: steel.weld.symbols-defects-ndt
+  S-K6-WELD-SYMBOL-ARROW-SIDE-POSITION: steel.weld.symbols-defects-ndt
+  S-K6-WELD-THROAT-ALLOWABLE-SHEAR-INDEPENDENT-OF-JOINT-FORM: steel.weld.allowable-stress
+  S-K6-WELD-TYPE-IDENTIFICATION: steel.weld.types-components-characteristics
+  S-K6-WIDER-FLANGE-REDUCES-BRACING-DEMAND: steel.beam-column.lateral-bracing
+  S-K6-WIDTH-THICKNESS-LIMIT-DECREASES-WITH-STRENGTH: steel.beam-column.local-buckling-width-thickness
+  S-K6-WIDTH-THICKNESS-LIMIT-MEANING: steel.beam-column.local-buckling-width-thickness
+  S-K6-WRAPPED-BASE-DUCTILE-FAILURE-MODE: steel.joint-base.wrapped-base
+  S-K6-WRAPPED-BASE-HEIGHT-AND-TOP-CONFINEMENT: steel.joint-base.wrapped-base
+  S-K6-WRAPPED-BASE-MOMENT-DISTRIBUTION: steel.joint-base.wrapped-base
+  S-K6-WRAPPED-BASE-SHEAR-Q2-GREATER-THAN-Q1: steel.joint-base.wrapped-base
+  S-K6-X-BRACE-TENSION-COMPRESSION-CAPACITY: steel.brace.buckling-ultimate-capacity

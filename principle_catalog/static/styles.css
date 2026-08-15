@@ -344,6 +344,27 @@ a:focus-visible {
   margin-top: 56px;
 }
 
+.catalog-group {
+  scroll-margin-top: 18px;
+}
+
+.catalog-group + .catalog-group {
+  margin-top: 96px;
+}
+
+.catalog-group > .section-heading {
+  margin-bottom: 34px;
+  border-bottom-width: 3px;
+}
+
+.catalog-group > .catalog-section {
+  margin-left: clamp(0px, 1.5vw, 18px);
+}
+
+.catalog-group > .catalog-section + .catalog-section {
+  margin-top: 58px;
+}
+
 .catalog-section {
   scroll-margin-top: 18px;
 }
@@ -371,11 +392,19 @@ a:focus-visible {
   font-weight: 700;
 }
 
-.section-heading h2 {
+.section-heading h2,
+.section-heading h3 {
   margin: 0;
   font-family: "Hiragino Mincho ProN", "Yu Mincho", serif;
-  font-size: clamp(1.4rem, 3vw, 2rem);
   line-height: 1.35;
+}
+
+.section-heading h2 {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+}
+
+.section-heading h3 {
+  font-size: clamp(1.1rem, 2.2vw, 1.45rem);
 }
 
 .card-grid {
@@ -478,7 +507,7 @@ a:focus-visible {
 .card-header h3 {
   margin: 0;
   font-family: "Hiragino Mincho ProN", "Yu Mincho", serif;
-  font-size: clamp(0.9rem, 1.4vw, 1rem);
+  font-size: clamp(0.6rem, 1.4vw, 1rem);
   line-height: 1.45;
 }
 
@@ -553,54 +582,6 @@ a:focus-visible {
   color: var(--ink);
   background: var(--card);
   border-bottom: 1px solid var(--line);
-}
-
-.answer-disclosure > summary {
-  box-sizing: border-box;
-  min-height: 52px;
-  padding: 15px 24px 15px 28px;
-  color: var(--blue);
-  background: #edf2f4;
-  cursor: pointer;
-  font-size: 0.85rem;
-  font-weight: 800;
-  list-style-position: inside;
-}
-
-.answer-disclosure > summary::marker {
-  color: var(--orange);
-}
-
-.answer-disclosure > summary:hover {
-  color: var(--blue-dark);
-  background: #e2ebef;
-}
-
-.answer-disclosure > summary:focus-visible {
-  position: relative;
-  z-index: 1;
-  outline: 3px solid var(--orange);
-  outline-offset: -3px;
-}
-
-.answer-disclosure[open] > summary {
-  border-bottom: 1px solid var(--line);
-}
-
-.answer-disclosure[open] .disclosure-label-closed,
-.answer-disclosure:not([open]) .disclosure-label-open {
-  display: none;
-}
-
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-  border: 0;
 }
 
 .answer-content {
@@ -687,6 +668,23 @@ a:focus-visible {
   overflow-wrap: anywhere;
 }
 
+.source-provenance {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.authority-sources {
+  margin: 3px 0 0;
+  padding-left: 1.2em;
+}
+
+.authority-link {
+  color: var(--blue);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
 .card-source a {
   display: grid;
   min-width: 32px;
@@ -700,6 +698,56 @@ a:focus-visible {
 .card-source a:hover {
   color: white;
   background: var(--blue);
+}
+
+.legacy-route {
+  display: none;
+}
+
+.legacy-route:target {
+  display: block;
+}
+
+.migration-notice,
+.redistribution-index {
+  margin: 28px 0;
+  padding: 20px 24px;
+  background: #fff8e8;
+  border: 1px solid #d5bb7d;
+  border-left: 4px solid var(--gold);
+  border-radius: 10px;
+  scroll-margin-top: 18px;
+}
+
+.coverage-gap-notice {
+  margin: 28px 0 18px;
+  padding: 14px 18px;
+  color: #6e531e;
+  background: #fff8e8;
+  border: 1px solid #d5bb7d;
+  border-left: 4px solid var(--gold);
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.migration-notice h2,
+.redistribution-index h2 {
+  margin: 3px 0 8px;
+  font-size: 1.15rem;
+}
+
+.migration-notice p,
+.redistribution-index p,
+.migration-notice ul,
+.redistribution-index ul {
+  margin-top: 7px;
+  margin-bottom: 7px;
+}
+
+.redistribution-index li span {
+  margin-left: 0.5em;
+  color: var(--ink-soft);
 }
 
 .empty-state {
@@ -819,11 +867,6 @@ a:focus-visible {
     padding: 16px 18px 16px 23px;
   }
 
-  .answer-disclosure > summary {
-    padding-right: 18px;
-    padding-left: 23px;
-  }
-
   .answer-key {
     margin-right: 18px;
     margin-left: 23px;
@@ -877,8 +920,14 @@ a:focus-visible {
   .card-header,
   .answer-disclosure,
   .card-source,
+  .migration-notice,
+  .redistribution-index,
   .empty-state,
   .site-footer {
+    display: none !important;
+  }
+
+  .coverage-gap-notice {
     display: none !important;
   }
 
@@ -893,6 +942,7 @@ a:focus-visible {
     margin: 0;
   }
 
+  .catalog-group,
   .catalog-section,
   .card-grid {
     display: contents;

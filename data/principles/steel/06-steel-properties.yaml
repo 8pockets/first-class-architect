@@ -52,47 +52,6 @@ principles:
     question_codes: []
   prerequisites: []
   editorial_status: draft
-- id: S-K6-STEEL-HIGH-STRENGTH-SMALLER-SECTION
-  order: 4
-  type: principle
-  principle: 鋼材強度と部材断面
-  question:
-    prompt: 教材が説明する鋼材の材料強度と部材断面積の関係について、正しい結論はどちらか。
-    choices:
-      A: 部材断面積を小さくできる
-      B: 部材断面積を大きくする必要がある
-    correct: A
-  conclusion: 鋼材は部材断面積を小さくできる。
-  reason: 材料強度が高いため。
-  conditions:
-  - 教材が説明する鉄骨部材の一般的な特徴
-  source:
-    pages:
-    - 181
-    question_codes: []
-  prerequisites: []
-  editorial_status: source_checked
-- id: S-K6-STEEL-SMALL-SECTION-DEFLECTION
-  order: 5
-  type: principle
-  principle: 小さい鋼材断面とたわみ
-  question:
-    prompt: 断面積が小さい鋼部材のたわみやすさについて、正しい結論はどちらか。
-    choices:
-      A: たわみやすい
-      B: たわみにくい
-    correct: A
-  conclusion: 鋼部材はたわみやすい。
-  reason: 断面積を小さくできる反面、断面積が小さいため。
-  conditions:
-  - 断面積が小さい鋼部材
-  source:
-    pages:
-    - 181
-    question_codes: []
-  prerequisites:
-  - S-K6-STEEL-HIGH-STRENGTH-SMALLER-SECTION
-  editorial_status: source_checked
 - id: S-K6-STEEL-STRUCTURE-DEFINITION
   order: 6
   type: identification

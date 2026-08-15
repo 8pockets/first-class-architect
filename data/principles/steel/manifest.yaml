@@ -65,16 +65,61 @@ audited_pages:
 - 214
 - 215
 inventory:
-  total: 215
+  total: 216
   editorial_status:
     draft: 2
     source_checked: 116
-    source_gap: 97
+    source_gap: 98
 question_audit:
   answer_positions:
     A: 58
     B: 58
-  content_sha256: e04c25d22d6c95b0eb3fe149fcbb4a8851e532019cfd32586f6eca3249e4c278
+  content_sha256: 06d10595bc6de13a3b09a0fcaa2d50565819ed424ca2db64231a2b4ba49d67a4
+  order_sha256: 862f884d120342abd9890a617825c3839caa0585f00bf45ce20797b82150c9e2
+  taxonomy_sha256: 6ffb4fdb9e55ded16db46e962b83261b438fce59d602ba5f3f740e52d8145e77
+  prerequisites_sha256: 3e3ed2efde069767a54cb5dd920eae4a93e0459e3c986ba139a7fc0bdc11a812
+  identities_sha256: d02b0538d872fa63941130fc7d8c0fdd1b131fbf3af3b1b11e3a36541f64c796
+  migration_sha256: b75bc25c31d4b203e03f547451ed636d4839fd6b9b968b87b592ac61ac576191
+  coverage_tiers_sha256: 6f63d9df0776cea7976431b8b0638b726f46444b74d4660a778b7941de515df9
+projections:
+  taxonomy: taxonomy.yaml
+  identities: identities.yaml
+  migration: migration.yaml
+  question_editions: question-editions.yaml
+  coverage_tiers: coverage-tiers.yaml
+authoritative_source_schema:
+  allowed_kinds:
+  - law
+  - notification
+  - jis
+  - aij
+  - government_spec
+  required_fields:
+  - kind
+  - title
+  - locator
+  - supports
+  optional_fields:
+  - url
+  allowed_supports:
+  - statement
+  - explanation
+  - conditions
+content_review_schema:
+  statement_source:
+  - verified
+  - gap
+  - unreviewed
+  explanation_completeness:
+  - complete
+  - partial
+  - missing
+  - unreviewed
+  conditions_completeness:
+  - complete
+  - partial
+  - missing
+  - unreviewed
 print_registry:
   next_number: 117
   content_sha256: 7b2a0e8e18bccb17560dc97e56a9fdcd70d242e8f18db0aa58ba1357969894ec
