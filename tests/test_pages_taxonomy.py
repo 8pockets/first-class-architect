@@ -18,11 +18,27 @@ from principle_catalog.catalog import (
     load_public_progress,
     resolve_principle,
 )
-from principle_catalog.models import AuthoritativeSource
+from principle_catalog.models import (
+    AuthoritativeSource,
+    IdentificationDisplayContent,
+    ResearchCoverageRecord,
+    ResearchCoverageRevision,
+    ResearchEvidence,
+    ResearchIdentificationDetails,
+    ResearchPrincipleDetails,
+    ResearchQuestionRecord,
+    ResearchQuestionRevision,
+    ResearchRuleDetails,
+    RuleDisplayContent,
+)
 from principle_catalog.research import (
     ResearchQueryRelease,
     _release_content_sha256,
     load_research_queries,
+)
+from principle_catalog.research_questions import (
+    load_research_coverage,
+    load_research_questions,
 )
 from principle_catalog.site import build_site
 
@@ -78,6 +94,126 @@ def _identity_identifiers(catalog, published_keys: set[str]) -> set[str]:
         if identity.key in issued_keys:
             identifiers.update((identity.key, identity.code, *identity.aliases))
     return identifiers
+
+
+def _patch_research_registries_for_catalog(
+    monkeypatch,
+    catalog,
+    changed_catalog,
+) -> None:
+    questions = load_research_questions(catalog)
+    coverage = load_research_coverage(catalog, questions)
+    question_items = dict(questions.items)
+    coverage_items = dict(coverage.items)
+    formal_coverage = catalog.coverage.schemes[catalog.coverage.current].assignments
+    active_items = tuple(
+        item
+        for item in changed_catalog.principles
+        if item.editorial_status != "source_checked"
+    )
+    for item in active_items:
+        if item.id in question_items:
+            continue
+        assert item.question is not None
+        if item.type == "principle":
+            details = ResearchPrincipleDetails(
+                conclusion=item.conclusion,
+                reason=item.reason,
+                conditions=item.conditions,
+            )
+        elif item.type == "rule":
+            assert isinstance(item.display_content, RuleDisplayContent)
+            details = ResearchRuleDetails(
+                rule=item.display_content.rule,
+                applicability=item.display_content.applicability,
+                numbers_exceptions=item.display_content.numbers_exceptions,
+            )
+        else:
+            assert isinstance(item.display_content, IdentificationDisplayContent)
+            details = ResearchIdentificationDetails(
+                definition=item.display_content.definition,
+                distinguishing_conditions=(
+                    item.display_content.distinguishing_conditions
+                ),
+                confusable_points=item.display_content.confusable_points,
+            )
+        question_items[item.id] = ResearchQuestionRecord(
+            code=item.code,
+            type=item.type,
+            revision_history=(
+                ResearchQuestionRevision(
+                    revision=1,
+                    state="provisional_answer",
+                    prompt=item.question.prompt,
+                    choice_a=item.question.choice_a,
+                    choice_b=item.question.choice_b,
+                    answer=item.question.correct,
+                    details=details,
+                    evidence=(
+                        ResearchEvidence(
+                            kind="ledger",
+                            locator="taxonomy transition fixture",
+                            supports=("question", "answer", "details"),
+                        ),
+                    ),
+                ),
+            ),
+        )
+        formal = formal_coverage[item.id]
+        coverage_items[item.id] = ResearchCoverageRecord(
+            code=item.code,
+            revision_history=(
+                ResearchCoverageRevision(
+                    revision=1,
+                    tier=formal.tier,
+                    reasons=formal.reasons,
+                ),
+            ),
+        )
+
+    active = tuple(sorted(item.id for item in active_items))
+    question_revisions = {
+        **questions.releases[-1].revisions,
+        **{key: 1 for key in active if key not in questions.items},
+    }
+    coverage_revisions = {
+        **coverage.releases[-1].revisions,
+        **{key: 1 for key in active if key not in coverage.items},
+    }
+    changed_questions = replace(
+        questions,
+        items=question_items,
+        releases=(
+            *questions.releases[:-1],
+            replace(
+                questions.releases[-1],
+                active=active,
+                revisions=question_revisions,
+            ),
+        ),
+    )
+    changed_coverage = replace(
+        coverage,
+        items=coverage_items,
+        releases=(
+            *coverage.releases[:-1],
+            replace(
+                coverage.releases[-1],
+                active=active,
+                revisions=coverage_revisions,
+            ),
+        ),
+    )
+    monkeypatch.setattr(
+        site_module,
+        "load_research_questions",
+        lambda actual_catalog: changed_questions,
+    )
+    monkeypatch.setattr(
+        site_module,
+        "load_research_coverage",
+        lambda actual_catalog, actual_questions: changed_coverage,
+    )
 
 
 def test_pages_omit_only_the_zero_public_fire_group_from_the_taxonomy_outline(
@@ -311,6 +447,7 @@ def test_issued_active_card_that_becomes_private_keeps_only_generic_routes(
         "load_research_queries",
         lambda actual_catalog: changed_registry,
     )
+    _patch_research_registries_for_catalog(monkeypatch, catalog, changed_catalog)
 
     html = _built_html(tmp_path)
 
@@ -388,6 +525,7 @@ def test_never_published_card_does_not_gain_public_routes_when_retired(
         ),
     )
     monkeypatch.setattr(site_module, "load_catalog", lambda: changed_catalog)
+    _patch_research_registries_for_catalog(monkeypatch, catalog, changed_catalog)
 
     html = _built_html(tmp_path)
 
@@ -496,6 +634,7 @@ def test_historical_split_stays_an_index_after_its_leaves_converge(
         ),
     )
     monkeypatch.setattr(site_module, "load_catalog", lambda: changed_catalog)
+    _patch_research_registries_for_catalog(monkeypatch, catalog, changed_catalog)
 
     html = _built_html(tmp_path)
     opening = (

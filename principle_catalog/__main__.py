@@ -16,6 +16,14 @@ from principle_catalog.catalog import (
 )
 from principle_catalog.progress import write_public_progress
 from principle_catalog.research import load_research_queries
+from principle_catalog.research_questions import (
+    RESEARCH_COVERAGE_TIERS_PATH,
+    RESEARCH_QUESTIONS_PATH,
+    load_research_coverage,
+    load_research_questions,
+    validate_research_coverage_history,
+    validate_research_question_history,
+)
 from principle_catalog.site import build_site
 from principle_catalog.study import (
     new_study_candidates_from_path,
@@ -78,6 +86,33 @@ def _parser() -> argparse.ArgumentParser:
         default=Path("data/principles/steel/coverage-tiers.yaml"),
     )
 
+    verify_research_questions = subcommands.add_parser(
+        "verify-research-questions",
+        help="verify that released provisional questions were preserved",
+    )
+    verify_research_questions.add_argument("--previous", type=Path, required=True)
+    verify_research_questions.add_argument(
+        "--current",
+        type=Path,
+        default=RESEARCH_QUESTIONS_PATH,
+    )
+
+    verify_research_coverage = subcommands.add_parser(
+        "verify-research-coverage",
+        help="verify that released candidate coverage and its questions were preserved",
+    )
+    verify_research_coverage.add_argument("--previous", type=Path, required=True)
+    verify_research_coverage.add_argument(
+        "--previous-questions",
+        type=Path,
+        required=True,
+    )
+    verify_research_coverage.add_argument(
+        "--current",
+        type=Path,
+        default=RESEARCH_COVERAGE_TIERS_PATH,
+    )
+
     sync = subcommands.add_parser("sync-progress", help="refresh the public progress projection")
     sync.add_argument("--output", type=Path, default=Path("data/public_progress.yaml"))
 
@@ -124,12 +159,26 @@ def main() -> int:
     if args.command == "validate":
         catalog = load_catalog()
         research_queries = load_research_queries(catalog)
+        research_questions = load_research_questions(catalog)
+        research_coverage = load_research_coverage(catalog, research_questions)
         progress = load_public_progress()
         validate_public_progress(catalog, progress)
+        research_tier_counts = {
+            tier: sum(
+                research_coverage.items[key].current.tier == tier
+                for key in research_coverage.active_keys
+            )
+            for tier in (1, 2, 3)
+        }
+        research_tier_summary = ",".join(
+            f"{tier}:{research_tier_counts[tier]}" for tier in (1, 2, 3)
+        )
         print(
             f"valid principles={len(catalog.principles)} "
             f"source_checked={sum(item.editorial_status == 'source_checked' for item in catalog.principles)} "
             f"research_queries={len(research_queries.items)} "
+            f"research_questions={len(research_questions.active_keys)} "
+            f"research_tiers={research_tier_summary} "
             f"projected_progress={len(progress.items)}"
         )
         return 0
@@ -161,6 +210,31 @@ def main() -> int:
     if args.command == "verify-coverage-tiers":
         validate_coverage_tier_history(args.previous, args.current)
         print(f"valid coverage tiers previous={args.previous}")
+        return 0
+    if args.command == "verify-research-questions":
+        catalog = load_catalog()
+        validate_research_question_history(catalog, args.previous, args.current)
+        print(f"valid research questions previous={args.previous}")
+        return 0
+    if args.command == "verify-research-coverage":
+        catalog = load_catalog()
+        validate_research_question_history(
+            catalog,
+            args.previous_questions,
+            RESEARCH_QUESTIONS_PATH,
+        )
+        questions = load_research_questions(catalog)
+        validate_research_coverage_history(
+            catalog,
+            questions,
+            args.previous,
+            args.current,
+        )
+        print(
+            "valid research coverage "
+            f"previous={args.previous} "
+            f"previous_questions={args.previous_questions}"
+        )
         return 0
     if args.command == "sync-study-items":
         added = sync_study_items(args.state)

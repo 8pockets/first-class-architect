@@ -8,6 +8,7 @@ import re
 from dataclasses import replace
 from html import escape, unescape
 from pathlib import Path
+from types import SimpleNamespace
 from urllib.parse import parse_qs, urlencode, urlsplit
 
 import pytest
@@ -15,6 +16,16 @@ import yaml
 
 import principle_catalog.site as site_module
 from principle_catalog.catalog import CatalogError, display_principles, load_catalog
+from principle_catalog.models import (
+    ResearchCoverageRecord,
+    ResearchCoverageRevision,
+    ResearchEvidence,
+    ResearchIdentificationDetails,
+    ResearchPrincipleDetails,
+    ResearchQuestionRecord,
+    ResearchQuestionRevision,
+    ResearchRuleDetails,
+)
 from principle_catalog.research import (
     RESEARCH_QUERIES_PATH,
     ResearchQueryRecord,
@@ -22,6 +33,10 @@ from principle_catalog.research import (
     _release_content_sha256,
     google_search_url,
     load_research_queries,
+)
+from principle_catalog.research_questions import (
+    load_research_coverage,
+    load_research_questions,
 )
 from principle_catalog.site import _research_page, build_site
 
@@ -78,6 +93,100 @@ def _explanation_search_links(
         r'aria-label="([^"]+)"\s*'
         r'data-research-search="explanation">([^<]+)</a>',
         html,
+    )
+
+
+def _sample_question_and_coverage_registries(catalog):
+    by_type = {
+        item_type: next(
+            item
+            for item in catalog.principles
+            if item.type == item_type and item.editorial_status != "source_checked"
+        )
+        for item_type in ("principle", "rule", "identification")
+    }
+    specifications = (
+        (
+            by_type["principle"],
+            "provisional_answer",
+            "A",
+            ResearchPrincipleDetails(
+                conclusion="原理の暫定結論",
+                reason="原理の暫定理由",
+                conditions=("原理の暫定条件",),
+            ),
+        ),
+        (
+            by_type["rule"],
+            "provisional_answer",
+            "B",
+            ResearchRuleDetails(
+                rule="規定の暫定本文",
+                applicability=("規定の暫定適用範囲",),
+                numbers_exceptions=("規定の暫定数値・例外",),
+            ),
+        ),
+        (
+            by_type["identification"],
+            "pending",
+            None,
+            ResearchIdentificationDetails(
+                definition="識別の暫定定義",
+                distinguishing_conditions=("識別の暫定条件",),
+                confusable_points=("識別の暫定混同注意",),
+            ),
+        ),
+    )
+    question_items = {}
+    coverage_items = {}
+    for tier, (item, state, answer, details) in enumerate(specifications, start=1):
+        supports = ("details",) if answer is None else ("answer", "details")
+        question_items[item.id] = ResearchQuestionRecord(
+            code=item.code,
+            type=item.type,
+            revision_history=(
+                ResearchQuestionRevision(
+                    revision=1,
+                    state=state,
+                    prompt=f"{item.principle}について、正しい結論はどちらか。",
+                    choice_a=f"{item.type}の選択肢A",
+                    choice_b=f"{item.type}の選択肢B",
+                    answer=answer,
+                    details=details,
+                    evidence=(
+                        ResearchEvidence(
+                            kind="ledger",
+                            locator=f"既存台帳 P{tier}",
+                            supports=supports,
+                        ),
+                        ResearchEvidence(
+                            kind="codex",
+                            supplement="問題文と補足説明の編集",
+                            supports=("details",),
+                        ),
+                    ),
+                ),
+            ),
+        )
+        coverage_items[item.id] = ResearchCoverageRecord(
+            code=item.code,
+            revision_history=(
+                ResearchCoverageRevision(
+                    revision=1,
+                    tier=tier,
+                    reasons=(
+                        {
+                            1: "coverage_representative",
+                            2: "standard_application",
+                            3: "exception_detail",
+                        }[tier],
+                    ),
+                ),
+            ),
+        )
+    return (
+        SimpleNamespace(items=question_items, active_keys=tuple(question_items)),
+        SimpleNamespace(items=coverage_items, active_keys=tuple(coverage_items)),
     )
 
 
@@ -558,6 +667,206 @@ def test_research_registry_supports_a_route_only_release(tmp_path: Path) -> None
     assert registry.items[key].research_route_history == ("steel-search-v2",)
 
 
+def test_research_page_renders_candidate_questions_with_closed_type_specific_answers() -> None:
+    catalog = load_catalog()
+    queries = load_research_queries(catalog)
+    questions, coverage = _sample_question_and_coverage_registries(catalog)
+
+    research = _research_page(
+        BASE_URL,
+        catalog,
+        queries,
+        questions,
+        coverage,
+    )
+
+    assert research.count('<article class="research-card"') == 3
+    hero = research.split(
+        '<div class="hero-stats" aria-label="調査ページの項目数">', maxsplit=1
+    )[1].split("</div>\n  </header>", maxsplit=1)[0]
+    assert "<strong>3</strong><span>暫定問題</span>" in hero
+    assert "<strong>2</strong><span>暫定正解あり</span>" in hero
+    assert "<strong>1</strong><span>判定保留</span>" in hero
+    assert '<select id="research-coverage-filter">' in research
+    filter_values = (
+        "all",
+        "core-only",
+        "standard-only",
+        "advanced-only",
+        "core+standard",
+    )
+    assert all(f'<option value="{value}"' in research for value in filter_values)
+    assert '<strong id="research-visible-count">3</strong>' in research
+    assert 'data-research-catalog-root' in research
+    assert research.count('data-research-section') == 3
+    assert research.count('data-research-nav-target="') == 3
+    assert research.count('data-research-answer-disclosure') == 3
+    assert research.count('data-research-coverage-tier="') == 3
+    assert research.count('class="research-question"') == 3
+    assert research.count('class="research-binary-choices"') == 3
+    assert research.count('class="research-evidence"') == 3
+    assert research.count('class="explanation-search-button"') == 3
+    assert research.count('class="research-answer-disclosure"') == 3
+    assert research.count('class="disclosure-label-closed"') == 3
+    assert research.count('class="disclosure-label-open"') == 3
+    assert '<details class="research-answer-disclosure" open' not in research
+    assert (
+        '<script src="https://8pockets.github.io/first-class-architect/'
+        'assets/research.js" defer></script>'
+    ) in research
+
+    expected_labels = {
+        "principle": ("暫定結論", "暫定理由", "暫定条件"),
+        "rule": ("暫定規定", "暫定適用範囲", "暫定数値・例外"),
+        "identification": ("暫定定義", "暫定識別条件", "暫定混同注意"),
+    }
+    for tier, (key, question_record) in enumerate(questions.items.items(), start=1):
+        item = next(candidate for candidate in catalog.principles if candidate.id == key)
+        question = question_record.current
+        card = _research_card(research, item.code)
+        disclosure_start = card.index(
+            '<details class="research-answer-disclosure" '
+            "data-research-answer-disclosure>"
+        )
+        disclosure_end = card.index("</details>", disclosure_start) + len("</details>")
+        disclosure = card[disclosure_start:disclosure_end]
+        outside_disclosure = card[:disclosure_start] + card[disclosure_end:]
+
+        assert f'data-research-coverage-tier="{tier}"' in card
+        assert f"候補層：{('骨格', '標準', '発展')[tier - 1]}" in card
+        assert escape(question.prompt) in outside_disclosure
+        assert escape(question.choice_a) in outside_disclosure
+        assert escape(question.choice_b) in outside_disclosure
+        assert 'class="research-evidence"' in outside_disclosure
+        assert "既存台帳" in outside_disclosure
+        assert "Codex補足（正答根拠外）" in outside_disclosure
+        assert f"既存台帳 P{tier}" not in outside_disclosure
+        assert "問題文と補足説明の編集" not in outside_disclosure
+        assert 'class="explanation-search-button"' in outside_disclosure
+        assert "<dt>" not in outside_disclosure
+        assert all(
+            f"<dt>{label}</dt>" in disclosure
+            for label in expected_labels[item.type]
+        )
+        if question.answer is None:
+            assert "判定保留" in outside_disclosure
+            assert "判定保留の内容を見る" in disclosure
+            assert "判定保留の内容を閉じる" in disclosure
+            assert "暫定正解は保留中です" in disclosure
+        else:
+            assert "暫定正解あり" in outside_disclosure
+            assert "暫定正解と内容を見る" in disclosure
+            assert "暫定正解と内容を閉じる" in disclosure
+            assert (
+                f'<span class="research-answer-label">{question.answer}</span>'
+                in disclosure
+            )
+
+    forbidden_formal_contracts = (
+        'class="print-question-number"',
+        "data-print-position",
+        "data-progress=",
+        'id="progress-filter"',
+        'id="coverage-filter"',
+        'class="coverage-badge',
+        'id="catalog-stats"',
+        "K6-R1",
+        "K6-R2",
+        "K6-R3",
+    )
+    assert not any(marker in research for marker in forbidden_formal_contracts)
+
+
+def test_build_loads_research_registries_and_copies_the_interaction_asset(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    catalog = load_catalog()
+    questions, coverage = _sample_question_and_coverage_registries(catalog)
+    monkeypatch.setattr(
+        site_module,
+        "load_research_questions",
+        lambda actual_catalog: questions,
+    )
+    monkeypatch.setattr(
+        site_module,
+        "load_research_coverage",
+        lambda actual_catalog, actual_questions: coverage,
+    )
+
+    _, research, output = _build(tmp_path)
+
+    assert research.count('<article class="research-card"') == 3
+    assert 'data-research-catalog-root' in research
+    assert (output / "assets/research.js").read_text(encoding="utf-8") == (
+        Path("principle_catalog/static/research.js").read_text(encoding="utf-8")
+    )
+
+
+def test_research_question_controls_remain_readable_and_tappable_on_mobile(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    catalog = load_catalog()
+    questions, coverage = _sample_question_and_coverage_registries(catalog)
+    monkeypatch.setattr(
+        site_module,
+        "load_research_questions",
+        lambda actual_catalog: questions,
+    )
+    monkeypatch.setattr(
+        site_module,
+        "load_research_coverage",
+        lambda actual_catalog, actual_questions: coverage,
+    )
+    _, _, output = _build(tmp_path)
+    css = (output / "assets/styles.css").read_text(encoding="utf-8")
+
+    select = re.search(r"#research-coverage-filter\s*\{([^}]*)\}", css)
+    disclosure = re.search(
+        r"\.research-answer-disclosure\s*>\s*summary\s*\{([^}]*)\}", css
+    )
+    evidence = re.search(r"\.research-evidence\s*\{([^}]*)\}", css)
+    choices = re.search(r"\.research-binary-choices\s*\{([^}]*)\}", css)
+    disclosure_labels = re.search(
+        r"\.research-answer-disclosure\[open\] \.disclosure-label-closed,\s*"
+        r"\.research-answer-disclosure:not\(\[open\]\) \.disclosure-label-open\s*"
+        r"\{([^}]*)\}",
+        css,
+    )
+    permalink = re.search(r"\.research-card-source a\s*\{([^}]*)\}", css)
+    light_focus = re.search(
+        r"\.research-nav a:focus-visible,\s*"
+        r"\.research-card-source a:focus-visible\s*\{([^}]*)\}",
+        css,
+    )
+    assert select is not None and "min-height: 44px" in select.group(1)
+    assert disclosure is not None and "min-height: 48px" in disclosure.group(1)
+    assert evidence is not None and "background:" in evidence.group(1)
+    assert choices is not None and "grid-template-columns:" in choices.group(1)
+    assert disclosure_labels is not None
+    assert "display: none" in disclosure_labels.group(1)
+    assert permalink is not None
+    assert "min-width: 44px" in permalink.group(1)
+    assert "min-height: 44px" in permalink.group(1)
+    assert light_focus is not None
+    assert "outline-color: var(--blue-dark)" in light_focus.group(1)
+
+    mobile_rules = css.split("@media (max-width: 760px)", maxsplit=1)[1].split(
+        "@media (prefers-reduced-motion", maxsplit=1
+    )[0]
+    mobile_controls = re.search(
+        r"\.research-controls\s*\{([^}]*)\}", mobile_rules
+    )
+    mobile_choices = re.search(
+        r"\.research-binary-choices\s*\{([^}]*)\}", mobile_rules
+    )
+    assert mobile_controls is not None
+    assert "grid-template-columns: 1fr" in mobile_controls.group(1)
+    assert mobile_choices is not None
+    assert "grid-template-columns: 1fr" in mobile_choices.group(1)
+
+
 def test_research_page_shows_exact_provisional_content_and_keeps_root_confirmed_only(
     tmp_path: Path,
 ) -> None:
@@ -565,10 +874,14 @@ def test_research_page_shows_exact_provisional_content_and_keeps_root_confirmed_
     catalog = load_catalog()
     by_key = {item.id: item for item in catalog.principles}
     registry = load_research_queries(catalog)
+    questions = load_research_questions(catalog)
+    coverage = load_research_coverage(catalog, questions)
+    active_keys = set(questions.active_keys) & set(coverage.active_keys)
     visible_keys = tuple(
         item.id
         for item in display_principles(catalog)
-        if item.id in registry.items
+        if item.id in active_keys
+        and item.id in registry.items
         and registry.items[item.id].has_research_route
         and item.editorial_status != "source_checked"
     )
@@ -593,38 +906,103 @@ def test_research_page_shows_exact_provisional_content_and_keeps_root_confirmed_
     assert research.count("誤り・欠落を含む可能性があります") == len(visible_keys)
     assert "Googleの検索結果は台帳の根拠ではありません" in research
     assert 'data-research-transition' not in research
+    assert len(visible_keys) == 100
+    assert sum(
+        questions.items[key].current.state == "provisional_answer"
+        for key in visible_keys
+    ) == 99
+    assert sum(
+        questions.items[key].current.state == "pending" for key in visible_keys
+    ) == 1
+    assert "<strong>100</strong><span>暫定問題</span>" in research
+    assert "<strong>99</strong><span>暫定正解あり</span>" in research
+    assert "<strong>1</strong><span>判定保留</span>" in research
+    assert "骨格のみ（5件）" in research
+    assert "標準のみ（47件）" in research
+    assert "発展のみ（48件）" in research
+    assert "骨格＋標準（52件）" in research
 
     codes = re.findall(r'<article class="research-card" id="([^"]+)"', research)
     assert codes == [by_key[key].code for key in visible_keys]
     for key in visible_keys:
         item = by_key[key]
+        record = questions.items[key]
+        question = record.current
         card = _research_card(research, item.code)
         assert item.id not in research
         assert f'<article class="principle-card" id="{item.code}"' not in root
         assert escape(item.principle) in card
-        assert "<dt>暫定結論</dt>" in card
-        assert escape(item.conclusion) in card
-        assert "<dt>暫定理由</dt>" in card
-        assert escape(item.reason) in card
-        assert "<dt>暫定条件</dt>" in card
-        assert all(escape(condition) in card for condition in item.conditions)
+        assert record.type == item.type
+        disclosure_start = card.index(
+            '<details class="research-answer-disclosure" '
+            "data-research-answer-disclosure>"
+        )
+        disclosure_end = card.index("</details>", disclosure_start) + len("</details>")
+        disclosure = card[disclosure_start:disclosure_end]
+        outside_disclosure = card[:disclosure_start] + card[disclosure_end:]
+        assert escape(question.prompt) in outside_disclosure
+        assert escape(question.choice_a) in outside_disclosure
+        assert escape(question.choice_b) in outside_disclosure
+        assert 'class="research-evidence"' in outside_disclosure
+        assert 'class="explanation-search-button"' in outside_disclosure
+        assert "候補層：" in outside_disclosure
+        if isinstance(question.details, ResearchPrincipleDetails):
+            expected_rows = (
+                ("暫定結論", (question.details.conclusion,)),
+                ("暫定理由", (question.details.reason,)),
+                ("暫定条件", question.details.conditions),
+            )
+        elif isinstance(question.details, ResearchRuleDetails):
+            expected_rows = (
+                ("暫定規定", (question.details.rule,)),
+                ("暫定適用範囲", question.details.applicability),
+                ("暫定数値・例外", question.details.numbers_exceptions),
+            )
+        else:
+            expected_rows = (
+                ("暫定定義", (question.details.definition,)),
+                ("暫定識別条件", question.details.distinguishing_conditions),
+                ("暫定混同注意", question.details.confusable_points),
+            )
+        for label, values in expected_rows:
+            assert f"<dt>{label}</dt>" in disclosure
+            assert all(escape(value) in disclosure for value in values)
+        for evidence in question.evidence:
+            hidden_values = (evidence.locator, evidence.title, evidence.supplement)
+            assert all(
+                value is None or escape(value) not in outside_disclosure
+                for value in hidden_values
+            )
+            if evidence.url:
+                assert escape(evidence.url) not in outside_disclosure
+        assert outside_disclosure.count("既存台帳") == sum(
+            evidence.kind == "ledger" for evidence in question.evidence
+        )
+        assert outside_disclosure.count("外部資料確認") == sum(
+            evidence.kind == "external" for evidence in question.evidence
+        )
+        assert outside_disclosure.count("Codex補足（正答根拠外）") == sum(
+            evidence.kind == "codex" for evidence in question.evidence
+        )
         assert f'href="#{item.code}"' in card
-        pages = "・".join(f"P{page}" for page in item.source.pages)
-        assert f"PDF {pages}" in card
-        if item.source.question_codes:
-            assert f"問題コード {'・'.join(item.source.question_codes)}" in card
-        assert "既存台帳の教材内確認" in card
-        assert "外部一次資料の確認結果ではありません" in card
 
 
 def test_research_cards_use_canonical_display_order_not_registry_order() -> None:
     catalog = load_catalog()
     registry = load_research_queries(catalog)
+    questions = load_research_questions(catalog)
+    coverage = load_research_coverage(catalog, questions)
     reversed_registry = replace(
         registry,
         items=dict(reversed(tuple(registry.items.items()))),
     )
-    research = _research_page(BASE_URL, catalog, reversed_registry)
+    research = _research_page(
+        BASE_URL,
+        catalog,
+        reversed_registry,
+        questions,
+        coverage,
+    )
 
     actual_codes = re.findall(
         r'<article class="research-card" id="([^"]+)"',
@@ -633,7 +1011,9 @@ def test_research_cards_use_canonical_display_order_not_registry_order() -> None
     expected_codes = [
         item.code
         for item in display_principles(catalog)
-        if item.id in registry.items
+        if item.id in questions.active_keys
+        and item.id in coverage.active_keys
+        and item.id in registry.items
         and registry.items[item.id].has_research_route
         and item.editorial_status != "source_checked"
     ]
@@ -651,6 +1031,24 @@ def test_root_research_entry_is_excluded_from_the_question_sheet(
 
     assert match is not None
     assert "display: none !important" in match.group(1)
+
+
+def test_research_page_content_is_excluded_from_print(
+    tmp_path: Path,
+) -> None:
+    _, _, output = _build(tmp_path)
+    css = (output / "assets/styles.css").read_text(encoding="utf-8")
+    print_rules = css.split("@media print", maxsplit=1)[1]
+    hidden = re.search(
+        r"\.research-warning,\s*"
+        r"\.research-controls,\s*"
+        r"\.research-nav,\s*"
+        r"\.research-catalog\s*\{([^}]*)\}",
+        print_rules,
+    )
+
+    assert hidden is not None
+    assert "display: none !important" in hidden.group(1)
 
 
 def test_confirmed_card_with_queries_adds_one_always_visible_explanation_button(
@@ -891,10 +1289,12 @@ def test_research_page_excludes_learning_and_private_state_features(
         "K6-R2",
         "K6-R3",
         'id="catalog-stats"',
-        "<script",
         "<form",
     )
     assert not any(marker in research for marker in forbidden_research_markup)
+    assert research.count("<script") == 1
+    assert f'src="{BASE_URL}assets/research.js"' in research
+    assert "assets/catalog.js" not in research
     for page in output.rglob("*.html"):
         html = page.read_text(encoding="utf-8")
         assert "/Users/" not in html
@@ -904,6 +1304,8 @@ def test_research_page_excludes_learning_and_private_state_features(
 
 def test_source_checked_query_entry_keeps_a_target_only_research_route() -> None:
     catalog = load_catalog()
+    questions = load_research_questions(catalog)
+    coverage = load_research_coverage(catalog, questions)
     item = next(candidate for candidate in catalog.principles if candidate.id == PILOT_KEYS[0])
     checked = replace(item, editorial_status="source_checked")
     changed_catalog = replace(
@@ -915,7 +1317,13 @@ def test_source_checked_query_entry_keeps_a_target_only_research_route() -> None
     )
     registry = load_research_queries(changed_catalog)
 
-    research = _research_page(BASE_URL, changed_catalog, registry)
+    research = _research_page(
+        BASE_URL,
+        changed_catalog,
+        registry,
+        questions,
+        coverage,
+    )
 
     assert f'<article class="research-card" id="{item.code}"' not in research
     assert re.search(
@@ -928,6 +1336,8 @@ def test_source_checked_query_entry_keeps_a_target_only_research_route() -> None
 
 def test_retired_research_route_follows_a_merge_to_a_confirmed_card() -> None:
     catalog = load_catalog()
+    questions = load_research_questions(catalog)
+    coverage = load_research_coverage(catalog, questions)
     item = next(candidate for candidate in catalog.principles if candidate.id == PILOT_KEYS[0])
     target = next(
         candidate
@@ -942,7 +1352,13 @@ def test_retired_research_route_follows_a_merge_to_a_confirmed_card() -> None:
     )
     registry = load_research_queries(changed_catalog)
 
-    research = _research_page(BASE_URL, changed_catalog, registry)
+    research = _research_page(
+        BASE_URL,
+        changed_catalog,
+        registry,
+        questions,
+        coverage,
+    )
 
     opening = (
         f'<section class="research-transition legacy-route" id="{item.code}" '
@@ -961,6 +1377,8 @@ def test_retired_research_route_follows_a_merge_to_a_confirmed_card() -> None:
 
 def test_retired_research_split_exposes_only_previously_public_targets() -> None:
     catalog = load_catalog()
+    questions = load_research_questions(catalog)
+    coverage = load_research_coverage(catalog, questions)
     item = next(candidate for candidate in catalog.principles if candidate.id == PILOT_KEYS[1])
     confirmed = next(
         candidate
@@ -993,7 +1411,13 @@ def test_retired_research_split_exposes_only_previously_public_targets() -> None
         },
     )
 
-    research = _research_page(BASE_URL, changed_catalog, registry)
+    research = _research_page(
+        BASE_URL,
+        changed_catalog,
+        registry,
+        questions,
+        coverage,
+    )
 
     opening = (
         f'<section class="research-transition legacy-route" id="{item.code}" '
