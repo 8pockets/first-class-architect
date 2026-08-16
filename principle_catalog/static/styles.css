@@ -717,6 +717,11 @@ a:focus-visible {
   display: none;
 }
 
+.research-answer-disclosure[open] .disclosure-label-closed,
+.research-answer-disclosure:not([open]) .disclosure-label-open {
+  display: none;
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -1022,6 +1027,85 @@ a:focus-visible {
   margin: 8px 0 0;
 }
 
+.research-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 0.55fr) auto;
+  gap: 20px 28px;
+  align-items: end;
+  margin-top: 24px;
+  padding: 22px 26px;
+  background: var(--card);
+  border: 1px solid #cfb9a9;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgb(69 37 30 / 7%);
+}
+
+.research-controls h2,
+.research-controls p {
+  margin: 0;
+}
+
+.research-controls .control-kicker {
+  margin-bottom: 4px;
+  color: #a33d22;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.research-controls h2 {
+  font-family: "Hiragino Mincho ProN", "Yu Mincho", serif;
+  font-size: 1.25rem;
+}
+
+.research-controls h2 + p {
+  margin-top: 3px;
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+}
+
+.research-controls label {
+  display: grid;
+  gap: 5px;
+  color: var(--ink-soft);
+  font-size: 0.74rem;
+  font-weight: 800;
+}
+
+#research-coverage-filter {
+  width: 100%;
+  min-height: 44px;
+  padding: 7px 34px 7px 11px;
+  color: var(--ink);
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+#research-coverage-filter:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 2px;
+}
+
+.research-result-summary {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.research-result-summary strong {
+  color: #a33d22;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 1.45rem;
+}
+
+.research-result-summary span {
+  color: var(--ink-soft);
+  font-size: 0.76rem;
+}
+
 .research-nav {
   margin-top: 24px;
 }
@@ -1089,6 +1173,49 @@ a:focus-visible {
   letter-spacing: 0.04em;
 }
 
+.research-question-state,
+.research-tier-badge {
+  display: inline-flex;
+  min-height: 25px;
+  align-items: center;
+  padding: 3px 9px;
+  border: 1px solid;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.research-question-state.state-provisional_answer {
+  color: #245340;
+  background: #e1efe7;
+  border-color: #a9cbb9;
+}
+
+.research-question-state.state-pending {
+  color: #70470f;
+  background: #fff0c9;
+  border-color: #dfbd69;
+}
+
+.research-tier-badge {
+  color: #29445a;
+  background: #e8eef2;
+  border-color: #b9c9d3;
+}
+
+.research-tier-badge.tier-standard {
+  color: #4d3d11;
+  background: #f4edcf;
+  border-color: #d5c47d;
+}
+
+.research-tier-badge.tier-advanced {
+  color: #593049;
+  background: #f2e5ed;
+  border-color: #d3afc4;
+}
+
 .research-card-warning {
   margin: 0;
   padding: 13px 26px 13px 30px;
@@ -1096,6 +1223,126 @@ a:focus-visible {
   background: #fff0e5;
   border-bottom: 1px solid #e9c3ad;
   font-size: 0.83rem;
+}
+
+.research-question {
+  padding: 20px 26px 22px 30px;
+  background: #fffdf8;
+  border-bottom: 1px solid #e0d2c6;
+}
+
+.research-question > p {
+  margin: 0;
+  color: var(--ink);
+  font-size: clamp(1.02rem, 1.8vw, 1.18rem);
+  font-weight: 700;
+  line-height: 1.65;
+}
+
+.research-binary-choices {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.research-binary-choices li {
+  display: grid;
+  grid-template-columns: 2.1rem minmax(0, 1fr);
+  gap: 9px;
+  align-items: center;
+  min-width: 0;
+  padding: 10px 12px;
+  background: #f5f1e9;
+  border: 1px solid #d8cec2;
+  border-radius: 8px;
+}
+
+.research-choice-label,
+.research-answer-label {
+  display: inline-grid;
+  width: 1.8rem;
+  height: 1.8rem;
+  place-items: center;
+  color: white;
+  background: #8f432c;
+  border-radius: 50%;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.research-choice-text {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 0.88rem;
+}
+
+.research-answer-disclosure {
+  border-bottom: 1px solid #d8cec2;
+}
+
+.research-answer-disclosure > summary {
+  box-sizing: border-box;
+  min-height: 48px;
+  padding: 13px 26px 13px 30px;
+  color: #752d19;
+  background: #f8e9de;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 800;
+  list-style-position: inside;
+}
+
+.research-answer-disclosure > summary::marker {
+  color: #b64c2d;
+}
+
+.research-answer-disclosure > summary:hover {
+  color: #542013;
+  background: #f2d9c9;
+}
+
+.research-answer-disclosure > summary:focus-visible {
+  position: relative;
+  z-index: 1;
+  outline: 3px solid var(--orange);
+  outline-offset: -3px;
+}
+
+.research-answer-disclosure[open] > summary {
+  border-bottom: 1px solid #d8cec2;
+}
+
+.research-answer-key {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+  margin: 18px 26px 0 30px;
+  color: #245340;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.research-answer-key strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: var(--ink);
+  font-size: 0.9rem;
+}
+
+.research-answer-pending {
+  margin: 18px 26px 0 30px;
+  padding: 9px 12px;
+  color: #70470f;
+  background: #fff0c9;
+  border: 1px solid #dfbd69;
+  border-radius: 7px;
+  font-size: 0.82rem;
+  font-weight: 800;
 }
 
 .provisional-three-point {
@@ -1132,8 +1379,63 @@ a:focus-visible {
   padding-left: 1.2em;
 }
 
+.research-evidence {
+  padding: 17px 26px 18px 30px;
+  background: #f4f1ea;
+  border-bottom: 1px solid #d8cec2;
+}
+
+.research-evidence h4 {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+}
+
+.research-evidence ul {
+  display: grid;
+  gap: 6px;
+  margin: 9px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.research-evidence li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 6px 14px;
+  padding-top: 6px;
+  border-top: 1px solid #ded7cc;
+  font-size: 0.76rem;
+}
+
+.research-evidence li:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.research-evidence span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.research-evidence small {
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
 .research-card-source {
   border-top: 1px solid #d8cec2;
+}
+
+.research-card-source a {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.research-nav a:focus-visible,
+.research-card-source a:focus-visible {
+  outline-color: var(--blue-dark);
 }
 
 .research-transition {
@@ -1193,6 +1495,16 @@ a:focus-visible {
 
   .research-entry > a {
     width: 100%;
+  }
+
+  .research-controls {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 20px 18px;
+  }
+
+  .research-result-summary {
+    justify-self: start;
   }
 
   .controls {
@@ -1277,6 +1589,30 @@ a:focus-visible {
     padding-left: 23px;
   }
 
+  .research-question {
+    padding: 17px 18px 18px 23px;
+  }
+
+  .research-binary-choices {
+    grid-template-columns: 1fr;
+  }
+
+  .research-answer-disclosure > summary {
+    padding-right: 18px;
+    padding-left: 23px;
+  }
+
+  .research-answer-key {
+    grid-template-columns: auto auto minmax(0, 1fr);
+    margin-right: 18px;
+    margin-left: 23px;
+  }
+
+  .research-answer-pending {
+    margin-right: 18px;
+    margin-left: 23px;
+  }
+
   .provisional-three-point {
     padding-right: 18px;
     padding-left: 23px;
@@ -1286,6 +1622,19 @@ a:focus-visible {
     grid-template-columns: 1fr;
     gap: 5px;
     padding: 14px 0;
+  }
+
+  .research-evidence {
+    padding-right: 18px;
+    padding-left: 23px;
+  }
+
+  .research-evidence li {
+    grid-template-columns: 1fr;
+  }
+
+  .research-evidence small {
+    white-space: normal;
   }
 
   .explanation-search-action,
@@ -1344,6 +1693,13 @@ a:focus-visible {
 }
 
 @media print {
+  .research-warning,
+  .research-controls,
+  .research-nav,
+  .research-catalog {
+    display: none !important;
+  }
+
   .research-entry {
     display: none !important;
   }

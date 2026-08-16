@@ -33,6 +33,10 @@ CoverageReason = Literal[
     "exception_detail",
     "integrated_judgment",
 ]
+ResearchQuestionState = Literal["provisional_answer", "pending"]
+ResearchEvidenceKind = Literal["ledger", "external", "codex"]
+ResearchEvidenceSupport = Literal["question", "answer", "details"]
+ResearchExternalSourceClass = Literal["official", "explanation"]
 
 
 @dataclass(frozen=True)
@@ -321,6 +325,121 @@ class CoverageRegistry:
     current: str
     tiers: dict[CoverageTier, CoverageTierDefinition]
     schemes: dict[str, CoverageScheme]
+
+
+@dataclass(frozen=True)
+class ResearchEvidence:
+    kind: ResearchEvidenceKind
+    supports: tuple[ResearchEvidenceSupport, ...]
+    locator: str | None = None
+    title: str | None = None
+    url: str | None = None
+    source_class: ResearchExternalSourceClass | None = None
+    supplement: str | None = None
+
+
+@dataclass(frozen=True)
+class ResearchPrincipleDetails:
+    conclusion: str
+    reason: str
+    conditions: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class ResearchRuleDetails:
+    rule: str
+    applicability: tuple[str, ...]
+    numbers_exceptions: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class ResearchIdentificationDetails:
+    definition: str
+    distinguishing_conditions: tuple[str, ...]
+    confusable_points: tuple[str, ...]
+
+
+ResearchQuestionDetails = (
+    ResearchPrincipleDetails
+    | ResearchRuleDetails
+    | ResearchIdentificationDetails
+)
+
+
+@dataclass(frozen=True)
+class ResearchQuestionRevision:
+    revision: int
+    state: ResearchQuestionState
+    prompt: str
+    choice_a: str
+    choice_b: str
+    answer: ChoiceLabel | None
+    details: ResearchQuestionDetails
+    evidence: tuple[ResearchEvidence, ...]
+
+
+@dataclass(frozen=True)
+class ResearchQuestionRecord:
+    code: str
+    type: PrincipleType
+    revision_history: tuple[ResearchQuestionRevision, ...]
+
+    @property
+    def current(self) -> ResearchQuestionRevision:
+        return self.revision_history[-1]
+
+
+@dataclass(frozen=True)
+class ResearchQuestionRelease:
+    id: str
+    active: tuple[str, ...]
+    revisions: dict[str, int]
+    content_sha256: str
+
+
+@dataclass(frozen=True)
+class ResearchQuestionRegistry:
+    items: dict[str, ResearchQuestionRecord]
+    releases: tuple[ResearchQuestionRelease, ...]
+
+    @property
+    def active_keys(self) -> tuple[str, ...]:
+        return self.releases[-1].active
+
+
+@dataclass(frozen=True)
+class ResearchCoverageRevision:
+    revision: int
+    tier: CoverageTier
+    reasons: tuple[CoverageReason, ...]
+
+
+@dataclass(frozen=True)
+class ResearchCoverageRecord:
+    code: str
+    revision_history: tuple[ResearchCoverageRevision, ...]
+
+    @property
+    def current(self) -> ResearchCoverageRevision:
+        return self.revision_history[-1]
+
+
+@dataclass(frozen=True)
+class ResearchCoverageRelease:
+    id: str
+    active: tuple[str, ...]
+    revisions: dict[str, int]
+    content_sha256: str
+
+
+@dataclass(frozen=True)
+class ResearchCoverageRegistry:
+    items: dict[str, ResearchCoverageRecord]
+    releases: tuple[ResearchCoverageRelease, ...]
+
+    @property
+    def active_keys(self) -> tuple[str, ...]:
+        return self.releases[-1].active
 
 
 @dataclass(frozen=True)

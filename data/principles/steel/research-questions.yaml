@@ -1,0 +1,3085 @@
+version: 1
+releases:
+- id: steel-research-questions-v1
+  active:
+  - S-K6-19-LATERAL-BUCKLING
+  - S-K6-BEAM-END-MOMENT-STRENGTH-FLANGE-PLUS-WEB
+  - S-K6-BEAM-SECTION-SHAPE-LATERAL-BUCKLING
+  - S-K6-BEAM-TYPES-ROLLED-BUILT-UP
+  - S-K6-BOLT-EDGE-DISTANCE-TERM-IDENTIFICATION
+  - S-K6-BOLT-MAXIMUM-EDGE-DISTANCE
+  - S-K6-BOLT-MINIMUM-EDGE-DISTANCE
+  - S-K6-BOX-COLUMN-FIELD-BUTT-WELD-WITH-BACKING
+  - S-K6-BRACE-BALANCED-DIRECTIONAL-LAYOUT
+  - S-K6-BRACE-SECTION-USE-IDENTIFICATION
+  - S-K6-BRACED-FRAME-COLUMN-BRACE-CAPACITY-SUM
+  - S-K6-BUILT-UP-H-SECTION-FLANGE-WEB-FILLET
+  - S-K6-COLUMN-BASE-NOTIFICATION-1456
+  - S-K6-COLUMN-BASE-TYPES-FIXITY-ORDER
+  - S-K6-DIAPHRAGM-FLANGE-MISALIGNMENT-LIMIT
+  - S-K6-DISSIMILAR-STEEL-WELD-WEAKER-BASE-GOVERNS
+  - S-K6-EFFECTIVE-SLENDERNESS-MAXIMUMS
+  - S-K6-EMBEDDED-BASE-EFFECTIVE-FIXED-POINT
+  - S-K6-EMBEDDED-BASE-MINIMUM-DEPTH
+  - S-K6-EXISTING-RIVET-JOINT-WELDED-EXTENSION-LOAD-SHARING
+  - S-K6-EXPOSED-BASE-ANCHOR-AREA-RATIO
+  - S-K6-EXPOSED-BASE-ANCHOR-HOLE-CLEARANCE
+  - S-K6-EXPOSED-BASE-ANCHOR-LOCKING
+  - S-K6-EXPOSED-BASE-CAPACITY-DESIGN-DS-PENALTY
+  - S-K6-EXPOSED-BASE-SHEAR-CAPACITY-NOT-ADDITIVE
+  - S-K6-FA-H-BEAM-FLANGE-WEB-WIDTH-THICKNESS-LIMITS
+  - S-K6-FATIGUE-CHECK-CYCLE-THRESHOLD
+  - S-K6-FILLER-PLATE-EQUALIZES-THICKNESS
+  - S-K6-FILLET-WELD-ANATOMY
+  - S-K6-FILLET-WELD-DEFINITION-REPEATED-STRESS
+  - S-K6-FILLET-WELD-EFFECTIVE-AREA
+  - S-K6-FILLET-WELD-SIZE-EFFECTIVE-THROAT
+  - S-K6-FIRE-LOAD-FIXED-PLUS-LIVE-COMBUSTIBLES
+  - S-K6-FIREPROOFING-BOARD-ATTACHMENT
+  - S-K6-FIREPROOFING-CAST-IN
+  - S-K6-FIREPROOFING-PLASTER-FINISH
+  - S-K6-FIREPROOFING-REQUIRED-ABOVE-250C
+  - S-K6-FIREPROOFING-SPRAY-APPLIED
+  - S-K6-FRICTION-JOINT-GAP-FILLER-RULE
+  - S-K6-FRICTION-JOINT-SLIP-COEFFICIENT
+  - S-K6-FULL-PENETRATION-WELD-ANATOMY
+  - S-K6-FULL-PENETRATION-WELD-DEFINITION-REPEATED-STRESS
+  - S-K6-FULL-PENETRATION-WELD-EFFECTIVE-THROAT
+  - S-K6-H-BEAM-ALLOWABLE-BENDING-INPUTS
+  - S-K6-H-SECTION-AXIS-LATERAL-BUCKLING
+  - S-K6-H-SECTION-FLANGE-BENDING
+  - S-K6-H-SECTION-STRONG-WEAK-AXIS-RIGIDITY
+  - S-K6-H-SECTION-WEB-SHEAR
+  - S-K6-HIGH-STRENGTH-BOLT-CONNECTION-TYPES
+  - S-K6-HIGH-STRENGTH-BOLT-CONSTRUCTION-ADVANTAGE
+  - S-K6-HIGH-STRENGTH-BOLT-HOLE-CLEARANCE
+  - S-K6-HIGH-STRENGTH-BOLT-MINIMUM-PITCH
+  - S-K6-HIGH-STRENGTH-BOLT-PRODUCT-TYPES
+  - S-K6-HIGH-STRENGTH-BOLT-TENSILE-STRENGTH-RATIO
+  - S-K6-HYSTERESIS-LOOP-AREA-ENERGY-ABSORPTION
+  - S-K6-METAL-TOUCH-SPLICE-DIRECT-TRANSFER-FRACTIONS
+  - S-K6-MINIMIZE-WELD-DISTORTION-AND-RESIDUAL-STRESS
+  - S-K6-MIXED-BUTT-FILLET-WELD-LOAD-SHARING
+  - S-K6-MIXED-WELD-ORDINARY-BOLT-LOAD-SHARING
+  - S-K6-NONSEISMIC-TRUSS-JOINT-MINIMUM-STRENGTH
+  - S-K6-ORDINARY-BOLT-HOLE-CLEARANCE
+  - S-K6-ORDINARY-BOLT-HOLE-DIAMETER-AIJ
+  - S-K6-ORDINARY-BOLT-THREAD-PROJECTION
+  - S-K6-ORDINARY-BOLT-WASHER-UNDER-NUT
+  - S-K6-OVERHEAD-CRANE-SEISMIC-WEIGHT
+  - S-K6-PARTIAL-PENETRATION-WELD-APPLICABILITY
+  - S-K6-SPLICE-FRICTION-JOINT-SELECTION
+  - S-K6-SPLICE-PLATE-TRANSFERS-FORCE
+  - S-K6-STEEL-BEAM-COMMON-SECTIONS
+  - S-K6-STEEL-BEAM-DEFLECTION-CHECK
+  - S-K6-STEEL-BEAM-DEFLECTION-CHECK-OMISSION
+  - S-K6-STEEL-BEAM-DEFLECTION-LIMITS
+  - S-K6-STEEL-BEAM-DEPTH-SPAN-RANGE
+  - S-K6-STEEL-BEAM-DESIGN-ACTIONS
+  - S-K6-STEEL-BUCKLING-MODE-IDENTIFICATION
+  - S-K6-STEEL-DIAMETER-THICKNESS-RATIO-SMALLER-PREFERRED
+  - S-K6-STEEL-END-TAB-RETENTION-CONDITIONS
+  - S-K6-STEEL-F-VALUE-DEFINITION
+  - S-K6-STEEL-FIRE-STRENGTH-FIREPROOFING
+  - S-K6-STEEL-LONG-TERM-BEARING-ALLOWABLE-STRESS
+  - S-K6-STEEL-MATERIAL-STRENGTH-JIS-FACTOR
+  - S-K6-STEEL-STRUCTURE-DEFINITION
+  - S-K6-STEEL-YIELD-RATIO-SMALLER-PREFERRED
+  - S-K6-STEEL-YOUNGS-MODULUS-STRENGTH-INDEPENDENT
+  - S-K6-STEEL-YOUNGS-MODULUS-VS-CONCRETE
+  - S-K6-THROUGH-DIAPHRAGM-CONSTRUCTION-AND-WELD
+  - S-K6-TRUSS-MEMBER-IN-OUT-PLANE-BUCKLING-LENGTH
+  - S-K6-UNIFORM-BRACING-SLENDERNESS-FORMULAS
+  - S-K6-WELD-ALLOWABLE-STRESS-FULL-PENETRATION
+  - S-K6-WELD-ALLOWABLE-STRESS-NONFULL-PENETRATION
+  - S-K6-WELD-BASIC-SYMBOL-SHAPES
+  - S-K6-WELD-BEAD-DEFINITION
+  - S-K6-WELD-CONSTRUCTION-DEFECT-RISK
+  - S-K6-WELD-DEFECT-OVERLAP
+  - S-K6-WELD-FORM-FLEXIBILITY
+  - S-K6-WELD-INSPECTION-DIFFICULTY
+  - S-K6-WELD-NO-CONSTRUCTION-NOISE
+  - S-K6-WELD-NO-SECTION-LOSS-HIGH-RIGIDITY
+  - S-K6-WELD-SYMBOL-ARROW-SIDE-POSITION
+  - S-K6-WELD-TYPE-IDENTIFICATION
+  revisions:
+    S-K6-19-LATERAL-BUCKLING: 1
+    S-K6-BEAM-END-MOMENT-STRENGTH-FLANGE-PLUS-WEB: 1
+    S-K6-BEAM-SECTION-SHAPE-LATERAL-BUCKLING: 1
+    S-K6-BEAM-TYPES-ROLLED-BUILT-UP: 1
+    S-K6-BOLT-EDGE-DISTANCE-TERM-IDENTIFICATION: 1
+    S-K6-BOLT-MAXIMUM-EDGE-DISTANCE: 1
+    S-K6-BOLT-MINIMUM-EDGE-DISTANCE: 1
+    S-K6-BOX-COLUMN-FIELD-BUTT-WELD-WITH-BACKING: 1
+    S-K6-BRACE-BALANCED-DIRECTIONAL-LAYOUT: 1
+    S-K6-BRACE-SECTION-USE-IDENTIFICATION: 1
+    S-K6-BRACED-FRAME-COLUMN-BRACE-CAPACITY-SUM: 1
+    S-K6-BUILT-UP-H-SECTION-FLANGE-WEB-FILLET: 1
+    S-K6-COLUMN-BASE-NOTIFICATION-1456: 1
+    S-K6-COLUMN-BASE-TYPES-FIXITY-ORDER: 1
+    S-K6-DIAPHRAGM-FLANGE-MISALIGNMENT-LIMIT: 1
+    S-K6-DISSIMILAR-STEEL-WELD-WEAKER-BASE-GOVERNS: 1
+    S-K6-EFFECTIVE-SLENDERNESS-MAXIMUMS: 1
+    S-K6-EMBEDDED-BASE-EFFECTIVE-FIXED-POINT: 1
+    S-K6-EMBEDDED-BASE-MINIMUM-DEPTH: 1
+    S-K6-EXISTING-RIVET-JOINT-WELDED-EXTENSION-LOAD-SHARING: 1
+    S-K6-EXPOSED-BASE-ANCHOR-AREA-RATIO: 1
+    S-K6-EXPOSED-BASE-ANCHOR-HOLE-CLEARANCE: 1
+    S-K6-EXPOSED-BASE-ANCHOR-LOCKING: 1
+    S-K6-EXPOSED-BASE-CAPACITY-DESIGN-DS-PENALTY: 1
+    S-K6-EXPOSED-BASE-SHEAR-CAPACITY-NOT-ADDITIVE: 1
+    S-K6-FA-H-BEAM-FLANGE-WEB-WIDTH-THICKNESS-LIMITS: 1
+    S-K6-FATIGUE-CHECK-CYCLE-THRESHOLD: 1
+    S-K6-FILLER-PLATE-EQUALIZES-THICKNESS: 1
+    S-K6-FILLET-WELD-ANATOMY: 1
+    S-K6-FILLET-WELD-DEFINITION-REPEATED-STRESS: 1
+    S-K6-FILLET-WELD-EFFECTIVE-AREA: 1
+    S-K6-FILLET-WELD-SIZE-EFFECTIVE-THROAT: 1
+    S-K6-FIRE-LOAD-FIXED-PLUS-LIVE-COMBUSTIBLES: 1
+    S-K6-FIREPROOFING-BOARD-ATTACHMENT: 1
+    S-K6-FIREPROOFING-CAST-IN: 1
+    S-K6-FIREPROOFING-PLASTER-FINISH: 1
+    S-K6-FIREPROOFING-REQUIRED-ABOVE-250C: 1
+    S-K6-FIREPROOFING-SPRAY-APPLIED: 1
+    S-K6-FRICTION-JOINT-GAP-FILLER-RULE: 1
+    S-K6-FRICTION-JOINT-SLIP-COEFFICIENT: 1
+    S-K6-FULL-PENETRATION-WELD-ANATOMY: 1
+    S-K6-FULL-PENETRATION-WELD-DEFINITION-REPEATED-STRESS: 1
+    S-K6-FULL-PENETRATION-WELD-EFFECTIVE-THROAT: 1
+    S-K6-H-BEAM-ALLOWABLE-BENDING-INPUTS: 1
+    S-K6-H-SECTION-AXIS-LATERAL-BUCKLING: 1
+    S-K6-H-SECTION-FLANGE-BENDING: 1
+    S-K6-H-SECTION-STRONG-WEAK-AXIS-RIGIDITY: 1
+    S-K6-H-SECTION-WEB-SHEAR: 1
+    S-K6-HIGH-STRENGTH-BOLT-CONNECTION-TYPES: 1
+    S-K6-HIGH-STRENGTH-BOLT-CONSTRUCTION-ADVANTAGE: 1
+    S-K6-HIGH-STRENGTH-BOLT-HOLE-CLEARANCE: 1
+    S-K6-HIGH-STRENGTH-BOLT-MINIMUM-PITCH: 1
+    S-K6-HIGH-STRENGTH-BOLT-PRODUCT-TYPES: 1
+    S-K6-HIGH-STRENGTH-BOLT-TENSILE-STRENGTH-RATIO: 1
+    S-K6-HYSTERESIS-LOOP-AREA-ENERGY-ABSORPTION: 1
+    S-K6-METAL-TOUCH-SPLICE-DIRECT-TRANSFER-FRACTIONS: 1
+    S-K6-MINIMIZE-WELD-DISTORTION-AND-RESIDUAL-STRESS: 1
+    S-K6-MIXED-BUTT-FILLET-WELD-LOAD-SHARING: 1
+    S-K6-MIXED-WELD-ORDINARY-BOLT-LOAD-SHARING: 1
+    S-K6-NONSEISMIC-TRUSS-JOINT-MINIMUM-STRENGTH: 1
+    S-K6-ORDINARY-BOLT-HOLE-CLEARANCE: 1
+    S-K6-ORDINARY-BOLT-HOLE-DIAMETER-AIJ: 1
+    S-K6-ORDINARY-BOLT-THREAD-PROJECTION: 1
+    S-K6-ORDINARY-BOLT-WASHER-UNDER-NUT: 1
+    S-K6-OVERHEAD-CRANE-SEISMIC-WEIGHT: 1
+    S-K6-PARTIAL-PENETRATION-WELD-APPLICABILITY: 1
+    S-K6-SPLICE-FRICTION-JOINT-SELECTION: 1
+    S-K6-SPLICE-PLATE-TRANSFERS-FORCE: 1
+    S-K6-STEEL-BEAM-COMMON-SECTIONS: 1
+    S-K6-STEEL-BEAM-DEFLECTION-CHECK: 1
+    S-K6-STEEL-BEAM-DEFLECTION-CHECK-OMISSION: 1
+    S-K6-STEEL-BEAM-DEFLECTION-LIMITS: 1
+    S-K6-STEEL-BEAM-DEPTH-SPAN-RANGE: 1
+    S-K6-STEEL-BEAM-DESIGN-ACTIONS: 1
+    S-K6-STEEL-BUCKLING-MODE-IDENTIFICATION: 1
+    S-K6-STEEL-DIAMETER-THICKNESS-RATIO-SMALLER-PREFERRED: 1
+    S-K6-STEEL-END-TAB-RETENTION-CONDITIONS: 1
+    S-K6-STEEL-F-VALUE-DEFINITION: 1
+    S-K6-STEEL-FIRE-STRENGTH-FIREPROOFING: 1
+    S-K6-STEEL-LONG-TERM-BEARING-ALLOWABLE-STRESS: 1
+    S-K6-STEEL-MATERIAL-STRENGTH-JIS-FACTOR: 1
+    S-K6-STEEL-STRUCTURE-DEFINITION: 1
+    S-K6-STEEL-YIELD-RATIO-SMALLER-PREFERRED: 1
+    S-K6-STEEL-YOUNGS-MODULUS-STRENGTH-INDEPENDENT: 1
+    S-K6-STEEL-YOUNGS-MODULUS-VS-CONCRETE: 1
+    S-K6-THROUGH-DIAPHRAGM-CONSTRUCTION-AND-WELD: 1
+    S-K6-TRUSS-MEMBER-IN-OUT-PLANE-BUCKLING-LENGTH: 1
+    S-K6-UNIFORM-BRACING-SLENDERNESS-FORMULAS: 1
+    S-K6-WELD-ALLOWABLE-STRESS-FULL-PENETRATION: 1
+    S-K6-WELD-ALLOWABLE-STRESS-NONFULL-PENETRATION: 1
+    S-K6-WELD-BASIC-SYMBOL-SHAPES: 1
+    S-K6-WELD-BEAD-DEFINITION: 1
+    S-K6-WELD-CONSTRUCTION-DEFECT-RISK: 1
+    S-K6-WELD-DEFECT-OVERLAP: 1
+    S-K6-WELD-FORM-FLEXIBILITY: 1
+    S-K6-WELD-INSPECTION-DIFFICULTY: 1
+    S-K6-WELD-NO-CONSTRUCTION-NOISE: 1
+    S-K6-WELD-NO-SECTION-LOSS-HIGH-RIGIDITY: 1
+    S-K6-WELD-SYMBOL-ARROW-SIDE-POSITION: 1
+    S-K6-WELD-TYPE-IDENTIFICATION: 1
+  content_sha256: 79fa55b2e60cfb3f5021533e0d2573eb459fc6832221ef0123f56ddd7455a549
+items:
+  S-K6-DISSIMILAR-STEEL-WELD-WEAKER-BASE-GOVERNS:
+    code: structure.steel.dissimilar-steel-weld-weaker-base-governs
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 強度の異なる鋼材の突合せ溶接で、許容応力度を決める側について、正しい結論はどちらか。
+      choices:
+        A: 接合母材のうち強度が小さい側
+        B: 接合母材のうち強度が大きい側
+      answer: A
+      details:
+        rule: 強度の異なる鋼材を突合せ溶接する場合、継目の許容応力度は接合母材のうち強度が小さい側で決める。
+        applicability:
+        - 異種鋼材の突合せ溶接
+        numbers_exceptions: []
+      evidence:
+      - kind: ledger
+        locator: 教材 P159；問題コード 01172、06161
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-BEAM-END-MOMENT-STRENGTH-FLANGE-PLUS-WEB:
+    code: structure.steel.beam-end-moment-strength-flange-plus-web
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 梁端接合部の最大曲げ耐力の構成について、正しい結論はどちらか。
+      choices:
+        A: フランジ部とウェブ部の耐力の差
+        B: フランジ部とウェブ部の耐力の和
+      answer: B
+      details:
+        rule: 梁端接合部の最大曲げ耐力は、梁フランジ接合部と梁ウェブ接合部の耐力の和で算定する。
+        applicability:
+        - 角形鋼管柱とH形鋼梁の梁端接合部
+        numbers_exceptions: []
+      evidence:
+      - kind: ledger
+        locator: 教材 P163；問題コード 03164
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-EXISTING-RIVET-JOINT-WELDED-EXTENSION-LOAD-SHARING:
+    code: structure.steel.existing-rivet-joint-welded-extension-load-sharing
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 既存リベット継手を溶接補強する増築で、追加溶接が負担する荷重について、正しい結論はどちらか。
+      choices:
+        A: 増築部の固定荷重・積載荷重
+        B: 既存部の固定荷重・積載荷重
+      answer: A
+      details:
+        rule: 既存リベットに既存部分の固定荷重を負担させ、追加する溶接に増築部分の固定荷重・積載荷重を負担させる併用継手として設計できる。
+        applicability:
+        - リベット継手を持つ既存建築物への増築
+        - 既存継手周囲を溶接補強
+        numbers_exceptions: []
+      evidence:
+      - kind: ledger
+        locator: 教材 P163；問題コード 18182
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-H-BEAM-ALLOWABLE-BENDING-INPUTS:
+    code: structure.steel.h-beam-allowable-bending-inputs
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: H形断面梁の許容曲げ応力度に使う支点間距離について、正しい結論はどちらか。
+      choices:
+        A: 引張フランジの支点間距離を用いる
+        B: 圧縮フランジの支点間距離を用いる
+      answer: B
+      details:
+        rule: H形断面梁の許容曲げ応力度は、鋼種、断面寸法、曲げモーメント分布、圧縮フランジの支点間距離を用いて算定する。
+        applicability:
+        - H形断面梁
+        numbers_exceptions: []
+      evidence:
+      - kind: ledger
+        locator: 教材 P165；問題コード 05151、23152
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-UNIFORM-BRACING-SLENDERNESS-FORMULAS:
+    code: structure.steel.uniform-bracing-slenderness-formulas
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: SN400B梁へ横補剛を均等配置する場合の弱軸細長比について、正しい結論はどちらか。
+      choices:
+        A: λ≦170＋20nを満たす
+        B: λ≦130＋20nを満たす
+      answer: A
+      details:
+        rule: 梁全長に均等配置する場合、弱軸細長比はSN400Bでλ≤170+20n、SN490Bでλ≤130+20nを満たすよう補剛数nを決める。
+        applicability:
+        - 梁全長に横補剛を均等配置
+        - SN400B又はSN490B
+        numbers_exceptions:
+        - 梁全長に均等配置する場合、弱軸細長比はSN400Bでλ≤170+20n、SN490Bでλ≤130+20nを満たすよう補剛数nを決める。
+        - SN400B又はSN490B
+      evidence:
+      - kind: ledger
+        locator: 教材 P166；問題コード 01153、07183
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-FRICTION-JOINT-GAP-FILLER-RULE:
+    code: structure.steel.friction-joint-gap-filler-rule
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 高力ボルト摩擦接合で肌すきが1mmを超える場合の処理について、正しい結論はどちらか。
+      choices:
+        A: 無処理のフィラーを挿入する
+        B: 両面処理したフィラーを挿入する
+      answer: B
+      details:
+        rule: 肌すき1mm以下は処理不要、1mmを超える場合は両面を摩擦面処理したフィラーを挿入する。フィラー材は母材にかかわらずSN400Aでよい。
+        applicability:
+        - 高力ボルト摩擦接合
+        - 肌すき量が1mm以下又は1mm超
+        numbers_exceptions:
+        - 肌すき1mm以下は処理不要、1mmを超える場合は両面を摩擦面処理したフィラーを挿入する。フィラー材は母材にかかわらずSN400Aでよい。
+        - 肌すき量が1mm以下又は1mm超
+      evidence:
+      - kind: ledger
+        locator: 教材 P168；問題コード 01173、03161、23172
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-NONSEISMIC-TRUSS-JOINT-MINIMUM-STRENGTH:
+    code: structure.steel.nonseismic-truss-joint-minimum-strength
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 地震力を受けないトラス接合部の最低耐力について、正しい結論はどちらか。
+      choices:
+        A: 部材許容耐力の1/2を上回る
+        B: 部材許容耐力の1/3を上回る
+      answer: A
+      details:
+        rule: 接合部は存在応力を伝え、かつ部材の許容耐力の1/2を上回る耐力を持たせる。
+        applicability:
+        - 地震力を受けないトラス部材の接合部
+        numbers_exceptions:
+        - 接合部は存在応力を伝え、かつ部材の許容耐力の1/2を上回る耐力を持たせる。
+      evidence:
+      - kind: ledger
+        locator: 教材 P169；問題コード 18181
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-METAL-TOUCH-SPLICE-DIRECT-TRANSFER-FRACTIONS:
+    code: structure.steel.metal-touch-splice-direct-transfer-fractions
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: メタルタッチ柱継手で接触面から直接伝達できる割合について、正しい結論はどちらか。
+      choices:
+        A: 圧縮力・曲げの各1/2まで
+        B: 圧縮力・曲げの各1/4まで
+      answer: B
+      details:
+        rule: 引張応力のおそれがなく端面を密着させる柱継手では、圧縮力・曲げモーメントの各1/4までを接触面から直接伝達するとみなせる。柱脚では1/2までである。
+        applicability:
+        - 断面に引張応力が生じない
+        - 削り仕上げ等で端面を密着
+        numbers_exceptions:
+        - 引張応力のおそれがなく端面を密着させる柱継手では、圧縮力・曲げモーメントの各1/4までを接触面から直接伝達するとみなせる。柱脚では1/2までである。
+      evidence:
+      - kind: ledger
+        locator: 教材 P172；問題コード 24162
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-MINIMIZE-WELD-DISTORTION-AND-RESIDUAL-STRESS:
+    code: structure.steel.minimize-weld-distortion-and-residual-stress
+    type: principle
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 溶接継手のひずみと残留応力に対する設計方針について、正しい結論はどちらか。
+      choices:
+        A: ひずみと残留応力を小さくする
+        B: ひずみと残留応力を大きくする
+      answer: A
+      details:
+        conclusion: 継手は溶接ひずみと残留応力が小さくなるように設計する。
+        reason: 溶接熱による収縮が変形と残留応力を生じさせるため。
+        conditions:
+        - 溶接継手
+      evidence:
+      - kind: ledger
+        locator: 教材 P172；問題コード 20181
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定理由はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-DIAPHRAGM-FLANGE-MISALIGNMENT-LIMIT:
+    code: structure.steel.diaphragm-flange-misalignment-limit
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 板厚15mm以下のダイアフラムと梁フランジの食い違いについて、正しい結論はどちらか。
+      choices:
+        A: 食い違いを3.0mm以下とする
+        B: 食い違いを1.5mm以下とする
+      answer: B
+      details:
+        rule: 鋼材厚15mm以下では食い違い・仕口ずれを1.5mm以下とし、許容値を超えた場合は所定耐力を持つよう補強する。
+        applicability:
+        - 通しダイアフラムと梁フランジの突合せ溶接
+        - 板厚15mm以下の例
+        numbers_exceptions:
+        - 鋼材厚15mm以下では食い違い・仕口ずれを1.5mm以下とし、許容値を超えた場合は所定耐力を持つよう補強する。
+        - 板厚15mm以下の例
+      evidence:
+      - kind: ledger
+        locator: 教材 P173；問題コード 06162、24174、28152
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-EXPOSED-BASE-CAPACITY-DESIGN-DS-PENALTY:
+    code: structure.steel.exposed-base-capacity-design-ds-penalty
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 露出柱脚が保有耐力接合条件を満たさない場合のDsについて、正しい結論はどちらか。
+      choices:
+        A: 1階のDsを0.05割り増す
+        B: 1階のDsを0.05割り引く
+      answer: A
+      details:
+        rule: 伸び能力のあるアンカーボルトを用いても保有耐力接合条件を満たさない場合は、1階のDsを0.05割増しして保有水平耐力を確認する。条件を満たせば割増し不要である。
+        applicability:
+        - 露出形式柱脚
+        - 保有耐力接合条件を満たすかどうか
+        numbers_exceptions:
+        - 伸び能力のあるアンカーボルトを用いても保有耐力接合条件を満たさない場合は、1階のDsを0.05割増しして保有水平耐力を確認する。条件を満たせば割増し不要である。
+      evidence:
+      - kind: ledger
+        locator: 教材 P174；問題コード 24184
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-BOX-COLUMN-FIELD-BUTT-WELD-WITH-BACKING:
+    code: structure.steel.box-column-field-butt-weld-with-backing
+    type: identification
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 箱形断面柱の上下柱を現場接合する方法について、正しい結論はどちらか。
+      choices:
+        A: 裏当て金を用いてすみ肉溶接する
+        B: 裏当て金を用いて突合せ溶接する
+      answer: B
+      details:
+        definition: 箱形断面の上柱・下柱を現場接合する場合、工場取付けの裏当て金を用いて突合せ溶接する方法がある。
+        distinguishing_conditions:
+        - 引張力を受ける箱形断面柱
+        - 工事現場で上下柱を接合
+        confusable_points:
+        - 裏当て金を用いてすみ肉溶接するとは区別する。
+      evidence:
+      - kind: ledger
+        locator: 教材 P175；問題コード 19154
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定混同注意はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-FIRE-LOAD-FIXED-PLUS-LIVE-COMBUSTIBLES:
+    code: structure.steel.fire-load-fixed-plus-live-combustibles
+    type: identification
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 火災区画の火災荷重を構成する可燃物量について、正しい結論はどちらか。
+      choices:
+        A: 固定可燃物量と積載可燃物量の和
+        B: 固定可燃物量と積載可燃物量の差
+      answer: A
+      details:
+        definition: 火災区画内の固定可燃物量と積載可燃物量を加算して火災荷重とし、単位床面積当たりの発熱量を木材火災に等価な木材重量で表す。
+        distinguishing_conditions:
+        - 耐火設計
+        - 火災区画
+        confusable_points:
+        - 固定可燃物量と積載可燃物量の差とは区別する。
+      evidence:
+      - kind: ledger
+        locator: 教材 P175；問題コード 18165
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定混同注意はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-OVERHEAD-CRANE-SEISMIC-WEIGHT:
+    code: structure.steel.overhead-crane-seismic-weight
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 天井走行クレーンの吊り荷を水平地震荷重に含める扱いについて、正しい結論はどちらか。
+      choices:
+        A: 原則として吊り荷を含める
+        B: 原則として吊り荷を含めない
+      answer: B
+      details:
+        rule: ワイヤロープで吊られた荷には水平地震動が伝わらないと考え、水平地震荷重では吊り荷を原則考慮しない。
+        applicability:
+        - ワイヤロープで吊り荷を支持する天井走行クレーン
+        - 振動解析などで吊り荷の影響を別途評価しない場合
+        numbers_exceptions:
+        - 特殊な設備又は振動解析を行う場合は吊り荷条件を別途確認する。
+        - 建築骨組へ与える水平力の作用高さは今回の外部資料では確認できていない。
+      evidence:
+      - kind: ledger
+        locator: 教材 P175；問題コード 18173
+        supports:
+        - details
+      - kind: external
+        source_class: official
+        title: 労働安全衛生総合研究所 クレーンの耐震安全対策に関する研究・緒論
+        url: https://www.jniosh.johas.go.jp/publication/doc/srr/SRR-No20-1.pdf
+        locator: 3.2–3.3、PDF P3–4
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。確認した外部資料の支持範囲へ設問と暫定内容を狭めた。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-COLUMN-BASE-TYPES-FIXITY-ORDER:
+    code: structure.steel.column-base-types-fixity-order
+    type: identification
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 鉄骨柱脚3形式の固定度の順序について、正しい結論はどちらか。
+      choices:
+        A: 埋込み≧根巻き＞露出
+        B: 露出≧根巻き＞埋込み
+      answer: A
+      details:
+        definition: 鉄骨柱脚には埋込み形式、根巻き形式、露出形式があり、固定度は埋込み形式≧根巻き形式＞露出形式である。
+        distinguishing_conditions:
+        - 鉄骨造柱脚の形式比較
+        - 鉄骨柱とコンクリート基礎の接合形式を識別する場合
+        confusable_points:
+        - 露出≧根巻き＞埋込みとは区別する。
+      evidence:
+      - kind: ledger
+        locator: 教材 P176、P180、P204
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定混同注意はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-H-SECTION-FLANGE-BENDING:
+    code: structure.steel.h-section-flange-bending
+    type: principle
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 曲げを受けるH形鋼のフランジの役割について、正しい結論はどちらか。
+      choices:
+        A: 曲げによるせん断力だけを負担
+        B: 曲げによる引張力・圧縮力を負担
+      answer: B
+      details:
+        conclusion: H形鋼のフランジは曲げモーメントに伴う引張力・圧縮力を負担する。
+        reason: 曲げにより断面内に引張応力と圧縮応力が生じるため。
+        conditions:
+        - 曲げを受けるH形鋼
+      evidence:
+      - kind: ledger
+        locator: 教材 P176、P178、P187、P192；問題コード 20172、23173、26163
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定理由はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-H-SECTION-WEB-SHEAR:
+    code: structure.steel.h-section-web-shear
+    type: principle
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: せん断力を受けるH形鋼のウェブの役割について、正しい結論はどちらか。
+      choices:
+        A: せん断力を負担する
+        B: 軸方向引張力を負担する
+      answer: A
+      details:
+        conclusion: H形鋼のウェブはせん断力を負担する。
+        reason: H形断面ではウェブがせん断力の主な伝達部になるため。
+        conditions:
+        - せん断力を受けるH形鋼
+      evidence:
+      - kind: ledger
+        locator: 教材 P176、P178、P187、P192；問題コード 20172、23173、26163
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定理由はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-HIGH-STRENGTH-BOLT-CONNECTION-TYPES:
+    code: structure.steel.high-strength-bolt-connection-types
+    type: identification
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 高力ボルト接合の形式について、正しい結論はどちらか。
+      choices:
+        A: 摩擦接合と溶接接合
+        B: 摩擦接合と引張接合
+      answer: B
+      details:
+        definition: 高力ボルト接合には摩擦接合と引張接合があり、多くは摩擦接合である。
+        distinguishing_conditions:
+        - 高力ボルト接合の形式を識別する場合
+        confusable_points:
+        - 摩擦接合と溶接接合とは区別する。
+      evidence:
+      - kind: ledger
+        locator: 教材 P176、P179、P184
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定混同注意はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-STEEL-MATERIAL-STRENGTH-JIS-FACTOR:
+    code: structure.steel.material-strength-jis-factor
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 構造用鋼材のせん断に対する材料強度について、正しい結論はどちらか。
+      choices:
+        A: せん断ではF/√3とする
+        B: せん断でもFとする
+      answer: A
+      details:
+        rule: 構造用鋼材の材料強度は、圧縮・引張・曲げでF、せん断でF/√3とし、炭素鋼のJIS規格品は教材表の値を1.1倍する。
+        applicability:
+        - 構造用鋼材の材料強度を扱う場合
+        - 1.1倍は炭素鋼のJIS規格品に適用
+        - SN材
+        - 材料強度の算定
+        numbers_exceptions:
+        - 構造用鋼材の材料強度は、圧縮・引張・曲げでF、せん断でF/√3とし、炭素鋼のJIS規格品は教材表の値を1.1倍する。
+        - 1.1倍は炭素鋼のJIS規格品に適用
+      evidence:
+      - kind: ledger
+        locator: 教材 P159、P177、P182；問題コード 19165、23303
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-WELD-ALLOWABLE-STRESS-FULL-PENETRATION:
+    code: structure.steel.weld-allowable-stress-full-penetration
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 完全溶込み溶接部の長期許容引張応力度について、正しい結論はどちらか。
+      choices:
+        A: 長期引張はF/√3とする
+        B: 長期引張はF/1.5とする
+      answer: B
+      details:
+        rule: 完全溶込み溶接部は、長期の圧縮・引張・曲げをF/1.5、長期せん断をF/(1.5√3)、短期の圧縮・引張・曲げをF、短期せん断をF/√3とする。
+        applicability:
+        - 突合せ溶接のうち完全溶込み溶接
+        - 母材の種類に応じた適切な溶接材料を使用
+        - 突合せ又は完全溶込み溶接
+        - 突合せ完全溶込み溶接
+        - 母材鋼種に応じた溶接材料を使用
+        numbers_exceptions:
+        - 完全溶込み溶接部は、長期の圧縮・引張・曲げをF/1.5、長期せん断をF/(1.5√3)、短期の圧縮・引張・曲げをF、短期せん断をF/√3とする。
+      evidence:
+      - kind: ledger
+        locator: 教材 P159、P177、P182、P212；問題コード 03163、05162、07161、19153、20183、21171、26164、28154、30152
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-WELD-ALLOWABLE-STRESS-NONFULL-PENETRATION:
+    code: structure.steel.weld-allowable-stress-nonfull-penetration
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 完全溶込み以外の溶接部の長期許容せん断応力度について、正しい結論はどちらか。
+      choices:
+        A: 長期せん断はF/(1.5√3)
+        B: 長期せん断はF/1.5
+      answer: A
+      details:
+        rule: 完全溶込み以外の突合せ溶接・隅肉溶接は、長期の圧縮・引張・曲げ・せん断をF/(1.5√3)、短期および材料強度をF/√3とする。
+        applicability:
+        - 完全溶込みではない突合せ溶接、または隅肉溶接
+        - 炭素鋼のJIS規格品は教材表の値を1.1倍
+        - すみ肉溶接ののど断面
+        numbers_exceptions:
+        - 完全溶込み以外の突合せ溶接・隅肉溶接は、長期の圧縮・引張・曲げ・せん断をF/(1.5√3)、短期および材料強度をF/√3とする。
+        - 炭素鋼のJIS規格品は教材表の値を1.1倍
+      evidence:
+      - kind: ledger
+        locator: 教材 P159、P177、P182；問題コード 03163、05162、07161、19153、20183、26164、28154、30152
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-STEEL-DIAMETER-THICKNESS-RATIO-SMALLER-PREFERRED:
+    code: structure.steel.diameter-thickness-ratio-smaller-preferred
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 教材の概略整理における径厚比の大小について、正しい結論はどちらか。
+      choices:
+        A: 径厚比は大きい方がよい
+        B: 径厚比は小さい方がよい
+      answer: B
+      details:
+        rule: 教材の概略整理では、径厚比は小さい方がよい。
+        applicability:
+        - 教材P177の概略整理
+        numbers_exceptions:
+        - 教材の概略整理では、径厚比は小さい方がよい。
+        - 教材P177の概略整理
+      evidence:
+      - kind: ledger
+        locator: 教材 P177
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-STEEL-F-VALUE-DEFINITION:
+    code: structure.steel.f-value-definition
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 基準強度Fを二つの下限値から決める方法について、正しい結論はどちらか。
+      choices:
+        A: 二つの下限値を比べ小さい方
+        B: 二つの下限値を比べ大きい方
+      answer: A
+      details:
+        rule: 基準強度Fは、降伏点の下限値と引張強度の下限値の70%を比較し、小さい方とする。
+        applicability:
+        - 鋼材の基準強度Fを定める場合
+        numbers_exceptions:
+        - 基準強度Fは、降伏点の下限値と引張強度の下限値の70%を比較し、小さい方とする。
+      evidence:
+      - kind: ledger
+        locator: 教材 P177、P182；問題コード 19165、23303
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-STEEL-YIELD-RATIO-SMALLER-PREFERRED:
+    code: structure.steel.yield-ratio-smaller-preferred
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 教材の概略整理における降伏比の大小について、正しい結論はどちらか。
+      choices:
+        A: 降伏比は大きい方がよい
+        B: 降伏比は小さい方がよい
+      answer: B
+      details:
+        rule: 教材の概略整理では、降伏比は小さい方がよい。
+        applicability:
+        - 教材P177の概略整理
+        numbers_exceptions:
+        - 教材の概略整理では、降伏比は小さい方がよい。
+        - 教材P177の概略整理
+      evidence:
+      - kind: ledger
+        locator: 教材 P177
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-STEEL-YOUNGS-MODULUS-STRENGTH-INDEPENDENT:
+    code: structure.steel.youngs-modulus-strength-independent
+    type: principle
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 鋼材強度だけを変えた場合のヤング係数Eについて、正しい結論はどちらか。
+      choices:
+        A: ヤング係数Eは変わらない
+        B: ヤング係数Eは大きくなる
+      answer: A
+      details:
+        conclusion: 鋼材の強度が変わっても、ヤング係数Eは一定である。
+        reason: ヤング係数は弾性域の物性で、鋼材強度とは別に定まるため。
+        conditions:
+        - 鋼種の強度だけを変えて比較する場合
+      evidence:
+      - kind: ledger
+        locator: 教材 P177、P192；問題コード 03173、20161、27173
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定理由はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-STEEL-YOUNGS-MODULUS-VS-CONCRETE:
+    code: structure.steel.youngs-modulus-vs-concrete
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 鋼材とコンクリートのヤング係数の概略比較について、正しい結論はどちらか。
+      choices:
+        A: 鋼材はコンクリートの約1/10
+        B: 鋼材はコンクリートの約10倍
+      answer: B
+      details:
+        rule: 鋼材のヤング係数Eは、コンクリートの約10倍である。
+        applicability:
+        - 教材の概略比較
+        numbers_exceptions:
+        - 鋼材のヤング係数Eは、コンクリートの約10倍である。
+      evidence:
+      - kind: ledger
+        locator: 教材 P177
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-H-SECTION-AXIS-LATERAL-BUCKLING:
+    code: structure.steel.h-section-axis-lateral-buckling
+    type: principle
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: H形鋼の曲げ軸と横座屈の生じやすさについて、正しい結論はどちらか。
+      choices:
+        A: 弱軸曲げの方が横座屈しにくい
+        B: 強軸曲げの方が横座屈しにくい
+      answer: A
+      details:
+        conclusion: 弱軸まわりの曲げでは横座屈しにくく、強軸まわりの曲げでは横座屈しやすい。
+        reason: 強軸曲げでは圧縮フランジが弱軸方向へ変形しやすいため。
+        conditions:
+        - H形鋼が曲げを受ける場合
+      evidence:
+      - kind: ledger
+        locator: 教材 P178、P193；問題コード 04164、07182、21151、25163
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定理由はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-H-SECTION-STRONG-WEAK-AXIS-RIGIDITY:
+    code: structure.steel.h-section-strong-weak-axis-rigidity
+    type: identification
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 同じH形鋼断面の強軸・弱軸まわりの曲がりやすさについて、正しい結論はどちらか。
+      choices:
+        A: 弱軸まわりの方が曲がりにくい
+        B: 強軸まわりの方が曲がりにくい
+      answer: B
+      details:
+        definition: H形鋼は強軸まわりでは曲がりにくく、弱軸まわりでは曲がりやすい。
+        distinguishing_conditions:
+        - 同じH形鋼断面の曲げ方向を比較する場合
+        confusable_points:
+        - 弱軸まわりの方が曲がりにくいとは区別する。
+      evidence:
+      - kind: ledger
+        locator: 教材 P178、P193；問題コード 04164、07182、21151、25163
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定混同注意はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-PARTIAL-PENETRATION-WELD-APPLICABILITY:
+    code: structure.steel.partial-penetration-weld-applicability
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 部分溶込み溶接を用いる応力状態について、正しい結論はどちらか。
+      choices:
+        A: せん断力が作用する箇所
+        B: 繰返し引張力が作用する箇所
+      answer: A
+      details:
+        rule: 部分溶込み溶接はせん断力だけが作用する場合に用い、溶接線直角方向の引張、溶接線を軸とする曲げ、又は繰返し荷重を受ける箇所には用いない。
+        applicability:
+        - 部分溶込み溶接
+        - 作用応力と荷重履歴
+        - 繰返し荷重
+        - 溶接線に直交する引張力
+        - 溶接線を軸とする曲げ
+        numbers_exceptions: []
+      evidence:
+      - kind: ledger
+        locator: 教材 P162、P179、P187、P189；問題コード 05161、22172、24171
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-WELD-NO-SECTION-LOSS-HIGH-RIGIDITY:
+    code: structure.steel.weld-no-section-loss-high-rigidity
+    type: principle
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 溶接接合でボルト孔による断面欠損が生じるかについて、正しい結論はどちらか。
+      choices:
+        A: ボルト孔による断面欠損が生じる
+        B: ボルト孔による断面欠損が生じない
+      answer: B
+      details:
+        conclusion: 溶接接合はボルト接合などに比べて断面欠損がなく、接合部の剛性が最も高い。
+        reason: ボルト孔を設けず母材を連続して接合できるため。
+        conditions:
+        - 溶接接合とボルト接合などを比較する場合
+      evidence:
+      - kind: ledger
+        locator: 教材 P179、P187
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定理由はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-WELD-TYPE-IDENTIFICATION:
+    code: structure.steel.weld-type-identification
+    type: identification
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 教材が整理する溶接接合の種類について、正しい結論はどちらか。
+      choices:
+        A: 突合せ・すみ肉・部分溶込み
+        B: 突合せ・ボルト・部分溶込み
+      answer: A
+      details:
+        definition: 教材では溶接接合を、突合せ溶接（完全溶込み溶接）・すみ肉溶接・部分溶込み溶接に整理する。
+        distinguishing_conditions:
+        - 溶接形式を識別する場合
+        confusable_points:
+        - 突合せ・ボルト・部分溶込みとは区別する。
+      evidence:
+      - kind: ledger
+        locator: 教材 P179、P187；問題コード 24171
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定混同注意はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-EMBEDDED-BASE-MINIMUM-DEPTH:
+    code: structure.steel.embedded-base-minimum-depth
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 所定の構造計算を行わない埋込み柱脚の埋込み深さについて、正しい結論はどちらか。
+      choices:
+        A: 大きい見付け幅の1倍以上
+        B: 大きい見付け幅の2倍以上
+      answer: B
+      details:
+        rule: 所定の構造計算を行わない場合、鉄骨柱の埋込み深さを柱の大きい見付け幅の2倍以上とする。
+        applicability:
+        - 埋込み形式柱脚
+        - 所定の構造計算を行わない場合
+        - 埋込み柱脚
+        numbers_exceptions:
+        - 所定の構造計算を行わない場合、鉄骨柱の埋込み深さを柱の大きい見付け幅の2倍以上とする。
+        - 所定の構造計算を行わない場合
+      evidence:
+      - kind: ledger
+        locator: 教材 P171、P180、P204；問題コード 19161、23164
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-EXPOSED-BASE-ANCHOR-AREA-RATIO:
+    code: structure.steel.exposed-base-anchor-area-ratio
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 所定の構造計算を行わない露出柱脚のアンカーボルト全断面積について、正しい結論はどちらか。
+      choices:
+        A: 柱最下端断面積の20%以上
+        B: 柱最下端断面積の10%以上
+      answer: A
+      details:
+        rule: 所定の構造計算を行わない場合、アンカーボルト全断面積を柱最下端断面積の20%以上とする。
+        applicability:
+        - 露出形式柱脚
+        - 所定の構造計算を行わない場合
+        - 露出柱脚
+        numbers_exceptions:
+        - 所定の構造計算を行わない場合、アンカーボルト全断面積を柱最下端断面積の20%以上とする。
+        - 所定の構造計算を行わない場合
+      evidence:
+      - kind: ledger
+        locator: 教材 P171、P180、P204；問題コード 施工06144、23162、28163
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-EXPOSED-BASE-ANCHOR-HOLE-CLEARANCE:
+    code: structure.steel.exposed-base-anchor-hole-clearance
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 露出柱脚のアンカーボルト孔径について、正しい結論はどちらか。
+      choices:
+        A: 公称軸径＋10mm以下
+        B: 公称軸径＋5mm以下
+      answer: B
+      details:
+        rule: アンカーボルト孔径は、公称軸径に5mm以下を加えた大きさとする。
+        applicability:
+        - 露出形式柱脚
+        - 露出柱脚
+        - 露出形式柱脚のベースプレート孔
+        numbers_exceptions:
+        - アンカーボルト孔径は、公称軸径に5mm以下を加えた大きさとする。
+      evidence:
+      - kind: ledger
+        locator: 教材 P171、P180、P204；問題コード 24163、28163
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-EXPOSED-BASE-SHEAR-CAPACITY-NOT-ADDITIVE:
+    code: structure.steel.exposed-base-shear-capacity-not-additive
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 露出柱脚の二つのせん断耐力の扱いについて、正しい結論はどちらか。
+      choices:
+        A: 二つの耐力の大きい方を用いる
+        B: 二つの耐力を加算して用いる
+      answer: A
+      details:
+        rule: 露出柱脚のせん断耐力は、ベースプレート下面の摩擦耐力とアンカーボルトせん断耐力のうち大きい方とし、両者を加算しない。
+        applicability:
+        - 露出柱脚
+        - 最大又は降伏せん断耐力の評価
+        - 露出柱脚部のせん断力を算定する場合
+        - 露出形式柱脚のせん断耐力算定
+        numbers_exceptions:
+        - 露出柱脚のせん断耐力は、ベースプレート下面の摩擦耐力とアンカーボルトせん断耐力のうち大きい方とし、両者を加算しない。
+      evidence:
+      - kind: ledger
+        locator: 教材 P171、P180、P204；問題コード 02263、07263、18184
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-EMBEDDED-BASE-EFFECTIVE-FIXED-POINT:
+    code: structure.steel.embedded-base-effective-fixed-point
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 埋込み柱脚の構造計算上の固定位置について、正しい結論はどちらか。
+      choices:
+        A: 上端から柱幅の0.5倍下
+        B: 上端から柱幅の1.5倍下
+      answer: B
+      details:
+        rule: 埋込み柱脚は、ベースプレート位置ではなく、基礎コンクリートまたは地中梁上端から柱幅の1.5倍下がった位置を固定点として計算する。
+        applicability:
+        - 埋込み形式柱脚の応力解析
+        - 埋込み形式柱脚
+        - 特別な剛性検討を行わない場合
+        - 埋込み柱脚を構造計算でモデル化する場合
+        numbers_exceptions:
+        - 埋込み柱脚は、ベースプレート位置ではなく、基礎コンクリートまたは地中梁上端から柱幅の1.5倍下がった位置を固定点として計算する。
+        - 特別な剛性検討を行わない場合
+      evidence:
+      - kind: ledger
+        locator: 教材 P172、P180、P204；問題コード 19161、29164
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-EXPOSED-BASE-ANCHOR-LOCKING:
+    code: structure.steel.exposed-base-anchor-locking
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 露出柱脚アンカーボルトのナットの戻り止めについて、正しい結論はどちらか。
+      choices:
+        A: 二重ナット等で戻り止めを行う
+        B: 一重ナットだけで戻り止めを行う
+      answer: A
+      details:
+        rule: アンカーボルトには座金を用い、ナットは二重使用または同等以上の効力を持つ戻り止めを行う。
+        applicability:
+        - 露出形式柱脚
+        - 露出柱脚
+        numbers_exceptions:
+        - アンカーボルトには座金を用い、ナットは二重使用または同等以上の効力を持つ戻り止めを行う。
+      evidence:
+      - kind: ledger
+        locator: 教材 P180、P204；問題コード 23161
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-STEEL-BUCKLING-MODE-IDENTIFICATION:
+    code: structure.steel.buckling-mode-identification
+    type: identification
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 教材が整理する鋼部材の座屈形式について、正しい結論はどちらか。
+      choices:
+        A: 曲げ・ねじれ・せん断座屈
+        B: 曲げ・局部・横座屈
+      answer: B
+      details:
+        definition: 教材では座屈を、曲げ座屈・局部座屈・横座屈の3形式に整理する。
+        distinguishing_conditions:
+        - 鋼部材の座屈形式を識別する場合
+        confusable_points:
+        - 曲げ・ねじれ・せん断座屈とは区別する。
+      evidence:
+      - kind: ledger
+        locator: 教材 P181
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定混同注意はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-STEEL-FIRE-STRENGTH-FIREPROOFING:
+    code: structure.steel.fire-strength-fireproofing
+    type: principle
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 火災時に鋼部材への熱伝達を遅らせる方法について、正しい結論はどちらか。
+      choices:
+        A: 耐火被覆を設ける
+        B: 防錆塗装だけを施す
+      answer: A
+      details:
+        conclusion: 耐火被覆は、火災時に鋼部材への熱伝達を遅らせる。
+        reason: 鋼材の耐力は温度上昇とともに低下するため。
+        conditions:
+        - 火災時の鉄骨部材
+        - 要求耐火時間、部位、鋼材寸法及び認定仕様に応じて被覆を選ぶ場合
+      evidence:
+      - kind: ledger
+        locator: 教材 P181
+        supports:
+        - details
+      - kind: external
+        source_class: official
+        title: 建築研究所 BRI NEWS Vol.47 構造部材の耐火性能
+        url: https://www.kenken.go.jp/japanese/contents/publications/epistura/pdf/47.pdf
+        locator: P3「鋼構造部材の耐火性」
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。確認した外部資料の支持範囲へ設問と暫定内容を狭めた。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-STEEL-STRUCTURE-DEFINITION:
+    code: structure.steel.structure-definition
+    type: identification
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 鉄骨構造の構成について、正しい結論はどちらか。
+      choices:
+        A: 木材を金物や接着剤で組み立てる構造
+        B: 鋼材をボルトや溶接で組み立てる構造
+      answer: B
+      details:
+        definition: 形鋼や角形鋼管などの鋼材を、高力ボルトや溶接で接合して組み立てる構造を鉄骨構造という。
+        distinguishing_conditions:
+        - 鋼材で造られた形鋼・角形鋼管などを用いる場合
+        confusable_points:
+        - 木材を金物や接着剤で組み立てる構造とは区別する。
+      evidence:
+      - kind: ledger
+        locator: 教材 P181
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定混同注意はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-STEEL-LONG-TERM-BEARING-ALLOWABLE-STRESS:
+    code: structure.steel.long-term-bearing-allowable-stress
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 鋼材の長期許容支圧応力度について、正しい結論はどちらか。
+      choices:
+        A: F/1.1である
+        B: F/1.5である
+      answer: A
+      details:
+        rule: 長期許容支圧応力度はF/1.1で、長期許容引張応力度F/1.5より大きい。
+        applicability:
+        - 鋼材の長期支圧を検討する場合
+        numbers_exceptions:
+        - 長期許容支圧応力度はF/1.1で、長期許容引張応力度F/1.5より大きい。
+      evidence:
+      - kind: ledger
+        locator: 教材 P182
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-ORDINARY-BOLT-HOLE-CLEARANCE:
+    code: structure.steel.ordinary-bolt-hole-clearance
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 普通ボルト孔径の原則的な上限について、正しい結論はどちらか。
+      choices:
+        A: 軸径より2mm大きい範囲まで
+        B: 軸径より1mm大きい範囲まで
+      answer: B
+      details:
+        rule: 普通ボルト孔径はボルト径より1mmを超えて大きくできない。ただし径20mm以上で構造耐力上支障がなければ1.5mmまで大きくできる。
+        applicability:
+        - 普通ボルト
+        - 例外はボルト径20mm以上かつ構造耐力上支障なし
+        - 軸径16mm以下、または20mm以上の教材掲載区分
+        numbers_exceptions:
+        - 普通ボルト孔径はボルト径より1mmを超えて大きくできない。ただし径20mm以上で構造耐力上支障がなければ1.5mmまで大きくできる。
+        - 例外はボルト径20mm以上かつ構造耐力上支障なし
+        - 軸径16mm以下、または20mm以上の教材掲載区分
+      evidence:
+      - kind: ledger
+        locator: 教材 P159、P183；問題コード 23302
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-ORDINARY-BOLT-HOLE-DIAMETER-AIJ:
+    code: structure.steel.ordinary-bolt-hole-diameter-aij
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 鋼構造設計規準の普通ボルト孔径について、正しい結論はどちらか。
+      choices:
+        A: ボルト軸径＋0.5mm
+        B: ボルト軸径＋1.0mm
+      answer: A
+      details:
+        rule: 日本建築学会『鋼構造設計規準』では、普通ボルト孔径をボルト軸径+0.5mmとする。
+        applicability:
+        - 日本建築学会『鋼構造設計規準』の値を問う場合
+        numbers_exceptions:
+        - 日本建築学会『鋼構造設計規準』では、普通ボルト孔径をボルト軸径+0.5mmとする。
+      evidence:
+      - kind: ledger
+        locator: 教材 P183；問題コード 23302
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-ORDINARY-BOLT-THREAD-PROJECTION:
+    code: structure.steel.ordinary-bolt-thread-projection
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 普通ボルトのねじ部をナット外へ出す量について、正しい結論はどちらか。
+      choices:
+        A: ナット外へ5〜6山出す
+        B: ナット外へ2〜3山出す
+      answer: B
+      details:
+        rule: ねじ部はナットより外へ2〜3山程度出す。
+        applicability:
+        - 普通ボルトのせん断接合
+        numbers_exceptions:
+        - ねじ部はナットより外へ2〜3山程度出す。
+      evidence:
+      - kind: ledger
+        locator: 教材 P183
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-ORDINARY-BOLT-WASHER-UNDER-NUT:
+    code: structure.steel.ordinary-bolt-washer-under-nut
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 普通ボルト接合の座金位置について、正しい結論はどちらか。
+      choices:
+        A: ナット側に座金を置く
+        B: ボルト頭側だけに座金を置く
+      answer: A
+      details:
+        rule: 普通ボルト接合では、ナット側に必ず座金を用いる。
+        applicability:
+        - 普通ボルトのせん断接合
+        numbers_exceptions: []
+      evidence:
+      - kind: ledger
+        locator: 教材 P183
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-HIGH-STRENGTH-BOLT-CONSTRUCTION-ADVANTAGE:
+    code: structure.steel.high-strength-bolt-construction-advantage
+    type: principle
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 高力ボルト接合が一般的な現場工期へ与える影響について、正しい結論はどちらか。
+      choices:
+        A: 工期を長期化させやすい
+        B: 工期を短縮しやすい
+      answer: B
+      details:
+        conclusion: 高力ボルト接合は施工が比較的容易で、工期を短縮できる。
+        reason: 現場で部材を機械的に締め付けて接合できるため。
+        conditions:
+        - 教材が説明する一般的な高力ボルト接合
+      evidence:
+      - kind: ledger
+        locator: 教材 P184；問題コード 27182
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定理由はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-HIGH-STRENGTH-BOLT-TENSILE-STRENGTH-RATIO:
+    code: structure.steel.high-strength-bolt-tensile-strength-ratio
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 高力ボルトの引張強度を普通ボルトと比べた場合について、正しい結論はどちらか。
+      choices:
+        A: 普通ボルトの2〜3倍
+        B: 普通ボルトの1/2〜1/3
+      answer: A
+      details:
+        rule: 高力ボルトの引張強度は、普通ボルトの2〜3倍である。
+        applicability:
+        - 教材の概略比較
+        numbers_exceptions:
+        - 高力ボルトの引張強度は、普通ボルトの2〜3倍である。
+      evidence:
+      - kind: ledger
+        locator: 教材 P184；問題コード 02162
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-FATIGUE-CHECK-CYCLE-THRESHOLD:
+    code: structure.steel.fatigue-check-cycle-threshold
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 疲労検討を要する繰返し数の閾値について、正しい結論はどちらか。
+      choices:
+        A: 1×10^3回を超える場合
+        B: 1×10^4回を超える場合
+      answer: B
+      details:
+        rule: 1×10^4回を超える繰返し応力を受ける部材・接合部は疲労検討を行う。繰返し応力を受けない場合、又は応力範囲が打切り限界以下なら疲労を考慮しなくてよい。
+        applicability:
+        - 部材又は接合部
+        - 繰返し数が1×10^4回を超えるか
+        - 応力範囲が打切り限界を超えるか
+        - 繰返し応力が1万回を超える場合
+        - 繰返し応力を受けない場合は検討不要
+        numbers_exceptions:
+        - 1×10^4回を超える繰返し応力を受ける部材・接合部は疲労検討を行う。繰返し応力を受けない場合、又は応力範囲が打切り限界以下なら疲労を考慮しなくてよい。
+        - 繰返し数が1×10^4回を超えるか
+        - 応力範囲が打切り限界を超えるか
+        - 繰返し応力が1万回を超える場合
+      evidence:
+      - kind: ledger
+        locator: 教材 P160、P185；問題コード 05152、06184、24161
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-HIGH-STRENGTH-BOLT-PRODUCT-TYPES:
+    code: structure.steel.high-strength-bolt-product-types
+    type: identification
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 高力ボルト製品の種類について、正しい結論はどちらか。
+      choices:
+        A: JIS形とトルシア形
+        B: JIS形と普通ボルト形
+      answer: A
+      details:
+        definition: 高力ボルトには、JIS形高力ボルトとトルシア形高力ボルトがある。
+        distinguishing_conditions:
+        - 高力ボルト製品を識別する場合
+        confusable_points:
+        - JIS形と普通ボルト形とは区別する。
+      evidence:
+      - kind: ledger
+        locator: 教材 P185
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定混同注意はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-FRICTION-JOINT-SLIP-COEFFICIENT:
+    code: structure.steel.friction-joint-slip-coefficient
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 通常面の高力ボルト摩擦接合のすべり係数について、正しい結論はどちらか。
+      choices:
+        A: 通常面は0.40とする
+        B: 通常面は0.45とする
+      answer: B
+      details:
+        rule: 許容耐力算定のすべり係数は摩擦面数によらず0.45で、溶融亜鉛めっきの場合は0.40とする。
+        applicability:
+        - 高力ボルト摩擦接合
+        - 通常面又は溶融亜鉛めっき面
+        - 教材掲載の高力ボルト摩擦接合
+        numbers_exceptions:
+        - 許容耐力算定のすべり係数は摩擦面数によらず0.45で、溶融亜鉛めっきの場合は0.40とする。
+      evidence:
+      - kind: ledger
+        locator: 教材 P160、P161、P186；問題コード 02164、19252
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-BOLT-MINIMUM-EDGE-DISTANCE:
+    code: structure.steel.bolt-minimum-edge-distance
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 軸径20mmでせん断縁の場合の最小縁端距離について、正しい結論はどちらか。
+      choices:
+        A: 34mm以上
+        B: 26mm以上
+      answer: A
+      details:
+        rule: 最小縁端距離は、縁端の種類と軸径に応じて教材表の値以上とする。
+        applicability:
+        - 軸径12/16/20/22/24/27mmの順に、せん断縁・手動ガス切断縁は22/28/34/38/44/49mm
+        - 同じ順に、圧延縁・自動ガス切断縁・のこ引き縁・機械仕上げ縁は18/22/26/28/32/36mm
+        - はしあき距離・へりあき距離の双方
+        - 高力ボルト接合
+        - 縁の加工方法
+        numbers_exceptions:
+        - 最小縁端距離は、縁端の種類と軸径に応じて教材表の値以上とする。
+        - 軸径12/16/20/22/24/27mmの順に、せん断縁・手動ガス切断縁は22/28/34/38/44/49mm
+        - 同じ順に、圧延縁・自動ガス切断縁・のこ引き縁・機械仕上げ縁は18/22/26/28/32/36mm
+      evidence:
+      - kind: ledger
+        locator: 教材 P161、P186；問題コード 01174、06164、25172
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-HIGH-STRENGTH-BOLT-HOLE-CLEARANCE:
+    code: structure.steel.high-strength-bolt-hole-clearance
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 軸径27mm未満の高力ボルト孔径の上限について、正しい結論はどちらか。
+      choices:
+        A: 軸径より3mm大きい範囲まで
+        B: 軸径より2mm大きい範囲まで
+      answer: B
+      details:
+        rule: 高力ボルト孔径は軸径より2mmを超えて大きくできず、軸径27mm以上では3mmまでとする。
+        applicability:
+        - 高力ボルト
+        - 軸径27mm未満又は27mm以上
+        - 施行令第68条の高力ボルト
+        - 軸径24mm以下、または27mm以上の教材掲載区分
+        numbers_exceptions:
+        - 高力ボルト孔径は軸径より2mmを超えて大きくできず、軸径27mm以上では3mmまでとする。
+        - 軸径27mm未満又は27mm以上
+        - 施行令第68条の高力ボルト
+        - 軸径24mm以下、または27mm以上の教材掲載区分
+      evidence:
+      - kind: ledger
+        locator: 教材 P161、P186；問題コード 05164、19251、23171
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-HIGH-STRENGTH-BOLT-MINIMUM-PITCH:
+    code: structure.steel.high-strength-bolt-minimum-pitch
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 高力ボルト孔の最小中心間隔について、正しい結論はどちらか。
+      choices:
+        A: ボルト径の2.5倍以上
+        B: ボルト径の1.5倍以上
+      answer: A
+      details:
+        rule: 高力ボルト孔の中心間隔はボルト径の2.5倍以上とする。M22なら55mm以上である。
+        applicability:
+        - 高力ボルト接合
+        - 普通ボルト・高力ボルトの双方
+        numbers_exceptions:
+        - 高力ボルト孔の中心間隔はボルト径の2.5倍以上とする。M22なら55mm以上である。
+      evidence:
+      - kind: ledger
+        locator: 教材 P161、P186；問題コード 23171
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-BOLT-EDGE-DISTANCE-TERM-IDENTIFICATION:
+    code: structure.steel.bolt-edge-distance-term-identification
+    type: identification
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 荷重方向の材端からボルト中心までの距離名について、正しい結論はどちらか。
+      choices:
+        A: へりあき距離
+        B: はしあき距離
+      answer: B
+      details:
+        definition: 教材図では、荷重方向の材端からボルト中心までをはしあき距離、荷重方向と直交する材縁からボルト中心までをへりあき距離として示す。
+        distinguishing_conditions:
+        - 引張力を受けるボルト接合板の縁端距離を読む場合
+        confusable_points:
+        - へりあき距離とは区別する。
+      evidence:
+      - kind: ledger
+        locator: 教材 P186；問題コード 01174、06164、25172
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定混同注意はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-BOLT-MAXIMUM-EDGE-DISTANCE:
+    code: structure.steel.bolt-maximum-edge-distance
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: ボルト最大縁端距離の材厚に対する上限について、正しい結論はどちらか。
+      choices:
+        A: 材厚の12倍以下
+        B: 材厚の15倍以下
+      answer: A
+      details:
+        rule: 最大縁端距離は、材厚の12倍以下、かつ150mm以下とする。
+        applicability:
+        - ボルト接合の縁端距離の上限を検討する場合
+        numbers_exceptions:
+        - 最大縁端距離は、材厚の12倍以下、かつ150mm以下とする。
+      evidence:
+      - kind: ledger
+        locator: 教材 P186
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-BUILT-UP-H-SECTION-FLANGE-WEB-FILLET:
+    code: structure.steel.built-up-h-section-flange-web-fillet
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 組立H形鋼のフランジとウェブの接合方法について、正しい結論はどちらか。
+      choices:
+        A: フランジとウェブを普通ボルト接合する
+        B: フランジとウェブをすみ肉溶接する
+      answer: B
+      details:
+        rule: 組立H形鋼そのもののフランジとウェブの接合は、隅肉溶接とする。
+        applicability:
+        - 組立H形鋼の断面を製作する場合
+        - 梁端の柱梁接合と混同しない
+        numbers_exceptions: []
+      evidence:
+      - kind: ledger
+        locator: 教材 P187；問題コード 20172、23173、26163
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-WELD-BEAD-DEFINITION:
+    code: structure.steel.weld-bead-definition
+    type: identification
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 溶接ビードの定義について、正しい結論はどちらか。
+      choices:
+        A: 1回のパスでできた溶接部・溶接金属
+        B: 溶接線に沿って行う1回分の溶接操作
+      answer: A
+      details:
+        definition: ビード（溶接ビード）は、1回の溶接パスによって作られる1回分の溶接部又は溶接金属である。
+        distinguishing_conditions:
+        - 溶接用語としてビードとパスを区別する場合
+        confusable_points:
+        - パスは溶接線に沿って行う1回分の溶接操作であり、その結果としてできるビードとは区別する。
+      evidence:
+      - kind: ledger
+        locator: 教材 P187
+        supports:
+        - question
+      - kind: external
+        source_class: explanation
+        title: 日本溶接協会 溶接管理技術者2級電子化教材
+        url: https://www-it.jwes.or.jp/we2/pageindices/index179.html
+        locator: 179/332（冊子P177）、第3章3.7.1〔5〕肉盛溶接、ビードの括弧内定義
+        supports:
+        - answer
+        - details
+      - kind: external
+        source_class: explanation
+        title: JIS Z 3001-7:2018 溶接用語―第7部：アーク溶接 掲載ページ
+        url: https://kikakurui.com/z3/Z3001-7-2018-01.html
+        locator: 4.3.1、用語番号73101「パス」及び73102「ビード」
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 外部資料でビードとパスの定義を照合し、設問を一つの判断軸に絞って誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-WELD-CONSTRUCTION-DEFECT-RISK:
+    code: structure.steel.weld-construction-defect-risk
+    type: principle
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 施工品質が不良な溶接接合の欠陥について、正しい結論はどちらか。
+      choices:
+        A: 施工不良でも欠陥が生じにくい
+        B: 施工不良で欠陥が生じやすい
+      answer: B
+      details:
+        conclusion: 溶接接合は施工不良による欠陥が生じやすい。
+        reason: 溶接条件や施工精度が溶込みと融合状態に影響するため。
+        conditions:
+        - 施工品質が不良な溶接接合
+      evidence:
+      - kind: ledger
+        locator: 教材 P187
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定理由はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-WELD-FORM-FLEXIBILITY:
+    code: structure.steel.weld-form-flexibility
+    type: principle
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 溶接接合で採れる接合形式について、正しい結論はどちらか。
+      choices:
+        A: 自由な接合形式をとりやすい
+        B: 接合形式の自由度が低い
+      answer: A
+      details:
+        conclusion: 溶接接合は形式が簡単で、自由な接合形式をとれる。
+        reason: 部材を溶着金属で直接一体化できるため。
+        conditions:
+        - 教材が説明する一般的な溶接接合
+      evidence:
+      - kind: ledger
+        locator: 教材 P187
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定理由はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-WELD-INSPECTION-DIFFICULTY:
+    code: structure.steel.weld-inspection-difficulty
+    type: principle
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 溶接接合部の検査について、正しい結論はどちらか。
+      choices:
+        A: 接合箇所の検査が容易である
+        B: 接合箇所の検査が難しい
+      answer: B
+      details:
+        conclusion: 溶接接合は接合箇所の検査が難しい。
+        reason: 接合内部の欠陥は外観だけでは確認しにくいため。
+        conditions:
+        - 溶接接合部を検査する場合
+      evidence:
+      - kind: ledger
+        locator: 教材 P187
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定理由はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-WELD-NO-CONSTRUCTION-NOISE:
+    code: structure.steel.weld-no-construction-noise
+    type: principle
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: アーク溶接そのものから生じる騒音について、正しい結論はどちらか。
+      choices:
+        A: 溶接法・条件によらず騒音は生じない
+        B: 溶接法・条件によって騒音が生じる
+      answer: B
+      details:
+        conclusion: 溶接施工で騒音がまったく発生しないとは一律にいえない。
+        reason: アーク形態の変化などにより音が発生し、溶接法・条件で音の大きさが変わるため。
+        conditions:
+        - アーク溶接
+        - 溶接法、電流波形その他の施工条件によって異なる
+      evidence:
+      - kind: ledger
+        locator: 教材 P187
+        supports:
+        - question
+      - kind: external
+        source_class: official
+        title: 米国労働安全衛生庁 Hot Work - Welding
+        url: https://www.osha.gov/etools/oil-and-gas/general-safety/hot-work-welding
+        locator: Welding, cutting, brazing, and grinding hazards（noiseへの曝露）
+        supports:
+        - answer
+        - details
+      - kind: external
+        source_class: explanation
+        title: 日本溶接協会 Q-07-01-16 パルス溶接の音
+        url: https://www-it.jwes.or.jp/qa/details.jsp?pg_no=0070010160
+        locator: 本文第1〜3段落（アーク形態変化による音発生と条件差）
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 既存台帳の無騒音という記載を外部資料と照合し、設問を騒音の発生可能性へ狭めて誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-STEEL-END-TAB-RETENTION-CONDITIONS:
+    code: structure.steel.end-tab-retention-conditions
+    type: rule
+    revision_history:
+    - revision: 1
+      state: pending
+      prompt: 教材文の「すべてに該当しない」の論理について、正しい結論はどちらか。
+      choices:
+        A: 三条件のどれにも該当しない
+        B: 全条件を同時には満たさない
+      answer: null
+      details:
+        rule: 施工上支障がなければ、塑性ヒンジを形成しない梁端接合部、400N/mm²級梁材の接合部、又はH形断面柱との接合部では、鋼製エンドタブを原則切断しなくてよい。
+        applicability:
+        - 列挙条件のいずれかに該当
+        - 後工程に問題を生じない
+        - 金属疲労を生じさせる荷重が作用しない
+        - 応力伝達上の支障がない
+        - 『すべてに該当しない』が『三条件のいずれにも該当しない』か『全条件を同時に満たさない』か、教材文だけでは判定困難
+        numbers_exceptions:
+        - 施工上支障がなければ、塑性ヒンジを形成しない梁端接合部、400N/mm²級梁材の接合部、又はH形断面柱との接合部では、鋼製エンドタブを原則切断しなくてよい。
+        - 『すべてに該当しない』が『三条件のいずれにも該当しない』か『全条件を同時に満たさない』か、教材文だけでは判定困難
+      evidence:
+      - kind: ledger
+        locator: 教材 P162、P188；問題コード 28151
+        supports:
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-FULL-PENETRATION-WELD-ANATOMY:
+    code: structure.steel.full-penetration-weld-anatomy
+    type: identification
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 完全溶込み溶接断面の用語群について、正しい結論はどちらか。
+      choices:
+        A: ピッチ・ゲージ・縁端距離
+        B: 開先・ルート面・有効のど厚
+      answer: B
+      details:
+        definition: 教材図は、開先・開先角度・ルート面・ルート間隔・溶込み深さ・有効のど厚・余盛・裏あて金を完全溶込み溶接断面の各部として示す。
+        distinguishing_conditions:
+        - 突合せ継手またはT継手の断面図を識別する場合
+        confusable_points:
+        - ピッチ・ゲージ・縁端距離とは区別する。
+      evidence:
+      - kind: ledger
+        locator: 教材 P188
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定混同注意はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-FULL-PENETRATION-WELD-DEFINITION-REPEATED-STRESS:
+    code: structure.steel.full-penetration-weld-definition-repeated-stress
+    type: identification
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 完全溶込み溶接の繰返し応力部への適用について、正しい結論はどちらか。
+      choices:
+        A: 繰返し応力の伝達部に使用できる
+        B: 繰返し応力の伝達部に使用できない
+      answer: A
+      details:
+        definition: 完全溶込み溶接は、母材端部に開先を設けて溶着金属で満たし一体化する溶接で、繰返し応力を伝達する部分に使用できる。
+        distinguishing_conditions:
+        - 突合せ溶接（完全溶込み溶接）
+        confusable_points:
+        - 繰返し応力の伝達部に使用できないとは区別する。
+      evidence:
+      - kind: ledger
+        locator: 教材 P188
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定混同注意はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-FULL-PENETRATION-WELD-EFFECTIVE-THROAT:
+    code: structure.steel.full-penetration-weld-effective-throat
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 板厚が異なる母材の完全溶込み溶接の有効のど厚について、正しい結論はどちらか。
+      choices:
+        A: 厚い方の母材板厚
+        B: 薄い方の母材板厚
+      answer: B
+      details:
+        rule: 完全溶込み溶接の有効のど厚は、薄い方の板厚とする。
+        applicability:
+        - 厚さの異なる母材を完全溶込み溶接する場合
+        numbers_exceptions: []
+      evidence:
+      - kind: ledger
+        locator: 教材 P188
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-FILLET-WELD-EFFECTIVE-AREA:
+    code: structure.steel.fillet-weld-effective-area
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: すみ肉溶接部の有効面積の求め方について、正しい結論はどちらか。
+      choices:
+        A: 有効長さ×有効のど厚
+        B: 有効長さ＋有効のど厚
+      answer: A
+      details:
+        rule: すみ肉溶接部の有効面積は、有効長さと有効のど厚の積で求める。
+        applicability:
+        - すみ肉溶接部
+        - すみ肉溶接の耐力計算
+        numbers_exceptions: []
+      evidence:
+      - kind: ledger
+        locator: 教材 P162、P189；問題コード 22174、25193
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-FILLET-WELD-ANATOMY:
+    code: structure.steel.fillet-weld-anatomy
+    type: identification
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: すみ肉溶接断面の用語群について、正しい結論はどちらか。
+      choices:
+        A: 開先角度・ルート面・裏あて金
+        B: 脚長・サイズ・有効のど厚
+      answer: B
+      details:
+        definition: 教材図は、脚長・サイズ・溶込み深さ・有効のど厚・余盛をすみ肉溶接断面の各部として示す。
+        distinguishing_conditions:
+        - すみ肉溶接断面図を識別する場合
+        confusable_points:
+        - 開先角度・ルート面・裏あて金とは区別する。
+      evidence:
+      - kind: ledger
+        locator: 教材 P189
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定混同注意はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-FILLET-WELD-DEFINITION-REPEATED-STRESS:
+    code: structure.steel.fillet-weld-definition-repeated-stress
+    type: identification
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: すみ肉溶接で溶着金属を満たす位置について、正しい結論はどちらか。
+      choices:
+        A: 母材の隅角部を溶着金属で満たす
+        B: 母材端部の開先を溶着金属で満たす
+      answer: A
+      details:
+        definition: すみ肉溶接は母材の隅角部を溶着金属で満たして一体化する溶接で、繰返し応力を伝達する部分に使用できる。
+        distinguishing_conditions:
+        - すみ肉溶接
+        confusable_points:
+        - 母材端部の開先を溶着金属で満たすとは区別する。
+      evidence:
+      - kind: ledger
+        locator: 教材 P189
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定混同注意はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-FILLET-WELD-SIZE-EFFECTIVE-THROAT:
+    code: structure.steel.fillet-weld-size-effective-throat
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 45度すみ肉溶接の有効のど厚について、正しい結論はどちらか。
+      choices:
+        A: サイズの1.0倍
+        B: サイズの0.7倍
+      answer: B
+      details:
+        rule: すみ肉溶接のサイズは薄い方の母材板厚以下とし、有効のど厚はサイズの0.7倍とする。
+        applicability:
+        - 教材図の45度すみ肉溶接
+        numbers_exceptions:
+        - すみ肉溶接のサイズは薄い方の母材板厚以下とし、有効のど厚はサイズの0.7倍とする。
+        - 教材図の45度すみ肉溶接
+      evidence:
+      - kind: ledger
+        locator: 教材 P189
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-WELD-DEFECT-OVERLAP:
+    code: structure.steel.weld-defect-overlap
+    type: identification
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 溶接欠陥オーバーラップの状態について、正しい結論はどちらか。
+      choices:
+        A: 母材に融合せず表面で重なる欠陥
+        B: 母材表面が溝状にえぐれる欠陥
+      answer: A
+      details:
+        definition: オーバーラップは、溶接金属の上端が母材に融合せず重なった表面欠陥である。
+        distinguishing_conditions:
+        - 溶接金属が母材へ融合せず表面で重なる場合
+        confusable_points:
+        - 母材表面が溝状にえぐれる欠陥とは区別する。
+      evidence:
+      - kind: ledger
+        locator: 教材 P190
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定混同注意はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-WELD-SYMBOL-ARROW-SIDE-POSITION:
+    code: structure.steel.weld-symbol-arrow-side-position
+    type: identification
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 矢印側の溶接を示す基本記号の位置について、正しい結論はどちらか。
+      choices:
+        A: 基本記号を基準線の上側に描く
+        B: 基本記号を基準線の下側に描く
+      answer: B
+      details:
+        definition: 溶接箇所が矢印側・手前側なら基本記号を基準線の下側に、反対側・向こう側なら上側に描く。
+        distinguishing_conditions:
+        - 溶接記号の施工側を読み取る場合
+        - JIS溶接記号の基線と矢の側を読む場合
+        confusable_points:
+        - 基本記号を基準線の上側に描くとは区別する。
+      evidence:
+      - kind: ledger
+        locator: 教材 P190、P213；問題コード 21171
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定混同注意はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-MIXED-BUTT-FILLET-WELD-LOAD-SHARING:
+    code: structure.steel.mixed-butt-fillet-weld-load-sharing
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 突合せ溶接とすみ肉溶接を混用する場合の応力分担について、正しい結論はどちらか。
+      choices:
+        A: 各溶接の許容耐力に応じて分担
+        B: 突合せ溶接側へ全応力を集中
+      answer: A
+      details:
+        rule: 突合せ溶接とすみ肉溶接を混用する場合は、それぞれの許容耐力に応じて応力を分担する。
+        applicability:
+        - 突合せ溶接とすみ肉溶接を同じ接合部で併用する場合
+        numbers_exceptions: []
+      evidence:
+      - kind: ledger
+        locator: 教材 P191
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-MIXED-WELD-ORDINARY-BOLT-LOAD-SHARING:
+    code: structure.steel.mixed-weld-ordinary-bolt-load-sharing
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 溶接と普通ボルトを混用する場合の応力負担について、正しい結論はどちらか。
+      choices:
+        A: 全応力を普通ボルトに負担させる
+        B: 全応力を溶接に負担させる
+      answer: B
+      details:
+        rule: 溶接と普通ボルトを混用する接合では、全応力を溶接が負担するものとする。
+        applicability:
+        - 溶接接合と普通ボルト接合の混用
+        numbers_exceptions: []
+      evidence:
+      - kind: ledger
+        locator: 教材 P191；問題コード 05163
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-STEEL-BEAM-COMMON-SECTIONS:
+    code: structure.steel.beam-common-sections
+    type: identification
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 教材図が梁によく使う形鋼として示す組合せについて、正しい結論はどちらか。
+      choices:
+        A: H形鋼・溝形鋼・等辺山形鋼
+        B: 丸鋼・平鋼・異形鉄筋
+      answer: A
+      details:
+        definition: 教材図では、梁によく使う形鋼としてH形鋼・溝形鋼・等辺山形鋼を示す。
+        distinguishing_conditions:
+        - 梁に用いる形鋼を識別する場合
+        confusable_points:
+        - 丸鋼・平鋼・異形鉄筋とは区別する。
+      evidence:
+      - kind: ledger
+        locator: 教材 P192
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定混同注意はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-STEEL-BEAM-DEFLECTION-CHECK:
+    code: structure.steel.beam-deflection-check
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 省略条件に該当しない鉄骨梁の検討項目について、正しい結論はどちらか。
+      choices:
+        A: 応力を検討し、たわみは省く
+        B: 応力とたわみを検討する
+      answer: B
+      details:
+        rule: 鉄骨梁は応力だけでなく、たわみも検討する。
+        applicability:
+        - たわみ検討を省略できる条件に該当しない鉄骨梁
+        numbers_exceptions:
+        - たわみ検討を省略できる条件に該当しない鉄骨梁
+      evidence:
+      - kind: ledger
+        locator: 教材 P192
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-STEEL-BEAM-DEFLECTION-CHECK-OMISSION:
+    code: structure.steel.beam-deflection-check-omission
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 鉄骨梁のたわみ検討を省略できる梁せいについて、正しい結論はどちらか。
+      choices:
+        A: 梁せいが有効長さの1/15超
+        B: 梁せいが有効長さの1/20超
+      answer: A
+      details:
+        rule: 梁せいが有効長さの1/15を超える場合は、たわみの検討を省略できる。
+        applicability:
+        - 梁せい > 有効長さ/15
+        numbers_exceptions:
+        - 梁せいが有効長さの1/15を超える場合は、たわみの検討を省略できる。
+        - 梁せい > 有効長さ/15
+      evidence:
+      - kind: ledger
+        locator: 教材 P192；問題コード 02173、26304
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-STEEL-BEAM-DEFLECTION-LIMITS:
+    code: structure.steel.beam-deflection-limits
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 両端支持梁のたわみ上限について、正しい結論はどちらか。
+      choices:
+        A: 両端支持梁はL/250以下
+        B: 両端支持梁はL/300以下
+      answer: B
+      details:
+        rule: 両端支持梁のたわみはスパンの1/300以下、片持ち梁はスパンの1/250以下とする。
+        applicability:
+        - 両端支持梁はL/300以下
+        - 片持ち梁はL/250以下
+        numbers_exceptions:
+        - 両端支持梁のたわみはスパンの1/300以下、片持ち梁はスパンの1/250以下とする。
+        - 両端支持梁はL/300以下
+        - 片持ち梁はL/250以下
+      evidence:
+      - kind: ledger
+        locator: 教材 P192；問題コード 05174
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-STEEL-BEAM-DEPTH-SPAN-RANGE:
+    code: structure.steel.beam-depth-span-range
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 一般的な鉄骨構造の梁せいとスパンの関係について、正しい結論はどちらか。
+      choices:
+        A: スパンの1/15〜1/30程度
+        B: スパンの1/5〜1/10程度
+      answer: A
+      details:
+        rule: 一般的な鉄骨構造の梁せいは、スパンの1/15〜1/30程度である。
+        applicability:
+        - 一般的な鉄骨構造の概略寸法
+        numbers_exceptions:
+        - 一般的な鉄骨構造の梁せいは、スパンの1/15〜1/30程度である。
+      evidence:
+      - kind: ledger
+        locator: 教材 P192；問題コード 28173
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-STEEL-BEAM-DESIGN-ACTIONS:
+    code: structure.steel.beam-design-actions
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 鉄骨梁に生じるものとして計算する設計用応力について、正しい結論はどちらか。
+      choices:
+        A: 軸方向力とねじりモーメント
+        B: 曲げモーメントとせん断力
+      answer: B
+      details:
+        rule: 鉄骨梁は、曲げモーメントとせん断力が生じるものとして計算する。
+        applicability:
+        - 鉄骨梁の応力を計算する場合
+        numbers_exceptions: []
+      evidence:
+      - kind: ledger
+        locator: 教材 P192
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-EFFECTIVE-SLENDERNESS-MAXIMUMS:
+    code: structure.steel.effective-slenderness-maximums
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 圧縮力を負担する主要柱の有効細長比上限について、正しい結論はどちらか。
+      choices:
+        A: 主要柱は200以下
+        B: 主要柱は250以下
+      answer: A
+      details:
+        rule: 圧縮力を負担する主要柱は200以下、柱以外は250以下、ラチス材は160以下とする。
+        applicability:
+        - 圧縮力を負担する構造耐力上主要な部材
+        - 柱は200以下
+        - 柱以外は250以下
+        - ラチス材は160以下
+        numbers_exceptions:
+        - 圧縮力を負担する主要柱は200以下、柱以外は250以下、ラチス材は160以下とする。
+        - 柱は200以下
+        - 柱以外は250以下
+        - ラチス材は160以下
+      evidence:
+      - kind: ledger
+        locator: 教材 P164、P193；問題コード 01152、04163、05172、07184、18162、22152、23153、28172、29254、29302
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-19-LATERAL-BUCKLING:
+    code: structure.steel.beam-lateral-buckling
+    type: principle
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 開断面梁に生じる横座屈時の圧縮フランジの変形について、正しい結論はどちらか。
+      choices:
+        A: 圧縮フランジが面内へはらみ出す
+        B: 圧縮フランジが面外へはらみ出す
+      answer: B
+      details:
+        conclusion: H形鋼などの開断面梁が曲げを受けると、ねじれを伴って圧縮フランジが面外にはらみ出す横座屈を生じる。スパンが長く、梁幅に対して梁せいが大きいほど生じやすい。
+        reason: 圧縮フランジの面外変形と断面のねじれが連成するため。
+        conditions:
+        - H形鋼などの開断面梁
+        - 曲げを受ける場合
+        - スパンが長い場合
+        - 梁幅に対して梁せいが大きい場合
+      evidence:
+      - kind: ledger
+        locator: 教材 P165、P194；問題コード 02172
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定理由はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-BEAM-SECTION-SHAPE-LATERAL-BUCKLING:
+    code: structure.steel.beam-section-shape-lateral-buckling
+    type: identification
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: H形鋼と箱形鋼の横座屈の生じやすさについて、正しい結論はどちらか。
+      choices:
+        A: 箱形鋼よりH形鋼が生じやすい
+        B: H形鋼より箱形鋼が生じやすい
+      answer: A
+      details:
+        definition: 教材図ではH形鋼・I形鋼は横座屈しやすく、箱形鋼は横座屈しにくい。
+        distinguishing_conditions:
+        - H形鋼・I形鋼と箱形鋼を比較する場合
+        confusable_points:
+        - H形鋼より箱形鋼が生じやすいとは区別する。
+      evidence:
+      - kind: ledger
+        locator: 教材 P194；問題コード 03174
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定混同注意はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-FA-H-BEAM-FLANGE-WEB-WIDTH-THICKNESS-LIMITS:
+    code: structure.steel.fa-h-beam-flange-web-width-thickness-limits
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: FA材H形鋼梁の幅厚比上限をフランジとウェブで比べる場合について、正しい結論はどちらか。
+      choices:
+        A: フランジの上限が大きい
+        B: ウェブの上限が大きい
+      answer: B
+      details:
+        rule: FA材の炭素鋼H形鋼梁では、フランジ上限は9√(235/F)、ウェブ上限は60√(235/F)で、ウェブの上限が大きい。
+        applicability:
+        - 炭素鋼H形鋼梁
+        - 部材種別FA
+        - 同じH形鋼のフランジとウェブを比較する場合
+        numbers_exceptions:
+        - FA材の炭素鋼H形鋼梁では、フランジ上限は9√(235/F)、ウェブ上限は60√(235/F)で、ウェブの上限が大きい。
+      evidence:
+      - kind: ledger
+        locator: 教材 P167、P195；問題コード 01162、01163、05171、05173、06181、20165、24151、27162、30161
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-BEAM-TYPES-ROLLED-BUILT-UP:
+    code: structure.steel.beam-types-rolled-built-up
+    type: identification
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: H形鋼梁の製作形式による分類について、正しい結論はどちらか。
+      choices:
+        A: H形鋼梁は形鋼梁に分類する
+        B: H形鋼梁は組立梁に分類する
+      answer: A
+      details:
+        definition: 形鋼梁にはH形鋼梁・I形鋼梁があり、組立梁にはトラス梁・ラチス梁がある。
+        distinguishing_conditions:
+        - 梁を製作形式で識別する場合
+        confusable_points:
+        - H形鋼梁は組立梁に分類するとは区別する。
+      evidence:
+      - kind: ledger
+        locator: 教材 P196
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定混同注意はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-FILLER-PLATE-EQUALIZES-THICKNESS:
+    code: structure.steel.filler-plate-equalizes-thickness
+    type: identification
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: フィラープレートの用途について、正しい結論はどちらか。
+      choices:
+        A: 部材応力を直接伝える添え板
+        B: 板厚差の隙間を埋める鋼板
+      answer: B
+      details:
+        definition: フィラープレートは、ボルト・高力ボルト接合で接合板厚が異なるとき、板厚をそろえるため隙間へ入れる鋼板である。
+        distinguishing_conditions:
+        - 接合する鋼板の板厚が異なるボルト接合部
+        confusable_points:
+        - 部材応力を直接伝える添え板とは区別する。
+      evidence:
+      - kind: ledger
+        locator: 教材 P197；問題コード 03161、23172
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定混同注意はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-SPLICE-PLATE-TRANSFERS-FORCE:
+    code: structure.steel.splice-plate-transfers-force
+    type: identification
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: スプライスプレートの用途について、正しい結論はどちらか。
+      choices:
+        A: 部材に添えて応力を伝える鋼板
+        B: 板厚差の隙間を埋める鋼板
+      answer: A
+      details:
+        definition: スプライスプレートは、H形鋼などの柱・梁をボルト接合するとき、応力を伝達するため部材に添える接合用鋼板である。
+        distinguishing_conditions:
+        - 柱・梁などのボルト継手
+        confusable_points:
+        - 板厚差の隙間を埋める鋼板とは区別する。
+      evidence:
+      - kind: ledger
+        locator: 教材 P197；問題コード 01173
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定混同注意はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-BRACE-BALANCED-DIRECTIONAL-LAYOUT:
+    code: structure.steel.brace-balanced-directional-layout
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 建物のブレースの方向別配置について、正しい結論はどちらか。
+      choices:
+        A: 一方向へ偏らせて配置する
+        B: 各方向へ釣り合いよく配置する
+      answer: B
+      details:
+        rule: ブレースは、すべての方向に釣り合いよく配置する。
+        applicability:
+        - 建物のブレース配置計画
+        numbers_exceptions: []
+      evidence:
+      - kind: ledger
+        locator: 教材 P199；問題コード 06182
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-BRACE-SECTION-USE-IDENTIFICATION:
+    code: structure.steel.brace-section-use-identification
+    type: identification
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 教材図の高層・超高層建築物のブレース鋼材例について、正しい結論はどちらか。
+      choices:
+        A: H形鋼を用いる例
+        B: 鉄筋バーを用いる例
+      answer: A
+      details:
+        definition: 教材図では、軽微な建築物に鉄筋バー、一般的な建築物に鋼管・山形鋼、高層・超高層建築物にH形鋼を用いる例を示している。
+        distinguishing_conditions:
+        - 教材図による代表的な使用例であり、絶対的な適用規定ではない
+        confusable_points:
+        - 鉄筋バーを用いる例とは区別する。
+      evidence:
+      - kind: ledger
+        locator: 教材 P199
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定混同注意はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-BRACED-FRAME-COLUMN-BRACE-CAPACITY-SUM:
+    code: structure.steel.braced-frame-column-brace-capacity-sum
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: X形筋かい付きラーメンの同一変形時の水平耐力について、正しい結論はどちらか。
+      choices:
+        A: ラーメンと筋かいの各耐力を合計する
+        B: 筋かいの耐力だけを用いる
+      answer: A
+      details:
+        rule: X形筋かい付きラーメンでは、同一の層間変形時におけるラーメンと筋かいの各水平耐力を合計して骨組の水平耐力とする。
+        applicability:
+        - X形筋かい付きラーメン
+        - ラーメンと筋かいを同一の層間変形及び崩壊状態で評価する場合
+        numbers_exceptions:
+        - 圧縮筋かいの座屈後挙動は採用する解析モデルに応じて評価する。
+        - K形筋かい、基礎浮上り等は別途崩壊機構を確認する。
+      evidence:
+      - kind: ledger
+        locator: 教材 P203
+        supports:
+        - details
+      - kind: external
+        source_class: official
+        title: 大阪府 構造計算適合性判定 指摘事例集 各種構造の設計1
+        url: https://www.pref.osaka.lg.jp/documents/35034/05_a41kakusyukouzounosekkei_1.pdf
+        locator: 4.1.3、P4.1.3-2–3、図4
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。確認した外部資料の支持範囲へ設問と暫定内容を狭めた。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-COLUMN-BASE-NOTIFICATION-1456:
+    code: structure.steel.column-base-notification-1456
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 鉄骨造柱脚の仕様を定める告示番号について、正しい結論はどちらか。
+      choices:
+        A: 平成12年建設省告示第1399号
+        B: 平成12年建設省告示第1456号
+      answer: B
+      details:
+        rule: 鉄骨造柱脚の仕様は、平成12年建設省告示第1456号「鉄骨造の柱の脚部を基礎に緊結する構造方法の基準を定める件」で規定される。
+        applicability:
+        - 鉄骨造柱脚の仕様規定を確認する場合
+        numbers_exceptions:
+        - 鉄骨造柱脚の仕様は、平成12年建設省告示第1456号「鉄骨造の柱の脚部を基礎に緊結する構造方法の基準を定める件」で規定される。
+      evidence:
+      - kind: ledger
+        locator: 教材 P204
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-FIREPROOFING-BOARD-ATTACHMENT:
+    code: structure.steel.fireproofing-board-attachment
+    type: identification
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 張付け耐火被覆に用いる材料例について、正しい結論はどちらか。
+      choices:
+        A: ALC板やけい酸カルシウム板
+        B: 岩綿や吹付けロックウール
+      answer: A
+      details:
+        definition: 張付け耐火被覆はALC板やけい酸カルシウム板などを金物・接着剤で取り付ける。作業能率と品質管理に優れるが、破損や割付けによるロスが生じる。
+        distinguishing_conditions:
+        - 成形板を用いる張付け耐火被覆
+        confusable_points:
+        - 岩綿や吹付けロックウールとは区別する。
+      evidence:
+      - kind: ledger
+        locator: 教材 P205
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定混同注意はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-FIREPROOFING-CAST-IN:
+    code: structure.steel.fireproofing-cast-in
+    type: identification
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 打込み耐火被覆の施工方法について、正しい結論はどちらか。
+      choices:
+        A: けい酸カルシウム板を張り付ける
+        B: 軽量コンクリートなどを打設する
+      answer: B
+      details:
+        definition: 打込み耐火被覆は軽量コンクリートなどを打設する。接合部がなく施工しやすく安全性も高いが、打設・養生に時間がかかり、ひび割れが生じやすい。
+        distinguishing_conditions:
+        - 軽量コンクリートなどを用いる打込み耐火被覆
+        confusable_points:
+        - けい酸カルシウム板を張り付けるとは区別する。
+      evidence:
+      - kind: ledger
+        locator: 教材 P205
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定混同注意はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-FIREPROOFING-PLASTER-FINISH:
+    code: structure.steel.fireproofing-plaster-finish
+    type: identification
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 塗仕上げ耐火被覆の施工方法について、正しい結論はどちらか。
+      choices:
+        A: ラスへモルタルなどを塗る
+        B: 鉄骨へ岩綿などを吹き付ける
+      answer: A
+      details:
+        definition: 塗仕上げ耐火被覆は、丸鋼で補強したラスへモルタルなどを塗る。材料が安価で仕上げを兼ねられるが、施工に熟練を要する。
+        distinguishing_conditions:
+        - モルタルなどを用いる塗仕上げ耐火被覆
+        confusable_points:
+        - 鉄骨へ岩綿などを吹き付けるとは区別する。
+      evidence:
+      - kind: ledger
+        locator: 教材 P205
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定混同注意はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-FIREPROOFING-REQUIRED-ABOVE-250C:
+    code: structure.steel.fireproofing-required-above-250c
+    type: principle
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 鋼材を高温にさらしたときの耐力の変化について、正しい結論はどちらか。
+      choices:
+        A: 温度上昇とともに耐力が増加する
+        B: 温度上昇とともに耐力が低下する
+      answer: B
+      details:
+        conclusion: 鋼材は高温にさらされると耐力が低下する。
+        reason: 鋼材の材料強度が温度上昇に伴って低下するため。
+        conditions:
+        - 火災時など鋼材温度が上昇する場合
+        - 低下の程度は鋼種、部材、荷重比及び加熱履歴により異なる
+      evidence:
+      - kind: ledger
+        locator: 教材 P205
+        supports:
+        - details
+      - kind: external
+        source_class: official
+        title: 建築研究所 BRI NEWS Vol.47 構造部材の耐火性能
+        url: https://www.kenken.go.jp/japanese/contents/publications/epistura/pdf/47.pdf
+        locator: P3「鋼構造部材の耐火性」
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。確認した外部資料の支持範囲へ設問と暫定内容を狭めた。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-FIREPROOFING-SPRAY-APPLIED:
+    code: structure.steel.fireproofing-spray-applied
+    type: identification
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 吹付け耐火被覆の施工方法について、正しい結論はどちらか。
+      choices:
+        A: 岩綿などを吹き付ける
+        B: ALC板などを張り付ける
+      answer: A
+      details:
+        definition: 吹付け耐火被覆は、接着剤を塗った鉄骨またはラス下地へ岩綿などを吹き付ける。複雑・不整形にも対応できるが、表面が粗く、飛散が公害要因となり、雨水で剥落するため内部に用いる。
+        distinguishing_conditions:
+        - 吹付け岩綿などの耐火被覆
+        - 雨掛かりを避ける内部使用
+        confusable_points:
+        - ALC板などを張り付けるとは区別する。
+      evidence:
+      - kind: ledger
+        locator: 教材 P205
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定混同注意はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-SPLICE-FRICTION-JOINT-SELECTION:
+    code: structure.steel.splice-friction-joint-selection
+    type: identification
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 鉄骨部材の現場継手で一般的なボルト接合形式について、正しい結論はどちらか。
+      choices:
+        A: 普通ボルト接合
+        B: 高力ボルト摩擦接合
+      answer: B
+      details:
+        definition: 継手は高力ボルト二面摩擦接合が一般的で、部材が小さい場合やボルトの張出しが支障になる場合は、一面摩擦接合または高力ボルト・溶接併用を用いることがある。
+        distinguishing_conditions:
+        - 鉄骨部材の現場継手
+        - 部材寸法とボルト張出しの制約を考慮
+        confusable_points:
+        - 普通ボルト接合とは区別する。
+      evidence:
+      - kind: ledger
+        locator: 教材 P207
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定混同注意はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-TRUSS-MEMBER-IN-OUT-PLANE-BUCKLING-LENGTH:
+    code: structure.steel.truss-member-in-out-plane-buckling-length
+    type: rule
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: トラス圧縮材の構面内座屈長さについて、正しい結論はどちらか。
+      choices:
+        A: 構面内は節点間距離
+        B: 構面内は横補剛間隔
+      answer: A
+      details:
+        rule: トラス圧縮材の構面内座屈長さは節点間距離、構面外座屈長さは横補剛間隔とする。
+        applicability:
+        - トラスを構成する圧縮部材
+        - 構面内座屈と構面外座屈を区別
+        - トラス弦材
+        - 精算によらない場合
+        numbers_exceptions: []
+      evidence:
+      - kind: ledger
+        locator: 教材 P172、P208；問題コード 27171
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+  S-K6-THROUGH-DIAPHRAGM-CONSTRUCTION-AND-WELD:
+    code: structure.steel.through-diaphragm-construction-and-weld
+    type: identification
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 通しダイアフラム形式で柱を切断する位置について、正しい結論はどちらか。
+      choices:
+        A: 梁ウェブ中央位置で柱を切断する
+        B: 梁フランジ位置で柱を切断する
+      answer: B
+      details:
+        definition: 通しダイアフラム形式は柱を梁の上下フランジ位置で切断し、上下柱とダイアフラムを完全溶込み溶接する。
+        distinguishing_conditions:
+        - 角形鋼管柱の通しダイアフラム形式
+        confusable_points:
+        - 梁ウェブ中央位置で柱を切断するとは区別する。
+      evidence:
+      - kind: ledger
+        locator: 教材 P209
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定混同注意はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-WELD-BASIC-SYMBOL-SHAPES:
+    code: structure.steel.weld-basic-symbol-shapes
+    type: identification
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: JISのすみ肉溶接の基本記号形状について、正しい結論はどちらか。
+      choices:
+        A: 直角三角形の記号
+        B: 円形の記号
+      answer: A
+      details:
+        definition: JISの基本記号は、すみ肉溶接を直角三角形、V形突合せ溶接をV形、U形突合せ溶接をU形で表し、すみ肉・V形記号の角度は90度とする。
+        distinguishing_conditions:
+        - JIS Z 3021の溶接記号を識別する場合
+        confusable_points:
+        - 円形の記号とは区別する。
+      evidence:
+      - kind: ledger
+        locator: 教材 P212；問題コード 21171
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定混同注意はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details
+  S-K6-HYSTERESIS-LOOP-AREA-ENERGY-ABSORPTION:
+    code: structure.steel.hysteresis-loop-area-energy-absorption
+    type: identification
+    revision_history:
+    - revision: 1
+      state: provisional_answer
+      prompt: 荷重・変形履歴ループで囲まれた面積が表すものについて、正しい結論はどちらか。
+      choices:
+        A: 最大耐力の大きさ
+        B: エネルギー吸収能力の大きさ
+      answer: B
+      details:
+        definition: 左右交互の繰返し水平荷重に対する荷重-変形関係を履歴曲線といい、ループで囲まれた面積がエネルギー吸収能力・靭性能の大きさを表す。
+        distinguishing_conditions:
+        - 地震力のような繰返し水平荷重
+        - 荷重-変形履歴ループ
+        confusable_points:
+        - 最大耐力の大きさとは区別する。
+      evidence:
+      - kind: ledger
+        locator: 教材 P214、P215；問題コード 05181
+        supports:
+        - answer
+        - details
+      - kind: codex
+        supplement: 設問を一つの判断軸に絞り、誤答選択肢を新規作成した。暫定混同注意はCodex補足であり、未確認である。Codex補足は暫定正解の根拠には用いていない。
+        supports:
+        - question
+        - details

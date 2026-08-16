@@ -24,8 +24,16 @@ from principle_catalog.models import (
     CardDisplayFacets,
     Catalog,
     Principle,
+    PrincipleType,
     PublicProgress,
     QuestionEdition,
+    ResearchCoverageRegistry,
+    ResearchEvidence,
+    ResearchIdentificationDetails,
+    ResearchPrincipleDetails,
+    ResearchQuestionRegistry,
+    ResearchQuestionRevision,
+    ResearchRuleDetails,
 )
 from principle_catalog.research import (
     ResearchQueryPair,
@@ -33,6 +41,10 @@ from principle_catalog.research import (
     ResearchQueryRegistry,
     google_search_url,
     load_research_queries,
+)
+from principle_catalog.research_questions import (
+    load_research_coverage,
+    load_research_questions,
 )
 
 
@@ -75,16 +87,19 @@ _RESEARCH_STATUS_LABELS = {
     "source_gap": "根拠確認待ち",
     "source_checked": "確認済み",
 }
-_RESEARCH_STATEMENT_LABELS = {
-    "verified": "記載確認",
-    "gap": "根拠不足",
-    "unreviewed": "未監査",
+_RESEARCH_QUESTION_STATE_LABELS = {
+    "provisional_answer": "暫定正解あり",
+    "pending": "判定保留",
 }
-_RESEARCH_COMPLETENESS_LABELS = {
-    "complete": "記載あり",
-    "partial": "一部不足",
-    "missing": "記載なし",
-    "unreviewed": "未監査",
+_RESEARCH_COVERAGE_LABELS = {
+    1: ("core", "候補層：骨格"),
+    2: ("standard", "候補層：標準"),
+    3: ("advanced", "候補層：発展"),
+}
+_RESEARCH_EVIDENCE_SUPPORT_LABELS = {
+    "question": "問題",
+    "answer": "暫定正解",
+    "details": "内容",
 }
 
 
@@ -617,39 +632,108 @@ def _source_kind_options(catalog: Catalog, items: tuple[Principle, ...]) -> str:
     )
 
 
+def _research_detail_rows(question: ResearchQuestionRevision) -> str:
+    details = question.details
+    if isinstance(details, ResearchPrincipleDetails):
+        rows = (
+            ("暫定結論", (details.conclusion,)),
+            ("暫定理由", (details.reason,)),
+            ("暫定条件", details.conditions),
+        )
+    elif isinstance(details, ResearchRuleDetails):
+        rows = (
+            ("暫定規定", (details.rule,)),
+            ("暫定適用範囲", details.applicability),
+            ("暫定数値・例外", details.numbers_exceptions),
+        )
+    elif isinstance(details, ResearchIdentificationDetails):
+        rows = (
+            ("暫定定義", (details.definition,)),
+            ("暫定識別条件", details.distinguishing_conditions),
+            ("暫定混同注意", details.confusable_points),
+        )
+    else:
+        raise TypeError(f"unsupported research details: {type(details).__name__}")
+    return "".join(
+        f"<div><dt>{label}</dt><dd>{_facet_value(values)}</dd></div>"
+        for label, values in rows
+    )
+
+
+def _research_evidence_item(evidence: ResearchEvidence) -> str:
+    supports = "・".join(
+        _RESEARCH_EVIDENCE_SUPPORT_LABELS[support]
+        for support in evidence.supports
+    )
+    if evidence.kind == "ledger":
+        description = "既存台帳"
+    elif evidence.kind == "external":
+        description = "外部資料確認"
+    else:
+        description = "Codex補足（正答根拠外）"
+    return f"<li><span>{description}</span><small>対応：{escape(supports)}</small></li>"
+
+
 def _research_card(
-    catalog: Catalog,
     item: Principle,
     queries: ResearchQueryPair,
+    question: ResearchQuestionRevision,
+    question_type: PrincipleType,
+    coverage_tier: int,
 ) -> str:
-    conditions = (
-        "<ul>"
-        + "".join(f"<li>{escape(condition)}</li>" for condition in item.conditions)
-        + "</ul>"
+    tier_slug, tier_label = _RESEARCH_COVERAGE_LABELS[coverage_tier]
+    choices = "".join(
+        f'<li><span class="research-choice-label">{label}</span>'
+        f'<span class="research-choice-text">{escape(text)}</span></li>'
+        for label, text in (("A", question.choice_a), ("B", question.choice_b))
     )
+    if question.answer is None:
+        answer = '<p class="research-answer-pending">暫定正解は保留中です。</p>'
+        disclosure_label = "判定保留の内容を見る"
+        disclosure_close_label = "判定保留の内容を閉じる"
+    else:
+        answer_text = question.choice_a if question.answer == "A" else question.choice_b
+        answer = (
+            '<p class="research-answer-key"><span>暫定正解</span>'
+            f'<span class="research-answer-label">{question.answer}</span>'
+            f'<strong>{escape(answer_text)}</strong></p>'
+        )
+        disclosure_label = "暫定正解と内容を見る"
+        disclosure_close_label = "暫定正解と内容を閉じる"
+    evidence = "".join(_research_evidence_item(item) for item in question.evidence)
     return f"""
 <article class="research-card" id="{escape(item.code)}"
-  data-editorial-status="{escape(item.editorial_status)}">
+  data-editorial-status="{escape(item.editorial_status)}"
+  data-research-coverage-tier="{coverage_tier}">
   <header class="research-card-header">
     <div class="badge-row">
-      <span class="type-badge type-{escape(item.type)}">{_TYPE_LABELS[item.type]}</span>
+      <span class="type-badge type-{escape(question_type)}">{_TYPE_LABELS[question_type]}</span>
       <span class="research-status-badge">{escape(_RESEARCH_STATUS_LABELS[item.editorial_status])}</span>
+      <span class="research-question-state state-{escape(question.state)}">{_RESEARCH_QUESTION_STATE_LABELS[question.state]}</span>
+      <span class="research-tier-badge tier-{tier_slug}">{tier_label}</span>
     </div>
     <p class="card-id">{escape(item.code)}</p>
     <h3>{escape(item.principle)}</h3>
   </header>
   <p class="research-card-warning"><strong>未確認：</strong>誤り・欠落を含む可能性があります。</p>
-  <dl class="provisional-three-point">
-    <div><dt>暫定結論</dt><dd>{escape(item.conclusion)}</dd></div>
-    <div><dt>暫定理由</dt><dd>{escape(item.reason)}</dd></div>
-    <div><dt>暫定条件</dt><dd>{conditions}</dd></div>
-  </dl>
+  <section class="research-question" aria-label="暫定確認問題">
+    <p>{escape(question.prompt)}</p>
+    <ol class="research-binary-choices">{choices}</ol>
+  </section>
+  <details class="research-answer-disclosure" data-research-answer-disclosure>
+    <summary>
+      <span class="disclosure-label-closed">{disclosure_label}<span class="visually-hidden">：{escape(item.principle)}</span></span>
+      <span class="disclosure-label-open">{disclosure_close_label}<span class="visually-hidden">：{escape(item.principle)}</span></span>
+    </summary>
+    {answer}
+    <dl class="provisional-three-point">{_research_detail_rows(question)}</dl>
+  </details>
+  <aside class="research-evidence" aria-label="根拠の状態">
+    <h4>根拠の状態</h4>
+    <ul>{evidence}</ul>
+  </aside>
   {_explanation_search_action(item, queries)}
   <footer class="card-source research-card-source">
-    <div class="source-provenance">
-      <span>教材内の掲載位置：{escape(_source_label(catalog, item))}</span>
-      <span>既存台帳の教材内確認（外部一次資料の確認結果ではありません）：主張 {escape(_RESEARCH_STATEMENT_LABELS[item.verification.statement_source])} / 理由 {escape(_RESEARCH_COMPLETENESS_LABELS[item.verification.explanation_completeness])} / 条件 {escape(_RESEARCH_COMPLETENESS_LABELS[item.verification.conditions_completeness])}</span>
-    </div>
     <a href="#{escape(item.code)}" data-principle-link aria-label="{escape(item.principle)}への固定リンク">#</a>
   </footer>
 </article>""".strip()
@@ -734,19 +818,31 @@ def _research_migration_transition(
 </section>""".strip()
 
 
+def _research_active_keys(
+    registry: ResearchQuestionRegistry | ResearchCoverageRegistry,
+) -> tuple[str, ...]:
+    return tuple(registry.active_keys)
+
+
 def _research_sections(
     catalog: Catalog,
-    registry: ResearchQueryRegistry,
+    queries: ResearchQueryRegistry,
+    questions: ResearchQuestionRegistry,
+    candidate_coverage: ResearchCoverageRegistry,
     base_url: str,
-) -> tuple[str, str, int]:
+) -> tuple[str, str, tuple[Principle, ...]]:
     by_key = {item.id: item for item in catalog.principles}
-    visible = [
+    active_keys = set(_research_active_keys(questions)) & set(
+        _research_active_keys(candidate_coverage)
+    )
+    visible = tuple(
         item
         for item in display_principles(catalog)
-        if item.id in registry.items
-        and registry.items[item.id].has_research_route
+        if item.id in active_keys
+        and item.id in queries.items
+        and queries.items[item.id].has_research_route
         and item.editorial_status != "source_checked"
-    ]
+    )
     by_subtopic: dict[str, list[Principle]] = {}
     for item in visible:
         by_subtopic.setdefault(catalog.taxonomy.assignments[item.id], []).append(item)
@@ -759,16 +855,23 @@ def _research_sections(
             if not items:
                 continue
             nav.append(
-                f'<a href="#research-{escape(subtopic.id)}">'
+                f'<a href="#research-{escape(subtopic.id)}" '
+                f'data-research-nav-target="research-{escape(subtopic.id)}">'
                 f"{escape(subtopic.title)}<span>{len(items)}</span></a>"
             )
             cards = "\n".join(
-                _research_card(catalog, item, registry.items[item.id].current)
+                _research_card(
+                    item,
+                    queries.items[item.id].current,
+                    questions.items[item.id].current,
+                    questions.items[item.id].type,
+                    candidate_coverage.items[item.id].current.tier,
+                )
                 for item in items
             )
             sections.append(
                 f"""
-<section class="research-section" id="research-{escape(subtopic.id)}">
+<section class="research-section" id="research-{escape(subtopic.id)}" data-research-section>
   <div class="section-heading">
     <p>{escape(subtopic.id)}</p>
     <h2>{escape(subtopic.title)}</h2>
@@ -778,7 +881,7 @@ def _research_sections(
 </section>""".strip()
             )
     transitions: list[str] = []
-    for key, publication in registry.items.items():
+    for key, publication in queries.items.items():
         if not publication.has_research_route:
             continue
         item = by_key.get(key)
@@ -790,21 +893,39 @@ def _research_sections(
                     catalog,
                     key,
                     publication,
-                    registry,
+                    queries,
                     base_url,
                 )
             )
-    return "".join(nav), "\n".join((*sections, *transitions)), len(visible)
+    return "".join(nav), "\n".join((*sections, *transitions)), visible
 
 
 def _research_page(
     base_url: str,
     catalog: Catalog,
-    registry: ResearchQueryRegistry,
+    queries: ResearchQueryRegistry,
+    questions: ResearchQuestionRegistry,
+    candidate_coverage: ResearchCoverageRegistry,
 ) -> str:
-    nav, sections, visible_count = _research_sections(catalog, registry, base_url)
+    nav, sections, visible = _research_sections(
+        catalog,
+        queries,
+        questions,
+        candidate_coverage,
+        base_url,
+    )
+    visible_count = len(visible)
+    answerable_count = sum(
+        questions.items[item.id].current.state == "provisional_answer"
+        for item in visible
+    )
+    pending_count = visible_count - answerable_count
+    tier_counts = Counter(
+        candidate_coverage.items[item.id].current.tier for item in visible
+    )
     canonical_url = urljoin(base_url, "research/")
     stylesheet_url = urljoin(base_url, "assets/styles.css")
+    script_url = urljoin(base_url, "assets/research.js")
     home_url = urljoin(base_url, "./")
     summary = (
         "根拠確認中の鉄骨構造項目について、暫定内容と分かりやすい解説を探す"
@@ -829,9 +950,9 @@ def _research_page(
     <h1>根拠を<br><span>調べる</span></h1>
     <p class="lead">確認前の内容と、<strong>分かりやすい解説</strong>を探すボタンを公開しています。</p>
     <div class="hero-stats" aria-label="調査ページの項目数">
-      <div><strong>{visible_count}</strong><span>暫定項目</span></div>
-      <div><strong>1</strong><span>検索ボタン / 項目</span></div>
-      <div><strong>0</strong><span>確定問題</span></div>
+      <div><strong>{visible_count}</strong><span>暫定問題</span></div>
+      <div><strong>{answerable_count}</strong><span>暫定正解あり</span></div>
+      <div><strong>{pending_count}</strong><span>判定保留</span></div>
     </div>
   </header>
 
@@ -844,14 +965,35 @@ def _research_page(
       <p>検索語はCodexによる調査結果を反映した監査スナップショットです。検索や内容更新を自動実行する仕組みではありません。</p>
     </section>
 
+    <section class="research-controls" aria-labelledby="research-filter-title">
+      <div>
+        <p class="control-kicker">CANDIDATE COVERAGE</p>
+        <h2 id="research-filter-title">候補層で絞り込む</h2>
+        <p>候補層は調査中の学習順案です。確認済み台帳の正式な導入層ではありません。</p>
+      </div>
+      <label for="research-coverage-filter">表示する候補層
+        <select id="research-coverage-filter">
+          <option value="all">すべて（{visible_count}件）</option>
+          <option value="core-only">骨格のみ（{tier_counts[1]}件）</option>
+          <option value="standard-only">標準のみ（{tier_counts[2]}件）</option>
+          <option value="advanced-only">発展のみ（{tier_counts[3]}件）</option>
+          <option value="core+standard">骨格＋標準（{tier_counts[1] + tier_counts[2]}件）</option>
+        </select>
+      </label>
+      <p class="research-result-summary" aria-live="polite">
+        <strong id="research-visible-count">{visible_count}</strong><span> / {visible_count}件を表示</span>
+      </p>
+    </section>
+
     <nav class="section-nav research-nav" aria-label="調査分野から探す">{nav}</nav>
-    <div id="research-items" class="research-catalog">{sections}</div>
+    <div id="research-items" class="research-catalog" data-research-catalog-root>{sections}</div>
   </main>
 
   <footer class="site-footer">
     <p>確認済みへの昇格には、正式資料の出典名・該当箇所・対応範囲の記録が必要です。</p>
-    <p>閲覧専用 / Cookie・外部解析なし / 検索語版：v{registry.version}</p>
+    <p>閲覧専用 / Cookie・外部解析なし / 検索語版：v{queries.version}</p>
   </footer>
+  <script src="{escape(script_url)}" defer></script>
 </body>
 </html>
 """
@@ -1045,6 +1187,8 @@ def build_site(output: Path, base_url: str) -> tuple[int, int]:
         raise ValueError("base URL must be an HTTPS directory URL ending in /")
     catalog = load_catalog()
     research_queries = load_research_queries(catalog)
+    research_questions = load_research_questions(catalog)
+    research_coverage = load_research_coverage(catalog, research_questions)
     published_count = sum(
         item.editorial_status == "source_checked" for item in catalog.principles
     )
@@ -1060,13 +1204,23 @@ def build_site(output: Path, base_url: str) -> tuple[int, int]:
         (temp / "index.html").write_text(root_page, encoding="utf-8")
         (temp / "404.html").write_text(root_page, encoding="utf-8")
         (research / "index.html").write_text(
-            _research_page(base_url, catalog, research_queries),
+            _research_page(
+                base_url,
+                catalog,
+                research_queries,
+                research_questions,
+                research_coverage,
+            ),
             encoding="utf-8",
         )
         (temp / ".nojekyll").write_text("", encoding="utf-8")
         (temp / _OUTPUT_MARKER).write_text(_OUTPUT_MARKER_CONTENT, encoding="utf-8")
         (assets / "styles.css").write_text(_asset_text("styles.css"), encoding="utf-8")
         (assets / "catalog.js").write_text(_asset_text("catalog.js"), encoding="utf-8")
+        (assets / "research.js").write_text(
+            _asset_text("research.js"),
+            encoding="utf-8",
+        )
         og_source = Path(__file__).with_name("static") / "og.png"
         if og_source.exists():
             shutil.copy2(og_source, assets / "og.png")

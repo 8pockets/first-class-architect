@@ -1,0 +1,953 @@
+version: 1
+releases:
+- id: steel-research-coverage-v1
+  active:
+  - S-K6-19-LATERAL-BUCKLING
+  - S-K6-BEAM-END-MOMENT-STRENGTH-FLANGE-PLUS-WEB
+  - S-K6-BEAM-SECTION-SHAPE-LATERAL-BUCKLING
+  - S-K6-BEAM-TYPES-ROLLED-BUILT-UP
+  - S-K6-BOLT-EDGE-DISTANCE-TERM-IDENTIFICATION
+  - S-K6-BOLT-MAXIMUM-EDGE-DISTANCE
+  - S-K6-BOLT-MINIMUM-EDGE-DISTANCE
+  - S-K6-BOX-COLUMN-FIELD-BUTT-WELD-WITH-BACKING
+  - S-K6-BRACE-BALANCED-DIRECTIONAL-LAYOUT
+  - S-K6-BRACE-SECTION-USE-IDENTIFICATION
+  - S-K6-BRACED-FRAME-COLUMN-BRACE-CAPACITY-SUM
+  - S-K6-BUILT-UP-H-SECTION-FLANGE-WEB-FILLET
+  - S-K6-COLUMN-BASE-NOTIFICATION-1456
+  - S-K6-COLUMN-BASE-TYPES-FIXITY-ORDER
+  - S-K6-DIAPHRAGM-FLANGE-MISALIGNMENT-LIMIT
+  - S-K6-DISSIMILAR-STEEL-WELD-WEAKER-BASE-GOVERNS
+  - S-K6-EFFECTIVE-SLENDERNESS-MAXIMUMS
+  - S-K6-EMBEDDED-BASE-EFFECTIVE-FIXED-POINT
+  - S-K6-EMBEDDED-BASE-MINIMUM-DEPTH
+  - S-K6-EXISTING-RIVET-JOINT-WELDED-EXTENSION-LOAD-SHARING
+  - S-K6-EXPOSED-BASE-ANCHOR-AREA-RATIO
+  - S-K6-EXPOSED-BASE-ANCHOR-HOLE-CLEARANCE
+  - S-K6-EXPOSED-BASE-ANCHOR-LOCKING
+  - S-K6-EXPOSED-BASE-CAPACITY-DESIGN-DS-PENALTY
+  - S-K6-EXPOSED-BASE-SHEAR-CAPACITY-NOT-ADDITIVE
+  - S-K6-FA-H-BEAM-FLANGE-WEB-WIDTH-THICKNESS-LIMITS
+  - S-K6-FATIGUE-CHECK-CYCLE-THRESHOLD
+  - S-K6-FILLER-PLATE-EQUALIZES-THICKNESS
+  - S-K6-FILLET-WELD-ANATOMY
+  - S-K6-FILLET-WELD-DEFINITION-REPEATED-STRESS
+  - S-K6-FILLET-WELD-EFFECTIVE-AREA
+  - S-K6-FILLET-WELD-SIZE-EFFECTIVE-THROAT
+  - S-K6-FIRE-LOAD-FIXED-PLUS-LIVE-COMBUSTIBLES
+  - S-K6-FIREPROOFING-BOARD-ATTACHMENT
+  - S-K6-FIREPROOFING-CAST-IN
+  - S-K6-FIREPROOFING-PLASTER-FINISH
+  - S-K6-FIREPROOFING-REQUIRED-ABOVE-250C
+  - S-K6-FIREPROOFING-SPRAY-APPLIED
+  - S-K6-FRICTION-JOINT-GAP-FILLER-RULE
+  - S-K6-FRICTION-JOINT-SLIP-COEFFICIENT
+  - S-K6-FULL-PENETRATION-WELD-ANATOMY
+  - S-K6-FULL-PENETRATION-WELD-DEFINITION-REPEATED-STRESS
+  - S-K6-FULL-PENETRATION-WELD-EFFECTIVE-THROAT
+  - S-K6-H-BEAM-ALLOWABLE-BENDING-INPUTS
+  - S-K6-H-SECTION-AXIS-LATERAL-BUCKLING
+  - S-K6-H-SECTION-FLANGE-BENDING
+  - S-K6-H-SECTION-STRONG-WEAK-AXIS-RIGIDITY
+  - S-K6-H-SECTION-WEB-SHEAR
+  - S-K6-HIGH-STRENGTH-BOLT-CONNECTION-TYPES
+  - S-K6-HIGH-STRENGTH-BOLT-CONSTRUCTION-ADVANTAGE
+  - S-K6-HIGH-STRENGTH-BOLT-HOLE-CLEARANCE
+  - S-K6-HIGH-STRENGTH-BOLT-MINIMUM-PITCH
+  - S-K6-HIGH-STRENGTH-BOLT-PRODUCT-TYPES
+  - S-K6-HIGH-STRENGTH-BOLT-TENSILE-STRENGTH-RATIO
+  - S-K6-HYSTERESIS-LOOP-AREA-ENERGY-ABSORPTION
+  - S-K6-METAL-TOUCH-SPLICE-DIRECT-TRANSFER-FRACTIONS
+  - S-K6-MINIMIZE-WELD-DISTORTION-AND-RESIDUAL-STRESS
+  - S-K6-MIXED-BUTT-FILLET-WELD-LOAD-SHARING
+  - S-K6-MIXED-WELD-ORDINARY-BOLT-LOAD-SHARING
+  - S-K6-NONSEISMIC-TRUSS-JOINT-MINIMUM-STRENGTH
+  - S-K6-ORDINARY-BOLT-HOLE-CLEARANCE
+  - S-K6-ORDINARY-BOLT-HOLE-DIAMETER-AIJ
+  - S-K6-ORDINARY-BOLT-THREAD-PROJECTION
+  - S-K6-ORDINARY-BOLT-WASHER-UNDER-NUT
+  - S-K6-OVERHEAD-CRANE-SEISMIC-WEIGHT
+  - S-K6-PARTIAL-PENETRATION-WELD-APPLICABILITY
+  - S-K6-SPLICE-FRICTION-JOINT-SELECTION
+  - S-K6-SPLICE-PLATE-TRANSFERS-FORCE
+  - S-K6-STEEL-BEAM-COMMON-SECTIONS
+  - S-K6-STEEL-BEAM-DEFLECTION-CHECK
+  - S-K6-STEEL-BEAM-DEFLECTION-CHECK-OMISSION
+  - S-K6-STEEL-BEAM-DEFLECTION-LIMITS
+  - S-K6-STEEL-BEAM-DEPTH-SPAN-RANGE
+  - S-K6-STEEL-BEAM-DESIGN-ACTIONS
+  - S-K6-STEEL-BUCKLING-MODE-IDENTIFICATION
+  - S-K6-STEEL-DIAMETER-THICKNESS-RATIO-SMALLER-PREFERRED
+  - S-K6-STEEL-END-TAB-RETENTION-CONDITIONS
+  - S-K6-STEEL-F-VALUE-DEFINITION
+  - S-K6-STEEL-FIRE-STRENGTH-FIREPROOFING
+  - S-K6-STEEL-LONG-TERM-BEARING-ALLOWABLE-STRESS
+  - S-K6-STEEL-MATERIAL-STRENGTH-JIS-FACTOR
+  - S-K6-STEEL-STRUCTURE-DEFINITION
+  - S-K6-STEEL-YIELD-RATIO-SMALLER-PREFERRED
+  - S-K6-STEEL-YOUNGS-MODULUS-STRENGTH-INDEPENDENT
+  - S-K6-STEEL-YOUNGS-MODULUS-VS-CONCRETE
+  - S-K6-THROUGH-DIAPHRAGM-CONSTRUCTION-AND-WELD
+  - S-K6-TRUSS-MEMBER-IN-OUT-PLANE-BUCKLING-LENGTH
+  - S-K6-UNIFORM-BRACING-SLENDERNESS-FORMULAS
+  - S-K6-WELD-ALLOWABLE-STRESS-FULL-PENETRATION
+  - S-K6-WELD-ALLOWABLE-STRESS-NONFULL-PENETRATION
+  - S-K6-WELD-BASIC-SYMBOL-SHAPES
+  - S-K6-WELD-BEAD-DEFINITION
+  - S-K6-WELD-CONSTRUCTION-DEFECT-RISK
+  - S-K6-WELD-DEFECT-OVERLAP
+  - S-K6-WELD-FORM-FLEXIBILITY
+  - S-K6-WELD-INSPECTION-DIFFICULTY
+  - S-K6-WELD-NO-CONSTRUCTION-NOISE
+  - S-K6-WELD-NO-SECTION-LOSS-HIGH-RIGIDITY
+  - S-K6-WELD-SYMBOL-ARROW-SIDE-POSITION
+  - S-K6-WELD-TYPE-IDENTIFICATION
+  revisions:
+    S-K6-19-LATERAL-BUCKLING: 1
+    S-K6-BEAM-END-MOMENT-STRENGTH-FLANGE-PLUS-WEB: 1
+    S-K6-BEAM-SECTION-SHAPE-LATERAL-BUCKLING: 1
+    S-K6-BEAM-TYPES-ROLLED-BUILT-UP: 1
+    S-K6-BOLT-EDGE-DISTANCE-TERM-IDENTIFICATION: 1
+    S-K6-BOLT-MAXIMUM-EDGE-DISTANCE: 1
+    S-K6-BOLT-MINIMUM-EDGE-DISTANCE: 1
+    S-K6-BOX-COLUMN-FIELD-BUTT-WELD-WITH-BACKING: 1
+    S-K6-BRACE-BALANCED-DIRECTIONAL-LAYOUT: 1
+    S-K6-BRACE-SECTION-USE-IDENTIFICATION: 1
+    S-K6-BRACED-FRAME-COLUMN-BRACE-CAPACITY-SUM: 1
+    S-K6-BUILT-UP-H-SECTION-FLANGE-WEB-FILLET: 1
+    S-K6-COLUMN-BASE-NOTIFICATION-1456: 1
+    S-K6-COLUMN-BASE-TYPES-FIXITY-ORDER: 1
+    S-K6-DIAPHRAGM-FLANGE-MISALIGNMENT-LIMIT: 1
+    S-K6-DISSIMILAR-STEEL-WELD-WEAKER-BASE-GOVERNS: 1
+    S-K6-EFFECTIVE-SLENDERNESS-MAXIMUMS: 1
+    S-K6-EMBEDDED-BASE-EFFECTIVE-FIXED-POINT: 1
+    S-K6-EMBEDDED-BASE-MINIMUM-DEPTH: 1
+    S-K6-EXISTING-RIVET-JOINT-WELDED-EXTENSION-LOAD-SHARING: 1
+    S-K6-EXPOSED-BASE-ANCHOR-AREA-RATIO: 1
+    S-K6-EXPOSED-BASE-ANCHOR-HOLE-CLEARANCE: 1
+    S-K6-EXPOSED-BASE-ANCHOR-LOCKING: 1
+    S-K6-EXPOSED-BASE-CAPACITY-DESIGN-DS-PENALTY: 1
+    S-K6-EXPOSED-BASE-SHEAR-CAPACITY-NOT-ADDITIVE: 1
+    S-K6-FA-H-BEAM-FLANGE-WEB-WIDTH-THICKNESS-LIMITS: 1
+    S-K6-FATIGUE-CHECK-CYCLE-THRESHOLD: 1
+    S-K6-FILLER-PLATE-EQUALIZES-THICKNESS: 1
+    S-K6-FILLET-WELD-ANATOMY: 1
+    S-K6-FILLET-WELD-DEFINITION-REPEATED-STRESS: 1
+    S-K6-FILLET-WELD-EFFECTIVE-AREA: 1
+    S-K6-FILLET-WELD-SIZE-EFFECTIVE-THROAT: 1
+    S-K6-FIRE-LOAD-FIXED-PLUS-LIVE-COMBUSTIBLES: 1
+    S-K6-FIREPROOFING-BOARD-ATTACHMENT: 1
+    S-K6-FIREPROOFING-CAST-IN: 1
+    S-K6-FIREPROOFING-PLASTER-FINISH: 1
+    S-K6-FIREPROOFING-REQUIRED-ABOVE-250C: 1
+    S-K6-FIREPROOFING-SPRAY-APPLIED: 1
+    S-K6-FRICTION-JOINT-GAP-FILLER-RULE: 1
+    S-K6-FRICTION-JOINT-SLIP-COEFFICIENT: 1
+    S-K6-FULL-PENETRATION-WELD-ANATOMY: 1
+    S-K6-FULL-PENETRATION-WELD-DEFINITION-REPEATED-STRESS: 1
+    S-K6-FULL-PENETRATION-WELD-EFFECTIVE-THROAT: 1
+    S-K6-H-BEAM-ALLOWABLE-BENDING-INPUTS: 1
+    S-K6-H-SECTION-AXIS-LATERAL-BUCKLING: 1
+    S-K6-H-SECTION-FLANGE-BENDING: 1
+    S-K6-H-SECTION-STRONG-WEAK-AXIS-RIGIDITY: 1
+    S-K6-H-SECTION-WEB-SHEAR: 1
+    S-K6-HIGH-STRENGTH-BOLT-CONNECTION-TYPES: 1
+    S-K6-HIGH-STRENGTH-BOLT-CONSTRUCTION-ADVANTAGE: 1
+    S-K6-HIGH-STRENGTH-BOLT-HOLE-CLEARANCE: 1
+    S-K6-HIGH-STRENGTH-BOLT-MINIMUM-PITCH: 1
+    S-K6-HIGH-STRENGTH-BOLT-PRODUCT-TYPES: 1
+    S-K6-HIGH-STRENGTH-BOLT-TENSILE-STRENGTH-RATIO: 1
+    S-K6-HYSTERESIS-LOOP-AREA-ENERGY-ABSORPTION: 1
+    S-K6-METAL-TOUCH-SPLICE-DIRECT-TRANSFER-FRACTIONS: 1
+    S-K6-MINIMIZE-WELD-DISTORTION-AND-RESIDUAL-STRESS: 1
+    S-K6-MIXED-BUTT-FILLET-WELD-LOAD-SHARING: 1
+    S-K6-MIXED-WELD-ORDINARY-BOLT-LOAD-SHARING: 1
+    S-K6-NONSEISMIC-TRUSS-JOINT-MINIMUM-STRENGTH: 1
+    S-K6-ORDINARY-BOLT-HOLE-CLEARANCE: 1
+    S-K6-ORDINARY-BOLT-HOLE-DIAMETER-AIJ: 1
+    S-K6-ORDINARY-BOLT-THREAD-PROJECTION: 1
+    S-K6-ORDINARY-BOLT-WASHER-UNDER-NUT: 1
+    S-K6-OVERHEAD-CRANE-SEISMIC-WEIGHT: 1
+    S-K6-PARTIAL-PENETRATION-WELD-APPLICABILITY: 1
+    S-K6-SPLICE-FRICTION-JOINT-SELECTION: 1
+    S-K6-SPLICE-PLATE-TRANSFERS-FORCE: 1
+    S-K6-STEEL-BEAM-COMMON-SECTIONS: 1
+    S-K6-STEEL-BEAM-DEFLECTION-CHECK: 1
+    S-K6-STEEL-BEAM-DEFLECTION-CHECK-OMISSION: 1
+    S-K6-STEEL-BEAM-DEFLECTION-LIMITS: 1
+    S-K6-STEEL-BEAM-DEPTH-SPAN-RANGE: 1
+    S-K6-STEEL-BEAM-DESIGN-ACTIONS: 1
+    S-K6-STEEL-BUCKLING-MODE-IDENTIFICATION: 1
+    S-K6-STEEL-DIAMETER-THICKNESS-RATIO-SMALLER-PREFERRED: 1
+    S-K6-STEEL-END-TAB-RETENTION-CONDITIONS: 1
+    S-K6-STEEL-F-VALUE-DEFINITION: 1
+    S-K6-STEEL-FIRE-STRENGTH-FIREPROOFING: 1
+    S-K6-STEEL-LONG-TERM-BEARING-ALLOWABLE-STRESS: 1
+    S-K6-STEEL-MATERIAL-STRENGTH-JIS-FACTOR: 1
+    S-K6-STEEL-STRUCTURE-DEFINITION: 1
+    S-K6-STEEL-YIELD-RATIO-SMALLER-PREFERRED: 1
+    S-K6-STEEL-YOUNGS-MODULUS-STRENGTH-INDEPENDENT: 1
+    S-K6-STEEL-YOUNGS-MODULUS-VS-CONCRETE: 1
+    S-K6-THROUGH-DIAPHRAGM-CONSTRUCTION-AND-WELD: 1
+    S-K6-TRUSS-MEMBER-IN-OUT-PLANE-BUCKLING-LENGTH: 1
+    S-K6-UNIFORM-BRACING-SLENDERNESS-FORMULAS: 1
+    S-K6-WELD-ALLOWABLE-STRESS-FULL-PENETRATION: 1
+    S-K6-WELD-ALLOWABLE-STRESS-NONFULL-PENETRATION: 1
+    S-K6-WELD-BASIC-SYMBOL-SHAPES: 1
+    S-K6-WELD-BEAD-DEFINITION: 1
+    S-K6-WELD-CONSTRUCTION-DEFECT-RISK: 1
+    S-K6-WELD-DEFECT-OVERLAP: 1
+    S-K6-WELD-FORM-FLEXIBILITY: 1
+    S-K6-WELD-INSPECTION-DIFFICULTY: 1
+    S-K6-WELD-NO-CONSTRUCTION-NOISE: 1
+    S-K6-WELD-NO-SECTION-LOSS-HIGH-RIGIDITY: 1
+    S-K6-WELD-SYMBOL-ARROW-SIDE-POSITION: 1
+    S-K6-WELD-TYPE-IDENTIFICATION: 1
+  content_sha256: 034e3e0097bab2f7634708269b993966121ec24ee71ead7039f00fcec0178b7a
+items:
+  S-K6-DISSIMILAR-STEEL-WELD-WEAKER-BASE-GOVERNS:
+    code: structure.steel.dissimilar-steel-weld-weaker-base-governs
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+  S-K6-BEAM-END-MOMENT-STRENGTH-FLANGE-PLUS-WEB:
+    code: structure.steel.beam-end-moment-strength-flange-plus-web
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - integrated_judgment
+  S-K6-EXISTING-RIVET-JOINT-WELDED-EXTENSION-LOAD-SHARING:
+    code: structure.steel.existing-rivet-joint-welded-extension-load-sharing
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - integrated_judgment
+  S-K6-H-BEAM-ALLOWABLE-BENDING-INPUTS:
+    code: structure.steel.h-beam-allowable-bending-inputs
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - integrated_judgment
+  S-K6-UNIFORM-BRACING-SLENDERNESS-FORMULAS:
+    code: structure.steel.uniform-bracing-slenderness-formulas
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - exception_detail
+  S-K6-FRICTION-JOINT-GAP-FILLER-RULE:
+    code: structure.steel.friction-joint-gap-filler-rule
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - exception_detail
+  S-K6-NONSEISMIC-TRUSS-JOINT-MINIMUM-STRENGTH:
+    code: structure.steel.nonseismic-truss-joint-minimum-strength
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - exception_detail
+  S-K6-METAL-TOUCH-SPLICE-DIRECT-TRANSFER-FRACTIONS:
+    code: structure.steel.metal-touch-splice-direct-transfer-fractions
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - exception_detail
+  S-K6-MINIMIZE-WELD-DISTORTION-AND-RESIDUAL-STRESS:
+    code: structure.steel.minimize-weld-distortion-and-residual-stress
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+  S-K6-DIAPHRAGM-FLANGE-MISALIGNMENT-LIMIT:
+    code: structure.steel.diaphragm-flange-misalignment-limit
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - integrated_judgment
+  S-K6-EXPOSED-BASE-CAPACITY-DESIGN-DS-PENALTY:
+    code: structure.steel.exposed-base-capacity-design-ds-penalty
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - exception_detail
+  S-K6-BOX-COLUMN-FIELD-BUTT-WELD-WITH-BACKING:
+    code: structure.steel.box-column-field-butt-weld-with-backing
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - integrated_judgment
+  S-K6-FIRE-LOAD-FIXED-PLUS-LIVE-COMBUSTIBLES:
+    code: structure.steel.fire-load-fixed-plus-live-combustibles
+    revision_history:
+    - revision: 1
+      tier: 1
+      reasons:
+      - coverage_representative
+      - basic_identification
+  S-K6-OVERHEAD-CRANE-SEISMIC-WEIGHT:
+    code: structure.steel.overhead-crane-seismic-weight
+    revision_history:
+    - revision: 1
+      tier: 1
+      reasons:
+      - coverage_representative
+  S-K6-COLUMN-BASE-TYPES-FIXITY-ORDER:
+    code: structure.steel.column-base-types-fixity-order
+    revision_history:
+    - revision: 1
+      tier: 1
+      reasons:
+      - coverage_representative
+      - prerequisite
+      - basic_identification
+  S-K6-H-SECTION-FLANGE-BENDING:
+    code: structure.steel.h-section-flange-bending
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+      - prerequisite
+  S-K6-H-SECTION-WEB-SHEAR:
+    code: structure.steel.h-section-web-shear
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+      - prerequisite
+  S-K6-HIGH-STRENGTH-BOLT-CONNECTION-TYPES:
+    code: structure.steel.high-strength-bolt-connection-types
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+      - prerequisite
+      - basic_identification
+  S-K6-STEEL-MATERIAL-STRENGTH-JIS-FACTOR:
+    code: structure.steel.material-strength-jis-factor
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - exception_detail
+  S-K6-WELD-ALLOWABLE-STRESS-FULL-PENETRATION:
+    code: structure.steel.weld-allowable-stress-full-penetration
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - integrated_judgment
+      - prerequisite
+  S-K6-WELD-ALLOWABLE-STRESS-NONFULL-PENETRATION:
+    code: structure.steel.weld-allowable-stress-nonfull-penetration
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - integrated_judgment
+      - prerequisite
+  S-K6-STEEL-DIAMETER-THICKNESS-RATIO-SMALLER-PREFERRED:
+    code: structure.steel.diameter-thickness-ratio-smaller-preferred
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+  S-K6-STEEL-F-VALUE-DEFINITION:
+    code: structure.steel.f-value-definition
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+      - prerequisite
+  S-K6-STEEL-YIELD-RATIO-SMALLER-PREFERRED:
+    code: structure.steel.yield-ratio-smaller-preferred
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+  S-K6-STEEL-YOUNGS-MODULUS-STRENGTH-INDEPENDENT:
+    code: structure.steel.youngs-modulus-strength-independent
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+  S-K6-STEEL-YOUNGS-MODULUS-VS-CONCRETE:
+    code: structure.steel.youngs-modulus-vs-concrete
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+  S-K6-H-SECTION-AXIS-LATERAL-BUCKLING:
+    code: structure.steel.h-section-axis-lateral-buckling
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+      - prerequisite
+  S-K6-H-SECTION-STRONG-WEAK-AXIS-RIGIDITY:
+    code: structure.steel.h-section-strong-weak-axis-rigidity
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+      - prerequisite
+      - basic_identification
+  S-K6-PARTIAL-PENETRATION-WELD-APPLICABILITY:
+    code: structure.steel.partial-penetration-weld-applicability
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+  S-K6-WELD-NO-SECTION-LOSS-HIGH-RIGIDITY:
+    code: structure.steel.weld-no-section-loss-high-rigidity
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+  S-K6-WELD-TYPE-IDENTIFICATION:
+    code: structure.steel.weld-type-identification
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+      - prerequisite
+      - basic_identification
+  S-K6-EMBEDDED-BASE-MINIMUM-DEPTH:
+    code: structure.steel.embedded-base-minimum-depth
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - exception_detail
+      - prerequisite
+  S-K6-EXPOSED-BASE-ANCHOR-AREA-RATIO:
+    code: structure.steel.exposed-base-anchor-area-ratio
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - exception_detail
+  S-K6-EXPOSED-BASE-ANCHOR-HOLE-CLEARANCE:
+    code: structure.steel.exposed-base-anchor-hole-clearance
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - exception_detail
+  S-K6-EXPOSED-BASE-SHEAR-CAPACITY-NOT-ADDITIVE:
+    code: structure.steel.exposed-base-shear-capacity-not-additive
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - integrated_judgment
+  S-K6-EMBEDDED-BASE-EFFECTIVE-FIXED-POINT:
+    code: structure.steel.embedded-base-effective-fixed-point
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - integrated_judgment
+  S-K6-EXPOSED-BASE-ANCHOR-LOCKING:
+    code: structure.steel.exposed-base-anchor-locking
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - exception_detail
+  S-K6-STEEL-BUCKLING-MODE-IDENTIFICATION:
+    code: structure.steel.buckling-mode-identification
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+      - basic_identification
+  S-K6-STEEL-FIRE-STRENGTH-FIREPROOFING:
+    code: structure.steel.fire-strength-fireproofing
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+  S-K6-STEEL-STRUCTURE-DEFINITION:
+    code: structure.steel.structure-definition
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+      - basic_identification
+  S-K6-STEEL-LONG-TERM-BEARING-ALLOWABLE-STRESS:
+    code: structure.steel.long-term-bearing-allowable-stress
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - exception_detail
+  S-K6-ORDINARY-BOLT-HOLE-CLEARANCE:
+    code: structure.steel.ordinary-bolt-hole-clearance
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - exception_detail
+  S-K6-ORDINARY-BOLT-HOLE-DIAMETER-AIJ:
+    code: structure.steel.ordinary-bolt-hole-diameter-aij
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - exception_detail
+  S-K6-ORDINARY-BOLT-THREAD-PROJECTION:
+    code: structure.steel.ordinary-bolt-thread-projection
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - exception_detail
+  S-K6-ORDINARY-BOLT-WASHER-UNDER-NUT:
+    code: structure.steel.ordinary-bolt-washer-under-nut
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - exception_detail
+  S-K6-HIGH-STRENGTH-BOLT-CONSTRUCTION-ADVANTAGE:
+    code: structure.steel.high-strength-bolt-construction-advantage
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+  S-K6-HIGH-STRENGTH-BOLT-TENSILE-STRENGTH-RATIO:
+    code: structure.steel.high-strength-bolt-tensile-strength-ratio
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+  S-K6-FATIGUE-CHECK-CYCLE-THRESHOLD:
+    code: structure.steel.fatigue-check-cycle-threshold
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - exception_detail
+  S-K6-HIGH-STRENGTH-BOLT-PRODUCT-TYPES:
+    code: structure.steel.high-strength-bolt-product-types
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+      - basic_identification
+  S-K6-FRICTION-JOINT-SLIP-COEFFICIENT:
+    code: structure.steel.friction-joint-slip-coefficient
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - exception_detail
+  S-K6-BOLT-MINIMUM-EDGE-DISTANCE:
+    code: structure.steel.bolt-minimum-edge-distance
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - exception_detail
+  S-K6-HIGH-STRENGTH-BOLT-HOLE-CLEARANCE:
+    code: structure.steel.high-strength-bolt-hole-clearance
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - exception_detail
+  S-K6-HIGH-STRENGTH-BOLT-MINIMUM-PITCH:
+    code: structure.steel.high-strength-bolt-minimum-pitch
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - exception_detail
+  S-K6-BOLT-EDGE-DISTANCE-TERM-IDENTIFICATION:
+    code: structure.steel.bolt-edge-distance-term-identification
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+      - prerequisite
+      - basic_identification
+  S-K6-BOLT-MAXIMUM-EDGE-DISTANCE:
+    code: structure.steel.bolt-maximum-edge-distance
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - exception_detail
+  S-K6-BUILT-UP-H-SECTION-FLANGE-WEB-FILLET:
+    code: structure.steel.built-up-h-section-flange-web-fillet
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - exception_detail
+  S-K6-WELD-BEAD-DEFINITION:
+    code: structure.steel.weld-bead-definition
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+      - basic_identification
+  S-K6-WELD-CONSTRUCTION-DEFECT-RISK:
+    code: structure.steel.weld-construction-defect-risk
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+      - prerequisite
+  S-K6-WELD-FORM-FLEXIBILITY:
+    code: structure.steel.weld-form-flexibility
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+  S-K6-WELD-INSPECTION-DIFFICULTY:
+    code: structure.steel.weld-inspection-difficulty
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+  S-K6-WELD-NO-CONSTRUCTION-NOISE:
+    code: structure.steel.weld-no-construction-noise
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+  S-K6-STEEL-END-TAB-RETENTION-CONDITIONS:
+    code: structure.steel.end-tab-retention-conditions
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - exception_detail
+  S-K6-FULL-PENETRATION-WELD-ANATOMY:
+    code: structure.steel.full-penetration-weld-anatomy
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+      - basic_identification
+  S-K6-FULL-PENETRATION-WELD-DEFINITION-REPEATED-STRESS:
+    code: structure.steel.full-penetration-weld-definition-repeated-stress
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+      - prerequisite
+      - basic_identification
+  S-K6-FULL-PENETRATION-WELD-EFFECTIVE-THROAT:
+    code: structure.steel.full-penetration-weld-effective-throat
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - exception_detail
+  S-K6-FILLET-WELD-EFFECTIVE-AREA:
+    code: structure.steel.fillet-weld-effective-area
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - integrated_judgment
+  S-K6-FILLET-WELD-ANATOMY:
+    code: structure.steel.fillet-weld-anatomy
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+      - basic_identification
+  S-K6-FILLET-WELD-DEFINITION-REPEATED-STRESS:
+    code: structure.steel.fillet-weld-definition-repeated-stress
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+      - prerequisite
+      - basic_identification
+  S-K6-FILLET-WELD-SIZE-EFFECTIVE-THROAT:
+    code: structure.steel.fillet-weld-size-effective-throat
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - exception_detail
+      - prerequisite
+  S-K6-WELD-DEFECT-OVERLAP:
+    code: structure.steel.weld-defect-overlap
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+      - basic_identification
+  S-K6-WELD-SYMBOL-ARROW-SIDE-POSITION:
+    code: structure.steel.weld-symbol-arrow-side-position
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - integrated_judgment
+  S-K6-MIXED-BUTT-FILLET-WELD-LOAD-SHARING:
+    code: structure.steel.mixed-butt-fillet-weld-load-sharing
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - integrated_judgment
+  S-K6-MIXED-WELD-ORDINARY-BOLT-LOAD-SHARING:
+    code: structure.steel.mixed-weld-ordinary-bolt-load-sharing
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - integrated_judgment
+  S-K6-STEEL-BEAM-COMMON-SECTIONS:
+    code: structure.steel.beam-common-sections
+    revision_history:
+    - revision: 1
+      tier: 1
+      reasons:
+      - coverage_representative
+      - basic_identification
+  S-K6-STEEL-BEAM-DEFLECTION-CHECK:
+    code: structure.steel.beam-deflection-check
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+      - prerequisite
+  S-K6-STEEL-BEAM-DEFLECTION-CHECK-OMISSION:
+    code: structure.steel.beam-deflection-check-omission
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - integrated_judgment
+  S-K6-STEEL-BEAM-DEFLECTION-LIMITS:
+    code: structure.steel.beam-deflection-limits
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - integrated_judgment
+  S-K6-STEEL-BEAM-DEPTH-SPAN-RANGE:
+    code: structure.steel.beam-depth-span-range
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+  S-K6-STEEL-BEAM-DESIGN-ACTIONS:
+    code: structure.steel.beam-design-actions
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+      - prerequisite
+  S-K6-EFFECTIVE-SLENDERNESS-MAXIMUMS:
+    code: structure.steel.effective-slenderness-maximums
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - exception_detail
+  S-K6-19-LATERAL-BUCKLING:
+    code: structure.steel.beam-lateral-buckling
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+      - prerequisite
+  S-K6-BEAM-SECTION-SHAPE-LATERAL-BUCKLING:
+    code: structure.steel.beam-section-shape-lateral-buckling
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+      - basic_identification
+  S-K6-FA-H-BEAM-FLANGE-WEB-WIDTH-THICKNESS-LIMITS:
+    code: structure.steel.fa-h-beam-flange-web-width-thickness-limits
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - integrated_judgment
+  S-K6-BEAM-TYPES-ROLLED-BUILT-UP:
+    code: structure.steel.beam-types-rolled-built-up
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+      - basic_identification
+  S-K6-FILLER-PLATE-EQUALIZES-THICKNESS:
+    code: structure.steel.filler-plate-equalizes-thickness
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+      - basic_identification
+  S-K6-SPLICE-PLATE-TRANSFERS-FORCE:
+    code: structure.steel.splice-plate-transfers-force
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+      - basic_identification
+  S-K6-BRACE-BALANCED-DIRECTIONAL-LAYOUT:
+    code: structure.steel.brace-balanced-directional-layout
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+  S-K6-BRACE-SECTION-USE-IDENTIFICATION:
+    code: structure.steel.brace-section-use-identification
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - exception_detail
+  S-K6-BRACED-FRAME-COLUMN-BRACE-CAPACITY-SUM:
+    code: structure.steel.braced-frame-column-brace-capacity-sum
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - integrated_judgment
+  S-K6-COLUMN-BASE-NOTIFICATION-1456:
+    code: structure.steel.column-base-notification-1456
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - exception_detail
+  S-K6-FIREPROOFING-BOARD-ATTACHMENT:
+    code: structure.steel.fireproofing-board-attachment
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+      - basic_identification
+  S-K6-FIREPROOFING-CAST-IN:
+    code: structure.steel.fireproofing-cast-in
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+      - basic_identification
+  S-K6-FIREPROOFING-PLASTER-FINISH:
+    code: structure.steel.fireproofing-plaster-finish
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+      - basic_identification
+  S-K6-FIREPROOFING-REQUIRED-ABOVE-250C:
+    code: structure.steel.fireproofing-required-above-250c
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - integrated_judgment
+  S-K6-FIREPROOFING-SPRAY-APPLIED:
+    code: structure.steel.fireproofing-spray-applied
+    revision_history:
+    - revision: 1
+      tier: 1
+      reasons:
+      - coverage_representative
+      - basic_identification
+  S-K6-SPLICE-FRICTION-JOINT-SELECTION:
+    code: structure.steel.splice-friction-joint-selection
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - exception_detail
+  S-K6-TRUSS-MEMBER-IN-OUT-PLANE-BUCKLING-LENGTH:
+    code: structure.steel.truss-member-in-out-plane-buckling-length
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+  S-K6-THROUGH-DIAPHRAGM-CONSTRUCTION-AND-WELD:
+    code: structure.steel.through-diaphragm-construction-and-weld
+    revision_history:
+    - revision: 1
+      tier: 3
+      reasons:
+      - integrated_judgment
+  S-K6-WELD-BASIC-SYMBOL-SHAPES:
+    code: structure.steel.weld-basic-symbol-shapes
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+      - prerequisite
+      - basic_identification
+  S-K6-HYSTERESIS-LOOP-AREA-ENERGY-ABSORPTION:
+    code: structure.steel.hysteresis-loop-area-energy-absorption
+    revision_history:
+    - revision: 1
+      tier: 2
+      reasons:
+      - standard_application
+      - basic_identification
