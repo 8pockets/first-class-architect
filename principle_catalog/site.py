@@ -156,9 +156,12 @@ def _authoritative_sources(item: Principle) -> str:
 def _binary_choices(item: Principle) -> str:
     if item.question is None:
         raise ValueError(f"published principle has no confirmation question: {item.id}")
+    answer_id = f"answer-{item.code}"
     return "".join(
-        f'<li><span class="choice-label">{label}</span>'
-        f'<span class="choice-text">{escape(text)}</span></li>'
+        f'<li><button type="button" class="choice-button" data-answer-choice '
+        f'aria-controls="{escape(answer_id)}" aria-expanded="false">'
+        f'<span class="choice-label">{label}</span>'
+        f'<span class="choice-text">{escape(text)}</span></button></li>'
         for label, text in (
             ("A", item.question.choice_a),
             ("B", item.question.choice_b),
@@ -301,7 +304,7 @@ def _card(
     <p class="practice-question-text">{escape(item.question.prompt)}</p>
     <ul class="binary-choices">{_binary_choices(item)}</ul>
   </div>
-  <details class="answer-disclosure" data-answer-disclosure>
+  <details id="answer-{escape(item.code)}" class="answer-disclosure" data-answer-disclosure>
     <summary>
       <span class="disclosure-label-closed">正解と解説を見る<span class="visually-hidden">：{escape(item.principle)}</span></span>
       <span class="disclosure-label-open">正解と解説を閉じる<span class="visually-hidden">：{escape(item.principle)}</span></span>
@@ -682,9 +685,13 @@ def _research_card(
     coverage_tier: int,
 ) -> str:
     tier_slug, tier_label = _RESEARCH_COVERAGE_LABELS[coverage_tier]
+    answer_id = f"research-answer-{item.code}"
     choices = "".join(
-        f'<li><span class="research-choice-label">{label}</span>'
-        f'<span class="research-choice-text">{escape(text)}</span></li>'
+        f'<li><button type="button" class="research-choice-button" '
+        f'data-research-answer-choice aria-controls="{escape(answer_id)}" '
+        f'aria-expanded="false">'
+        f'<span class="research-choice-label">{label}</span>'
+        f'<span class="research-choice-text">{escape(text)}</span></button></li>'
         for label, text in (("A", question.choice_a), ("B", question.choice_b))
     )
     if question.answer is None:
@@ -720,7 +727,7 @@ def _research_card(
     <p>{escape(question.prompt)}</p>
     <ol class="research-binary-choices">{choices}</ol>
   </section>
-  <details class="research-answer-disclosure" data-research-answer-disclosure>
+  <details id="{escape(answer_id)}" class="research-answer-disclosure" data-research-answer-disclosure>
     <summary>
       <span class="disclosure-label-closed">{disclosure_label}<span class="visually-hidden">：{escape(item.principle)}</span></span>
       <span class="disclosure-label-open">{disclosure_close_label}<span class="visually-hidden">：{escape(item.principle)}</span></span>
@@ -935,7 +942,7 @@ def _research_page(
 <html lang="ja" class="research-document">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>根拠を調べる — 鉄骨構造 原理台帳</title>
   <meta name="description" content="{escape(summary)}">
   <meta name="robots" content="noindex,follow">

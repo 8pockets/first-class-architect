@@ -19,10 +19,6 @@
   font-synthesis: none;
 }
 
-:root.research-document {
-  touch-action: auto;
-}
-
 * {
   box-sizing: border-box;
 }
@@ -643,15 +639,33 @@ a:focus-visible {
 }
 
 .binary-choices li {
+  min-width: 0;
+}
+
+.choice-button {
+  appearance: none;
   display: grid;
   grid-template-columns: 2rem minmax(0, 1fr);
   gap: 10px;
   align-items: start;
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
   padding: 10px 12px;
   color: var(--ink);
   background: #fffdf8;
   border: 1px solid rgb(255 255 255 / 34%);
   border-radius: 8px;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.choice-button:focus-visible {
+  position: relative;
+  z-index: 1;
+  outline: 3px solid #ef9e6f;
+  outline-offset: 2px;
 }
 
 .choice-label {
@@ -1249,15 +1263,33 @@ a:focus-visible {
 }
 
 .research-binary-choices li {
+  min-width: 0;
+}
+
+.research-choice-button {
+  appearance: none;
   display: grid;
   grid-template-columns: 2.1rem minmax(0, 1fr);
   gap: 9px;
   align-items: center;
+  width: 100%;
   min-width: 0;
+  min-height: 44px;
   padding: 10px 12px;
+  color: var(--ink);
   background: #f5f1e9;
   border: 1px solid #d8cec2;
   border-radius: 8px;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.research-choice-button:focus-visible {
+  position: relative;
+  z-index: 1;
+  outline: 3px solid var(--blue-dark);
+  outline-offset: 2px;
 }
 
 .research-choice-label,
@@ -1814,15 +1846,34 @@ a:focus-visible {
   }
 
   .binary-choices li {
-    display: grid;
-    grid-template-columns: 2.2em minmax(0, 1fr);
-    gap: 0.6mm;
-    align-items: start;
+    display: block;
     padding: 0;
     color: #000;
     background: transparent;
     border: 0;
     border-radius: 0;
+  }
+
+  .choice-button {
+    display: grid;
+    grid-template-columns: 2.2em minmax(0, 1fr);
+    gap: 0.6mm;
+    align-items: start;
+    width: 100%;
+    min-height: 0;
+    padding: 0;
+    color: #000;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    font: inherit;
+    text-align: left;
+    cursor: default;
+  }
+
+  .choice-button:focus-visible {
+    outline: none;
+    outline-offset: 0;
   }
 
   .choice-label {

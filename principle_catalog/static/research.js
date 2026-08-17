@@ -13,6 +13,9 @@
   const disclosures = [
     ...root.querySelectorAll("[data-research-answer-disclosure]"),
   ];
+  const answerChoices = [
+    ...root.querySelectorAll("[data-research-answer-choice]"),
+  ];
   const tiersByFilter = new Map([
     ["all", [1, 2, 3]],
     ["core-only", [1]],
@@ -21,8 +24,34 @@
     ["core+standard", [1, 2]],
   ]);
 
+  const syncChoiceExpansion = (disclosure) => {
+    const expanded = String(disclosure.open);
+    for (const choice of answerChoices) {
+      if (choice.getAttribute("aria-controls") === disclosure.id) {
+        choice.setAttribute("aria-expanded", expanded);
+      }
+    }
+  };
+
+  const setAnswerOpen = (disclosure, open) => {
+    disclosure.open = open;
+    syncChoiceExpansion(disclosure);
+  };
+
+  const openAnswerForChoice = (choice) => {
+    const controlledId = choice.getAttribute("aria-controls");
+    const disclosure = controlledId
+      ? document.getElementById(controlledId)
+      : null;
+    if (!disclosure) return;
+    for (const candidate of disclosures) {
+      if (candidate !== disclosure) setAnswerOpen(candidate, false);
+    }
+    setAnswerOpen(disclosure, true);
+  };
+
   const closeAnswers = () => {
-    for (const disclosure of disclosures) disclosure.open = false;
+    for (const disclosure of disclosures) setAnswerOpen(disclosure, false);
   };
 
   const applyCoverageFilter = () => {
@@ -47,10 +76,19 @@
   closeAnswers();
   for (const disclosure of disclosures) {
     disclosure.addEventListener("toggle", () => {
+      syncChoiceExpansion(disclosure);
       if (!disclosure.open) return;
       for (const candidate of disclosures) {
-        if (candidate !== disclosure) candidate.open = false;
+        if (candidate !== disclosure) setAnswerOpen(candidate, false);
       }
+    });
+  }
+  for (const choice of answerChoices) {
+    choice.addEventListener("click", () => openAnswerForChoice(choice));
+    choice.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      event.preventDefault();
+      openAnswerForChoice(choice);
     });
   }
   coverage.addEventListener("change", applyCoverageFilter);

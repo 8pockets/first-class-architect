@@ -359,10 +359,10 @@ def test_build_publishes_only_source_checked_entries(tmp_path: Path) -> None:
     assert html.count('class="principle-card"') == published
     assert html.count("確認問題（自作・2択）") == published
     assert html.count('class="binary-choices"') == published
+    assert html.count('class="choice-button"') == published * 2
+    assert html.count("data-answer-choice") == published * 2
     assert html.count('class="answer-disclosure"') == published
-    assert html.count(
-        '<details class="answer-disclosure" data-answer-disclosure>'
-    ) == published
+    assert html.count('<details id="answer-') == published
     assert html.count("正解と解説を見る") == published
     assert html.count("正解と解説を閉じる") == published
     assert html.count('class="answer-key"') == published
@@ -425,7 +425,7 @@ def test_learning_pages_keep_the_existing_disabled_zoom_contract(
     assert root["touch-action"] == "pan-x pan-y"
 
 
-def test_research_page_allows_browser_zoom(tmp_path: Path) -> None:
+def test_research_page_keeps_the_disabled_zoom_contract(tmp_path: Path) -> None:
     output = tmp_path / "site"
     build_site(output, "https://8pockets.github.io/first-class-architect/")
     html = (output / "research/index.html").read_text(encoding="utf-8")
@@ -433,13 +433,13 @@ def test_research_page_allows_browser_zoom(tmp_path: Path) -> None:
 
     assert '<html lang="ja" class="research-document">' in html
     assert (
-        '<meta name="viewport" content="width=device-width, initial-scale=1">'
+        '<meta name="viewport" content="width=device-width, initial-scale=1, '
+        'maximum-scale=1, user-scalable=no">'
         in html
     )
-    assert "maximum-scale" not in html
-    assert "user-scalable" not in html
-    research_root = _css_declarations(css, ":root.research-document")
-    assert research_root["touch-action"] == "auto"
+    assert ":root.research-document" not in css
+    root = _css_declarations(css, ":root")
+    assert root["touch-action"] == "pan-x pan-y"
 
 
 def test_build_places_each_question_before_its_three_point_answer_and_searches_it(
@@ -474,14 +474,17 @@ def test_build_places_each_question_before_its_three_point_answer_and_searches_i
             prompt
         )
         assert card_body.index(prompt) < card_body.index('<ul class="binary-choices">')
-        assert card_body.index('<ul class="binary-choices">') < card_body.index(
-            '<details class="answer-disclosure"'
+        answer_opening = (
+            f'<details id="answer-{item.code}" class="answer-disclosure"'
         )
-        assert card_body.index('<details class="answer-disclosure"') < card_body.index(
+        assert card_body.index('<ul class="binary-choices">') < card_body.index(
+            answer_opening
+        )
+        assert card_body.index(answer_opening) < card_body.index(
             '<p class="answer-key">'
         )
         answer = card_body.split(
-            '<details class="answer-disclosure"', maxsplit=1
+            answer_opening, maxsplit=1
         )[1].split("</details>", maxsplit=1)[0]
         disclosure_opening = answer.split(">", maxsplit=1)[0]
         assert answer.index("正解と解説を見る") < answer.index(
@@ -520,6 +523,69 @@ def test_build_places_each_question_before_its_three_point_answer_and_searches_i
             assert all(escape(value.lower()) in search_text for value in facet.values)
 
 
+def test_confirmed_choices_are_buttons_that_control_their_answer(tmp_path: Path) -> None:
+    output = tmp_path / "site"
+    build_site(output, "https://8pockets.github.io/first-class-architect/")
+    html = (output / "index.html").read_text(encoding="utf-8")
+    catalog = load_catalog()
+    published = display_principles(catalog, published_only=True)
+
+    assert html.count('class="choice-button"') == len(published) * 2
+    assert html.count("data-answer-choice") == len(published) * 2
+    assert html.count('<details id="answer-') == len(published)
+
+    for item in published:
+        card = html.split(f'id="{item.code}"', maxsplit=1)[1].split(
+            "</article>", maxsplit=1
+        )[0]
+        answer_id = f"answer-{item.code}"
+        assert card.count('class="choice-button"') == 2
+        assert card.count('data-answer-choice') == 2
+        assert card.count('type="button"') == 2
+        assert card.count(f'aria-controls="{answer_id}"') == 2
+        assert card.count('aria-expanded="false"') == 2
+        assert (
+            f'<details id="{answer_id}" class="answer-disclosure" '
+            "data-answer-disclosure>"
+            in card
+        )
+        assert "data-correct" not in card
+
+
+def test_confirmed_choice_buttons_preserve_screen_and_print_design(
+    tmp_path: Path,
+) -> None:
+    output = tmp_path / "site"
+    build_site(output, "https://8pockets.github.io/first-class-architect/")
+    css = (output / "assets/styles.css").read_text(encoding="utf-8")
+
+    button = _css_declarations(css, ".choice-button")
+    assert button["display"] == "grid"
+    assert button["grid-template-columns"] == "2rem minmax(0, 1fr)"
+    assert button["width"] == "100%"
+    assert button["min-height"] == "44px"
+    assert button["padding"] == "10px 12px"
+    assert button["color"] == "var(--ink)"
+    assert button["background"] == "#fffdf8"
+    assert button["border-radius"] == "8px"
+    assert button["font"] == "inherit"
+    assert button["text-align"] == "left"
+    assert button["cursor"] == "pointer"
+    focus = _css_declarations(css, ".choice-button:focus-visible")
+    assert focus["outline"] == "3px solid #ef9e6f"
+
+    print_rules = css.split("@media print", maxsplit=1)[1]
+    printed_button = _css_declarations(print_rules, ".choice-button")
+    assert printed_button["display"] == "grid"
+    assert printed_button["grid-template-columns"] == "2.2em minmax(0, 1fr)"
+    assert printed_button["padding"] == "0"
+    assert printed_button["color"] == "#000"
+    assert printed_button["background"] == "transparent"
+    assert printed_button["border"] == "0"
+    printed_focus = _css_declarations(print_rules, ".choice-button:focus-visible")
+    assert printed_focus["outline"] == "none"
+
+
 def test_build_is_public_read_only_and_privacy_bounded(tmp_path: Path) -> None:
     output = tmp_path / "site"
     build_site(output, "https://8pockets.github.io/first-class-architect/")
@@ -555,19 +621,23 @@ def test_answer_disclosure_is_closed_by_default_and_accessible_on_screen(
     html = (output / "index.html").read_text(encoding="utf-8")
     css = (output / "assets/styles.css").read_text(encoding="utf-8")
 
-    assert html.count(
-        '<details class="answer-disclosure" data-answer-disclosure>'
-    ) == 116
+    assert html.count('<details id="answer-') == 116
     assert len(
         re.findall(
-            r'<details class="answer-disclosure" data-answer-disclosure>\s*<summary>',
+            r'<details id="answer-[^"]+" class="answer-disclosure" '
+            r'data-answer-disclosure>\s*<summary>',
             html,
         )
     ) == 116
     assert html.count('class="disclosure-label-closed"') == 116
     assert html.count('class="disclosure-label-open"') == 116
     assert (
-        '<details class="answer-disclosure" data-answer-disclosure open>' not in html
+        re.search(
+            r'<details id="answer-[^"]+" class="answer-disclosure" '
+            r'data-answer-disclosure open>',
+            html,
+        )
+        is None
     )
     assert 'name="answer-disclosure"' not in html
     answer = _css_declarations(css, ".answer-disclosure")

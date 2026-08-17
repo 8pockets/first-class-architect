@@ -29,6 +29,7 @@
   const sections = [...root.querySelectorAll("[data-catalog-section]")];
   const groups = [...root.querySelectorAll("[data-catalog-group]")];
   const disclosures = [...root.querySelectorAll("[data-answer-disclosure]")];
+  const answerChoices = [...root.querySelectorAll("[data-answer-choice]")];
   const principleLinks = [...root.querySelectorAll("[data-principle-link]")];
   let activeType = "all";
   let bulkAnswersOpen = false;
@@ -61,6 +62,35 @@
       return card && !card.hidden;
     });
 
+  const syncChoiceExpansion = (disclosure) => {
+    const expanded = String(disclosure.open);
+    for (const choice of answerChoices) {
+      if (choice.getAttribute("aria-controls") === disclosure.id) {
+        choice.setAttribute("aria-expanded", expanded);
+      }
+    }
+  };
+
+  const setAnswerOpen = (disclosure, open) => {
+    disclosure.open = open;
+    syncChoiceExpansion(disclosure);
+  };
+
+  const openAnswerForChoice = (choice) => {
+    const controlledId = choice.getAttribute("aria-controls");
+    const disclosure = controlledId
+      ? document.getElementById(controlledId)
+      : null;
+    if (!disclosure) return;
+    if (!bulkAnswersOpen) {
+      for (const candidate of disclosures) {
+        if (candidate !== disclosure) setAnswerOpen(candidate, false);
+      }
+    }
+    setAnswerOpen(disclosure, true);
+    syncBulkAnswerButton();
+  };
+
   const syncBulkAnswerButton = () => {
     const visibleDisclosures = visibleAnswerDisclosures();
     updateBulkAnswerButton(
@@ -71,7 +101,7 @@
 
   const closeAnswers = () => {
     for (const disclosure of disclosures) {
-      disclosure.open = false;
+      setAnswerOpen(disclosure, false);
     }
     bulkAnswersOpen = false;
     updateBulkAnswerButton(false);
@@ -112,10 +142,11 @@
 
   for (const disclosure of disclosures) {
     disclosure.addEventListener("toggle", () => {
+      syncChoiceExpansion(disclosure);
       if (bulkAnswersOpen) return;
       if (disclosure.open) {
         for (const candidate of disclosures) {
-          if (candidate !== disclosure) candidate.open = false;
+          if (candidate !== disclosure) setAnswerOpen(candidate, false);
         }
       }
       syncBulkAnswerButton();
@@ -125,8 +156,17 @@
       bulkAnswersOpen = false;
       updateBulkAnswerButton(false);
       for (const candidate of disclosures) {
-        if (candidate !== disclosure) candidate.open = false;
+        if (candidate !== disclosure) setAnswerOpen(candidate, false);
       }
+    });
+  }
+
+  for (const choice of answerChoices) {
+    choice.addEventListener("click", () => openAnswerForChoice(choice));
+    choice.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      event.preventDefault();
+      openAnswerForChoice(choice);
     });
   }
 
@@ -137,7 +177,7 @@
       visibleDisclosures.some((disclosure) => !disclosure.open);
     bulkAnswersOpen = shouldOpen;
     for (const disclosure of visibleDisclosures) {
-      disclosure.open = shouldOpen;
+      setAnswerOpen(disclosure, shouldOpen);
     }
     updateBulkAnswerButton(shouldOpen);
   });

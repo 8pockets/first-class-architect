@@ -754,7 +754,11 @@ def test_published_cards_put_correct_answer_and_semantic_facets_in_disclosure(
     for item in examples.values():
         card = _card_html(html, item.code)
         facets = display_facets(catalog, item)
-        assert '<details class="answer-disclosure" data-answer-disclosure>' in card
+        assert (
+            f'<details id="answer-{item.code}" class="answer-disclosure" '
+            "data-answer-disclosure>"
+            in card
+        )
         assert "<summary>" in card
         disclosure_opening = card.split("<details", maxsplit=1)[1].split(
             ">", maxsplit=1

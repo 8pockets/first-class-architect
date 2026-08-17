@@ -9,9 +9,10 @@ const script = readFileSync(
 );
 
 class FakeElement extends EventTarget {
-  constructor({ dataset = {}, value = "" } = {}) {
+  constructor({ dataset = {}, id = "", value = "" } = {}) {
     super();
     this.dataset = dataset;
+    this.id = id;
     this.value = value;
     this.hidden = false;
     this.open = false;
@@ -24,6 +25,10 @@ class FakeElement extends EventTarget {
 
   setAttribute(name, value) {
     this.attributes.set(name, value);
+  }
+
+  getAttribute(name) {
+    return this.attributes.get(name) ?? null;
   }
 
   querySelector(selector) {
@@ -75,7 +80,18 @@ const bootCatalog = ({ catalogCards } = {}) => {
     }),
   ];
   const cards = catalogCards ?? defaultCards;
-  const disclosures = cards.map(() => new FakeElement());
+  const disclosures = cards.map(
+    (_card, index) => new FakeElement({ id: `answer-${index + 1}` }),
+  );
+  const answerChoices = cards.flatMap((card, index) =>
+    ["A", "B"].map(() => {
+      const choice = new FakeElement();
+      choice.card = card;
+      choice.setAttribute("aria-controls", disclosures[index].id);
+      choice.setAttribute("aria-expanded", "false");
+      return choice;
+    }),
+  );
   const principleLinks = [new FakeElement()];
   disclosures.forEach((disclosure, index) => {
     disclosure.open = true;
@@ -118,6 +134,7 @@ const bootCatalog = ({ catalogCards } = {}) => {
       if (selector === "[data-catalog-section]") return sections;
       if (selector === "[data-catalog-group]") return groups;
       if (selector === "[data-answer-disclosure]") return disclosures;
+      if (selector === "[data-answer-choice]") return answerChoices;
       if (selector === "[data-principle-link]") return principleLinks;
       return [];
     },
@@ -152,6 +169,7 @@ const bootCatalog = ({ catalogCards } = {}) => {
   const elementsById = new Map([
     ["S-K6-18-SLENDERNESS", legacyAnchor],
     ["structure.steel.compression-member-slenderness", canonicalCard],
+    ...disclosures.map((disclosure) => [disclosure.id, disclosure]),
   ]);
   const document = {
     querySelector: (selector) => elements.get(selector) ?? null,
@@ -171,6 +189,7 @@ const bootCatalog = ({ catalogCards } = {}) => {
   vm.runInNewContext(script, { document, Event, window });
 
   return {
+    answerChoices,
     cards,
     disclosures,
     groups,
@@ -194,6 +213,13 @@ const openAnswer = (disclosure) => {
   disclosure.dispatchEvent(new Event("toggle"));
 };
 
+const pressChoice = (choice, key) => {
+  const event = new Event("keydown", { cancelable: true });
+  Object.defineProperty(event, "key", { value: key });
+  choice.dispatchEvent(event);
+  return event;
+};
+
 test("answers start closed and opening one closes the previously open answer", () => {
   const { disclosures } = bootCatalog();
 
@@ -201,6 +227,39 @@ test("answers start closed and opening one closes the previously open answer", (
   openAnswer(disclosures[0]);
   openAnswer(disclosures[1]);
 
+  assert.deepEqual(disclosures.map(({ open }) => open), [false, true, false]);
+});
+
+test("choosing A or B opens its answer, closes another, and stays open on repeat", () => {
+  const { answerChoices, disclosures } = bootCatalog();
+
+  answerChoices[0].dispatchEvent(new Event("click"));
+  assert.deepEqual(disclosures.map(({ open }) => open), [true, false, false]);
+  assert.deepEqual(
+    answerChoices.slice(0, 2).map((choice) => choice.getAttribute("aria-expanded")),
+    ["true", "true"],
+  );
+
+  answerChoices[2].dispatchEvent(new Event("click"));
+  assert.deepEqual(disclosures.map(({ open }) => open), [false, true, false]);
+  assert.deepEqual(
+    answerChoices.slice(0, 4).map((choice) => choice.getAttribute("aria-expanded")),
+    ["false", "false", "true", "true"],
+  );
+
+  answerChoices[2].dispatchEvent(new Event("click"));
+  assert.deepEqual(disclosures.map(({ open }) => open), [false, true, false]);
+});
+
+test("Enter and Space open the controlled answer without browser click synthesis", () => {
+  const { answerChoices, disclosures } = bootCatalog();
+
+  const enterEvent = pressChoice(answerChoices[0], "Enter");
+  assert.equal(enterEvent.defaultPrevented, true);
+  assert.deepEqual(disclosures.map(({ open }) => open), [true, false, false]);
+
+  const spaceEvent = pressChoice(answerChoices[2], " ");
+  assert.equal(spaceEvent.defaultPrevented, true);
   assert.deepEqual(disclosures.map(({ open }) => open), [false, true, false]);
 });
 
@@ -235,6 +294,18 @@ test("the bulk answer button opens and closes only answers on visible cards", ()
   assert.deepEqual(disclosures.map(({ open }) => open), [false, false, false]);
   assert.equal(toggleVisibleAnswers.textContent, "表示中の答えをすべて開く");
   assert.equal(toggleVisibleAnswers.attributes.get("aria-pressed"), "false");
+});
+
+test("choosing A or B preserves an explicitly opened bulk answer view", () => {
+  const { answerChoices, disclosures, toggleVisibleAnswers } = bootCatalog();
+  toggleVisibleAnswers.dispatchEvent(new Event("click"));
+  assert.deepEqual(disclosures.map(({ open }) => open), [true, true, true]);
+
+  answerChoices[2].dispatchEvent(new Event("click"));
+
+  assert.deepEqual(disclosures.map(({ open }) => open), [true, true, true]);
+  assert.equal(toggleVisibleAnswers.textContent, "表示中の答えをすべて閉じる");
+  assert.equal(toggleVisibleAnswers.attributes.get("aria-pressed"), "true");
 });
 
 test("using an individual answer after bulk open returns to single-answer mode", () => {
