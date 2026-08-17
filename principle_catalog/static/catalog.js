@@ -32,7 +32,6 @@
   const answerChoices = [...root.querySelectorAll("[data-answer-choice]")];
   const principleLinks = [...root.querySelectorAll("[data-principle-link]")];
   let activeType = "all";
-  let bulkAnswersOpen = false;
 
   const coverageTiersByFilter = new Map([
     ["all", [1, 2, 3]],
@@ -82,11 +81,6 @@
       ? document.getElementById(controlledId)
       : null;
     if (!disclosure) return;
-    if (!bulkAnswersOpen) {
-      for (const candidate of disclosures) {
-        if (candidate !== disclosure) setAnswerOpen(candidate, false);
-      }
-    }
     setAnswerOpen(disclosure, true);
     syncBulkAnswerButton();
   };
@@ -103,7 +97,6 @@
     for (const disclosure of disclosures) {
       setAnswerOpen(disclosure, false);
     }
-    bulkAnswersOpen = false;
     updateBulkAnswerButton(false);
   };
 
@@ -143,21 +136,7 @@
   for (const disclosure of disclosures) {
     disclosure.addEventListener("toggle", () => {
       syncChoiceExpansion(disclosure);
-      if (bulkAnswersOpen) return;
-      if (disclosure.open) {
-        for (const candidate of disclosures) {
-          if (candidate !== disclosure) setAnswerOpen(candidate, false);
-        }
-      }
       syncBulkAnswerButton();
-    });
-
-    disclosure.querySelector("summary")?.addEventListener("click", () => {
-      bulkAnswersOpen = false;
-      updateBulkAnswerButton(false);
-      for (const candidate of disclosures) {
-        if (candidate !== disclosure) setAnswerOpen(candidate, false);
-      }
     });
   }
 
@@ -175,7 +154,6 @@
     const shouldOpen =
       visibleDisclosures.length > 0 &&
       visibleDisclosures.some((disclosure) => !disclosure.open);
-    bulkAnswersOpen = shouldOpen;
     for (const disclosure of visibleDisclosures) {
       setAnswerOpen(disclosure, shouldOpen);
     }

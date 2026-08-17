@@ -220,17 +220,38 @@ const pressChoice = (choice, key) => {
   return event;
 };
 
-test("answers start closed and opening one closes the previously open answer", () => {
+test("answers start closed and opening a lower answer keeps the answer above open", () => {
   const { disclosures } = bootCatalog();
 
   assert.deepEqual(disclosures.map(({ open }) => open), [false, false, false]);
   openAnswer(disclosures[0]);
   openAnswer(disclosures[1]);
 
-  assert.deepEqual(disclosures.map(({ open }) => open), [false, true, false]);
+  assert.deepEqual(disclosures.map(({ open }) => open), [true, true, false]);
 });
 
-test("choosing A or B opens its answer, closes another, and stays open on repeat", () => {
+test("opening a lower answer does not move the viewport when an answer above is open", () => {
+  const { answerChoices, disclosures, window } = bootCatalog();
+  let answerAboveOpen = disclosures[0].open;
+  Object.defineProperty(disclosures[0], "open", {
+    configurable: true,
+    get: () => answerAboveOpen,
+    set: (open) => {
+      if (answerAboveOpen && !open) window.scrollY -= 325;
+      answerAboveOpen = open;
+    },
+  });
+  window.scrollY = 2940;
+
+  answerChoices[0].dispatchEvent(new Event("click"));
+  const scrollYBefore = window.scrollY;
+  answerChoices[2].dispatchEvent(new Event("click"));
+
+  assert.equal(window.scrollY, scrollYBefore);
+  assert.deepEqual(disclosures.map(({ open }) => open), [true, true, false]);
+});
+
+test("choosing A or B opens its answer without collapsing another answer", () => {
   const { answerChoices, disclosures } = bootCatalog();
 
   answerChoices[0].dispatchEvent(new Event("click"));
@@ -241,14 +262,14 @@ test("choosing A or B opens its answer, closes another, and stays open on repeat
   );
 
   answerChoices[2].dispatchEvent(new Event("click"));
-  assert.deepEqual(disclosures.map(({ open }) => open), [false, true, false]);
+  assert.deepEqual(disclosures.map(({ open }) => open), [true, true, false]);
   assert.deepEqual(
     answerChoices.slice(0, 4).map((choice) => choice.getAttribute("aria-expanded")),
-    ["false", "false", "true", "true"],
+    ["true", "true", "true", "true"],
   );
 
   answerChoices[2].dispatchEvent(new Event("click"));
-  assert.deepEqual(disclosures.map(({ open }) => open), [false, true, false]);
+  assert.deepEqual(disclosures.map(({ open }) => open), [true, true, false]);
 });
 
 test("Enter and Space open the controlled answer without browser click synthesis", () => {
@@ -260,20 +281,20 @@ test("Enter and Space open the controlled answer without browser click synthesis
 
   const spaceEvent = pressChoice(answerChoices[2], " ");
   assert.equal(spaceEvent.defaultPrevented, true);
-  assert.deepEqual(disclosures.map(({ open }) => open), [false, true, false]);
+  assert.deepEqual(disclosures.map(({ open }) => open), [true, true, false]);
 });
 
-test("clicking a closed answer closes the current answer before native opening", () => {
+test("clicking a closed answer summary does not collapse the current answer", () => {
   const { disclosures } = bootCatalog();
   openAnswer(disclosures[0]);
 
   disclosures[1].summary.dispatchEvent(new Event("click"));
 
-  assert.deepEqual(disclosures.map(({ open }) => open), [false, false, false]);
+  assert.deepEqual(disclosures.map(({ open }) => open), [true, false, false]);
 
   disclosures[1].open = true;
   disclosures[1].dispatchEvent(new Event("toggle"));
-  assert.deepEqual(disclosures.map(({ open }) => open), [false, true, false]);
+  assert.deepEqual(disclosures.map(({ open }) => open), [true, true, false]);
 });
 
 test("the bulk answer button opens and closes only answers on visible cards", () => {
@@ -308,7 +329,7 @@ test("choosing A or B preserves an explicitly opened bulk answer view", () => {
   assert.equal(toggleVisibleAnswers.attributes.get("aria-pressed"), "true");
 });
 
-test("using an individual answer after bulk open returns to single-answer mode", () => {
+test("using an individual answer after bulk open leaves unrelated answers in place", () => {
   const { disclosures, toggleVisibleAnswers } = bootCatalog();
   toggleVisibleAnswers.dispatchEvent(new Event("click"));
   for (const disclosure of disclosures) {
@@ -320,13 +341,13 @@ test("using an individual answer after bulk open returns to single-answer mode",
   disclosures[1].open = false;
   disclosures[1].dispatchEvent(new Event("toggle"));
 
-  assert.deepEqual(disclosures.map(({ open }) => open), [false, false, false]);
+  assert.deepEqual(disclosures.map(({ open }) => open), [true, false, true]);
   assert.equal(toggleVisibleAnswers.textContent, "表示中の答えをすべて開く");
   assert.equal(toggleVisibleAnswers.attributes.get("aria-pressed"), "false");
 
   openAnswer(disclosures[2]);
   openAnswer(disclosures[0]);
-  assert.deepEqual(disclosures.map(({ open }) => open), [true, false, false]);
+  assert.deepEqual(disclosures.map(({ open }) => open), [true, false, true]);
 });
 
 test("the bulk button reflects whether every visible answer is currently open", () => {

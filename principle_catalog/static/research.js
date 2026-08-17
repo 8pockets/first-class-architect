@@ -44,9 +44,6 @@
       ? document.getElementById(controlledId)
       : null;
     if (!disclosure) return;
-    for (const candidate of disclosures) {
-      if (candidate !== disclosure) setAnswerOpen(candidate, false);
-    }
     setAnswerOpen(disclosure, true);
   };
 
@@ -77,10 +74,6 @@
   for (const disclosure of disclosures) {
     disclosure.addEventListener("toggle", () => {
       syncChoiceExpansion(disclosure);
-      if (!disclosure.open) return;
-      for (const candidate of disclosures) {
-        if (candidate !== disclosure) setAnswerOpen(candidate, false);
-      }
     });
   }
   for (const choice of answerChoices) {
