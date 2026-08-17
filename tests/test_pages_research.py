@@ -709,7 +709,11 @@ def test_research_page_renders_candidate_questions_with_closed_type_specific_ans
     assert research.count('class="research-answer-disclosure"') == 3
     assert research.count('class="disclosure-label-closed"') == 3
     assert research.count('class="disclosure-label-open"') == 3
-    assert '<details class="research-answer-disclosure" open' not in research
+    assert not re.search(
+        r'<details id="research-answer-[^"]+" '
+        r'class="research-answer-disclosure"[^>]* open',
+        research,
+    )
     assert (
         '<script src="https://8pockets.github.io/first-class-architect/'
         'assets/research.js" defer></script>'
@@ -725,7 +729,8 @@ def test_research_page_renders_candidate_questions_with_closed_type_specific_ans
         question = question_record.current
         card = _research_card(research, item.code)
         disclosure_start = card.index(
-            '<details class="research-answer-disclosure" '
+            f'<details id="research-answer-{item.code}" '
+            'class="research-answer-disclosure" '
             "data-research-answer-disclosure>"
         )
         disclosure_end = card.index("</details>", disclosure_start) + len("</details>")
@@ -801,6 +806,53 @@ def test_build_loads_research_registries_and_copies_the_interaction_asset(
     assert (output / "assets/research.js").read_text(encoding="utf-8") == (
         Path("principle_catalog/static/research.js").read_text(encoding="utf-8")
     )
+
+
+def test_research_choices_are_buttons_that_control_their_answer() -> None:
+    catalog = load_catalog()
+    queries = load_research_queries(catalog)
+    questions, coverage = _sample_question_and_coverage_registries(catalog)
+    research = _research_page(BASE_URL, catalog, queries, questions, coverage)
+
+    for key in questions.items:
+        item = next(candidate for candidate in catalog.principles if candidate.id == key)
+        card = _research_card(research, item.code)
+        answer_id = f"research-answer-{item.code}"
+        assert card.count('class="research-choice-button"') == 2
+        assert card.count('data-research-answer-choice') == 2
+        assert card.count('type="button"') == 2
+        assert card.count(f'aria-controls="{answer_id}"') == 2
+        assert card.count('aria-expanded="false"') == 2
+        assert (
+            f'<details id="{answer_id}" class="research-answer-disclosure" '
+            "data-research-answer-disclosure>"
+            in card
+        )
+        assert "data-correct" not in card
+
+
+def test_research_choice_buttons_preserve_the_existing_design(tmp_path: Path) -> None:
+    _, _, output = _build(tmp_path)
+    css = (output / "assets/styles.css").read_text(encoding="utf-8")
+
+    button = re.search(r"\.research-choice-button\s*\{([^}]*)\}", css)
+    assert button is not None
+    declarations = button.group(1)
+    assert "display: grid" in declarations
+    assert "grid-template-columns: 2.1rem minmax(0, 1fr)" in declarations
+    assert "width: 100%" in declarations
+    assert "min-height: 44px" in declarations
+    assert "padding: 10px 12px" in declarations
+    assert "background: #f5f1e9" in declarations
+    assert "border: 1px solid #d8cec2" in declarations
+    assert "border-radius: 8px" in declarations
+    assert "font: inherit" in declarations
+    assert "text-align: left" in declarations
+    assert "cursor: pointer" in declarations
+
+    focus = re.search(r"\.research-choice-button:focus-visible\s*\{([^}]*)\}", css)
+    assert focus is not None
+    assert "outline: 3px solid var(--blue-dark)" in focus.group(1)
 
 
 def test_research_question_controls_remain_readable_and_tappable_on_mobile(
@@ -921,6 +973,9 @@ def test_research_page_shows_exact_provisional_content_and_keeps_root_confirmed_
     assert "標準のみ（47件）" in research
     assert "発展のみ（48件）" in research
     assert "骨格＋標準（52件）" in research
+    assert research.count('class="research-choice-button"') == len(visible_keys) * 2
+    assert research.count("data-research-answer-choice") == len(visible_keys) * 2
+    assert research.count('<details id="research-answer-') == len(visible_keys)
 
     codes = re.findall(r'<article class="research-card" id="([^"]+)"', research)
     assert codes == [by_key[key].code for key in visible_keys]
@@ -934,7 +989,8 @@ def test_research_page_shows_exact_provisional_content_and_keeps_root_confirmed_
         assert escape(item.principle) in card
         assert record.type == item.type
         disclosure_start = card.index(
-            '<details class="research-answer-disclosure" '
+            f'<details id="research-answer-{item.code}" '
+            'class="research-answer-disclosure" '
             "data-research-answer-disclosure>"
         )
         disclosure_end = card.index("</details>", disclosure_start) + len("</details>")
@@ -943,6 +999,10 @@ def test_research_page_shows_exact_provisional_content_and_keeps_root_confirmed_
         assert escape(question.prompt) in outside_disclosure
         assert escape(question.choice_a) in outside_disclosure
         assert escape(question.choice_b) in outside_disclosure
+        answer_id = f"research-answer-{item.code}"
+        assert card.count('class="research-choice-button"') == 2
+        assert card.count(f'aria-controls="{answer_id}"') == 2
+        assert card.count('aria-expanded="false"') == 2
         assert 'class="research-evidence"' in outside_disclosure
         assert 'class="explanation-search-button"' in outside_disclosure
         assert "候補層：" in outside_disclosure
@@ -1092,9 +1152,7 @@ def test_confirmed_card_with_queries_adds_one_always_visible_explanation_button(
 
     assert root.count('class="principle-card"') == 116
     assert root.count('class="practice-question"') == 116
-    assert root.count(
-        '<details class="answer-disclosure" data-answer-disclosure>'
-    ) == 116
+    assert root.count('<details id="answer-') == 116
     expected_button_count = sum(
         candidate.id in changed_registry.items
         for candidate in display_principles(catalog, published_only=True)
