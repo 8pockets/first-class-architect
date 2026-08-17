@@ -100,7 +100,9 @@ const bootResearchPage = () => {
     getElementById: (identifier) => elementsById.get(identifier) ?? null,
   };
 
-  vm.runInNewContext(script, { document, Event });
+  const window = new EventTarget();
+  window.scrollY = 0;
+  vm.runInNewContext(script, { document, Event, window });
   return {
     answerChoices,
     cards,
@@ -109,6 +111,7 @@ const bootResearchPage = () => {
     navLinks,
     sections,
     visibleCount,
+    window,
   };
 };
 
@@ -145,7 +148,7 @@ test("research coverage filter exposes all, each tier, and foundation plus stand
   }
 });
 
-test("provisional answers start closed, stay single-open, and close on filtering", () => {
+test("provisional answers start closed, open independently, and close on filtering", () => {
   const { coverage, disclosures } = bootResearchPage();
 
   assert.deepEqual(disclosures.map(({ open }) => open), [false, false, false]);
@@ -154,11 +157,32 @@ test("provisional answers start closed, stay single-open, and close on filtering
   disclosures[0].dispatchEvent(new Event("toggle"));
   disclosures[1].open = true;
   disclosures[1].dispatchEvent(new Event("toggle"));
-  assert.deepEqual(disclosures.map(({ open }) => open), [false, true, false]);
+  assert.deepEqual(disclosures.map(({ open }) => open), [true, true, false]);
 
   coverage.value = "core-only";
   coverage.dispatchEvent(new Event("change"));
   assert.deepEqual(disclosures.map(({ open }) => open), [false, false, false]);
+});
+
+test("opening a lower provisional answer does not move the viewport", () => {
+  const { answerChoices, disclosures, window } = bootResearchPage();
+  let answerAboveOpen = disclosures[0].open;
+  Object.defineProperty(disclosures[0], "open", {
+    configurable: true,
+    get: () => answerAboveOpen,
+    set: (open) => {
+      if (answerAboveOpen && !open) window.scrollY -= 370;
+      answerAboveOpen = open;
+    },
+  });
+  window.scrollY = 20260;
+
+  answerChoices[0].dispatchEvent(new Event("click"));
+  const scrollYBefore = window.scrollY;
+  answerChoices[2].dispatchEvent(new Event("click"));
+
+  assert.equal(window.scrollY, scrollYBefore);
+  assert.deepEqual(disclosures.map(({ open }) => open), [true, true, false]);
 });
 
 test("choosing A or B opens provisional or pending content and stays open on repeat", () => {
@@ -172,14 +196,14 @@ test("choosing A or B opens provisional or pending content and stays open on rep
   );
 
   answerChoices[4].dispatchEvent(new Event("click"));
-  assert.deepEqual(disclosures.map(({ open }) => open), [false, false, true]);
+  assert.deepEqual(disclosures.map(({ open }) => open), [true, false, true]);
   assert.deepEqual(
     answerChoices.map((choice) => choice.getAttribute("aria-expanded")),
-    ["false", "false", "false", "false", "true", "true"],
+    ["true", "true", "false", "false", "true", "true"],
   );
 
   answerChoices[4].dispatchEvent(new Event("click"));
-  assert.deepEqual(disclosures.map(({ open }) => open), [false, false, true]);
+  assert.deepEqual(disclosures.map(({ open }) => open), [true, false, true]);
 });
 
 test("Enter and Space open provisional or pending content without browser click synthesis", () => {
@@ -191,5 +215,5 @@ test("Enter and Space open provisional or pending content without browser click 
 
   const spaceEvent = pressChoice(answerChoices[4], " ");
   assert.equal(spaceEvent.defaultPrevented, true);
-  assert.deepEqual(disclosures.map(({ open }) => open), [false, false, true]);
+  assert.deepEqual(disclosures.map(({ open }) => open), [true, false, true]);
 });
