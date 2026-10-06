@@ -7,6 +7,10 @@ const script = readFileSync(
   new URL("../principle_catalog/static/catalog.js", import.meta.url),
   "utf8",
 );
+const historyScript = readFileSync(
+  new URL("../principle_catalog/static/answer-history.js", import.meta.url), "utf8",
+);
+let bootSerial = 0;
 
 class FakeElement extends EventTarget {
   constructor({ dataset = {}, id = "", value = "" } = {}) {
@@ -18,6 +22,7 @@ class FakeElement extends EventTarget {
     this.open = false;
     this.textContent = "";
     this.attributes = new Map();
+    this.elements = new Map();
     this.classList = {
       toggle: () => {},
     };
@@ -34,7 +39,7 @@ class FakeElement extends EventTarget {
   querySelector(selector) {
     if (selector === "[data-print-position]") return this.printPosition ?? null;
     if (selector === "summary") return this.summary ?? null;
-    return null;
+    return this.elements.get(selector) ?? null;
   }
 
   closest(selector) {
@@ -44,12 +49,14 @@ class FakeElement extends EventTarget {
 
   focus() {}
 
+  replaceChildren(...children) { this.children = children; }
+
   scrollIntoView() {
     this.scrolledIntoView = true;
   }
 }
 
-const bootCatalog = ({ catalogCards } = {}) => {
+const bootCatalog = ({ catalogCards, withHistory = false, storage } = {}) => {
   const defaultCards = [
     new FakeElement({
       dataset: {
@@ -80,12 +87,18 @@ const bootCatalog = ({ catalogCards } = {}) => {
     }),
   ];
   const cards = catalogCards ?? defaultCards;
+  if (withHistory) cards.forEach((card, index) => {
+    Object.assign(card.dataset, { studyId: `steel.test-${index}`, questionRevision: "rev1", correctChoice: "A" });
+    for (const selector of ["[data-answer-result]", "[data-answer-retry]", "[data-answer-history]", "[data-answer-history-list]", '[data-research-search="explanation"]']) {
+      card.elements.set(selector, new FakeElement());
+    }
+  });
   const disclosures = cards.map(
     (_card, index) => new FakeElement({ id: `answer-${index + 1}` }),
   );
   const answerChoices = cards.flatMap((card, index) =>
-    ["A", "B"].map(() => {
-      const choice = new FakeElement();
+    ["A", "B"].map((letter) => {
+      const choice = new FakeElement({ dataset: { answerChoice: letter } });
       choice.card = card;
       choice.setAttribute("aria-controls", disclosures[index].id);
       choice.setAttribute("aria-expanded", "false");
@@ -143,6 +156,10 @@ const bootCatalog = ({ catalogCards } = {}) => {
   const progress = new FakeElement({ value: "all" });
   const sourceKind = new FakeElement({ value: "all" });
   const coverage = new FakeElement({ value: "all" });
+  const reviewFilter = new FakeElement({ value: "all" });
+  const historyStatus = new FakeElement();
+  const historyExport = new FakeElement();
+  const historyImport = new FakeElement();
   const toggleVisibleAnswers = new FakeElement();
   const reset = new FakeElement();
   const visibleCount = new FakeElement();
@@ -162,6 +179,12 @@ const bootCatalog = ({ catalogCards } = {}) => {
     ["#visible-count", visibleCount],
     ["#empty-state", empty],
   ]);
+  if (withHistory) {
+    elements.set("#review-filter", reviewFilter);
+    elements.set("#history-status", historyStatus);
+    elements.set("#history-export", historyExport);
+    elements.set("#history-import", historyImport);
+  }
   const legacyAnchor = new FakeElement({
     dataset: { canonicalFragment: "structure.steel.compression-member-slenderness" },
   });
@@ -176,6 +199,7 @@ const bootCatalog = ({ catalogCards } = {}) => {
     querySelectorAll: (selector) =>
       selector === "[data-filter-type]" ? typeButtons : [],
     getElementById: (identifier) => elementsById.get(identifier) ?? null,
+    createElement: () => new FakeElement(),
   };
   const window = new EventTarget();
   window.location = { hash: "" };
@@ -185,8 +209,19 @@ const bootCatalog = ({ catalogCards } = {}) => {
       window.history.replacement = replacement;
     },
   };
-
-  vm.runInNewContext(script, { document, Event, window });
+  const values = new Map();
+  window.localStorage = storage ?? {
+    get length() { return values.size; },
+    key: (index) => [...values.keys()][index] ?? null,
+    getItem: (key) => values.get(key) ?? null,
+    setItem: (key, value) => values.set(key, value),
+  };
+  const serial = ++bootSerial;
+  let id = 0;
+  const context = { document, Event, window, crypto: { randomUUID: () => `boot-${serial}-id-${++id}` } };
+  vm.createContext(context);
+  if (withHistory) vm.runInContext(historyScript, context);
+  vm.runInContext(script, context);
 
   return {
     answerChoices,
@@ -195,6 +230,18 @@ const bootCatalog = ({ catalogCards } = {}) => {
     groups,
     canonicalCard,
     coverage,
+    reviewFilter,
+    historyStatus,
+    historyImport,
+    historyExport,
+    storedEvents: () => {
+      const result = [];
+      for (let i = 0; i < window.localStorage.length; i += 1) {
+        const key = window.localStorage.key(i);
+        if (key.startsWith("architect-steel-history:v1:event:")) result.push(JSON.parse(window.localStorage.getItem(key)));
+      }
+      return result;
+    },
     printPositions,
     principleLinks,
     progress,
@@ -219,6 +266,139 @@ const pressChoice = (choice, key) => {
   choice.dispatchEvent(event);
   return event;
 };
+
+test("answer history grades the first button only, and native keyboard click is not duplicated", () => {
+  const app = bootCatalog({ withHistory: true });
+  pressChoice(app.answerChoices[1], "Enter");
+  assert.equal(app.storedEvents().length, 0);
+  app.answerChoices[1].dispatchEvent(new Event("click"));
+  app.answerChoices[0].dispatchEvent(new Event("click"));
+  app.answerChoices[1].dispatchEvent(new Event("click"));
+  const answers = app.storedEvents().filter((event) => event.type === "answer");
+  assert.equal(answers.length, 1);
+  assert.equal(answers[0].choice, "B");
+  assert.equal(answers[0].correct, false);
+  assert.equal(answers[0].independent, true);
+  assert.match(app.cards[0].querySelector("[data-answer-result]").textContent, /今回：Bを選択 → 不正解/);
+  assert.equal(app.disclosures[0].open, true);
+});
+
+test("individual and bulk answer viewing never counts as answering and later answers are assisted", () => {
+  const app = bootCatalog({ withHistory: true });
+  app.disclosures[0].summary.dispatchEvent(new Event("click"));
+  assert.equal(app.storedEvents().filter((event) => event.type === "answer").length, 0);
+  app.answerChoices[0].dispatchEvent(new Event("click"));
+  app.toggleVisibleAnswers.dispatchEvent(new Event("click"));
+  app.answerChoices[2].dispatchEvent(new Event("click"));
+  const answers = app.storedEvents().filter((event) => event.type === "answer");
+  assert.equal(answers.length, 2);
+  assert.equal(answers.every((event) => !event.independent), true);
+});
+
+test("explicit retry records a new assisted attempt without erasing the first answer", () => {
+  const app = bootCatalog({ withHistory: true });
+  app.answerChoices[1].dispatchEvent(new Event("click"));
+  assert.equal(app.cards[0].querySelector("[data-answer-retry]").hidden, false);
+  app.cards[0].querySelector("[data-answer-retry]").dispatchEvent(new Event("click"));
+  assert.equal(app.cards[0].querySelector("[data-answer-retry]").hidden, true);
+  assert.equal(app.disclosures[0].open, false);
+  app.answerChoices[0].dispatchEvent(new Event("click"));
+  const answers = app.storedEvents().filter((event) => event.type === "answer");
+  assert.equal(answers.length, 2);
+  assert.deepEqual(answers.map((event) => event.choice), ["B", "A"]);
+  assert.equal(answers[1].independent, false);
+  assert.match(app.cards[0].querySelector("[data-answer-result]").textContent, /要復習/);
+});
+
+test("review filters combine with coverage and never hide cards while answering", () => {
+  const app = bootCatalog({ withHistory: true });
+  app.reviewFilter.value = "unanswered";
+  app.reviewFilter.dispatchEvent(new Event("change"));
+  app.answerChoices[1].dispatchEvent(new Event("click"));
+  assert.equal(app.cards[0].hidden, false, "an answer does not cause a card to jump out of view");
+  app.reviewFilter.dispatchEvent(new Event("change"));
+  assert.equal(app.cards[0].hidden, true);
+  app.reviewFilter.value = "review";
+  app.reviewFilter.dispatchEvent(new Event("change"));
+  assert.deepEqual(app.cards.map((card) => card.hidden), [false, true, true]);
+  app.coverage.value = "standard-only";
+  app.coverage.dispatchEvent(new Event("change"));
+  assert.deepEqual(app.cards.map((card) => card.hidden), [true, true, true]);
+  app.reset.dispatchEvent(new Event("click"));
+  assert.equal(app.reviewFilter.value, "all");
+  assert.deepEqual(app.cards.map((card) => card.hidden), [false, false, false]);
+});
+
+test("reload retains history but does not leak the previous selected letter before opening history", () => {
+  const first = bootCatalog({ withHistory: true });
+  first.answerChoices[1].dispatchEvent(new Event("click"));
+  const app = bootCatalog({ withHistory: true, storage: first.window.localStorage });
+  const result = app.cards[0].querySelector("[data-answer-result]").textContent;
+  assert.match(result, /要復習/);
+  assert.doesNotMatch(result, /Bを選択/);
+  assert.match(app.cards[0].querySelector("[data-answer-history-list]").children[0].textContent, /B → 不正解/);
+  app.answerChoices[0].dispatchEvent(new Event("click"));
+  assert.equal(app.storedEvents().filter((event) => event.type === "answer").at(-1).independent, false);
+});
+
+test("opening an empty history panel does not pretend that an answer was revealed", () => {
+  const app = bootCatalog({ withHistory: true });
+  const panel = app.cards[0].querySelector("[data-answer-history]");
+  panel.open = true;
+  panel.dispatchEvent(new Event("toggle"));
+  app.window.dispatchEvent(new Event("focus"));
+  assert.equal(app.storedEvents().length, 0);
+  app.answerChoices[0].dispatchEvent(new Event("click"));
+  const answers = app.storedEvents().filter((event) => event.type === "answer");
+  assert.equal(answers.length, 1);
+  assert.equal(answers[0].independent, true);
+});
+
+test("storage failure is explicit and never prevents independent answer disclosures", () => {
+  const app = bootCatalog({ withHistory: true });
+  app.window.localStorage.setItem = () => { throw new Error("QuotaExceededError"); };
+  app.answerChoices[0].dispatchEvent(new Event("click"));
+  assert.match(app.historyStatus.textContent, /保存できません/);
+  assert.equal(app.historyStatus.dataset.error, "true");
+  assert.match(app.cards[0].querySelector("[data-answer-result]").textContent, /保存されていません/);
+  assert.equal(app.disclosures[0].open, true);
+  app.answerChoices[0].dispatchEvent(new Event("click"));
+  assert.equal(app.storedEvents().length, 0);
+});
+
+test("viewing during a storage failure remains assisted after the answer is closed and storage recovers", () => {
+  const app = bootCatalog({ withHistory: true });
+  const save = app.window.localStorage.setItem;
+  app.window.localStorage.setItem = () => { throw new Error("QuotaExceededError"); };
+  openAnswer(app.disclosures[0]);
+  app.disclosures[0].open = false;
+  app.disclosures[0].dispatchEvent(new Event("toggle"));
+  assert.equal(app.storedEvents().length, 0);
+  app.window.localStorage.setItem = save;
+  app.answerChoices[0].dispatchEvent(new Event("click"));
+  const answers = app.storedEvents().filter((event) => event.type === "answer");
+  assert.equal(answers.length, 1);
+  assert.equal(answers[0].independent, false);
+});
+
+test("question-only printing does not mark answers exposed", () => {
+  const app = bootCatalog({ withHistory: true });
+  app.window.dispatchEvent(new Event("beforeprint"));
+  assert.equal(app.storedEvents().length, 0);
+  app.answerChoices[0].dispatchEvent(new Event("click"));
+  assert.equal(app.storedEvents()[0].independent, true);
+});
+
+test("following the external explanation search marks the next answer assisted", () => {
+  const app = bootCatalog({ withHistory: true });
+  app.cards[0].querySelector('[data-research-search="explanation"]').dispatchEvent(new Event("click"));
+  app.cards[1].querySelector('[data-research-search="explanation"]').dispatchEvent(new Event("auxclick"));
+  app.answerChoices[0].dispatchEvent(new Event("click"));
+  app.answerChoices[2].dispatchEvent(new Event("click"));
+  const answers = app.storedEvents().filter((event) => event.type === "answer");
+  assert.equal(answers.length, 2);
+  assert.equal(answers.every((event) => !event.independent), true);
+});
 
 test("answers start closed and opening a lower answer keeps the answer above open", () => {
   const { disclosures } = bootCatalog();
@@ -272,15 +452,19 @@ test("choosing A or B opens its answer without collapsing another answer", () =>
   assert.deepEqual(disclosures.map(({ open }) => open), [true, true, false]);
 });
 
-test("Enter and Space open the controlled answer without browser click synthesis", () => {
+test("native Enter and Space rely only on the browser synthesized click", () => {
   const { answerChoices, disclosures } = bootCatalog();
 
   const enterEvent = pressChoice(answerChoices[0], "Enter");
-  assert.equal(enterEvent.defaultPrevented, true);
+  assert.equal(enterEvent.defaultPrevented, false);
+  assert.deepEqual(disclosures.map(({ open }) => open), [false, false, false]);
+  answerChoices[0].dispatchEvent(new Event("click"));
   assert.deepEqual(disclosures.map(({ open }) => open), [true, false, false]);
 
   const spaceEvent = pressChoice(answerChoices[2], " ");
-  assert.equal(spaceEvent.defaultPrevented, true);
+  assert.equal(spaceEvent.defaultPrevented, false);
+  assert.deepEqual(disclosures.map(({ open }) => open), [true, false, false]);
+  answerChoices[2].dispatchEvent(new Event("click"));
   assert.deepEqual(disclosures.map(({ open }) => open), [true, true, false]);
 });
 

@@ -9,21 +9,17 @@ principles:
   type: principle
   principle: 山形鋼・溝形鋼筋かいの有効断面積
   question:
-    prompt: ガセットプレートへ片側接合する山形鋼・溝形鋼引張ブレースで、ボルト孔欠損を控除した後の有効断面積について正しい結論はどちらか。
+    prompt: 片側接合の単一山形鋼ブレースを許容応力度計算する。孔欠損を控除済みの断面積について、正しい結論はどちらか。
     choices:
-      A: 突出脚の無効部分も控除する
-      B: 突出脚の無効部分は控除しない
-    correct: A
-  conclusion: 片側接合の山形鋼・溝形鋼引張ブレースは、全断面からボルト孔欠損と突出脚の無効部分を差し引いて有効断面積を求める。無効部分はボルト本数で決まる無効長さと板厚の積とし、簡略には突出脚の1/2を無効とする場合がある。
+      A: 突出部は全て有効として控除しない
+      B: 突出部の1/2も無効として控除する
+    correct: B
+  conclusion: 片側接合の山形鋼・溝形鋼引張ブレースでは、ボルト孔欠損に加えて突出脚の無効部分を控除する。許容応力度計算では一般に突出部の1/2を無効とし、破断耐力算定用のボルト本数に応じた有効断面積算定式と区別する。
   reason: 接合されない突出脚にはせん断遅れによる無効部分があり、孔欠損部も引張力を伝えないため。
   conditions:
   - 山形鋼又は溝形鋼の引張筋かい
-  - ボルト接合
-  - 山形鋼又は溝形鋼
-  - ガセットプレート片側だけに接合
-  - 山形鋼または溝形鋼の片側接合
-  - 引張ブレース
-  - ボルト孔欠損も別途控除
+  - ガセットプレートの片側へボルト接合
+  - 許容応力度計算と破断耐力算定の有効断面積を混同しない
   source:
     pages:
     - 169
@@ -37,8 +33,20 @@ principles:
     - '26152'
     - '26154'
     - '29152'
+    authoritative_sources:
+    - kind: local_government
+      title: 大阪府 建築構造設計指針 第1編 B 注意喚起事項（2021年版・2023年一部改訂）
+      locator: B-2、2.2 鉄骨ブレースの有効断面積
+      url: https://www.pref.osaka.lg.jp/documents/35034/09_btyuuikannkizikou_1.pdf
+      supports:
+      - statement
+      - conditions
   prerequisites: []
   editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-BRACE-ECCENTRIC-JOINT-EFFECTS
   order: 2
   type: principle
@@ -46,9 +54,9 @@ principles:
   question:
     prompt: 筋かいを柱へ偏心接合せざるを得ない場合、柱・接合部の設計で考慮する応力として正しい結論はどちらか。
     choices:
-      A: 偏心曲げを含まない応力で設計する
-      B: 偏心曲げを含む応力で設計する
-    correct: B
+      A: 偏心曲げを含む応力で設計する
+      B: 偏心曲げを含まない応力で設計する
+    correct: A
   conclusion: 筋かいは柱へ偏心接合しないようにし、やむを得ない場合は偏心曲げを含む応力を解析して柱・接合部を設計する。
   reason: 偏心曲げモーメントが接合部や柱へ付加応力を生じ、接合部破壊につながるため。
   conditions:

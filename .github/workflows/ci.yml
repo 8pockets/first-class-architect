@@ -87,8 +87,11 @@ jobs:
       - name: Run tests
         run: uv run --locked python -m pytest
       - name: Check browser script syntax
-        run: node --check principle_catalog/static/catalog.js
+        run: |
+          node --check principle_catalog/static/catalog.js
+          node --check principle_catalog/static/answer-history.js
+          node --check principle_catalog/static/research.js
       - name: Test catalog interactions
-        run: node --test tests/catalog-interactions.test.mjs
+        run: node --test tests/*.test.mjs
       - name: Build public site
         run: uv run --locked python -m principle_catalog build --output _site

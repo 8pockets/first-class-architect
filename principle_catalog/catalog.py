@@ -136,6 +136,11 @@ _AUTHORITATIVE_SOURCE_KINDS: set[str] = {
     "jis",
     "aij",
     "government_spec",
+    "government_research",
+    "professional_body",
+    "local_government",
+    "official_exam",
+    "study_material",
 }
 _SOURCE_SUPPORTS: set[str] = {"statement", "explanation", "conditions"}
 _STATEMENT_SOURCE_STATUSES: set[str] = {"verified", "gap", "unreviewed"}
@@ -967,7 +972,7 @@ def _load_section(path: Path, manifest: CatalogManifest) -> tuple[Principle, ...
             question_data = _mapping(item["question"], path, f"{item_id}.question")
             _exact_keys(
                 question_data,
-                {"prompt", "choices", "correct"},
+                {"prompt", "choices", "correct"} | ({"figure"} if "figure" in question_data else set()),
                 path,
                 f"{item_id}.question",
             )
@@ -1017,11 +1022,17 @@ def _load_section(path: Path, manifest: CatalogManifest) -> tuple[Principle, ...
                 _fail(path, f"{item_id}.question choices reveal the answer")
             if _contains_invisible(choice_text):
                 _fail(path, f"{item_id}.question choices contain invisible characters")
+            from principle_catalog.figures import FIGURE_IDS
+
+            figure = question_data.get("figure")
+            if figure is not None and (not isinstance(figure, str) or figure not in FIGURE_IDS):
+                _fail(path, f"{item_id}.question.figure must be a known versioned figure")
             question = BinaryQuestion(
                 prompt=prompt,
                 choice_a=choice_a,
                 choice_b=choice_b,
                 correct=cast(ChoiceLabel, correct),
+                figure=figure,
             )
         if status == "source_checked" and question is None:
             _fail(path, f"{item_id}.question is required for source_checked entries")
@@ -1033,7 +1044,7 @@ def _load_section(path: Path, manifest: CatalogManifest) -> tuple[Principle, ...
         if not conditions:
             _fail(path, f"{item_id}.conditions must not be empty")
         if status == "source_checked" and (
-            reason == _GAP or _GAP in conditions
+            (item_type == "principle" and reason == _GAP) or _GAP in conditions
         ):
             _fail(path, f"{item_id} cannot be source_checked with a source gap")
 
@@ -1046,8 +1057,8 @@ def _load_section(path: Path, manifest: CatalogManifest) -> tuple[Principle, ...
             _int(page, path, f"{item_id}.source.pages entry")
             for page in _list(source["pages"], path, f"{item_id}.source.pages")
         )
-        if not pages or tuple(sorted(set(pages))) != pages:
-            _fail(path, f"{item_id}.source.pages must be non-empty, unique, and sorted")
+        if tuple(sorted(set(pages))) != pages:
+            _fail(path, f"{item_id}.source.pages must be unique and sorted")
         if any(page < manifest.first_page or page > manifest.last_page for page in pages):
             _fail(path, f"{item_id}.source.pages falls outside the audited range")
         question_codes = _string_list(
@@ -1064,6 +1075,16 @@ def _load_section(path: Path, manifest: CatalogManifest) -> tuple[Principle, ...
             if "authoritative_sources" in source
             else ()
         )
+        if not pages:
+            supported = {
+                claim for reference in authoritative_sources for claim in reference.supports
+            }
+            if supported != _SOURCE_SUPPORTS or "verification" not in item:
+                _fail(
+                    path,
+                    f"{item_id}: without audited steel pages, explicit verification and "
+                    "authoritative support for statement, explanation, and conditions are required",
+                )
 
         verification = (
             _load_verification(
@@ -1098,6 +1119,24 @@ def _load_section(path: Path, manifest: CatalogManifest) -> tuple[Principle, ...
                 path,
                 f"{item_id}.display_content is required for published {item_type}",
             )
+        if status == "source_checked" and display_content is not None:
+            # Publication verifies the fields actually taught. A regulation needs
+            # its applicability, not an invented causal explanation in legacy reason.
+            if isinstance(display_content, RuleDisplayContent):
+                required_content = (display_content.rule, *display_content.applicability)
+                qualifiers = display_content.numbers_exceptions
+                has_context = bool(display_content.applicability)
+            else:
+                required_content = (
+                    display_content.definition,
+                    *display_content.distinguishing_conditions,
+                )
+                qualifiers = display_content.confusable_points
+                has_context = bool(display_content.distinguishing_conditions)
+            if not has_context or any(_GAP in value for value in (*required_content, *qualifiers)):
+                _fail(path, f"{item_id}.display_content cannot have missing evidence")
+            if reason == _GAP and "verification" not in item:
+                _fail(path, f"{item_id} requires explicit typed verification")
 
         item_order = _int(item["order"], path, f"{item_id}.order")
         if item_order < 1:
@@ -1276,10 +1315,10 @@ def _load_taxonomy(path: Path) -> TaxonomyProjection:
                 subtopics=tuple(subtopics),
             )
         )
-    if len(groups) != 7:
-        _fail(path, "taxonomy must contain exactly 7 groups")
-    if len(subtopic_ids) != 37:
-        _fail(path, "taxonomy must contain exactly 37 subtopics")
+    # The audited projection fixes the release's tree. The schema must also
+    # support new, source-verified fields such as composite and seismic design.
+    if not groups:
+        _fail(path, "taxonomy must contain at least one group")
 
     raw_assignments = _mapping(data["assignments"], path, "assignments")
     assignments: dict[str, str] = {}
@@ -1863,6 +1902,7 @@ def _question_audit_sha256(principles: tuple[Principle, ...]) -> str:
                 "B": item.question.choice_b,
             },
             "correct": item.question.correct,
+            "figure": item.question.figure,
             "conclusion": item.conclusion,
             "reason": item.reason,
             "conditions": item.conditions,

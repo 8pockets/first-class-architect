@@ -18,4 +18,21 @@ principles:
     - 207
     question_codes: []
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 高力ボルト二面摩擦継手で部材寸法やボルトの張出しが納まりの制約となるときの検討案について、正しい結論はどちらか。
+    choices:
+      A: 一面摩擦や溶接併用を検討する
+      B: 普通ボルトへ無条件で置き換える
+    correct: A
+  display_content:
+    definition: 継手は高力ボルト二面摩擦接合が一般的で、部材が小さい場合やボルトの張出しが支障になる場合は、一面摩擦接合または高力ボルト・溶接併用を用いることがある。
+    distinguishing_conditions:
+    - 鉄骨部材の現場継手
+    - 部材寸法とボルト張出しの制約を考慮
+    confusable_points:
+    - 本問では「普通ボルトへ無条件で置き換える」と区別する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete

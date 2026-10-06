@@ -49,7 +49,22 @@ principles:
   prerequisites:
   - S-K6-WELD-ALLOWABLE-STRESS-FULL-PENETRATION
   - S-K6-WELD-ALLOWABLE-STRESS-NONFULL-PENETRATION
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 突合せ溶接とすみ肉溶接を混用する場合の応力分担について、正しい結論はどちらか。
+    choices:
+      A: 各溶接の許容耐力に応じて分担
+      B: 突合せ溶接側へ全応力を集中
+    correct: A
+  display_content:
+    rule: 突合せ溶接とすみ肉溶接を混用する場合は、それぞれの許容耐力に応じて応力を分担する。
+    applicability:
+    - 突合せ溶接とすみ肉溶接を同じ接合部で併用する場合
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-MIXED-WELD-ORDINARY-BOLT-LOAD-SHARING
   order: 3
   type: rule
@@ -66,4 +81,19 @@ principles:
   prerequisites:
   - S-K6-ORDINARY-BOLT-SHEAR-TRANSFER
   - S-K6-WELD-TYPE-IDENTIFICATION
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 普通ボルト継手と溶接を混用して60kNを伝える新設接合部で、許容耐力の計画について、正しい結論はどちらか。
+    choices:
+      A: 溶接だけで60kNを負担できるようにする
+      B: 普通ボルト30kNと溶接30kNに分担する
+    correct: A
+  display_content:
+    rule: 溶接と普通ボルトを混用する接合では、全応力を溶接が負担するものとする。
+    applicability:
+    - 溶接接合と普通ボルト接合の混用
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete

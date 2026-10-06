@@ -97,14 +97,23 @@ def _explanation_search_links(
 
 
 def _sample_question_and_coverage_registries(catalog):
+    route_keys = {
+        key for key, record in load_research_queries(catalog).items.items()
+        if record.has_research_route
+    }
     by_type = {
         item_type: next(
             item
             for item in catalog.principles
-            if item.type == item_type and item.editorial_status != "source_checked"
+            if item.type == item_type and item.id in route_keys
         )
         for item_type in ("principle", "rule", "identification")
     }
+    fixture_keys = {item.id for item in by_type.values()}
+    catalog = replace(catalog, principles=tuple(
+        replace(item, editorial_status="source_gap", question=None)
+        if item.id in fixture_keys else item for item in catalog.principles
+    ))
     specifications = (
         (
             by_type["principle"],
@@ -185,6 +194,7 @@ def _sample_question_and_coverage_registries(catalog):
             ),
         )
     return (
+        catalog,
         SimpleNamespace(items=question_items, active_keys=tuple(question_items)),
         SimpleNamespace(items=coverage_items, active_keys=tuple(coverage_items)),
     )
@@ -301,11 +311,10 @@ def test_research_queries_preserve_the_initial_fire_special_pilot_snapshot() -> 
     raw = yaml.safe_load(RESEARCH_QUERIES_PATH.read_text(encoding="utf-8"))
 
     assert registry.version == 1
-    # The first all-item publication contains active identities only. Future retired
-    # research routes should get a separate history assertion instead of weakening
-    # this immutable initial snapshot.
-    assert len(registry.items) == 216
-    assert set(registry.items) == set(catalog.identities.active)
+    # Freeze the initial 216-item release while allowing later appended releases.
+    initial_keys = set(registry.releases[0].revisions)
+    assert len(initial_keys) == 216
+    assert set(catalog.identities.active) <= set(registry.items)
     assert tuple(registry.items)[: len(PILOT_KEYS)] == PILOT_KEYS
     assert set(PILOT_KEYS) <= set(registry.items)
     assert set(backlog["topic_backlog"]["keys"]) <= set(registry.items)
@@ -333,20 +342,23 @@ def test_research_queries_preserve_the_initial_fire_special_pilot_snapshot() -> 
     route_keys = {
         key for key, record in registry.items.items() if record.has_research_route
     }
-    assert route_keys == pending_keys
+    initial_route_keys = set(registry.releases[0].route_history_lengths)
+    assert len(initial_route_keys) == 100
+    assert initial_route_keys <= route_keys
+    assert pending_keys <= route_keys
     assert all(
         record.research_route_history == ("steel-search-v1",)
         for key, record in registry.items.items()
-        if key in pending_keys
+        if key in initial_route_keys
     )
     assert all(
         record.research_route_history == ()
         for key, record in registry.items.items()
-        if key not in pending_keys
+        if key in initial_keys - initial_route_keys
     )
     assert tuple(
         (release.id, release.content_sha256) for release in registry.releases
-    ) == INITIAL_RESEARCH_RELEASES
+    )[: len(INITIAL_RESEARCH_RELEASES)] == INITIAL_RESEARCH_RELEASES
     for key, record in registry.items.items():
         assert record.code == identities[key].code
         assert tuple(revision.revision for revision in record.query_history) == tuple(
@@ -379,7 +391,7 @@ def test_research_queries_preserve_the_initial_fire_special_pilot_snapshot() -> 
             "authoritative": registry.items[key].query_history[0].authoritative,
             "explanation": registry.items[key].query_history[0].explanation,
         }
-        for key in sorted(registry.items)
+        for key in sorted(initial_keys)
     ]
     canonical_all_items = json.dumps(
         initial_all_items,
@@ -572,6 +584,9 @@ def test_research_release_watermarks_reject_drops_decreases_and_route_removal(
         load_research_queries(catalog, removed_route)
 
     registry = load_research_queries(catalog)
+    current["releases"] = current["releases"][:1]
+    current["items"] = {candidate: record for candidate, record in current["items"].items()
+                        if candidate in current["releases"][0]["revisions"]}
     route_release = current["releases"][0]
     del route_release["route_history_lengths"][key]
     changed_items = {
@@ -589,8 +604,12 @@ def test_research_release_watermarks_reject_drops_decreases_and_route_removal(
         yaml.safe_dump(current, allow_unicode=True, sort_keys=False),
         encoding="utf-8",
     )
+    fixture_catalog = replace(catalog, principles=tuple(
+        replace(item, editorial_status="source_gap", question=None) if item.id == key else item
+        for item in catalog.principles
+    ))
     with pytest.raises(CatalogError, match="active unconfirmed"):
-        load_research_queries(catalog, unpublished_route)
+        load_research_queries(fixture_catalog, unpublished_route)
 
 
 def test_research_registry_supports_a_route_only_release(tmp_path: Path) -> None:
@@ -670,7 +689,7 @@ def test_research_registry_supports_a_route_only_release(tmp_path: Path) -> None
 def test_research_page_renders_candidate_questions_with_closed_type_specific_answers() -> None:
     catalog = load_catalog()
     queries = load_research_queries(catalog)
-    questions, coverage = _sample_question_and_coverage_registries(catalog)
+    catalog, questions, coverage = _sample_question_and_coverage_registries(catalog)
 
     research = _research_page(
         BASE_URL,
@@ -787,7 +806,11 @@ def test_build_loads_research_registries_and_copies_the_interaction_asset(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     catalog = load_catalog()
-    questions, coverage = _sample_question_and_coverage_registries(catalog)
+    catalog, questions, coverage = _sample_question_and_coverage_registries(catalog)
+    monkeypatch.setattr(site_module, "load_catalog", lambda: catalog)
+    # This deliberately demoted three-card projection is not the audited
+    # production corpus. The independent exam audit has its own loader tests.
+    monkeypatch.setattr(site_module, "load_exam_coverage", lambda actual_catalog: None)
     monkeypatch.setattr(
         site_module,
         "load_research_questions",
@@ -811,7 +834,7 @@ def test_build_loads_research_registries_and_copies_the_interaction_asset(
 def test_research_choices_are_buttons_that_control_their_answer() -> None:
     catalog = load_catalog()
     queries = load_research_queries(catalog)
-    questions, coverage = _sample_question_and_coverage_registries(catalog)
+    catalog, questions, coverage = _sample_question_and_coverage_registries(catalog)
     research = _research_page(BASE_URL, catalog, queries, questions, coverage)
 
     for key in questions.items:
@@ -860,7 +883,7 @@ def test_research_question_controls_remain_readable_and_tappable_on_mobile(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     catalog = load_catalog()
-    questions, coverage = _sample_question_and_coverage_registries(catalog)
+    catalog, questions, coverage = _sample_question_and_coverage_registries(catalog)
     monkeypatch.setattr(
         site_module,
         "load_research_questions",
@@ -945,34 +968,50 @@ def test_research_page_shows_exact_provisional_content_and_keeps_root_confirmed_
     assert {
         page.relative_to(output).as_posix() for page in output.rglob("*.html")
     } == {"index.html", "404.html", "research/index.html"}
-    assert root.count('class="principle-card"') == 116
+    assert root.count('class="principle-card"') == len(display_principles(catalog, published_only=True))
     assert root.count('class="explanation-search-button"') == confirmed_query_count
-    assert f'href="{BASE_URL}research/"' in root
-    assert f"根拠確認中の{len(visible_keys)}件" in root
-    assert '<h2 id="research-entry-title">根拠確認中の項目を調べる</h2>' in root
-    assert "根拠確認中の項目を見る" in root
+    if visible_keys:
+        assert f'href="{BASE_URL}research/"' in root
+        assert f"根拠確認中の{len(visible_keys)}件" in root
+        assert '<h2 id="research-entry-title">根拠確認中の項目を調べる</h2>' in root
+        assert "根拠確認中の項目を見る" in root
+    else:
+        assert 'id="research-entry-title"' not in root
+        assert "根拠確認中の項目を見る" not in root
     assert "耐火・特殊荷重の根拠を調べる" not in root
     assert '<meta name="robots" content="noindex,follow">' in research
     assert f'<link rel="canonical" href="{BASE_URL}research/">' in research
     assert f'href="{BASE_URL}"' in research
     assert research.count("誤り・欠落を含む可能性があります") == len(visible_keys)
-    assert "Googleの検索結果は台帳の根拠ではありません" in research
-    assert 'data-research-transition' not in research
-    assert len(visible_keys) == 100
-    assert sum(
+    if visible_keys:
+        assert "Googleの検索結果は台帳の根拠ではありません" in research
+    else:
+        assert "現在、根拠確認中のカードはありません" in research
+        assert 'id="research-coverage-filter"' not in research
+        assert 'class="research-warning"' not in research
+    promoted = [item for item in catalog.principles if item.editorial_status == "source_checked"
+                and item.id in registry.items and registry.items[item.id].has_research_route]
+    assert research.count('data-research-transition') == len(promoted)
+    # The 100-question provisional publication is permanent history, not a
+    # requirement to keep those questions unconfirmed forever.
+    assert len(questions.releases[0].active) == 100
+    provisional_count = sum(
         questions.items[key].current.state == "provisional_answer"
         for key in visible_keys
-    ) == 99
-    assert sum(
+    )
+    pending_count = sum(
         questions.items[key].current.state == "pending" for key in visible_keys
-    ) == 1
-    assert "<strong>100</strong><span>暫定問題</span>" in research
-    assert "<strong>99</strong><span>暫定正解あり</span>" in research
-    assert "<strong>1</strong><span>判定保留</span>" in research
-    assert "骨格のみ（5件）" in research
-    assert "標準のみ（47件）" in research
-    assert "発展のみ（48件）" in research
-    assert "骨格＋標準（52件）" in research
+    )
+    if visible_keys:
+        assert f"<strong>{len(visible_keys)}</strong><span>暫定問題</span>" in research
+        assert f"<strong>{provisional_count}</strong><span>暫定正解あり</span>" in research
+        assert f"<strong>{pending_count}</strong><span>判定保留</span>" in research
+    tier_counts = {tier: sum(coverage.items[key].current.tier == tier for key in visible_keys)
+                   for tier in (1, 2, 3)}
+    if visible_keys:
+        for tier, label in ((1, "骨格"), (2, "標準"), (3, "発展")):
+            assert f"{label}のみ（{tier_counts[tier]}件）" in research
+        assert f"骨格＋標準（{tier_counts[1] + tier_counts[2]}件）" in research
     assert research.count('class="research-choice-button"') == len(visible_keys) * 2
     assert research.count("data-research-answer-choice") == len(visible_keys) * 2
     assert research.count('<details id="research-answer-') == len(visible_keys)
@@ -1150,9 +1189,10 @@ def test_confirmed_card_with_queries_adds_one_always_visible_explanation_button(
     action_opening = '<div class="explanation-search-action">'
     action = card.split(action_opening, maxsplit=1)[1].split("</div>", maxsplit=1)[0]
 
-    assert root.count('class="principle-card"') == 116
-    assert root.count('class="practice-question"') == 116
-    assert root.count('<details id="answer-') == 116
+    published_count = len(display_principles(catalog, published_only=True))
+    assert root.count('class="principle-card"') == published_count
+    assert root.count('class="practice-question"') == published_count
+    assert root.count('<details id="answer-') == published_count
     expected_button_count = sum(
         candidate.id in changed_registry.items
         for candidate in display_principles(catalog, published_only=True)
@@ -1180,7 +1220,7 @@ def test_confirmed_card_with_queries_adds_one_always_visible_explanation_button(
         "noreferrer",
     }
     assert unescape(accessible_name) == (
-        f"{item.principle}：分かりやすい解説をGoogleで検索（別タブ）"
+        f"{catalog.question_editions.editions[catalog.question_editions.current].reference(item.id)}：分かりやすい解説をGoogleで検索（別タブ）"
     )
     assert visible_label == "分かりやすい解説"
 
@@ -1219,7 +1259,7 @@ def test_every_card_has_one_direct_explanation_search_and_no_visible_search_trai
     }
     expected_accessible_names = {
         record.explanation: (
-            f"{by_key[key].principle}：分かりやすい解説をGoogleで検索（別タブ）"
+            f"{catalog.question_editions.editions[catalog.question_editions.current].reference(key) if key in confirmed_records else by_key[key].principle}：分かりやすい解説をGoogleで検索（別タブ）"
         )
         for key, record in registry.items.items()
         if key in by_key
@@ -1227,11 +1267,11 @@ def test_every_card_has_one_direct_explanation_search_and_no_visible_search_trai
     links = _explanation_search_links(research)
     root_links = _explanation_search_links(root)
 
-    assert len(links) == len(provisional_records) == 100
-    assert len(root_links) == len(confirmed_records) == 116
-    assert len(links) + len(root_links) == 216
-    assert research.count('href="https://www.google.com/search?') == 100
-    assert root.count('href="https://www.google.com/search?') == 116
+    assert len(links) == len(provisional_records)
+    assert len(root_links) == len(confirmed_records)
+    assert len(links) + len(root_links) == len(catalog.principles)
+    assert research.count('href="https://www.google.com/search?') == len(provisional_records)
+    assert root.count('href="https://www.google.com/search?') == len(confirmed_records)
     for key in provisional_records:
         card = _research_card(research, by_key[key].code)
         assert card.count('class="explanation-search-button"') == 1
@@ -1256,7 +1296,7 @@ def test_every_card_has_one_direct_explanation_search_and_no_visible_search_trai
     assert actual_root_queries == expected_root_queries
 
     all_links = links + root_links
-    assert len({unescape(label) for _, _, label, _ in all_links}) == 216
+    assert len({unescape(label) for _, _, label, _ in all_links}) == len(catalog.principles)
     for href, rel, accessible_name, visible_label in all_links:
         href = unescape(href)
         accessible_name = unescape(accessible_name)
@@ -1292,12 +1332,15 @@ def test_every_card_has_one_direct_explanation_search_and_no_visible_search_trai
         "送信されます。Googleの検索結果は台帳の根拠ではありません。"
     )
     assert root.count(disclosure) == 1
-    assert research.count(disclosure) == 1
     assert root.index(disclosure) < root.index('<section class="controls"')
-    warning = research.split(
-        '<section class="research-warning"', maxsplit=1
-    )[1].split("</section>", maxsplit=1)[0]
-    assert disclosure in warning
+    if provisional_records:
+        assert research.count(disclosure) == 1
+        warning = research.split(
+            '<section class="research-warning"', maxsplit=1
+        )[1].split("</section>", maxsplit=1)[0]
+        assert disclosure in warning
+    else:
+        assert research.count(disclosure) == 0
 
     css = (output / "assets/styles.css").read_text(encoding="utf-8")
     focus = re.search(
@@ -1435,6 +1478,7 @@ def test_retired_research_route_follows_a_merge_to_a_confirmed_card() -> None:
 
 def test_retired_research_split_exposes_only_previously_public_targets() -> None:
     catalog = load_catalog()
+    original_queries = load_research_queries(catalog)
     questions = load_research_questions(catalog)
     coverage = load_research_coverage(catalog, questions)
     item = next(candidate for candidate in catalog.principles if candidate.id == PILOT_KEYS[1])
@@ -1446,17 +1490,21 @@ def test_retired_research_split_exposes_only_previously_public_targets() -> None
     never_public = next(
         candidate
         for candidate in catalog.principles
-        if candidate.editorial_status != "source_checked"
-        and candidate.id not in PILOT_KEYS
+        if candidate.id not in PILOT_KEYS
+        and candidate.id != confirmed.id
         and candidate.id != item.id
     )
+    catalog = replace(catalog, principles=tuple(
+        replace(candidate, editorial_status="source_gap", question=None)
+        if candidate.id == never_public.id else candidate for candidate in catalog.principles
+    ))
     changed_catalog = _retire_research_item(
         catalog,
         item.id,
         operation="split",
         targets=(confirmed.id, never_public.id),
     )
-    registry = load_research_queries(changed_catalog)
+    registry = original_queries
     registry = replace(
         registry,
         items={

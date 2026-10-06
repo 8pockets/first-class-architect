@@ -8,17 +8,58 @@ principles:
   order: 1
   type: rule
   principle: 鉄骨造柱脚の仕様規定の根拠告示
-  conclusion: 鉄骨造柱脚の仕様は、平成12年建設省告示第1456号「鉄骨造の柱の脚部を基礎に緊結する構造方法の基準を定める件」で規定される。
+  conclusion: 鉄骨造の柱脚を基礎へ緊結する方法は、施行令第66条と平成12年建設省告示第1456号で定める。露出・根巻き・埋込み等の方法と、所定の構造計算による適用除外を区別する。
   reason: 教材に記載なし
   conditions:
-  - 鉄骨造柱脚の仕様規定を確認する場合
+  - 通常の鉄骨造柱脚の緊結方法
+  - 所定の構造計算による除外でも全ての詳細規定がなくなるわけではない
+  - 令和7年のコンテナ等に関する合理化は通常の柱脚と区別する
   source:
     pages:
     - 204
     question_codes: []
+    authoritative_sources:
+    - kind: law
+      title: 建築基準法施行令（e-Gov現行本文、2026-10-06照合）
+      locator: 第66条
+      url: https://laws.e-gov.go.jp/law/325CO0000000338
+      supports:
+      - statement
+      - conditions
+    - kind: notification
+      title: 平成12年建設省告示第1456号（平成19年改正を含む公表本文）
+      locator: 前文ただし書・第一号・第三号（通常の柱脚。後続のコンテナ等特例は令和7年技術的助言を参照）
+      url: https://www.mlit.go.jp/notice/noticedata/pdf/201703/00006502.pdf
+      supports:
+      - statement
+      - conditions
+    - kind: government_spec
+      title: 国土交通省 国住指第502号（令和7年4月1日）
+      locator: 3. コンテナ等建築物の柱の脚部の構造方法の合理化
+      url: https://www.mlit.go.jp/jutakukentiku/build/content/001881640.pdf
+      supports:
+      - conditions
   prerequisites:
   - S-K6-COLUMN-BASE-TYPES-FIXITY-ORDER
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 告示1456号の所定の構造計算を行う場合の柱脚仕様の扱いについて、正しい結論はどちらか。
+    choices:
+      A: 指定された条項について適用除外がある
+      B: 全ての条項について自動的に適用除外となる
+    correct: A
+  display_content:
+    rule: 鉄骨造の柱脚を基礎へ緊結する方法は、施行令第66条と平成12年建設省告示第1456号で定める。露出・根巻き・埋込み等の方法と、所定の構造計算による適用除外を区別する。
+    applicability:
+    - 通常の鉄骨造柱脚の緊結方法
+    - 所定の構造計算による除外でも全ての詳細規定がなくなるわけではない
+    - 令和7年のコンテナ等に関する合理化は通常の柱脚と区別する
+    numbers_exceptions:
+    - 所定の構造計算による除外でも全ての詳細規定がなくなるわけではない
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-ENCASED-BASE-BOTTOM-PIN-MOMENT-TRANSFER
   order: 2
   type: principle
@@ -26,9 +67,9 @@ principles:
   question:
     prompt: 根巻き形式柱脚で鉄骨部分最下部をピン接合として扱うとき、その位置の曲げモーメントを負担する部分として正しい結論はどちらか。
     choices:
-      A: 鉄骨部分が負担する
-      B: 根巻き鉄筋コンクリート部分が負担する
-    correct: B
+      A: 根巻き鉄筋コンクリート部分が負担する
+      B: 鉄骨部分が負担する
+    correct: A
   conclusion: 根巻き柱脚の鉄骨部分最下部はピン接合として曲げモーメントをゼロとみなし、その位置の曲げモーメントは根巻き鉄筋コンクリート部分が負担する。
   reason: 鉄骨最下部をピン接合としてモデル化し、周囲の根巻き鉄筋コンクリートが曲げを伝達するため。
   conditions:

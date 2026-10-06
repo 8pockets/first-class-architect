@@ -25,7 +25,9 @@ def test_ci_runs_for_pull_requests_without_write_permissions() -> None:
     assert "id-token: write" not in text
     assert "uv sync --locked --group dev" in text
     assert "uv run --locked python -m pytest" in text
-    assert "node --test tests/catalog-interactions.test.mjs" in text
+    assert "node --test tests/*.test.mjs" in text
+    for script in ("catalog.js", "answer-history.js", "research.js"):
+        assert f"node --check principle_catalog/static/{script}" in text
     assert "--frozen" not in text
 
 
@@ -50,12 +52,13 @@ def test_pages_deploys_only_main_and_separates_permissions() -> None:
     assert jobs["deploy"]["needs"] == "build"
     build_steps = jobs["build"]["steps"]
     assert any(step.get("run") == "uv run --locked python -m pytest" for step in build_steps)
+    for script in ("catalog.js", "answer-history.js", "research.js"):
+        assert any(
+            f"node --check principle_catalog/static/{script}" in step.get("run", "").splitlines()
+            for step in build_steps
+        )
     assert any(
-        step.get("run") == "node --check principle_catalog/static/catalog.js"
-        for step in build_steps
-    )
-    assert any(
-        step.get("run") == "node --test tests/catalog-interactions.test.mjs"
+        step.get("run") == "node --test tests/*.test.mjs"
         for step in build_steps
     )
 

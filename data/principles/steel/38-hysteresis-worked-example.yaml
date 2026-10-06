@@ -9,11 +9,12 @@ principles:
   type: principle
   principle: 筋かい細長比による履歴特性の差
   question:
-    prompt: 同じ基準強度で細長比が小さいX形筋かい架構を細長比が大きい場合と比べるとき、エネルギー吸収能力として正しい結論はどちらか。
+    prompt: 接合部の剛性・強度が十分なX形筋かい架構の自作履歴図を比較する。強度とグラフの尺度が同じとき、細長比と原点付近の抵抗について正しい結論はどちらか。
+    figure: brace-loops-v1
     choices:
-      A: エネルギー吸収能力は小さい
-      B: エネルギー吸収能力は大きい
-    correct: B
+      A: 図1は小細長比、図2は大細長比に対応する
+      B: 図1は大細長比、図2は小細長比に対応する
+    correct: A
   conclusion: 細長比が大きいX形筋かい架構は小荷重で変形が進み原点付近のエネルギー吸収が小さい。細長比が小さいX形筋かい架構は圧縮筋かいが座屈しにくく、座屈後曲げ抵抗とエネルギー吸収が大きいが、繰返しで耐力が低下する。
   reason: 大細長比材は圧縮を負担できず、引張降伏後に伸びた筋かいが再び効くまで抵抗できない一方、小細長比材は圧縮座屈しにくく座屈後抵抗も大きいため。
   conditions:
@@ -33,16 +34,18 @@ principles:
   type: principle
   principle: ラーメン架構の履歴特性
   question:
-    prompt: 鉄骨造ラーメン架構の荷重・変形履歴について、一般的な模式化として正しい結論はどちらか。
+    prompt: 自作模式図の二つの履歴を比較する。局部座屈や破断を生じず柱・梁端部が安定して塑性化する鉄骨ラーメンに対応する図として、正しい結論はどちらか。
+    figure: hysteresis-loops-v1
     choices:
-      A: 変形が増えるとループ・強度・エネルギー吸収能力が増え、平行四辺形状に近似できる。
-      B: 変形が増えると履歴ループの面積がゼロへ近づき、直線状に近似できる。
+      A: 幅のあるループを描く図1が対応する
+      B: 中央がくびれたループを描く図2が対応する
     correct: A
   conclusion: ラーメン架構は変形増大とともに履歴ループ・強度・エネルギー吸収能力が増え、その履歴を平行四辺形状に近似できる。
   reason: 柱・梁端部の塑性化に伴って履歴ループが拡大し、ループで囲まれる面積が大きくなるため。
   conditions:
   - 鉄骨造ラーメン架構へ繰返し水平荷重が作用する場合
   - 荷重・変形履歴を模式化する場合
+  - 図1は安定した塑性化、図2は圧縮座屈後の伸びが戻るまで抵抗が小さい筋かいの模式化である
   source:
     pages:
     - 214
@@ -55,11 +58,11 @@ principles:
   order: 2
   type: identification
   principle: 履歴曲線とエネルギー吸収能力
-  conclusion: 左右交互の繰返し水平荷重に対する荷重-変形関係を履歴曲線といい、ループで囲まれた面積がエネルギー吸収能力・靭性能の大きさを表す。
+  conclusion: 荷重-変形履歴曲線の閉じたループの面積は、その1サイクルで吸収・消費するエネルギーを表す。面積そのものが最大耐力や初期剛性を表すわけではない。
   reason: 教材に記載なし
   conditions:
-  - 地震力のような繰返し水平荷重
-  - 荷重-変形履歴ループ
+  - 同じ単位・尺度の荷重-変形グラフ
+  - 同じ振幅等の条件で履歴特性を比較する
   source:
     pages:
     - 214
@@ -67,7 +70,24 @@ principles:
     question_codes:
     - 05181
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 最大荷重が同じ二つの履歴ループで、囲まれた面積が大きいものについて、正しい結論はどちらか。
+    choices:
+      A: 初期剛性の大小を直接表す
+      B: 1サイクルの吸収エネルギーが大きい
+    correct: B
+  display_content:
+    definition: 荷重-変形履歴曲線の閉じたループの面積は、その1サイクルで吸収・消費するエネルギーを表す。面積そのものが最大耐力や初期剛性を表すわけではない。
+    distinguishing_conditions:
+    - 同じ単位・尺度の荷重-変形グラフ
+    - 同じ振幅等の条件で履歴特性を比較する
+    confusable_points:
+    - 面積は初期剛性の大小を直接表すものではない。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-BRACE-SHARE-SEISMIC-STRESS-AMPLIFICATION
   order: 3
   type: rule

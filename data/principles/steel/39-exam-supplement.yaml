@@ -1,0 +1,3578 @@
+version: 1
+section:
+  id: K6-39
+  title: 本試験範囲の補完
+  order: 40
+principles:
+- id: S-K6-EXAM-SN-A-USE
+  order: 1
+  type: identification
+  principle: SN材のA種の用途
+  question:
+    prompt: SN400Aを用いる部位の計画について、正しい結論はどちらか。
+    choices:
+      A: 塑性変形を期待する部位を基本とする
+      B: 弾性範囲内で使う部位を基本とする
+    correct: B
+  conclusion: SN400Aは降伏後の変形能力を保証する材料ではなく、弾性範囲で使う部位を基本とする。 降伏点は下限のみが規定される。
+  reason: 教材に記載なし
+  conditions: &id001
+  - 建築構造用圧延鋼材SN400A
+  - 溶接性・塑性変形能力を保証するB種やC種と区別する
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P43／SN材のA種の用途に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P35／公式出題条件との照合に伴う補足
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    definition: SN400Aは降伏後の変形能力を保証する材料ではなく、弾性範囲で使う部位を基本とする。 降伏点は下限のみが規定される。
+    distinguishing_conditions: *id001
+    confusable_points:
+    - A種は、塑性変形性能を保証するB種・C種と区別する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-SN-C-THICKNESS
+  order: 2
+  type: identification
+  principle: SN材のB種とC種
+  question:
+    prompt: SN材B種・C種のうち、板厚方向の大きな引張力に対する性能を確認して通しダイアフラムへ用いる鋼種として、正しい結論はどちらか。
+    choices:
+      A: 板厚方向性能の規定があるB種を選ぶ
+      B: 板厚方向性能の規定があるC種を選ぶ
+    correct: B
+  conclusion: SN材C種はB種の性能に加えて板厚方向の絞り値が規定され、板厚方向に引張力を受ける部材に適する。
+  reason: 教材に記載なし
+  conditions: &id002
+  - SN材のB種・C種を比較
+  - 通しダイアフラム等の板厚方向引張りを受ける部位
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P43／SN材のB種とC種に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    definition: SN材C種はB種の性能に加えて板厚方向の絞り値が規定され、板厚方向に引張力を受ける部材に適する。
+    distinguishing_conditions: *id002
+    confusable_points:
+    - B種に板厚方向の性能を追加したものがC種である。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-SN-YIELD-RANGE
+  order: 3
+  type: principle
+  principle: SN材の降伏点の規定
+  question:
+    prompt: 板厚12mm以上40mm以下のSN490B鋼板の降伏点又は耐力について、正しい結論はどちらか。
+    choices:
+      A: 下限値だけが規定される
+      B: 下限値と上限値が規定される
+    correct: B
+  conclusion: SN490B鋼板の板厚12mm以上40mm以下では、降伏点又は耐力に下限・上限がある。設計で想定した降伏メカニズムの実現に関係する。 SN材B種・C種では、適用板厚等の条件の下で降伏比や降伏点レンジを管理し、想定した降伏順序の実現確度を高める。12mm以上40mm以下の鋼板の例に対し、板厚40mm超100mm以下のSN490B鋼板では降伏点の下限295N/mm²・上限415N/mm²を用いる。
+  reason: 降伏点のばらつきを制限することにより、設計で想定した順序で部材を降伏させやすくするため。
+  conditions:
+  - 板厚12mm以上40mm以下のSN490B鋼板
+  - 引張強さの規定と降伏点の規定を区別する
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P35／SN材の降伏点の規定に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P35／公式出題条件との照合に伴う補足
+      supports:
+      - statement
+      - explanation
+      - conditions
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P37／40mm超100mm以下のSN490Bの降伏点範囲
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-SN-CHARPY-GRADE
+  order: 4
+  type: rule
+  principle: SN材の種別と衝撃試験
+  question:
+    prompt: SN材のA種と、シャルピー規定が適用されるB種・C種を比べるとき、正しい結論はどちらか。
+    choices:
+      A: A種には吸収エネルギーの下限規定がない
+      B: A種にも同じ吸収エネルギーの下限規定がある
+    correct: A
+  conclusion: SN材A種にはシャルピー吸収エネルギーの下限規定がない。B種・C種の適用範囲における要求と区別する。
+  reason: 教材に記載なし
+  conditions: &id003
+  - SN材の種別比較
+  - B種・C種の板厚等の適用条件を別途確認する
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P35／SN材の種別と衝撃試験に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: SN材A種にはシャルピー吸収エネルギーの下限規定がない。B種・C種の適用範囲における要求と区別する。
+    applicability: *id003
+    numbers_exceptions:
+    - B種・C種の板厚等の適用条件を別途確認する
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-SN490-SYMBOL
+  order: 5
+  type: identification
+  principle: SN490Bの数値の意味
+  question:
+    prompt: SN490Bという鋼材記号の490について、正しい結論はどちらか。
+    choices:
+      A: 引張強さの下限値を表す
+      B: 降伏点又は耐力の下限値を表す
+    correct: A
+  conclusion: SN490Bの490は引張強さの下限値490N/mm²を表す。降伏点又は耐力の下限値そのものではない。
+  reason: 教材に記載なし
+  conditions: &id004
+  - 建築構造用圧延鋼材SN490B
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P35／SN490Bの数値の意味に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    definition: SN490Bの490は引張強さの下限値490N/mm²を表す。降伏点又は耐力の下限値そのものではない。
+    distinguishing_conditions: *id004
+    confusable_points:
+    - SN490の数字は引張強さ。BCR295やBCP325の数字は降伏点又は耐力に関係する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-SN490-F40
+  order: 6
+  type: rule
+  principle: SN490BのF値と板厚
+  question:
+    prompt: 板厚25mmのSN490Bの短期許容引張応力度について、正しい結論はどちらか。
+    choices:
+      A: 325N/mm²とする
+      B: 490N/mm²とする
+    correct: A
+  conclusion: 板厚40mm以下のSN490BではF=325N/mm²であり、短期許容引張応力度はFに等しい。
+  reason: 教材に記載なし
+  conditions: &id005
+  - 板厚25mmのSN490B
+  - 引張りの短期許容応力度。座屈や接合部の検討ではない
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P35／SN490BのF値と板厚に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: 板厚40mm以下のSN490BではF=325N/mm²であり、短期許容引張応力度はFに等しい。
+    applicability: *id005
+    numbers_exceptions:
+    - 引張りの短期許容応力度。座屈や接合部の検討ではない
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-SN-THICKNESS-F
+  order: 7
+  type: rule
+  principle: SN材の板厚と許容値
+  question:
+    prompt: SN490Bで板厚25mmと50mmの部材の許容引張応力度を比較するとき、正しい結論はどちらか。
+    choices:
+      A: 二つの部材は同じである
+      B: 50mmの部材の方が小さい
+    correct: B
+  conclusion: SN490Bの基準強度は板厚40mmを境に変わる。40mm以下の325N/mm²に対し、40mm超100mm以下では295N/mm²となる。 SN400Bでは40mm以下のFは235N/mm²、40mm超100mm以下は215N/mm²である。同じ鋼塊から圧延された鋼材は、一般に薄い方が降伏点が高い。
+  reason: 教材に記載なし
+  conditions:
+  - 同じSN490B
+  - 板厚25mmと50mm、同じ長期又は短期の区分を比較
+  - 比較表の補足ではSN400Bの板厚区分も示す。鋼種を混同しない
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P37／SN材の板厚と許容値に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P37／公式出題条件との照合に伴う補足
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: SN490Bの基準強度は板厚40mmを境に変わる。40mm以下の325N/mm²に対し、40mm超100mm以下では295N/mm²となる。 SN400Bでは40mm以下のFは235N/mm²、40mm超100mm以下は215N/mm²である。同じ鋼塊から圧延された鋼材は、一般に薄い方が降伏点が高い。
+    applicability:
+    - 同じSN490B
+    - 板厚25mmと50mm、同じ長期又は短期の区分を比較
+    - 比較表の補足ではSN400Bの板厚区分も示す。鋼種を混同しない
+    numbers_exceptions:
+    - 板厚25mmと50mm、同じ長期又は短期の区分を比較
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-SN-TOLERANCE
+  order: 8
+  type: rule
+  principle: SN材とSS材の板厚公差
+  question:
+    prompt: SN400鋼板とSS400鋼板の厚さのマイナス許容差を比べるとき、正しい結論はどちらか。
+    choices:
+      A: SS400の方が厳しく管理される
+      B: SN400の方が厳しく管理される
+    correct: B
+  conclusion: SN400の厚さのマイナス許容差は、SS400と同一ではなく、より厳しく規定されている。
+  reason: 教材に記載なし
+  conditions: &id006
+  - 建築構造用SN400鋼板と一般構造用SS400鋼板を比較
+  - 製品形状・板厚等による適用条件は規格で確認する
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P34／SN材とSS材の板厚公差に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: SN400の厚さのマイナス許容差は、SS400と同一ではなく、より厳しく規定されている。
+    applicability: *id006
+    numbers_exceptions:
+    - 製品形状・板厚等による適用条件は規格で確認する
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-STEEL-ANISOTROPY
+  order: 9
+  type: rule
+  principle: 圧延鋼材の方向別性質
+  question:
+    prompt: 熱間圧延鋼材の板厚方向の強度を、圧延方向等と比べるとき、正しい結論はどちらか。
+    choices:
+      A: 板厚方向の方が小さい傾向がある
+      B: 板厚方向の方が大きい傾向がある
+    correct: A
+  conclusion: 熱間圧延鋼材は異方性をもち、一般に板厚方向の強度は圧延方向やその直角方向より小さい傾向がある。
+  reason: 教材に記載なし
+  conditions: &id007
+  - 熱間圧延鋼材の一般的傾向
+  - 鋼種や板厚方向性能の規定が不要という意味ではない
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P36／圧延鋼材の方向別性質に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: 熱間圧延鋼材は異方性をもち、一般に板厚方向の強度は圧延方向やその直角方向より小さい傾向がある。
+    applicability: *id007
+    numbers_exceptions:
+    - 鋼種や板厚方向性能の規定が不要という意味ではない
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-CHARPY-ENERGY
+  order: 10
+  type: identification
+  principle: シャルピー吸収エネルギー
+  question:
+    prompt: 試験温度などの条件を揃えて鋼材のシャルピー吸収エネルギーを比べるとき、正しい結論はどちらか。
+    choices:
+      A: 小さい材料ほど脆性破壊に抵抗しやすい
+      B: 大きい材料ほど脆性破壊に抵抗しやすい
+    correct: B
+  conclusion: シャルピー吸収エネルギーは切欠き試験片の破壊に要したエネルギーであり、大きいほど衝撃的な脆性破壊に抵抗する能力が高い。
+  reason: 教材に記載なし
+  conditions: &id008
+  - 同じ試験条件で比較
+  - 引張強さや硬さそのものを表す値ではない
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P43／シャルピー吸収エネルギーに関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    definition: シャルピー吸収エネルギーは切欠き試験片の破壊に要したエネルギーであり、大きいほど衝撃的な脆性破壊に抵抗する能力が高い。
+    distinguishing_conditions: *id008
+    confusable_points:
+    - 吸収エネルギーは、引張強さ・降伏点・硬さとは異なる指標である。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-CHARPY-TEMPERATURE
+  order: 11
+  type: rule
+  principle: 鋼材の低温時の靱性
+  question:
+    prompt: 炭素鋼のシャルピー試験で温度を低下させ、遷移温度域を下回るとき、正しい結論はどちらか。
+    choices:
+      A: 吸収エネルギーが低下し脆くなる
+      B: 吸収エネルギーが増大し粘り強くなる
+    correct: A
+  conclusion: 炭素鋼は低温になると、ある温度域で吸収エネルギーが急激に低下して脆性破壊しやすくなる。
+  reason: 教材に記載なし
+  conditions: &id009
+  - 炭素鋼の延性・脆性遷移
+  - 試験温度を変えた比較
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P36／鋼材の低温時の靱性に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: 炭素鋼は低温になると、ある温度域で吸収エネルギーが急激に低下して脆性破壊しやすくなる。
+    applicability: *id009
+    numbers_exceptions:
+    - 試験温度を変えた比較
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-CARBON-WELDABILITY
+  order: 12
+  type: rule
+  principle: 炭素量と鋼材の性能
+  question:
+    prompt: 一般的な構造用炭素鋼で炭素含有量を増やした場合の溶接性について、正しい結論はどちらか。
+    choices:
+      A: 溶接性は向上する傾向がある
+      B: 溶接性は低下する傾向がある
+    correct: B
+  conclusion: 構造用炭素鋼では、炭素量の増加は強度・硬さを高める一方で、溶接性や伸び能力を低下させる傾向がある。 炭素量の増加は靱性も低下させる傾向がある。
+  reason: 教材に記載なし
+  conditions:
+  - 一般的な構造用炭素鋼の組成範囲
+  - 鋼種や熱処理の違いを無視した絶対比較ではない
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P41／炭素量と鋼材の性能に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P41／公式出題条件との照合に伴う補足
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: 構造用炭素鋼では、炭素量の増加は強度・硬さを高める一方で、溶接性や伸び能力を低下させる傾向がある。 炭素量の増加は靱性も低下させる傾向がある。
+    applicability:
+    - 一般的な構造用炭素鋼の組成範囲
+    - 鋼種や熱処理の違いを無視した絶対比較ではない
+    numbers_exceptions:
+    - 鋼種や熱処理の違いを無視した絶対比較ではない
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-SULFUR-TOUGHNESS
+  order: 13
+  type: rule
+  principle: 硫黄と板厚方向性能
+  question:
+    prompt: 炭素鋼の他の条件が同程度で硫黄含有量を減らすとき、正しい結論はどちらか。
+    choices:
+      A: 靱性と板厚方向の絞りに有利になる
+      B: 靱性と板厚方向の絞りに不利になる
+    correct: A
+  conclusion: 硫黄含有量が少ないほど、一般にシャルピー吸収エネルギーや板厚方向の絞り値は大きくなる。
+  reason: 教材に記載なし
+  conditions: &id010
+  - 炭素鋼で他の条件が同程度
+  - 化学成分による一般的傾向
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P36／硫黄と板厚方向性能に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: 硫黄含有量が少ないほど、一般にシャルピー吸収エネルギーや板厚方向の絞り値は大きくなる。
+    applicability: *id010
+    numbers_exceptions:
+    - 化学成分による一般的傾向
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-PHOSPHORUS-TOUGHNESS
+  order: 14
+  type: rule
+  principle: リンと鋼材の靱性
+  question:
+    prompt: 構造用鋼材の靱性を確保する観点からリンの含有量を考えるとき、正しい結論はどちらか。
+    choices:
+      A: 少なく管理することが望ましい
+      B: 多く配合することが望ましい
+    correct: A
+  conclusion: リンは鋼材や溶接部の靱性を損なう要因となるため、構造用鋼材ではその含有量を小さく管理する。
+  reason: 教材に記載なし
+  conditions: &id011
+  - 構造用鋼材の材料選定
+  - 強度を増す成分の働きと不純物の有害な影響を区別する
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P40／リンと鋼材の靱性に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: リンは鋼材や溶接部の靱性を損なう要因となるため、構造用鋼材ではその含有量を小さく管理する。
+    applicability: *id011
+    numbers_exceptions:
+    - 強度を増す成分の働きと不純物の有害な影響を区別する
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-COLD-FORMING
+  order: 15
+  type: principle
+  principle: 鋼材の冷間曲げ加工
+  question:
+    prompt: 鋼材を板厚の数倍程度の小さな半径で冷間曲げした場合、加工前と比べて、正しい結論はどちらか。
+    choices:
+      A: 強度も変形能力も向上する
+      B: 強度は増すが変形能力は低下する
+    correct: B
+  conclusion: 小さな曲げ半径での冷間曲げは加工硬化を生じ、強度を高める一方で変形能力を低下させる。
+  reason: 小さな曲げ半径による冷間加工で加工硬化が生じるため。
+  conditions:
+  - 冷間成形角形鋼管の角部など
+  - 十分大きな曲げ半径の場合を一律に扱わない
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P38／鋼材の冷間曲げ加工に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-BCR-BCP-PROCESS
+  order: 16
+  type: identification
+  principle: BCR材とBCP材の成形方法
+  question:
+    prompt: 建築構造用のBCR材とBCP材の製造方法の区別として、正しい結論はどちらか。
+    choices:
+      A: BCRはロール成形、BCPはプレス成形
+      B: BCRはプレス成形、BCPはロール成形
+    correct: A
+  conclusion: BCRは冷間ロール成形、BCPは冷間プレス成形による角形鋼管である。
+  reason: 教材に記載なし
+  conditions: &id012
+  - 建築構造用冷間成形角形鋼管
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P47／BCR材とBCP材の成形方法に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    definition: BCRは冷間ロール成形、BCPは冷間プレス成形による角形鋼管である。
+    distinguishing_conditions: *id012
+    confusable_points:
+    - BCRのRはロール成形、BCPのPはプレス成形に対応する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-BCR295-SYMBOL
+  order: 17
+  type: identification
+  principle: BCR295の数値の意味
+  question:
+    prompt: BCR295という鋼管記号の295について、正しい結論はどちらか。
+    choices:
+      A: 引張強さの下限値を表す
+      B: 降伏点又は耐力の下限値を表す
+    correct: B
+  conclusion: BCR295の295は降伏点又は耐力の下限値295N/mm²を表す。SN490Bの490と同じ意味で読まない。
+  reason: 教材に記載なし
+  conditions: &id013
+  - 建築構造用冷間ロール成形角形鋼管BCR295
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P36／BCR295の数値の意味に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    definition: BCR295の295は降伏点又は耐力の下限値295N/mm²を表す。SN490Bの490と同じ意味で読まない。
+    distinguishing_conditions: *id013
+    confusable_points:
+    - SN490Bの490を読む場合と区別する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-BCR-YIELD-RATIO
+  order: 18
+  type: rule
+  principle: BCR295の降伏比の規定
+  question:
+    prompt: BCR295を選定する際、降伏点と引張強さの比の管理について、正しい結論はどちらか。
+    choices:
+      A: 適用板厚に応じて上限値を確認する
+      B: 降伏点の下限値を満たせば比は確認不要
+    correct: A
+  conclusion: BCR295には、適用板厚に応じて降伏比の上限が規定されている。降伏強度の下限値だけで選定しない。
+  reason: 教材に記載なし
+  conditions:
+  - 建築構造用冷間ロール成形角形鋼管BCR295
+  - 降伏比の上限規定の適用板厚を規格で確認する
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P37／BCR295の降伏比の規定に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: BCR295には、適用板厚に応じて降伏比の上限が規定されている。降伏強度の下限値だけで選定しない。
+    applicability:
+    - 建築構造用冷間ロール成形角形鋼管BCR295
+    - 降伏比の上限規定の適用板厚を規格で確認する
+    numbers_exceptions:
+    - 適用板厚を確認する
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-BCP325-STRENGTH
+  order: 19
+  type: rule
+  principle: BCP325の規格値
+  question:
+    prompt: 板厚12mm以上のBCP325で、引張強さの下限値の読み方として、正しい結論はどちらか。
+    choices:
+      A: 325N/mm²である
+      B: 490N/mm²である
+    correct: B
+  conclusion: 板厚12mm以上のBCP325は引張強さの下限値が490N/mm²であり、325は降伏点又は耐力の下限値に関係する。 また適用板厚では、降伏点又は耐力に下限値と上限値が規定される。
+  reason: 教材に記載なし
+  conditions:
+  - 建築構造用冷間プレス成形角形鋼管BCP325
+  - 板厚12mm以上。さらに各規定の板厚範囲を確認する
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P37／BCP325の規格値に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P37／公式出題条件との照合に伴う補足
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: 板厚12mm以上のBCP325は引張強さの下限値が490N/mm²であり、325は降伏点又は耐力の下限値に関係する。 また適用板厚では、降伏点又は耐力に下限値と上限値が規定される。
+    applicability:
+    - 建築構造用冷間プレス成形角形鋼管BCP325
+    - 板厚12mm以上。さらに各規定の板厚範囲を確認する
+    numbers_exceptions:
+    - 板厚12mm以上。さらに各規定の板厚範囲を確認する
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-TMCP-THICK-PLATE
+  order: 20
+  type: identification
+  principle: TMCP鋼の厚板への適用
+  question:
+    prompt: 所定の認定・製品範囲にある建築構造用TMCP鋼で、板厚40mm超100mm以下の基準強度Fについて、正しい結論はどちらか。
+    choices:
+      A: 通常のSN材と同様にF値を低減する
+      B: 40mm以下と同じF値を確保できる
+    correct: B
+  conclusion: 建築構造用TMCP鋼は熱加工制御により、所定の製品範囲では板厚40mm超100mm以下でも40mm以下と同じ基準強度Fを確保できる。通常のSN材の厚板におけるF値の低減と区別する。
+  reason: 教材に記載なし
+  conditions: &id014
+  - 建築構造用TMCP鋼
+  - 製品の認定・規定板厚範囲内。全鋼材に共通する板厚無制限の規則ではない
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P48／TMCP鋼の厚板への適用に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P37／TMCP鋼の厚板の基準強度とSN材との比較
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    definition: 建築構造用TMCP鋼は熱加工制御により、所定の製品範囲では板厚40mm超100mm以下でも40mm以下と同じ基準強度Fを確保できる。通常のSN材の厚板におけるF値の低減と区別する。
+    distinguishing_conditions: *id014
+    confusable_points:
+    - 厚板用の材料性能の特徴であり、すべての製品で板厚制限がなくなるという意味ではない。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-SUS-OFFSET
+  order: 21
+  type: rule
+  principle: SUS304Aの基準強度の指標
+  question:
+    prompt: 明瞭な降伏点を示さない建築構造用SUS304Aの降伏強さを扱うとき、正しい結論はどちらか。
+    choices:
+      A: 0.2％オフセット耐力を用いる
+      B: 0.1％オフセット耐力を用いる
+    correct: B
+  conclusion: 建築構造用SUS304Aでは0.1％オフセット耐力を用いる。一般の降伏棚のない鋼材の0.2％と区別する。
+  reason: 教材に記載なし
+  conditions: &id015
+  - 建築構造用ステンレス鋼材SUS304A
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P44／SUS304Aの基準強度の指標に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: 建築構造用SUS304Aでは0.1％オフセット耐力を用いる。一般の降伏棚のない鋼材の0.2％と区別する。
+    applicability: *id015
+    numbers_exceptions:
+    - 建築構造用ステンレス鋼材SUS304A
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-SUS-F
+  order: 22
+  type: rule
+  principle: SUS304AとSN400BのF値
+  question:
+    prompt: 基準強度235N/mm²が適用されるSN400Bと建築構造用SUS304Aを比べるとき、正しい結論はどちらか。
+    choices:
+      A: SUS304AのFは490N/mm²である
+      B: SUS304AのFも235N/mm²である
+    correct: B
+  conclusion: 建築構造用SUS304Aの基準強度は235N/mm²であり、SN400Bの該当板厚のFと同じ値である。 ステンレス鋼は一般に炭素鋼より耐食性・耐火性に優れるが、この比較だけで必要な耐火設計を省略してよいわけではない。
+  reason: 教材に記載なし
+  conditions:
+  - 比較するSN400Bは板厚40mm以下でF=235N/mm²となる範囲
+  - ヤング係数や応力度ひずみ曲線まで同じという意味ではない
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P40／SUS304AとSN400BのF値に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P40／公式出題条件との照合に伴う補足
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: 建築構造用SUS304Aの基準強度は235N/mm²であり、SN400Bの該当板厚のFと同じ値である。 ステンレス鋼は一般に炭素鋼より耐食性・耐火性に優れるが、この比較だけで必要な耐火設計を省略してよいわけではない。
+    applicability:
+    - 比較するSN400Bは板厚40mm以下でF=235N/mm²となる範囲
+    - ヤング係数や応力度ひずみ曲線まで同じという意味ではない
+    numbers_exceptions:
+    - ヤング係数や応力度ひずみ曲線まで同じという意味ではない
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-STEEL-HEAT-YIELD
+  order: 23
+  type: rule
+  principle: 鋼材の温度と力学特性
+  question:
+    prompt: 一般的な鋼材の温度上昇に伴う降伏点とヤング係数の傾向について、正しい結論はどちらか。
+    choices:
+      A: 降伏点とヤング係数は低下する傾向がある
+      B: 降伏点とヤング係数は増大する傾向がある
+    correct: A
+  conclusion: 鋼材の降伏点とヤング係数は温度上昇とともに低下する傾向がある。引張強さが250〜300℃付近で一時的に高まることと区別する。
+  reason: 教材に記載なし
+  conditions: &id016
+  - 一般的な鋼材の高温時の傾向
+  - 耐火鋼など個別材料の規定値とは区別する
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P41／鋼材の温度と力学特性に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: 鋼材の降伏点とヤング係数は温度上昇とともに低下する傾向がある。引張強さが250〜300℃付近で一時的に高まることと区別する。
+    applicability: *id016
+    numbers_exceptions:
+    - 耐火鋼など個別材料の規定値とは区別する
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-ROUTE11-SCALE
+  order: 24
+  type: rule
+  principle: ルート1-1の柱スパン
+  question:
+    prompt: 鉄骨造のルート1-1の規模要件で、柱相互の間隔の上限について、正しい結論はどちらか。
+    choices:
+      A: 6m以下とする
+      B: 12m以下とする
+    correct: A
+  conclusion: ルート1-1の柱相互の間隔は6m以下である。高さ・軒高・階数・延べ面積等の要件も併せて満たす。
+  reason: 教材に記載なし
+  conditions: &id017
+  - 2025年4月施行後の鉄骨造ルート1-1
+  - 規模要件のうち柱相互の間隔を問う
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P149／ルート1-1の柱スパンに関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: ルート1-1の柱相互の間隔は6m以下である。高さ・軒高・階数・延べ面積等の要件も併せて満たす。
+    applicability: *id017
+    numbers_exceptions:
+    - 規模要件のうち柱相互の間隔を問う
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-ROUTE12-SCALE
+  order: 25
+  type: rule
+  principle: ルート1-2の階数条件
+  question:
+    prompt: 鉄骨造のルート1-2の規模要件のうち地上階数について、正しい結論はどちらか。
+    choices:
+      A: 地上3階以下とする
+      B: 地上2階以下とする
+    correct: B
+  conclusion: ルート1-2の地上階数は2以下である。高さ13m以下、軒高9m以下、柱スパン12m以下等も必要になる。
+  reason: 教材に記載なし
+  conditions: &id018
+  - 鉄骨造のルート1-2
+  - 一般の場合の延べ面積は500m²以下。平屋の特例と区別する
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P149／ルート1-2の階数条件に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: ルート1-2の地上階数は2以下である。高さ13m以下、軒高9m以下、柱スパン12m以下等も必要になる。
+    applicability: *id018
+    numbers_exceptions:
+    - 一般の場合の延べ面積は500m²以下。平屋の特例と区別する
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-ROUTE12-ONE-STORY
+  order: 26
+  type: rule
+  principle: ルート1-2の平屋の面積
+  question:
+    prompt: 鉄骨造のルート1-2で平屋建てに適用する延べ面積の上限について、正しい結論はどちらか。
+    choices:
+      A: 3,000m²以下とする
+      B: 500m²以下だけに限定される
+    correct: A
+  conclusion: ルート1-2では、平屋建てについて延べ面積3,000m²以下の規模条件がある。他の規模・構造要件も満たす必要がある。
+  reason: 教材に記載なし
+  conditions: &id019
+  - 鉄骨造のルート1-2で平屋建て
+  - 階数2の場合の500m²以下と区別する
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P149／ルート1-2の平屋の面積に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: ルート1-2では、平屋建てについて延べ面積3,000m²以下の規模条件がある。他の規模・構造要件も満たす必要がある。
+    applicability: *id019
+    numbers_exceptions:
+    - 階数2の場合の500m²以下と区別する
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-ROUTE13-HEIGHT
+  order: 27
+  type: rule
+  principle: ルート1-3の高さ条件
+  question:
+    prompt: 2025年4月施行の鉄骨造ルート1-3の高さの上限について、正しい結論はどちらか。
+    choices:
+      A: 16m以下とする
+      B: 13m以下とする
+    correct: A
+  conclusion: 2025年4月に新設されたルート1-3は高さ16m以下を対象とする。地上3階以下、延べ面積500m²以下、柱間隔6m以下等の要件を併せて満たす。
+  reason: 教材に記載なし
+  conditions: &id020
+  - 2025年4月施行後の鉄骨造ルート1-3
+  - 過年度のルート1-1・1-2の高さ条件と混同しない
+  - 高さ13m超又は軒高9m超の区分の新設ルート。ほかの適用要件も満たす
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P150／ルート1-3の高さ条件に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+    - kind: government_spec
+      title: 国土交通省 改正建築基準法の構造関係規定に係る技術的助言
+      locator: PDF P34（本文P10）第8・1(1)／鉄骨造の構造計算ルート1-3
+      url: https://www.mlit.go.jp/common/001877517.pdf
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: 2025年4月に新設されたルート1-3は高さ16m以下を対象とする。地上3階以下、延べ面積500m²以下、柱間隔6m以下等の要件を併せて満たす。
+    applicability: *id020
+    numbers_exceptions:
+    - 過年度のルート1-1・1-2の高さ条件と混同しない
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-ROUTE1-CO
+  order: 28
+  type: rule
+  principle: ルート1の地震力算定
+  question:
+    prompt: 鉄骨造のルート1で地震力算定に用いる標準せん断力係数Coについて、正しい結論はどちらか。
+    choices:
+      A: 0.3以上とする
+      B: 0.2以上だけでよい
+    correct: A
+  conclusion: 鉄骨造のルート1-1・1-2・1-3は、原則としてCoを0.3以上として地震力を算定する。
+  reason: 教材に記載なし
+  conditions: &id021
+  - 鉄骨造の耐震計算ルート1
+  - ルート1-3の層間変形角の確認用地震力とは区別する
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P149／ルート1の地震力算定に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: 鉄骨造のルート1-1・1-2・1-3は、原則としてCoを0.3以上として地震力を算定する。
+    applicability: *id021
+    numbers_exceptions:
+    - ルート1-3の層間変形角の確認用地震力とは区別する
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-ROUTE2-CO
+  order: 29
+  type: rule
+  principle: ルート2の地震力算定
+  question:
+    prompt: 鉄骨造のルート2で、筋かい分担率による応力割増しを別途考慮するとき、Coについて、正しい結論はどちらか。
+    choices:
+      A: 0.3以上でなければならない
+      B: 0.2以上を用いることができる
+    correct: B
+  conclusion: 鉄骨造ルート2ではCo=0.2以上を用いることができる。筋かいの水平力分担率に応じた応力割増しは別途必要である。
+  reason: 教材に記載なし
+  conditions: &id022
+  - 鉄骨造のルート2
+  - 必要な筋かい分担率による応力割増しを行う
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P150／ルート2の地震力算定に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: 鉄骨造ルート2ではCo=0.2以上を用いることができる。筋かいの水平力分担率に応じた応力割増しは別途必要である。
+    applicability: *id022
+    numbers_exceptions:
+    - 必要な筋かい分担率による応力割増しを行う
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-ROUTE11-CHECKS
+  order: 30
+  type: rule
+  principle: ルート1-1の確認項目
+  question:
+    prompt: 鉄骨造ルート1-1の固有の計算要件として、偏心率・剛性率・層間変形角の数値確認について、正しい結論はどちらか。
+    choices:
+      A: 三つ全ての数値確認が要求される
+      B: 三つの数値確認は要求されない
+    correct: B
+  conclusion: ルート1-1では、偏心率・剛性率・層間変形角の数値確認は要求されない。規模、応力、接合部、非構造部材等の安全確認まで不要となるわけではない。
+  reason: 教材に記載なし
+  conditions: &id023
+  - ルート1-1の適用条件を満たす鉄骨造
+  - ルート1-2や1-3の要件を一般化しない
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P116／ルート1-1の確認項目に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: ルート1-1では、偏心率・剛性率・層間変形角の数値確認は要求されない。規模、応力、接合部、非構造部材等の安全確認まで不要となるわけではない。
+    applicability: *id023
+    numbers_exceptions:
+    - ルート1-2や1-3の要件を一般化しない
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-ROUTE12-ECCENTRICITY
+  order: 31
+  type: rule
+  principle: ルート1-2の偏心率
+  question:
+    prompt: 鉄骨造ルート1-2でCo=0.3以上として地震力を算定した場合の偏心率確認について、正しい結論はどちらか。
+    choices:
+      A: 地震力を割増したので確認を省略する
+      B: 各階0.15以下であることを確かめる
+    correct: B
+  conclusion: ルート1-2では、Coを0.3以上としても、各階の偏心率が0.15以下であることの確認が必要である。 ルート1-2では層間変形角と剛性率の数値確認は要求されないが、偏心率の確認は必要である。
+  reason: 教材に記載なし
+  conditions:
+  - 鉄骨造のルート1-2
+  - Coの割増しと偏心率の確認は代替関係ではない
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P149／ルート1-2の偏心率に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P117／公式出題条件との照合に伴う補足
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: ルート1-2では、Coを0.3以上としても、各階の偏心率が0.15以下であることの確認が必要である。 ルート1-2では層間変形角と剛性率の数値確認は要求されないが、偏心率の確認は必要である。
+    applicability:
+    - 鉄骨造のルート1-2
+    - Coの割増しと偏心率の確認は代替関係ではない
+    numbers_exceptions:
+    - Coの割増しと偏心率の確認は代替関係ではない
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-ROUTE12-BRACING
+  order: 32
+  type: rule
+  principle: ルート1-2の梁の横補剛
+  question:
+    prompt: 鉄骨造のルート1-2における大梁の横補剛について、正しい結論はどちらか。
+    choices:
+      A: 保有耐力横補剛が必要である
+      B: 許容応力度の確認だけでよい
+    correct: A
+  conclusion: ルート1-2の大梁は保有耐力横補剛を満たす必要があり、許容曲げ応力度を計算するだけでは代替できない。
+  reason: 教材に記載なし
+  conditions: &id024
+  - 鉄骨造のルート1-2
+  - 局部座屈・接合部等の要件も別途満たす
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P149／ルート1-2の梁の横補剛に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: ルート1-2の大梁は保有耐力横補剛を満たす必要があり、許容曲げ応力度を計算するだけでは代替できない。
+    applicability: *id024
+    numbers_exceptions:
+    - 局部座屈・接合部等の要件も別途満たす
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-ROUTE13-DRIFT
+  order: 33
+  type: rule
+  principle: ルート1-3の層間変形角
+  question:
+    prompt: ルート1-3の層間変形角確認で、非構造部材に著しい損傷が生じない場合の1/120への緩和について、正しい結論はどちらか。
+    choices:
+      A: その緩和を適用できる
+      B: その緩和は適用できない
+    correct: B
+  conclusion: ルート1-3では、Co=0.2以上の地震力に対する層間変形角を1/200以下とし、1/120への緩和は適用しない。
+  reason: 教材に記載なし
+  conditions: &id025
+  - 2025年4月施行後の鉄骨造ルート1-3
+  - ルート2・3で条件付きで認められる緩和と区別する
+  - 高さ13m超又は軒高9m超の区分の新設ルート。ほかの適用要件も満たす
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P150／ルート1-3の層間変形角に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+    - kind: government_spec
+      title: 国土交通省 改正建築基準法の構造関係規定に係る技術的助言
+      locator: PDF P34（本文P10）第8・1(1)／鉄骨造の構造計算ルート1-3
+      url: https://www.mlit.go.jp/common/001877517.pdf
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: ルート1-3では、Co=0.2以上の地震力に対する層間変形角を1/200以下とし、1/120への緩和は適用しない。
+    applicability: *id025
+    numbers_exceptions:
+    - ルート2・3で条件付きで認められる緩和と区別する
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-ROUTE2-ASPECT
+  order: 34
+  type: rule
+  principle: ルート2の塔状比
+  question:
+    prompt: 鉄骨造ルート2で確認する地上部分の塔状比について、正しい結論はどちらか。
+    choices:
+      A: 4以下であることを確かめる
+      B: 6以下であることを確かめる
+    correct: A
+  conclusion: 鉄骨造ルート2は地上部分の塔状比を4以下とする。階高と柱スパンの比ではない。
+  reason: 教材に記載なし
+  conditions: &id026
+  - 鉄骨造のルート2
+  - 塔状比は建築物の高さと張り間方向の幅等の関係で扱う
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P150／ルート2の塔状比に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: 鉄骨造ルート2は地上部分の塔状比を4以下とする。階高と柱スパンの比ではない。
+    applicability: *id026
+    numbers_exceptions:
+    - 塔状比は建築物の高さと張り間方向の幅等の関係で扱う
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-ROUTE2-STIFFNESS
+  order: 35
+  type: identification
+  principle: 剛性率と偏心率の対象
+  question:
+    prompt: 特定の階だけが柔らかくなる立面的な剛性の不均衡を確認するとき、正しい結論はどちらか。
+    choices:
+      A: 主として剛性率を確認する
+      B: 主として偏心率を確認する
+    correct: A
+  conclusion: 剛性率は高さ方向の剛性の不均衡に関係する。偏心率は平面的な重心と剛心の偏りに関係する。
+  reason: 教材に記載なし
+  conditions: &id027
+  - 構造設計における剛性率と偏心率の区別
+  - 鉄骨造ルート2では剛性率0.6以上、偏心率0.15以下等を確認
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P147／剛性率と偏心率の対象に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    definition: 剛性率は高さ方向の剛性の不均衡に関係する。偏心率は平面的な重心と剛心の偏りに関係する。
+    distinguishing_conditions: *id027
+    confusable_points:
+    - 剛性率は高さ方向、偏心率は平面内の剛性の偏りと関係する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-COLD-ROUTE1
+  order: 36
+  type: rule
+  principle: 冷間成形柱のルート1
+  question:
+    prompt: 板厚6mm以上の冷間成形角形鋼管柱をルート1で設計する場合、Co=0.3による柱の地震時応力について、正しい結論はどちらか。
+    choices:
+      A: Coの割増しだけでよい
+      B: 規定に従ってさらに割り増す
+    correct: B
+  conclusion: ルート1で冷間成形角形鋼管柱を用いる場合、Coを0.3以上とした計算に加え、鋼管の種類等に応じて柱の地震時応力を割り増す。 柱梁接合形式が同じなら、地震時応力の割増し係数はBCRの方がBCPより大きい。
+  reason: 教材に記載なし
+  conditions:
+  - 特別な調査・研究によらない通常の設計
+  - 板厚6mm以上の冷間成形角形鋼管柱
+  - BCR・BCP・STKRの規定を混同しない
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P149／冷間成形柱のルート1に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P116／公式出題条件との照合に伴う補足
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: ルート1で冷間成形角形鋼管柱を用いる場合、Coを0.3以上とした計算に加え、鋼管の種類等に応じて柱の地震時応力を割り増す。 柱梁接合形式が同じなら、地震時応力の割増し係数はBCRの方がBCPより大きい。
+    applicability:
+    - 特別な調査・研究によらない通常の設計
+    - 板厚6mm以上の冷間成形角形鋼管柱
+    - BCR・BCP・STKRの規定を混同しない
+    numbers_exceptions:
+    - BCR・BCP・STKRの規定を混同しない
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-COLD-ROUTE2-RATIO
+  order: 37
+  type: rule
+  principle: 冷間成形柱の柱梁耐力比
+  question:
+    prompt: 通常のルート2で板厚6mm以上のBCR・BCP柱を設計するとき、最上階柱頭と1階柱脚を除く接合部の柱梁耐力比について、正しい結論はどちらか。
+    choices:
+      A: 梁の曲げ耐力和を柱の1.5倍以上とする
+      B: 柱の曲げ耐力和を梁の1.5倍以上とする
+    correct: B
+  conclusion: 冷間成形角形鋼管柱のルート2では、最上階柱頭と1階柱脚を除く接合部で柱の曲げ耐力の和を梁の1.5倍以上にする。
+  reason: 教材に記載なし
+  conditions: &id028
+  - 板厚6mm以上のBCR・BCP柱
+  - 特別な調査・研究によらない通常の設計
+  - 最上階柱頭と1階柱脚はこの比の対象から除く
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P117／冷間成形柱の柱梁耐力比に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: 冷間成形角形鋼管柱のルート2では、最上階柱頭と1階柱脚を除く接合部で柱の曲げ耐力の和を梁の1.5倍以上にする。
+    applicability: *id028
+    numbers_exceptions:
+    - 最上階柱頭と1階柱脚はこの比の対象から除く
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-COLD-ROUTE3-LOCAL
+  order: 38
+  type: rule
+  principle: 冷間成形柱の局部崩壊
+  question:
+    prompt: 板厚6mm以上のBCR・BCP柱を用いる通常のルート3で局部崩壊と判定されたとき、正しい結論はどちらか。
+    choices:
+      A: 通常の耐力確認だけで終了できる
+      B: 指定柱の耐力を低減した追加確認を行う
+    correct: B
+  conclusion: 局部崩壊と判定された場合は、通常の保有水平耐力確認に加え、所定の柱の耐力を低減して算定した保有水平耐力が必要値以上となることも確認する。
+  reason: 教材に記載なし
+  conditions: &id029
+  - 特別な調査・研究によらない通常のルート3
+  - 板厚6mm以上のBCR・BCP柱
+  - 耐力低減箇所と低減率は鋼管種類・接合形式等の規定に従う
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P67／冷間成形柱の局部崩壊に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: 局部崩壊と判定された場合は、通常の保有水平耐力確認に加え、所定の柱の耐力を低減して算定した保有水平耐力が必要値以上となることも確認する。
+    applicability: *id029
+    numbers_exceptions:
+    - 耐力低減箇所と低減率は鋼管種類・接合形式等の規定に従う
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-ROUTE-BRACE-END
+  order: 39
+  type: rule
+  principle: ルート1・2の筋かい接合
+  question:
+    prompt: 鉄骨造ルート1・2で筋かいの地震時応力を割り増して設計した場合、筋かいの端部・接合部について、正しい結論はどちらか。
+    choices:
+      A: 保有耐力接合の確認も必要である
+      B: 応力割増しにより接合の確認は省ける
+    correct: A
+  conclusion: ルート1・2でも、筋かいが塑性変形する前に端部や接合部で破断しないよう、保有耐力接合を確保する。
+  reason: 教材に記載なし
+  conditions: &id030
+  - 鉄骨造のルート1・2
+  - 地震力や応力の割増しと接合部の耐力確保を区別する
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P149／ルート1・2の筋かい接合に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: ルート1・2でも、筋かいが塑性変形する前に端部や接合部で破断しないよう、保有耐力接合を確保する。
+    applicability: *id030
+    numbers_exceptions:
+    - 地震力や応力の割増しと接合部の耐力確保を区別する
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-ROUTE-CEILING
+  order: 40
+  type: rule
+  principle: 計算ルートと特定天井
+  question:
+    prompt: 鉄骨造のルート1-1で設計し、特定天井を設ける場合、正しい結論はどちらか。
+    choices:
+      A: 特定天井の技術基準への適合確認は不要
+      B: 特定天井の技術基準への適合確認が必要
+    correct: B
+  conclusion: ルート1-1であっても、特定天井があれば特定天井の技術基準に適合することを確かめる。
+  reason: 教材に記載なし
+  conditions: &id031
+  - 特定天井に該当する天井を設置
+  - 主架構の計算ルートだけで非構造部材の確認は省略できない
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P437／計算ルートと特定天井に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: ルート1-1であっても、特定天井があれば特定天井の技術基準に適合することを確かめる。
+    applicability: *id031
+    numbers_exceptions:
+    - 主架構の計算ルートだけで非構造部材の確認は省略できない
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-DS-MEMBER
+  order: 41
+  type: rule
+  principle: 鉄骨造のDsと部材性能
+  question:
+    prompt: 鉄骨造ルート3の構造特性係数Dsを決めるとき、正しい結論はどちらか。
+    choices:
+      A: 階数だけを用いて一律に決める
+      B: 筋かい細長比や柱梁の幅厚比を考慮する
+    correct: B
+  conclusion: 鉄骨造のDsには筋かいの有効細長比や柱・梁の幅厚比等で評価する塑性変形能力が関係する。 柱・梁の部材群の種別が同じ場合、通常の筋かい付き架構のDsを筋かいのない架構より小さくできるとは扱わない。
+  reason: 教材に記載なし
+  conditions:
+  - 柱・梁の大部分が鉄骨造である階
+  - 部材種別や筋かいの負担割合など所定の条件も確認
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P66／鉄骨造のDsと部材性能に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P65／公式出題条件との照合に伴う補足
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: 鉄骨造のDsには筋かいの有効細長比や柱・梁の幅厚比等で評価する塑性変形能力が関係する。 柱・梁の部材群の種別が同じ場合、通常の筋かい付き架構のDsを筋かいのない架構より小さくできるとは扱わない。
+    applicability:
+    - 柱・梁の大部分が鉄骨造である階
+    - 部材種別や筋かいの負担割合など所定の条件も確認
+    numbers_exceptions:
+    - 部材種別や筋かいの負担割合など所定の条件も確認
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-PANEL-DS
+  order: 42
+  type: rule
+  principle: 柱梁接合部パネルとDs
+  question:
+    prompt: 通常の鉄骨造ルート3のDs算定で、柱梁接合部パネルの耐力について、正しい結論はどちらか。
+    choices:
+      A: パネル耐力をDs算定に含める必要はない
+      B: パネル耐力をDs算定に含める必要がある
+    correct: A
+  conclusion: 通常の鉄骨造ルート3のDs算定では、柱梁接合部パネルの耐力を考慮する必要はない。ただし接合部パネル自体の安全性や剛性を無視してよいという意味ではない。
+  reason: 教材に記載なし
+  conditions: &id032
+  - 通常の鉄骨造ルート3のDs算定
+  - 接合部パネル自体の設計や変形評価とは別の問い
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P66／柱梁接合部パネルとDsに関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: 通常の鉄骨造ルート3のDs算定では、柱梁接合部パネルの耐力を考慮する必要はない。ただし接合部パネル自体の安全性や剛性を無視してよいという意味ではない。
+    applicability: *id032
+    numbers_exceptions:
+    - 接合部パネル自体の設計や変形評価とは別の問い
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-COMPOSITE-STUD
+  order: 43
+  type: principle
+  principle: 合成梁の力の伝達
+  question:
+    prompt: 鉄骨梁とRC床スラブを合成梁として働かせる接合材の主な役割について、正しい結論はどちらか。
+    choices:
+      A: 床の鉛直せん断力だけを直接伝える
+      B: 鉄骨とスラブ間の水平せん断力を伝える
+    correct: B
+  conclusion: スタッド等のシアコネクターは鉄骨梁とRC床スラブの間でせん断力を伝え、一体として曲げに抵抗させる。
+  reason: 曲げを受ける鉄骨梁と床スラブの間に生じる相対的なずれをシアコネクターが抑え、力を伝えるため。
+  conditions:
+  - 鉄骨梁とRC床スラブからなる合成梁
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P457／合成梁の力の伝達に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-COMPOSITE-FULL
+  order: 44
+  type: identification
+  principle: 完全合成梁のスタッド量
+  question:
+    prompt: 鉄骨梁とRC床スラブを完全合成梁とするためのスタッド等の設計について、正しい結論はどちらか。
+    choices:
+      A: 全塑性耐力に達するまで一体性を確保する
+      B: 弾性範囲だけの一体性を確保すればよい
+    correct: A
+  conclusion: 完全合成梁では合成断面が全塑性曲げ耐力に達するまで一体に働くよう、十分なシアコネクターを設ける。
+  reason: 教材に記載なし
+  conditions: &id033
+  - 完全合成梁と部分合成梁の区別
+  - 単にスタッドがあるだけで完全合成梁とは判断しない
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P457／完全合成梁のスタッド量に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    definition: 完全合成梁では合成断面が全塑性曲げ耐力に達するまで一体に働くよう、十分なシアコネクターを設ける。
+    distinguishing_conditions: *id033
+    confusable_points:
+    - シアコネクターが存在するだけで完全合成梁とはいえない。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-COMPOSITE-WIDTH
+  order: 45
+  type: rule
+  principle: 合成梁のスラブ有効幅
+  question:
+    prompt: 合成梁の曲げ剛性を算定する際のRCスラブの有効幅について、正しい結論はどちらか。
+    choices:
+      A: スラブ全幅を無条件に有効としてよい
+      B: RC梁の場合と同じ扱いを用いてよい
+    correct: B
+  conclusion: 合成梁の曲げ剛性用の床スラブ有効幅は、RC梁の曲げ剛性用の有効幅と同じとしてよい。スラブ全幅が常に有効ではない。
+  reason: 教材に記載なし
+  conditions: &id034
+  - 鉄骨梁とRCスラブの合成梁
+  - 曲げ剛性の算定。終局耐力の算定と混同しない
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P457／合成梁のスラブ有効幅に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: 合成梁の曲げ剛性用の床スラブ有効幅は、RC梁の曲げ剛性用の有効幅と同じとしてよい。スラブ全幅が常に有効ではない。
+    applicability: *id034
+    numbers_exceptions:
+    - 曲げ剛性の算定。終局耐力の算定と混同しない
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-COMPOSITE-TOP-FLANGE
+  order: 46
+  type: principle
+  principle: 合成梁の上フランジ
+  question:
+    prompt: RCスラブで上フランジが十分拘束された合成梁が正曲げを受ける場合、正しい結論はどちらか。
+    choices:
+      A: 上フランジの局部座屈を抑制できる
+      B: 上フランジの局部座屈は促進される
+    correct: A
+  conclusion: 十分に緊結されたRCスラブは圧縮側上フランジの変形を拘束し、局部座屈や横座屈を抑制する。
+  reason: RCスラブとの緊結によって圧縮側上フランジの変形が拘束されるため。
+  conditions:
+  - 正曲げで上フランジが圧縮側
+  - RCスラブと鉄骨梁の一体性が確保される場合
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P457／合成梁の上フランジに関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-COMPOSITE-BOTTOM-FLANGE
+  order: 47
+  type: principle
+  principle: 合成梁の下フランジ
+  question:
+    prompt: 上面だけにRCスラブのある合成梁で、負曲げにより下フランジが圧縮側となる場合、正しい結論はどちらか。
+    choices:
+      A: 下フランジの局部座屈を検討する
+      B: 床スラブがあるので局部座屈を省く
+    correct: A
+  conclusion: 負曲げで圧縮側となる下フランジは上面のスラブで直接拘束されず、局部座屈等の検討が必要である。
+  reason: 負曲げで圧縮側となる下フランジは、上面にあるRCスラブによって直接拘束されないため。
+  conditions:
+  - 上面にRCスラブがある合成梁
+  - 負曲げで下フランジが圧縮側
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P457／合成梁の下フランジに関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-DECK-INPLANE
+  order: 48
+  type: principle
+  principle: デッキ合成スラブの力伝達
+  question:
+    prompt: デッキプレートとコンクリートを一体として設計するデッキ合成スラブについて、正しい結論はどちらか。
+    choices:
+      A: 面内せん断力の伝達も期待できる
+      B: 面内せん断力の伝達は期待できない
+    correct: A
+  conclusion: 鋼製デッキプレートとコンクリートが一体に働く合成スラブでは、面内せん断力の伝達も期待できる。
+  reason: デッキプレートとコンクリートを一体の床スラブとして設計するため。
+  conditions:
+  - デッキプレートを単なる型枠とする方式とは区別する
+  - 合成スラブとしての設計と支持部の力伝達を満たす
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P437／デッキ合成スラブの力伝達に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-CFT-BUCKLING
+  order: 49
+  type: principle
+  principle: CFT柱の局部座屈
+  question:
+    prompt: 同じ径・板厚の中空鋼管柱と、適切に充填されたCFT柱を比べるとき、正しい結論はどちらか。
+    choices:
+      A: CFT柱の方が局部座屈しにくい
+      B: CFT柱の方が局部座屈しやすい
+    correct: A
+  conclusion: CFT柱では充填コンクリートが鋼管の局部座屈を抑え、一般に中空鋼管柱より塑性変形能力を高める。 同じ断面の中空鋼管柱と比べて、一般に剛性も高くなる。
+  reason: 充填コンクリートが鋼管の内側への局部変形を拘束するため。
+  conditions:
+  - 鋼管の径・板厚など同じ条件で比較
+  - 充填や接合など所定の条件を満たすCFT柱
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P324／CFT柱の局部座屈に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P324／公式出題条件との照合に伴う補足
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-CFT-CONFINEMENT
+  order: 50
+  type: rule
+  principle: CFT柱の拘束効果
+  question:
+    prompt: 円形CFT柱の座屈長さlkと断面せいDの比が15である。充填コンクリートの拘束による強度割増しについて、正しい結論はどちらか。
+    choices:
+      A: この比では拘束効果を考慮しない
+      B: 短柱と同じ拘束効果を考慮する
+    correct: A
+  conclusion: CFT柱で座屈長さlkと断面せいDの比lk/Dが12を超える場合は、充填コンクリートの拘束効果を考慮しない。短柱で認められる強度割増しを一律に用いない。 所定の要件を満たす短柱では、鋼管がコンクリートの側方への膨張を拘束し、実況に応じた強度試験等で確認して充填コンクリートの圧縮強度を通常のRC造より高く評価できる。
+  reason: 教材に記載なし
+  conditions:
+  - CFT柱の充填コンクリートの拘束効果
+  - lk/D=15であり、12を超える場合
+  - 短柱の強度割増しは一般原理の補足であり、設問のlk/D=15に適用しない
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P313／CFT柱の拘束効果に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P313／公式出題条件との照合に伴う補足
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+  display_content:
+    rule: CFT柱で座屈長さlkと断面せいDの比lk/Dが12を超える場合は、充填コンクリートの拘束効果を考慮しない。短柱で認められる強度割増しを一律に用いない。 所定の要件を満たす短柱では、鋼管がコンクリートの側方への膨張を拘束し、実況に応じた強度試験等で確認して充填コンクリートの圧縮強度を通常のRC造より高く評価できる。
+    applicability:
+    - CFT柱の充填コンクリートの拘束効果
+    - lk/D=15であり、12を超える場合
+    - 短柱の強度割増しは一般原理の補足であり、設問のlk/D=15に適用しない
+    numbers_exceptions:
+    - lk/D>12では拘束効果を考慮しない。短柱でも所定の強度確認等が必要。
+- id: S-K6-EXAM-CFT-CIRCLE
+  order: 51
+  type: principle
+  principle: CFT短柱の断面形と拘束
+  question:
+    prompt: CFT短柱で円形鋼管と角形鋼管のコンファインド効果を比較するとき、正しい結論はどちらか。
+    choices:
+      A: 一般に角形鋼管の方が大きい
+      B: 一般に円形鋼管の方が大きい
+    correct: B
+  conclusion: 一般にCFT短柱では、円形鋼管の方が角形鋼管よりコンクリートを均等に拘束でき、コンファインド効果が大きい。
+  reason: 円形鋼管はコンクリートを周囲から均等に拘束しやすいため。
+  conditions:
+  - 短柱での一般的比較
+  - 断面形以外の条件を考慮し、全てのCFT柱に同一効果を仮定しない
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P313／CFT短柱の断面形と拘束に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-CFT-WIDTH-THICKNESS
+  order: 52
+  type: principle
+  principle: CFT柱の幅厚比の扱い
+  question:
+    prompt: 適切に設計されたCFT柱の鋼管幅厚比制限を、通常の鉄骨柱と比べるとき、正しい結論はどちらか。
+    choices:
+      A: 緩和できる場合がある
+      B: 同じ制限をそのまま適用する
+    correct: A
+  conclusion: CFT柱では充填コンクリートによる局部座屈抑制等を踏まえて、鋼管の幅厚比や軸力比の制限を緩和できる場合がある。
+  reason: 充填コンクリートによって鋼管の局部座屈が抑えられ、塑性変形能力が向上するため。
+  conditions:
+  - 所定のCFT設計条件を満たす
+  - 無条件に幅厚比制限がなくなるという意味ではない
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P313／CFT柱の幅厚比の扱いに関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-CFT-FIRE
+  order: 53
+  type: principle
+  principle: CFT柱の耐火性能
+  question:
+    prompt: CFT柱を同じ断面の中空鋼管柱と比べた一般的な耐火性能について、正しい結論はどちらか。
+    choices:
+      A: 充填コンクリートによる違いはない
+      B: 充填コンクリートによる向上を期待できる
+    correct: B
+  conclusion: CFT柱は、内部コンクリートの温度上昇が抑えられること等により、中空鋼管柱に比べ耐火性能の向上を期待できる。
+  reason: コンクリートは熱容量が大きく内部の温度上昇が抑えられるため、鋼管の耐力低下後も内部コンクリートに耐荷重を期待できるため。
+  conditions:
+  - 一般的な性能の比較
+  - 耐火被覆の省略可否は個別の耐火設計・認定条件に従う
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P324／CFT柱の耐火性能に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-CFT-TRANSFER
+  order: 54
+  type: principle
+  principle: CFT柱の鋼管とコンクリート
+  question:
+    prompt: 梁からのせん断力の一部をCFT柱の充填コンクリートに負担させる場合、正しい結論はどちらか。
+    choices:
+      A: 充填してあれば応力伝達は検討不要
+      B: 鋼管との間の応力伝達を設計する
+    correct: B
+  conclusion: 充填コンクリートに力を負担させるには、鋼管との間で応力が伝わるよう設計する。ダイアフラム、シアコネクター、付着等を所定の条件で評価する。
+  reason: 鋼管と充填コンクリートが一体として働くには、両者の間で力を受け渡せなければならないため。
+  conditions:
+  - 梁からのせん断力を充填コンクリートにも負担させる場合
+  - 充填の有無だけで必要な応力伝達性能を判断しない
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P324／CFT柱の鋼管とコンクリートに関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-SRC-BENDING
+  order: 55
+  type: rule
+  principle: SRC柱の曲げ終局耐力
+  question:
+    prompt: SRC柱の曲げ終局耐力の基本的な算定方法について、正しい結論はどちらか。
+    choices:
+      A: 鉄骨部分とRC部分の耐力を累加する
+      B: 鉄骨部分とRC部分の小さい方だけをとる
+    correct: A
+  conclusion: SRC柱の曲げ終局耐力は、作用軸力等の条件を踏まえ、鉄骨部分とRC部分の曲げ終局耐力を累加して算定する。
+  reason: 教材に記載なし
+  conditions: &id035
+  - SRC柱の曲げ終局耐力
+  - せん断耐力や埋込み柱脚の内部機構の評価と区別する
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P314／SRC柱の曲げ終局耐力に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: SRC柱の曲げ終局耐力は、作用軸力等の条件を踏まえ、鉄骨部分とRC部分の曲げ終局耐力を累加して算定する。
+    applicability: *id035
+    numbers_exceptions:
+    - せん断耐力や埋込み柱脚の内部機構の評価と区別する
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-SRC-SHEAR
+  order: 56
+  type: rule
+  principle: SRC柱のせん断終局耐力
+  question:
+    prompt: SRC柱で曲げで決まるせん断力／せん断耐力が、鉄骨部分80／100kN、RC部分90／70kNである。終局せん断耐力として正しい結論はどちらか。
+    choices:
+      A: 曲げ・せん断別の和を比べ170kNとする
+      B: 各部分の小さい値を足し150kNとする
+    correct: B
+  conclusion: SRC柱のせん断終局耐力では、鉄骨部分とRC部分それぞれについて曲げ又はせん断で決まる耐力の小さい方を採り、それらを累加する。 この例はmin(80,100)+min(90,70)=150kNである。
+  reason: 教材に記載なし
+  conditions: &id036
+  - SRC柱のせん断終局耐力の評価
+  - 同じ作用軸力等に対応した各部分の耐力を用いる
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P321／SRC柱のせん断終局耐力に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: SRC柱のせん断終局耐力では、鉄骨部分とRC部分それぞれについて曲げ又はせん断で決まる耐力の小さい方を採り、それらを累加する。 この例はmin(80,100)+min(90,70)=150kNである。
+    applicability: *id036
+    numbers_exceptions:
+    - 各部分で支配する値を選んでから累加する。総和後にminをとると170kNとなり不適切。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-SRC-CRACK-STIFFNESS
+  order: 57
+  type: principle
+  principle: SRC部材のひび割れ後の剛性
+  question:
+    prompt: SRC部材の曲げひび割れ後の剛性を評価するとき、正しい結論はどちらか。
+    choices:
+      A: RC部分の剛性低下と鉄骨の寄与を考慮する
+      B: 鉄骨があるのでRC部分の剛性低下を無視する
+    correct: A
+  conclusion: SRC部材のひび割れ後は、RC部分の剛性低下を考慮し、鉄骨部分の寄与を併せて評価する。
+  reason: RC部分はひび割れによって剛性が低下する一方、鉄骨部分にも剛性を負担させる複合構造であるため。
+  conditions:
+  - SRC部材の曲げひび割れ後
+  - 弾性初期剛性とひび割れ後の剛性を区別する
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P320／SRC部材のひび割れ後の剛性に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-SRC-WEB-TYPE
+  order: 58
+  type: principle
+  principle: SRC柱の鉄骨形式
+  question:
+    prompt: SRC柱で充腹形と格子形の鉄骨を比較するとき、正しい結論はどちらか。
+    choices:
+      A: 格子形の方が常にせん断抵抗に有利である
+      B: 充腹形の方がせん断抵抗を確保しやすい
+    correct: B
+  conclusion: 充腹形の鉄骨はウェブがせん断に抵抗し、格子形に比べて、ひび割れ後の剛性や靱性の確保に有利である。
+  reason: 充腹形は連続した鉄骨ウェブがせん断に抵抗し、ひび割れ後の剛性の急激な低下を抑えるため。
+  conditions:
+  - SRC部材の一般的な鉄骨形式の比較
+  - 具体的な性能は配筋・寸法・材料等も確認する
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P320／SRC柱の鉄骨形式に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-SRC-TENSION-BASE
+  order: 59
+  type: principle
+  principle: SRC造の最下階柱脚
+  question:
+    prompt: 地震時に大きな引張軸力が生じるSRC造の最下階柱脚を計画するとき、正しい結論はどちらか。
+    choices:
+      A: 原則として埋込み形式を選ぶ
+      B: 原則として非埋込み形式を選ぶ
+    correct: A
+  conclusion: 地震時に引張軸力が生じるSRC造の最下階柱脚は、原則として埋込み形式とする。
+  reason: 引張軸力が生じる非埋込み柱脚は、曲げで破壊する場合でも変形能力を確保しにくいため。
+  conditions:
+  - 地震時に引張軸力が生じるSRC造の最下階柱脚
+  - 鉄骨造単独の露出柱脚の一般論と区別する
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P312・P322／SRC柱脚に引張軸力が生じる場合
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-SRC-NONEMBEDDED-DS
+  order: 60
+  type: rule
+  principle: SRC非埋込み柱脚と部材種別
+  question:
+    prompt: SRC造の非埋込み柱脚で曲げ降伏する場合の構造特性係数の検討について、正しい結論はどちらか。
+    choices:
+      A: 当該柱を無条件に鉄骨柱として扱う
+      B: 当該柱をRC柱として扱う
+    correct: B
+  conclusion: SRC造の非埋込み柱脚が曲げ降伏する場合は、当該柱をRC柱として扱って構造特性係数等を検討する。
+  reason: 教材に記載なし
+  conditions: &id037
+  - SRC造の非埋込み柱脚で曲げ降伏
+  - 全てのSRC柱を一律にRC柱扱いにするのではない
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P322／SRC非埋込み柱脚と部材種別に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: SRC造の非埋込み柱脚が曲げ降伏する場合は、当該柱をRC柱として扱って構造特性係数等を検討する。
+    applicability: *id037
+    numbers_exceptions:
+    - 全てのSRC柱を一律にRC柱扱いにするのではない
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-SRC-EMBEDDED-MIN
+  order: 61
+  type: rule
+  principle: SRC埋込み柱脚の鉄骨部分
+  question:
+    prompt: SRC埋込み柱脚で鉄骨断面の曲げ耐力と埋込み部の曲げ耐力を評価したとき、鉄骨部分の耐力は、正しい結論はどちらか。
+    choices:
+      A: 二つの耐力の小さい方を採る
+      B: 二つの耐力をそのまま足し合わせる
+    correct: A
+  conclusion: SRC埋込み柱脚の鉄骨部分の曲げ終局耐力は、鉄骨断面の耐力と埋込み部の耐力の小さい方とする。その上でRC部分との累加を検討する。
+  reason: 教材に記載なし
+  conditions: &id038
+  - SRC造の埋込み柱脚
+  - 鉄骨部分内部の支配機構の選定と、鉄骨・RCの累加を区別する
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P323／SRC埋込み柱脚の鉄骨部分に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: SRC埋込み柱脚の鉄骨部分の曲げ終局耐力は、鉄骨断面の耐力と埋込み部の耐力の小さい方とする。その上でRC部分との累加を検討する。
+    applicability: *id038
+    numbers_exceptions:
+    - 鉄骨部分内部の支配機構の選定と、鉄骨・RCの累加を区別する
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-SRC-NONEMBEDDED-SUM
+  order: 62
+  type: rule
+  principle: SRC非埋込み柱脚の曲げ耐力
+  question:
+    prompt: SRC非埋込み柱脚の曲げ終局耐力を評価するとき、正しい結論はどちらか。
+    choices:
+      A: アンカーボルトの抵抗だけで決める
+      B: 柱脚鉄骨側と周囲RC側の抵抗を累加する
+    correct: B
+  conclusion: SRC非埋込み柱脚は、ベースプレート下面側のアンカーボルト・コンクリートによる抵抗と、周囲のRC部分の抵抗を作用軸力と整合させて累加する。
+  reason: 教材に記載なし
+  conditions: &id039
+  - SRC造の非埋込み柱脚
+  - RC部分の抵抗を無条件に無視しない
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P323／SRC非埋込み柱脚の曲げ耐力に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: SRC非埋込み柱脚は、ベースプレート下面側のアンカーボルト・コンクリートによる抵抗と、周囲のRC部分の抵抗を作用軸力と整合させて累加する。
+    applicability: *id039
+    numbers_exceptions:
+    - RC部分の抵抗を無条件に無視しない
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-MIXED-RC-S-TRANSFER
+  order: 63
+  type: principle
+  principle: RC柱・S梁の接合
+  question:
+    prompt: 大スパンのRC柱・S梁の混合構造で異種部材の接合部を設計するとき、正しい結論はどちらか。
+    choices:
+      A: 異種部材間の応力伝達を確認する
+      B: 各部材の単独検討だけで十分とする
+    correct: A
+  conclusion: RC柱・S梁の混合構造では、異種部材間の応力伝達を確認し、接合部のせん断、支圧、付着・定着等の破壊を防止する。
+  reason: 部材が異なる構造形式でも、接合部を介して力を連続して伝達しなければ架構として抵抗できないため。
+  conditions:
+  - RC柱とS梁の混合構造
+  - 部材単体の断面算定だけでは接合部の安全性は確認できない
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P119／RC柱・S梁の接合に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-MIXED-CORE
+  order: 64
+  type: rule
+  principle: RCコアと外周S骨組
+  question:
+    prompt: 剛性の高いRCコア壁と外周S骨組を組み合わせる計画の一般的な荷重分担について、正しい結論はどちらか。
+    choices:
+      A: 外周S骨組だけを水平抵抗要素とする
+      B: コア壁を主な水平抵抗要素とする
+    correct: B
+  conclusion: この混合架構は、RCコア壁を主な水平抵抗要素、外周S骨組を主に鉛直荷重を負担する部分として計画でき、大スパン化に適する。
+  reason: 教材に記載なし
+  conditions: &id040
+  - RCコア壁と外周S骨組の剛性差を活用する形式
+  - 床を含めて力を確実に伝達する計画が必要
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P235／RCコアと外周S骨組に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: この混合架構は、RCコア壁を主な水平抵抗要素、外周S骨組を主に鉛直荷重を負担する部分として計画でき、大スパン化に適する。
+    applicability: *id040
+    numbers_exceptions:
+    - 床を含めて力を確実に伝達する計画が必要
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-DAMPER-PLASTICITY
+  order: 65
+  type: identification
+  principle: 鋼材ダンパーの働き
+  question:
+    prompt: 鋼材履歴型ダンパーに地震エネルギーを吸収させる仕組みとして、正しい結論はどちらか。
+    choices:
+      A: 繰返し塑性変形を利用する
+      B: 弾性変形だけを利用する
+    correct: A
+  conclusion: 鋼材履歴型ダンパーは繰返し塑性変形による履歴エネルギー吸収を利用する。 天然ゴム系積層ゴムアイソレータを用いる免震構造では、それだけでは減衰能力が不足するため、鋼材ダンパー等を組み合わせてエネルギーを吸収させる。
+  reason: 教材に記載なし
+  conditions: &id041
+  - 鋼材の履歴型ダンパー
+  - 速度依存型のオイルダンパーとは区別する
+  - 免震構造の補足は天然ゴム系アイソレータの場合。全ての免震装置に一般化しない
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P450／鋼材ダンパーの働きに関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P425／公式出題条件との照合に伴う補足
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    definition: 鋼材履歴型ダンパーは繰返し塑性変形による履歴エネルギー吸収を利用する。 天然ゴム系積層ゴムアイソレータを用いる免震構造では、それだけでは減衰能力が不足するため、鋼材ダンパー等を組み合わせてエネルギーを吸収させる。
+    distinguishing_conditions: *id041
+    confusable_points:
+    - 鋼材の履歴型と、速度依存型のオイルダンパーを区別する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-DAMPER-YIELD-SEQUENCE
+  order: 66
+  type: principle
+  principle: 鋼材ダンパーと主架構
+  question:
+    prompt: 主架構の損傷を抑える鋼材ダンパーの塑性化の順序について、正しい結論はどちらか。
+    choices:
+      A: 主架構より先に塑性化させる
+      B: 主架構より後に塑性化させる
+    correct: A
+  conclusion: 鋼材ダンパーを小さな層間変形から主架構に先行して塑性化させることで、主架構の損傷を抑えながらエネルギーを吸収させる。
+  reason: エネルギーをダンパーの塑性変形で吸収させ、柱梁などの重要な主架構部分の塑性化を抑えるため。
+  conditions:
+  - 主架構の損傷低減を目的とする制振構造
+  - 全ての部材を無条件に弾性に保つ設計とは異なる
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P450／鋼材ダンパーと主架構に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-DAMPER-LY225
+  order: 67
+  type: principle
+  principle: 低降伏点鋼の選択
+  question:
+    prompt: SN400と比べてLY225を鋼材ダンパーに使う狙いとして、正しい結論はどちらか。
+    choices:
+      A: 高い降伏点と小さな伸び能力を利用する
+      B: 低い降伏点と大きな伸び能力を利用する
+    correct: B
+  conclusion: 低降伏点鋼LY225は、低い降伏点と優れた伸び能力を生かして履歴型ダンパーに用いられる。
+  reason: 低い降伏点により主架構に先行して塑性化させやすく、大きな伸び能力を履歴エネルギー吸収に利用できるため。
+  conditions:
+  - 鋼材履歴型ダンパーの材料選定
+  - 主架構用の高強度鋼と役割を区別する
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P450／低降伏点鋼の選択に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-DAMPER-HIGH-STRENGTH-FRAME
+  order: 68
+  type: principle
+  principle: 制振建物の主架構用鋼材
+  question:
+    prompt: 鋼材ダンパーを先行降伏させ、主架構を弾性に保つ設計で主架構に高い基準強度の鋼材を使う狙いとして、正しい結論はどちらか。
+    choices:
+      A: 主架構をダンパーより先に降伏させる
+      B: 主架構の弾性変形の範囲を広げる
+    correct: B
+  conclusion: 主架構を弾性に保つ目的では、SN490より基準強度が高い鋼材の利用が有効となる場合がある。教材の比較例はSA440である。
+  reason: 主架構の基準強度を高くすると、ダンパーが塑性化する間も主架構を弾性に保ちやすくなるため。
+  conditions:
+  - 鋼材ダンパーを主架構より先に塑性化させる計画
+  - 材料の現在の供給規格・認定・座屈・接合条件は別途確認する
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P453／制振建物の主架構用鋼材に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-DAMPER-CONNECTION
+  order: 69
+  type: principle
+  principle: ダンパー取付部の剛性
+  question:
+    prompt: 層間変位10mmが同じ方向の支持部変形3mmとダンパー変形の和となる単純化モデルで、ダンパーの有効変形について、正しい結論はどちらか。
+    choices:
+      A: 層間変位をそのまま用いた10mmである
+      B: 支持部変形を差し引いた7mmである
+    correct: B
+  conclusion: 取付部・支持部材の剛性を確保すると、層間変位をダンパーの有効変形として伝えやすくなる。支持部変形が無視できない場合は解析モデルに考慮する。例の直列変形モデルでは10−3=7mmがダンパー変形となる。
+  reason: 取付部・支持部の変形を小さくすることで、層間変位をダンパー自身の変形として利用しやすくなるため。
+  conditions:
+  - 鋼材ダンパーと主架構を接続する部分
+  - 強度も確保し、接合部が先に損傷しないようにする
+  - 支持部の剛性・変形を考慮して制振効果を評価する
+  - 設問は同一方向の変形の和を仮定した単純化モデル。斜材の角度等を含む実架構の計算式ではない
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P453／ダンパー取付部の剛性に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-DAMPER-LAYOUT
+  order: 71
+  type: rule
+  principle: ダンパーの配置計画
+  question:
+    prompt: 建物全体に設けるダンパーの配置について、正しい結論はどちらか。
+    choices:
+      A: 耐力分布と振動性状を考慮する
+      B: 総数が同じなら配置場所は問わない
+    correct: A
+  conclusion: ダンパーの効果は総数だけでなく配置にも左右される。建物全体の耐力分布や振動性状を踏まえて配置する。
+  reason: 教材に記載なし
+  conditions: &id042
+  - 制振構造の全体計画
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P453／ダンパーの配置計画に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: ダンパーの効果は総数だけでなく配置にも左右される。建物全体の耐力分布や振動性状を踏まえて配置する。
+    applicability: *id042
+    numbers_exceptions:
+    - 制振構造の全体計画
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-DAMPER-FATIGUE
+  order: 72
+  type: rule
+  principle: 鋼材ダンパーの繰返し検討
+  question:
+    prompt: せん断パネル型の鋼材ダンパーを地震時の繰返し変形に対して検討するとき、正しい結論はどちらか。
+    choices:
+      A: 一回の最大強度だけを確認する
+      B: 累積損傷や疲労を確認する
+    correct: B
+  conclusion: 鋼材ダンパーでは一回の最大強度だけでなく、繰返し塑性変形による累積損傷度や疲労を検討する。
+  reason: 教材に記載なし
+  conditions: &id043
+  - せん断パネル型等の鋼材履歴ダンパー
+  - 想定される繰返し回数・変形振幅を考慮する
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P453／鋼材ダンパーの繰返し検討に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: 鋼材ダンパーでは一回の最大強度だけでなく、繰返し塑性変形による累積損傷度や疲労を検討する。
+    applicability: *id043
+    numbers_exceptions:
+    - 想定される繰返し回数・変形振幅を考慮する
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-DAMPER-PANEL-ANGLE
+  order: 73
+  type: rule
+  principle: せん断パネルの変形角
+  question:
+    prompt: 高い剛性の支持部材を介して設けたせん断パネル型ダンパーのせん断変形角について、正しい結論はどちらか。
+    choices:
+      A: 層間変形角より大きくなり得る
+      B: 層間変形角より小さくなる
+    correct: A
+  conclusion: 剛性の高い支持部材を介して配置したせん断パネルには変形が集中するため、そのせん断変形角は層間変形角より大きくなり得る。
+  reason: 教材に記載なし
+  conditions: &id044
+  - 支持部材の剛性が比較的高いせん断パネル型ダンパー
+  - 同じ層間変位でもダンパー高さ等によって変形角は異なる
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P429／せん断パネル型ダンパー、コード07241
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: 剛性の高い支持部材を介して配置したせん断パネルには変形が集中するため、そのせん断変形角は層間変形角より大きくなり得る。
+    applicability: *id044
+    numbers_exceptions:
+    - 同じ層間変位でもダンパー高さ等によって変形角は異なる
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-DAMPER-RESIDUAL
+  order: 74
+  type: rule
+  principle: 履歴型ダンパーの耐力配分
+  question:
+    prompt: 主架構との耐力配分を考える履歴型ダンパーで、地震後の残留変形を抑えるための基本的な計画として、正しい結論はどちらか。
+    choices:
+      A: ダンパーを主架構より高い耐力で働かせる
+      B: ダンパーを主架構より低い耐力で働かせる
+    correct: B
+  conclusion: 履歴型ダンパーは主架構より低い耐力で働かせる。残留変形を抑える目的でダンパーの耐力を主架構より大きくするという考え方は適切ではない。
+  reason: 教材に記載なし
+  conditions: &id045
+  - 柱梁からなる主架構と履歴型ダンパーを組み合わせる制振構造
+  - ダンパー単体の高強度化だけで性能を判断しない
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P428／履歴型ダンパーの耐力配分に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: 履歴型ダンパーは主架構より低い耐力で働かせる。残留変形を抑える目的でダンパーの耐力を主架構より大きくするという考え方は適切ではない。
+    applicability: *id045
+    numbers_exceptions:
+    - ダンパー単体の高強度化だけで性能を判断しない
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-FLOOR-FREQUENCY
+  order: 75
+  type: principle
+  principle: 床の鉛直振動と梁剛性
+  question:
+    prompt: 他の条件を同じとして梁の水平軸回りの断面二次モーメントを小さくすると、床の鉛直固有振動数は、正しい結論はどちらか。
+    choices:
+      A: 低くなる傾向がある
+      B: 高くなる傾向がある
+    correct: A
+  conclusion: 梁の曲げ剛性が小さくなると、床の鉛直方向の固有周期が長くなり、固有振動数は低くなる。
+  reason: 梁の曲げ剛性を小さくすると床が揺れやすくなって固有周期が長くなり、その逆数である固有振動数が低くなるため。
+  conditions:
+  - 質量・支持条件など他の条件を同じとして比較
+  - 固有周期と固有振動数は逆数の関係
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P121／床の鉛直振動と梁剛性に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-LIGHT-BUILDING-WIND
+  order: 76
+  type: principle
+  principle: 軽量鉄骨建物の柱脚荷重
+  question:
+    prompt: 工場・体育館等の軽量な鉄骨建物で暴風時の柱継手・柱脚を設計するとき、正しい結論はどちらか。
+    choices:
+      A: 積載荷重を除いた組合せも確認する
+      B: 積載荷重を加えた組合せだけを確認する
+    correct: A
+  conclusion: 軽量建物の柱継手・柱脚では、積載荷重を除くと引張り・引抜きに不利になる場合があるため、その荷重組合せも確認する。
+  reason: 積載荷重が引抜きに抵抗する側に働く場合、その荷重がない方が柱継手や柱脚の引張力は大きくなるため。
+  conditions:
+  - 工場・体育館等の軽量な建物
+  - 積載荷重が引抜きへの抵抗側に働く場合
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P51／軽量鉄骨建物の柱脚荷重に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-STEEL-PERIOD
+  order: 77
+  type: rule
+  principle: 鉄骨造の略算固有周期
+  question:
+    prompt: 全ての階の柱梁の大部分が鉄骨造である建物の高さをh[m]とし、告示の略算式を用いるとき、正しい結論はどちらか。
+    choices:
+      A: 設計用一次固有周期をT=0.02h[s]とする
+      B: 設計用一次固有周期をT=0.03h[s]とする
+    correct: B
+  conclusion: 鉄骨造の設計用一次固有周期は、略算ではT=0.03h[s]とする。hは振動性状を考慮した高さである。
+  reason: 教材に記載なし
+  conditions: &id046
+  - 全ての階の柱梁の大部分が鉄骨造
+  - 特別な調査・研究による精算ではなく略算式を使う
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P59／鉄骨造の略算固有周期に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: 鉄骨造の設計用一次固有周期は、略算ではT=0.03h[s]とする。hは振動性状を考慮した高さである。
+    applicability: *id046
+    numbers_exceptions:
+    - 特別な調査・研究による精算ではなく略算式を使う
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-STEEL-DAMPING
+  order: 78
+  type: rule
+  principle: 鉄骨造とRC造の内部減衰
+  question:
+    prompt: 一般的な振動解析で用いる鉄骨造の内部粘性減衰をRC造と比べるとき、正しい結論はどちらか。
+    choices:
+      A: 鉄骨造の方を小さく設定することが多い
+      B: 鉄骨造の方を大きく設定することが多い
+    correct: A
+  conclusion: 一般的な内部粘性減衰の設定では、鉄骨造の方がRC造より小さく、代表例としてS造2％、RC造3％が用いられる。
+  reason: 教材に記載なし
+  conditions: &id047
+  - 弾性域の内部粘性減衰の代表的設定
+  - 塑性変形による履歴減衰や制振装置の減衰と区別する
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P64／鉄骨造とRC造の内部減衰に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: 一般的な内部粘性減衰の設定では、鉄骨造の方がRC造より小さく、代表例としてS造2％、RC造3％が用いられる。
+    applicability: *id047
+    numbers_exceptions:
+    - 塑性変形による履歴減衰や制振装置の減衰と区別する
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-PILE-CORROSION
+  order: 79
+  type: rule
+  principle: 鋼管杭の腐食への配慮
+  question:
+    prompt: 強い酸性でない一般的な地盤で鋼管杭を設計するとき、腐食代の代表的な考え方として、正しい結論はどちらか。
+    choices:
+      A: 鋼管の厚さに1mmを見込む
+      B: 鋼管の厚さに10mmを見込む
+    correct: A
+  conclusion: 強い酸性でない一般的な地盤では、鋼管杭の腐食代として通常1mm程度を見込む。
+  reason: 教材に記載なし
+  conditions: &id048
+  - 地盤が強い酸性ではない一般的な条件
+  - 腐食環境が厳しい場合や個別の防食条件を別途評価する
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P409／鋼管杭の腐食への配慮に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: 強い酸性でない一般的な地盤では、鋼管杭の腐食代として通常1mm程度を見込む。
+    applicability: *id048
+    numbers_exceptions:
+    - 腐食環境が厳しい場合や個別の防食条件を別途評価する
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-ROUTE-DIRECTION
+  order: 81
+  type: rule
+  principle: 方向別の計算ルート
+  question:
+    prompt: 張り間方向が純ラーメン、桁行方向がブレース架構の鉄骨建物の計算ルートについて、正しい結論はどちらか。
+    choices:
+      A: 二方向を同一のルートにする
+      B: 適用条件を満たせば方向別に選べる
+    correct: B
+  conclusion: 鉄骨造の耐震計算ルートは、適用条件を満たせば方向ごとに異なるものを採用できる。ただし、各階ごとに自由に変えてよいという意味ではない。
+  reason: 教材に記載なし
+  conditions: &id049
+  - 直交する二方向の架構形式が異なる鉄骨造
+  - 各方向で採用するルートの適用条件を満たす
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P113／方向別の計算ルートに関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: 鉄骨造の耐震計算ルートは、適用条件を満たせば方向ごとに異なるものを採用できる。ただし、各階ごとに自由に変えてよいという意味ではない。
+    applicability: *id049
+    numbers_exceptions:
+    - 各方向で採用するルートの適用条件を満たす
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-ROUTE-UPPER-SELECTION
+  order: 82
+  type: rule
+  principle: 計算ルートの選択
+  question:
+    prompt: ルート2の適用条件を満たす鉄骨造で、保有水平耐力を確認するルート3を選ぶことについて、正しい結論はどちらか。
+    choices:
+      A: ルート3で設計してもよい
+      B: ルート2だけを選ばなければならない
+    correct: A
+  conclusion: ルート2を適用できる鉄骨造でも、ルート3による保有水平耐力計算を選択できる。選んだルートの検討事項を満たす必要がある。
+  reason: 教材に記載なし
+  conditions: &id050
+  - ルート2の適用条件を満たす鉄骨造
+  - 高さ60m超の建築物など別の計算体系とは区別する
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P113／計算ルートの選択に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: ルート2を適用できる鉄骨造でも、ルート3による保有水平耐力計算を選択できる。選んだルートの検討事項を満たす必要がある。
+    applicability: *id050
+    numbers_exceptions:
+    - 高さ60m超の建築物など別の計算体系とは区別する
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-SRC-ALLOWABLE-SHEAR
+  order: 83
+  type: rule
+  principle: SRC柱の短期許容せん断
+  question:
+    prompt: SRC柱の短期荷重時のせん断力を確認するとき、正しい結論はどちらか。
+    choices:
+      A: 鉄骨部分とRC部分を各負担力に対し検定する
+      B: 二つの許容せん断力の和だけを検定する
+    correct: A
+  conclusion: SRC柱の短期許容せん断の検定では、鉄骨部分とRC部分のそれぞれについて、その許容せん断力が分担する設計用せん断力を下回らないようにする。
+  reason: 教材に記載なし
+  conditions: &id051
+  - SRC柱の短期荷重時
+  - 終局せん断耐力の累加と区別する
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P314／SRC柱の短期許容せん断に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: SRC柱の短期許容せん断の検定では、鉄骨部分とRC部分のそれぞれについて、その許容せん断力が分担する設計用せん断力を下回らないようにする。
+    applicability: *id051
+    numbers_exceptions:
+    - 終局せん断耐力の累加と区別する
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-SRC-WEB-HOLE
+  order: 84
+  type: rule
+  principle: SRC接合部の帯筋の納まり
+  question:
+    prompt: SRC柱梁接合部で帯筋を鉄骨梁に通す場合の設計として、正しい結論はどちらか。
+    choices:
+      A: 断面性能を確認してウェブに貫通孔を設ける
+      B: 納まりだけを優先してフランジに孔を設ける
+    correct: A
+  conclusion: SRC接合部では必要な断面性能を確認して鉄骨ウェブに鉄筋の貫通孔を設けられるが、鉄骨フランジに同様の貫通孔を設けてはならない。
+  reason: 教材に記載なし
+  conditions: &id052
+  - SRC柱梁接合部の帯筋等の貫通
+  - 断面欠損と変形性能への影響を確認する
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P311／SRC接合部の帯筋の納まりに関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: SRC接合部では必要な断面性能を確認して鉄骨ウェブに鉄筋の貫通孔を設けられるが、鉄骨フランジに同様の貫通孔を設けてはならない。
+    applicability: *id052
+    numbers_exceptions:
+    - 断面欠損と変形性能への影響を確認する
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-SRC-ELASTIC-STIFFNESS
+  order: 85
+  type: principle
+  principle: SRC架構の応力計算用剛性
+  question:
+    prompt: 部材間で鋼材比がほぼ均等で鋼材が剛比へ与える影響が小さいSRC架構では、正しい結論はどちらか。
+    choices:
+      A: どの場合も鋼材分を個別に換算する必要がある
+      B: 全断面をコンクリートとして剛性評価できる
+    correct: B
+  conclusion: SRC架構の応力計算で鋼材の剛比への影響が小さい場合は、全断面にコンクリートのヤング係数を用いて部材剛性を評価できる。
+  reason: 架構内の応力分布には剛性の絶対値だけでなく部材相互の剛比が関係するため、鋼材比がほぼ均等ならその影響を省略できる場合がある。
+  conditions:
+  - 鋼材の影響が小さく、部材間の鋼材比がほぼ均等
+  - ひび割れ後の剛性を一律に無視する規則ではない
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P311／SRC架構の応力計算用剛性に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-MIXED-VERTICAL-DS
+  order: 86
+  type: rule
+  principle: 上下階で異なる構造種別のDs
+  question:
+    prompt: 1階がSRC造、2階以上がS造の建物で2階以上の必要保有水平耐力を計算するとき、正しい結論はどちらか。
+    choices:
+      A: S造としてのDsを用いる
+      B: 1階に合わせてSRC造のDsを用いる
+    correct: A
+  conclusion: 構造特性係数Dsは構造種別・階・計算方向に応じて定めるため、1階SRC・上階Sの混構造では、上階の必要保有水平耐力にはS造のDsを用いる。
+  reason: 教材に記載なし
+  conditions: &id053
+  - 1階がSRC造、2階以上がS造
+  - 計算ルートを各階で自由に変える話とは区別する
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P65／上下階で異なる構造種別のDsに関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: 構造特性係数Dsは構造種別・階・計算方向に応じて定めるため、1階SRC・上階Sの混構造では、上階の必要保有水平耐力にはS造のDsを用いる。
+    applicability: *id053
+    numbers_exceptions:
+    - 計算ルートを各階で自由に変える話とは区別する
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-MIXED-DIRECTION-RULES
+  order: 87
+  type: rule
+  principle: 方向別に異なる構造種別
+  question:
+    prompt: 一方向をSRC造、直交方向をRC造とみなせる架構の構造計算について、正しい結論はどちらか。
+    choices:
+      A: 二方向にSRC造の規定だけを適用する
+      B: 方向別に各構造の規定を適用できる
+    correct: B
+  conclusion: 方向によってSRC造とRC造とみなせる場合は、それぞれの方向について対応する構造計算等の規定を適用できる。
+  reason: 教材に記載なし
+  conditions: &id054
+  - 方向別に各構造種別として成立することを確認
+  - 部材・接合部の力の伝達も考慮する
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P311／方向別に異なる構造種別に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: 方向によってSRC造とRC造とみなせる場合は、それぞれの方向について対応する構造計算等の規定を適用できる。
+    applicability: *id054
+    numbers_exceptions:
+    - 部材・接合部の力の伝達も考慮する
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-STEEL-RETROFIT
+  order: 88
+  type: identification
+  principle: 枠付き鉄骨ブレースの耐震改修
+  question:
+    prompt: 既存RC建物へ枠付き鉄骨ブレースを増設する耐震改修の主な狙いについて、正しい結論はどちらか。
+    choices:
+      A: 水平力に対する耐力を高める
+      B: 既存柱の曲げ耐力だけを直接高める
+    correct: A
+  conclusion: 枠付き鉄骨ブレースの増設は建物の水平耐力を高める補強方法である。既存柱の曲げ耐力だけを直接高める方法ではない。
+  reason: 教材に記載なし
+  conditions: &id055
+  - 既存RC造建物の耐震改修
+  - 既存架構への接合と力の伝達を適切に設計する
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P123／枠付き鉄骨ブレースの耐震改修に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    definition: 枠付き鉄骨ブレースの増設は建物の水平耐力を高める補強方法である。既存柱の曲げ耐力だけを直接高める方法ではない。
+    distinguishing_conditions: *id055
+    confusable_points:
+    - 建物の水平耐力の増加と、既存柱自体の曲げ耐力の増加は同じではない。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-COMPOSITE-STUD-FORCE
+  order: 89
+  type: rule
+  principle: 合成梁のスタッドの設計力
+  question:
+    prompt: 合成梁の頭付きスタッドに作用する水平せん断力の設計値を求める際、正しい結論はどちらか。
+    choices:
+      A: 鉛直荷重をスタッド本数だけで割る
+      B: 曲げ終局時の圧縮力・引張力を用いる
+    correct: B
+  conclusion: スタッドの設計用水平せん断力は、曲げ終局時の合成断面の圧縮力と引張力の釣合いから求める。鉛直荷重をスタッド本数で割るだけでは求まらない。
+  reason: 教材に記載なし
+  conditions: &id056
+  - 鉄骨梁とRCスラブの頭付きスタッド接合
+  - 終局時の合成作用に必要な力の伝達を検討
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P436／合成梁のスタッドの設計力に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: スタッドの設計用水平せん断力は、曲げ終局時の合成断面の圧縮力と引張力の釣合いから求める。鉛直荷重をスタッド本数で割るだけでは求まらない。
+    applicability: *id056
+    numbers_exceptions:
+    - 終局時の合成作用に必要な力の伝達を検討
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-DECK-DEFORMATION
+  order: 90
+  type: rule
+  principle: デッキ合成スラブの変形増大
+  question:
+    prompt: 使用上の支障に関する変形増大係数で、鉄骨梁を1とする場合のデッキ合成スラブは、正しい結論はどちらか。
+    choices:
+      A: 1.5とする
+      B: 1とする
+    correct: A
+  conclusion: 変形増大係数は鉄骨梁では1、デッキプレート版（デッキ合成スラブ）では1.5とされ、同じ係数ではない。
+  reason: 教材に記載なし
+  conditions: &id057
+  - 建築物の使用上の支障に関するたわみ確認
+  - 即時弾性たわみそのものの比較とは区別する
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P111／デッキ合成スラブの変形増大に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: 変形増大係数は鉄骨梁では1、デッキプレート版（デッキ合成スラブ）では1.5とされ、同じ係数ではない。
+    applicability: *id057
+    numbers_exceptions:
+    - 即時弾性たわみそのものの比較とは区別する
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-ALUMINUM-EXPANSION
+  order: 91
+  type: rule
+  principle: 鋼とアルミニウムの熱膨張
+  question:
+    prompt: 常温付近のアルミニウム合金の線膨張係数を炭素鋼と比べると、正しい結論はどちらか。
+    choices:
+      A: 約1/2である
+      B: 約2倍である
+    correct: B
+  conclusion: 常温付近のアルミニウム合金の線膨張係数は炭素鋼の約2倍である。異種材料を接続するときは熱伸縮の差に配慮する。
+  reason: 教材に記載なし
+  conditions: &id058
+  - 一般的な炭素鋼とアルミニウム合金を比較
+  - 常温付近の線膨張係数
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P33／鋼とアルミニウムの熱膨張に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: 常温付近のアルミニウム合金の線膨張係数は炭素鋼の約2倍である。異種材料を接続するときは熱伸縮の差に配慮する。
+    applicability: *id058
+    numbers_exceptions:
+    - 常温付近の線膨張係数
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-CONCRETE-EXPANSION
+  order: 92
+  type: rule
+  principle: 鋼と軽量コンクリートの熱膨張
+  question:
+    prompt: 常温における軽量コンクリート1種と一般の鋼材の線膨張係数について、正しい結論はどちらか。
+    choices:
+      A: 軽量コンクリートを鋼材の2倍とする
+      B: ほぼ等しい値として扱うことが多い
+    correct: B
+  conclusion: 常温の軽量コンクリート1種の線膨張係数は、一般の鋼材とほぼ等しいとして扱うことが多い。
+  reason: 教材に記載なし
+  conditions: &id059
+  - 常温における軽量コンクリート1種
+  - アルミニウムと鋼の比較とは区別する
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P217／鋼と軽量コンクリートの熱膨張に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: 常温の軽量コンクリート1種の線膨張係数は、一般の鋼材とほぼ等しいとして扱うことが多い。
+    applicability: *id059
+    numbers_exceptions:
+    - アルミニウムと鋼の比較とは区別する
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-DAMPER-BRACE-STUD
+  order: 93
+  type: principle
+  principle: ダンパーの取付形式
+  question:
+    prompt: 他の条件が同程度のブレース型と間柱型のダンパー取付けを比べるとき、一般に、正しい結論はどちらか。
+    choices:
+      A: ブレース型の方が変形を伝えやすい
+      B: 間柱型の方が常に変形を伝えやすい
+    correct: A
+  conclusion: 一般にブレース型は層間変位をダンパーへ直接伝えやすく、間柱型より効率よく働かせやすい。個別の取付部・支持部の変形も考慮する。
+  reason: ブレース型は層間変位を直接ダンパーに伝えやすい一方、間柱型では支持部材の曲げ変形の影響を受けるため。
+  conditions:
+  - 一般的なブレース型と間柱型の比較
+  - 実際の効果は支持剛性や配置等にも依存する
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: study_material
+      title: 2026 構造・文章問題（学習者所有教材）
+      locator: PDF P451／ダンパーの取付形式に関係する解説・本試験知識
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-FATIGUE-STEEL-GRADE
+  order: 94
+  type: rule
+  principle: 鋼種変更と疲労の許容値
+  question:
+    prompt: 多数回の繰返しを受ける梁フランジを同一断面のSN400BからSN490Bに替え、継手形式と総繰返し数を変えない場合、正しい結論はどちらか。
+    choices:
+      A: 許容疲労強さは変わらない
+      B: 許容疲労強さは引張強さに比例して増す
+    correct: A
+  conclusion: 同一断面・同じ継手形式・同じ総繰返し数なら、SN400BをSN490Bへ変更するだけで許容疲労強さは増加しない。
+  reason: 教材に記載なし
+  conditions: &id060
+  - 2026年学科IV No.15 肢1の条件
+  - 多数回繰返しを受ける梁フランジ、継手形式・総繰返し数が同じ
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: official_exam
+      title: JAEIC 2026年 一級建築士学科IV（構造）試験問題
+      locator: PDF P12／No.15（条件はカード本文に限定）
+      url: https://www.jaeic.or.jp/.assets/1k-2026-1st-gakka4_5.pdf
+      supports:
+      - statement
+      - conditions
+    - kind: official_exam
+      title: JAEIC 2026年 学科の試験 合格基準点等・正答肢
+      locator: PDF P1／学科IV No.15の正答肢と問題本文を照合
+      url: https://www.jaeic.or.jp/.assets/1k-2026-1st-gokakukijun.pdf
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: 同一断面・同じ継手形式・同じ総繰返し数なら、SN400BをSN490Bへ変更するだけで許容疲労強さは増加しない。
+    applicability: *id060
+    numbers_exceptions:
+    - 多数回繰返しを受ける梁フランジ、継手形式・総繰返し数が同じ
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-HEAT-TENSILE-F
+  order: 95
+  type: rule
+  principle: 高温引張強さと基準強度
+  question:
+    prompt: 建築構造用圧延鋼材の常温から400℃程度までの引張強さを、その鋼材のF値と比較するとき、正しい結論はどちらか。
+    choices:
+      A: 一般に引張強さはF値より小さい
+      B: 一般に引張強さはF値より大きい
+    correct: B
+  conclusion: 建築構造用圧延鋼材の常温から400℃程度までの引張強さは、一般に基準強度Fより大きい。高温時の降伏強度や許容値が不変という意味ではない。
+  reason: 教材に記載なし
+  conditions: &id061
+  - 2026年学科IV No.29 肢3の一般的比較
+  - 建築構造用圧延鋼材、常温から400℃程度
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: official_exam
+      title: JAEIC 2026年 一級建築士学科IV（構造）試験問題
+      locator: PDF P17／No.29（条件はカード本文に限定）
+      url: https://www.jaeic.or.jp/.assets/1k-2026-1st-gakka4_5.pdf
+      supports:
+      - statement
+      - conditions
+    - kind: official_exam
+      title: JAEIC 2026年 学科の試験 合格基準点等・正答肢
+      locator: PDF P1／学科IV No.29の正答肢と問題本文を照合
+      url: https://www.jaeic.or.jp/.assets/1k-2026-1st-gokakukijun.pdf
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: 建築構造用圧延鋼材の常温から400℃程度までの引張強さは、一般に基準強度Fより大きい。高温時の降伏強度や許容値が不変という意味ではない。
+    applicability: *id061
+    numbers_exceptions:
+    - 建築構造用圧延鋼材、常温から400℃程度
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-PANEL-EARLY-YIELD
+  order: 96
+  type: rule
+  principle: 柱梁パネルの早期降伏
+  question:
+    prompt: 大地震時に柱梁接合部パネルが接続する梁・柱より先に降伏した場合、骨組全体の剛性について、正しい結論はどちらか。
+    choices:
+      A: 直ちに失われる
+      B: 一般に直ちに低下するとは限らない
+    correct: B
+  conclusion: 柱梁接合部パネルが梁・柱より早期に降伏しても、一般に骨組全体の剛性が直ちに低下するとは限らない。パネル単体の性状と骨組全体の挙動を区別する。
+  reason: 教材に記載なし
+  conditions: &id062
+  - 2026年学科IV No.18 肢4の条件
+  - 大地震時の柱梁接合部パネルの先行降伏
+  - パネルの局所剛性が弾性のままという意味ではない
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: official_exam
+      title: JAEIC 2026年 一級建築士学科IV（構造）試験問題
+      locator: PDF P13／No.18（条件はカード本文に限定）
+      url: https://www.jaeic.or.jp/.assets/1k-2026-1st-gakka4_5.pdf
+      supports:
+      - statement
+      - conditions
+    - kind: official_exam
+      title: JAEIC 2026年 学科の試験 合格基準点等・正答肢
+      locator: PDF P1／学科IV No.18の正答肢と問題本文を照合
+      url: https://www.jaeic.or.jp/.assets/1k-2026-1st-gokakukijun.pdf
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: 柱梁接合部パネルが梁・柱より早期に降伏しても、一般に骨組全体の剛性が直ちに低下するとは限らない。パネル単体の性状と骨組全体の挙動を区別する。
+    applicability: *id062
+    numbers_exceptions:
+    - パネルの局所剛性が弾性のままという意味ではない
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-EXAM-EAF-CARBON
+  order: 97
+  type: rule
+  principle: 鋼材選択と製造段階の環境負荷
+  question:
+    prompt: 必要な品質・性能を満たすスクラップ再生の電炉材を適切に用いることは、正しい結論はどちらか。
+    choices:
+      A: 資材製造段階のCO₂削減策になり得る
+      B: 資材製造段階のCO₂削減策にはならない
+    correct: A
+  conclusion: 必要な品質・性能を満たす電炉材の適切な利用は、建築物の資材製造段階のCO₂排出量を削減する方法の一つとなる。
+  reason: 教材に記載なし
+  conditions: &id063
+  - 2026年学科IV No.30 肢2の対象範囲
+  - 資材の製造段階を比較。建築物の全生涯排出量の優劣まで断定しない
+  source:
+    pages: []
+    question_codes: []
+    authoritative_sources:
+    - kind: official_exam
+      title: JAEIC 2026年 一級建築士学科IV（構造）試験問題
+      locator: PDF P17／No.30（条件はカード本文に限定）
+      url: https://www.jaeic.or.jp/.assets/1k-2026-1st-gakka4_5.pdf
+      supports:
+      - statement
+      - conditions
+    - kind: official_exam
+      title: JAEIC 2026年 学科の試験 合格基準点等・正答肢
+      locator: PDF P1／学科IV No.30の正答肢と問題本文を照合
+      url: https://www.jaeic.or.jp/.assets/1k-2026-1st-gokakukijun.pdf
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  display_content:
+    rule: 必要な品質・性能を満たす電炉材の適切な利用は、建築物の資材製造段階のCO₂排出量を削減する方法の一つとなる。
+    applicability: *id063
+    numbers_exceptions:
+    - 資材の製造段階を比較。建築物の全生涯排出量の優劣まで断定しない
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete

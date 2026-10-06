@@ -8,11 +8,11 @@ principles:
   order: 1
   type: identification
   principle: 柱脚形式と固定度の大小
-  conclusion: 鉄骨柱脚には埋込み形式、根巻き形式、露出形式があり、固定度は埋込み形式≧根巻き形式＞露出形式である。
+  conclusion: 通常の柱脚形式を概略比較すると、固定度は埋込み形式≧根巻き形式＞露出形式となる。実際の固定度は接合部の剛性に応じて評価する。
   reason: 教材に記載なし
   conditions:
-  - 鉄骨造柱脚の形式比較
-  - 鉄骨柱とコンクリート基礎の接合形式を識別する場合
+  - 同程度の柱・基礎を用いた通常の柱脚形式の概略比較
+  - 露出柱脚にも回転剛性があり、常に完全なピンではない
   source:
     pages:
     - 176
@@ -20,15 +20,33 @@ principles:
     - 204
     question_codes: []
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 柱脚形式の一般的な回転拘束の大小関係について、正しい結論はどちらか。
+    choices:
+      A: 埋込み≧根巻き＞露出
+      B: 根巻き≧露出＞埋込み
+    correct: A
+  display_content:
+    definition: 通常の柱脚形式を概略比較すると、固定度は埋込み形式≧根巻き形式＞露出形式となる。実際の固定度は接合部の剛性に応じて評価する。
+    distinguishing_conditions:
+    - 同程度の柱・基礎を用いた通常の柱脚形式の概略比較
+    - 露出柱脚にも回転剛性があり、常に完全なピンではない
+    confusable_points:
+    - 本問では「根巻き≧露出＞埋込み」と区別する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-H-SECTION-FLANGE-BENDING
   order: 2
   type: principle
   principle: H形鋼フランジの役割
-  conclusion: H形鋼のフランジは曲げモーメントに伴う引張力・圧縮力を負担する。
-  reason: 教材に記載なし
+  conclusion: 強軸曲げを受けるH形鋼梁では、上下フランジが曲げによる引張・圧縮の主な負担部となる。
+  reason: 曲げでは中立軸から遠い部分に大きな軸方向応力が生じ、上下フランジの引張力と圧縮力が対となって曲げモーメントに抵抗するため。
   conditions:
-  - 曲げを受けるH形鋼
+  - H形鋼梁の強軸曲げ
+  - フランジが曲げ、ウェブがせん断を主に負担する近似
   source:
     pages:
     - 176
@@ -40,15 +58,26 @@ principles:
     - '23173'
     - '26163'
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 下向き荷重で正曲げを受けるH形鋼梁の上下フランジの応力について、正しい結論はどちらか。
+    choices:
+      A: 上フランジが引張、下フランジが圧縮
+      B: 上フランジが圧縮、下フランジが引張
+    correct: B
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-H-SECTION-WEB-SHEAR
   order: 3
-  type: principle
+  type: identification
   principle: H形鋼ウェブの役割
-  conclusion: H形鋼のウェブはせん断力を負担する。
+  conclusion: H形鋼梁の簡略計算では、フランジに曲げ、ウェブにせん断力を負担させる。
   reason: 教材に記載なし
   conditions:
-  - せん断力を受けるH形鋼
+  - H形鋼梁のフランジ・ウェブの役割を区別する簡略計算
+  - 実際の応力分布を各部分で完全に分離するものではない
   source:
     pages:
     - 176
@@ -60,7 +89,24 @@ principles:
     - '23173'
     - '26163'
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: H形鋼梁の継手をフランジ側とウェブ側に分けて設計するとき、主にせん断力を伝える部分について、正しい結論はどちらか。
+    choices:
+      A: フランジ側の継手
+      B: ウェブ側の継手
+    correct: B
+  display_content:
+    definition: H形鋼梁の簡略計算では、フランジに曲げ、ウェブにせん断力を負担させる。
+    distinguishing_conditions:
+    - H形鋼梁のフランジ・ウェブの役割を区別する簡略計算
+    - 実際の応力分布を各部分で完全に分離するものではない
+    confusable_points:
+    - 本問では「フランジ側の継手」と区別する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-HIGH-STRENGTH-BOLT-CONNECTION-TYPES
   order: 4
   type: identification
@@ -77,7 +123,23 @@ principles:
     question_codes: []
   prerequisites:
   - S-K6-STEEL-CONNECTION-TYPE-IDENTIFICATION
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 高力ボルトを軸方向に引っ張る力を、ボルトの引張抵抗で伝える接合形式について、正しい結論はどちらか。
+    choices:
+      A: 摩擦接合
+      B: 引張接合
+    correct: B
+  display_content:
+    definition: 高力ボルト接合には摩擦接合と引張接合があり、多くは摩擦接合である。
+    distinguishing_conditions:
+    - 高力ボルト接合の形式を識別する場合
+    confusable_points:
+    - 本問では「摩擦接合」と区別する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-STEEL-CONNECTION-TYPE-IDENTIFICATION
   order: 5
   type: identification
@@ -111,20 +173,34 @@ principles:
   type: principle
   principle: 鋼材の靭性と破断
   question:
-    prompt: 教材が説明する一般的な鋼材の靭性と破断について、正しい結論はどちらか。
+    prompt: 同じ強度の鋼材から、溶接部の脆性破断を防ぎ塑性変形能力を確保する材料を選ぶ。追加して確認する特性として正しい結論はどちらか。
     choices:
-      A: 急激に破断しやすく、脆性破壊しやすい
-      B: 急激に破断しにくく、脆性破壊しにくい
-    correct: B
-  conclusion: 鋼材は急激に破断しにくく、脆性破壊しにくい。
-  reason: 鋼材は伸びる材料で、靭性に富むため。
+      A: 必要な靭性を確保すること
+      B: ヤング係数を大きくすること
+    correct: A
+  conclusion: 必要な靭性が確保された鋼材・溶接部は、塑性変形を発揮しやすく脆性破断を起こしにくい。鋼材であることだけでは脆性破断しないとはいえない。
+  reason: 靭性は破断までにエネルギーを吸収する能力に関係し、不足すると大きな変形を発揮する前に脆性破断するおそれがあるため。
   conditions:
-  - 教材が説明する一般的な鋼材の材料特性
+  - 鋼材と溶接部の必要靭性が確保されていること
+  - 材料強度と靭性は別の特性として評価する
   source:
     pages:
     - 176
     - 177
     - 181
     question_codes: []
+    authoritative_sources:
+    - kind: professional_body
+      title: 日本鉄鋼連盟 鉄骨造建物の耐震・耐津波安全性と鋼材について
+      locator: 冊子p.9–10（PDF6頁）「シャルピー吸収エネルギー」「溶接部のシャルピー吸収エネルギー」
+      url: https://www.jisf.or.jp/business/tech/infrastructure/docs/infrastructure_pdf_02.pdf
+      supports:
+      - statement
+      - explanation
+      - conditions
   prerequisites: []
   editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete

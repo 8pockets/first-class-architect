@@ -11,9 +11,9 @@ principles:
   question:
     prompt: 完全溶込み溶接の開先の始端・終端で健全な溶接断面を確保するとき、エンドタブの扱いとして正しい結論はどちらか。
     choices:
-      A: 開先の両端にエンドタブを用いる
-      B: 開先の両端にエンドタブを用いない
-    correct: A
+      A: 開先の両端にエンドタブを用いない
+      B: 開先の両端にエンドタブを用いる
+    correct: B
   conclusion: 開先溶接の両端には、健全な完全溶込み溶接断面を確保するためエンドタブを用いる。
   reason: 突合せ溶接の始点と終点での欠陥発生を避けるため。
   conditions:
@@ -32,53 +32,112 @@ principles:
   order: 2
   type: rule
   principle: 鋼製エンドタブを切断しなくてよい接合部
-  conclusion: 施工上支障がなければ、塑性ヒンジを形成しない梁端接合部、400N/mm²級梁材の接合部、又はH形断面柱との接合部では、鋼製エンドタブを原則切断しなくてよい。
+  conclusion: 教材P162の解説では、後工程に支障がなく、塑性ヒンジを形成しない梁端、400N/mm²級の梁材、H形断面柱との接合のいずれかに該当する鋼製エンドタブは切断不要としている。実工事は切断箇所・範囲の特記にも従う。
   reason: 教材に記載なし
   conditions:
-  - 列挙条件のいずれかに該当
-  - 後工程に問題を生じない
-  - 金属疲労を生じさせる荷重が作用しない
-  - 応力伝達上の支障がない
-  - 『すべてに該当しない』が『三条件のいずれにも該当しない』か『全条件を同時に満たさない』か、教材文だけでは判定困難
+  - 教材P162・コード28151の条件を問う場合
+  - 金属疲労・応力伝達上の支障がないことも確認する
+  - P188の曖昧な『すべてに該当しない』だけで条件を判定しない
   source:
     pages:
     - 162
     - 188
     question_codes:
     - '28151'
+    authoritative_sources:
+    - kind: government_spec
+      title: 公共建築工事標準仕様書（建築工事編）令和7年版
+      locator: 7.6.7(1)(カ)(b)（切断箇所・範囲の特記。教材の三条件の根拠は教材P162）
+      url: https://www.mlit.go.jp/gobuild/content/001888816.pdf
+      supports:
+      - statement
+      - explanation
+      - conditions
   prerequisites:
   - S-K6-END-TABS-SECURE-SOUND-WELD-ENDS
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 後工程・疲労・応力伝達に支障がなく、終局時に塑性ヒンジを形成しない梁端の鋼製エンドタブを教材の条件で判断するとき、正しい結論はどちらか。
+    choices:
+      A: 切断しない納まりも認められる
+      B: 条件によらず切断する必要がある
+    correct: A
+  display_content:
+    rule: 教材P162の解説では、後工程に支障がなく、塑性ヒンジを形成しない梁端、400N/mm²級の梁材、H形断面柱との接合のいずれかに該当する鋼製エンドタブは切断不要としている。実工事は切断箇所・範囲の特記にも従う。
+    applicability:
+    - 教材P162・コード28151の条件を問う場合
+    - 金属疲労・応力伝達上の支障がないことも確認する
+    - P188の曖昧な『すべてに該当しない』だけで条件を判定しない
+    numbers_exceptions:
+    - P188の曖昧な『すべてに該当しない』だけで条件を判定しない
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-FULL-PENETRATION-WELD-ANATOMY
   order: 3
   type: identification
   principle: 完全溶込み溶接断面の用語
-  conclusion: 教材図は、開先・開先角度・ルート面・ルート間隔・溶込み深さ・有効のど厚・余盛・裏あて金を完全溶込み溶接断面の各部として示す。
+  conclusion: 完全溶込み溶接の開先は溶接のため設ける溝で、ルート間隔は向かい合う母材のルート部間の隙間、ルート面は開先底部に残る面をいう。
   reason: 教材に記載なし
   conditions:
-  - 突合せ継手またはT継手の断面図を識別する場合
+  - 開先を設けた突合せ継手の断面を読む場合
   source:
     pages:
     - 188
     question_codes: []
   prerequisites:
   - S-K6-FULL-PENETRATION-WELD-DEFINITION-REPEATED-STRESS
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 突合せ継手の開先底部で、向かい合う母材の間に設ける隙間の名称について、正しい結論はどちらか。
+    choices:
+      A: ルート間隔
+      B: ルート面
+    correct: A
+  display_content:
+    definition: 完全溶込み溶接の開先は溶接のため設ける溝で、ルート間隔は向かい合う母材のルート部間の隙間、ルート面は開先底部に残る面をいう。
+    distinguishing_conditions:
+    - 開先を設けた突合せ継手の断面を読む場合
+    confusable_points:
+    - 本問では「ルート面」と区別する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-FULL-PENETRATION-WELD-DEFINITION-REPEATED-STRESS
   order: 4
   type: identification
   principle: 完全溶込み溶接の構成と適用
-  conclusion: 完全溶込み溶接は、母材端部に開先を設けて溶着金属で満たし一体化する溶接で、繰返し応力を伝達する部分に使用できる。
+  conclusion: 完全溶込み溶接は接合部の全厚にわたり溶け込ませる溶接で、繰返し応力を伝える部分にも用いられる。使用できることと疲労検討が不要であることは別である。
   reason: 教材に記載なし
   conditions:
-  - 突合せ溶接（完全溶込み溶接）
+  - 所要の溶込み・品質を確保した完全溶込み溶接
+  - 繰返し応力の回数・応力範囲に応じた疲労検討を別途行う
   source:
     pages:
     - 188
     question_codes: []
   prerequisites:
   - S-K6-WELD-TYPE-IDENTIFICATION
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 繰返し応力を受ける部材に完全溶込み溶接を使う計画について、正しい結論はどちらか。
+    choices:
+      A: 適用できるが必要な疲労検討は行う
+      B: 完全溶込みなら疲労検討を常に省ける
+    correct: A
+  display_content:
+    definition: 完全溶込み溶接は接合部の全厚にわたり溶け込ませる溶接で、繰返し応力を伝える部分にも用いられる。使用できることと疲労検討が不要であることは別である。
+    distinguishing_conditions:
+    - 所要の溶込み・品質を確保した完全溶込み溶接
+    - 繰返し応力の回数・応力範囲に応じた疲労検討を別途行う
+    confusable_points:
+    - 本問では「完全溶込みなら疲労検討を常に省ける」と区別する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-FULL-PENETRATION-WELD-EFFECTIVE-LENGTH
   order: 5
   type: rule
@@ -118,7 +177,22 @@ principles:
     question_codes: []
   prerequisites:
   - S-K6-FULL-PENETRATION-WELD-DEFINITION-REPEATED-STRESS
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 板厚12mmと16mmの母材を完全溶込み溶接するときの有効のど厚について、正しい結論はどちらか。
+    choices:
+      A: 16mm
+      B: 12mm
+    correct: B
+  display_content:
+    rule: 完全溶込み溶接の有効のど厚は、薄い方の板厚とする。
+    applicability:
+    - 厚さの異なる母材を完全溶込み溶接する場合
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-WELD-BACK-GOUGING-PURPOSE
   order: 7
   type: principle
@@ -126,9 +200,9 @@ principles:
   question:
     prompt: 裏面からも溶接する突合せ溶接について、裏はつりと裏面溶接の施工順序として正しい結論はどちらか。
     choices:
-      A: 第一層の欠陥を除去してから裏面溶接する
-      B: 裏面溶接を終えてから第一層の欠陥を除去する
-    correct: A
+      A: 裏面溶接を終えてから第一層の欠陥を除去する
+      B: 第一層の欠陥を除去してから裏面溶接する
+    correct: B
   conclusion: 裏はつりは第一層の溶込み不足やスラグ巻込みを除去する作業で、その後に裏面から溶接する。
   reason: 第一層に残った欠陥を除去してから裏面溶接するため。
   conditions:
@@ -143,25 +217,47 @@ principles:
   order: 8
   type: rule
   display_content:
-    rule: 裏あて金は溶接部を裏側から補強する補助板で、ルート間隔が6mm以上の場合に必要である。
+    rule: 片面から施工する完全溶込み溶接では、健全なルート部を形成するため裏当て金を用いる方法がある。両面から施工して裏はつりする方法もあり、ルート間隔6mmだけで裏当ての要否を一律に決めない。
     applicability:
-    - ルート間隔6mm以上
-    numbers_exceptions:
-    - 裏あて金は溶接部を裏側から補強する補助板で、ルート間隔が6mm以上の場合に必要である。
+    - 完全溶込み溶接の施工方法を選ぶ場合
+    - ルート間隔・母材との密着・溶接方法を仕様に従って管理
+    numbers_exceptions: []
   principle: 裏あて金の役割と必要条件
   question:
-    prompt: ルート間隔が6mm以上の溶接部について、裏あて金の扱いとして正しい結論はどちらか。
+    prompt: 完全溶込み溶接で裏当て金を使わず両面施工する計画について、正しい結論はどちらか。
     choices:
-      A: 裏あて金を用いない
-      B: 裏あて金を用いる
-    correct: B
-  conclusion: 裏あて金は溶接部を裏側から補強する補助板で、ルート間隔が6mm以上の場合に必要である。
-  reason: 強度補強のため。
+      A: 健全な部分まで裏はつりして裏溶接する
+      B: 表面だけで完了し裏面の溶込み確認を省く
+    correct: A
+  conclusion: 片面から施工する完全溶込み溶接では、健全なルート部を形成するため裏当て金を用いる方法がある。両面から施工して裏はつりする方法もあり、ルート間隔6mmだけで裏当ての要否を一律に決めない。
+  reason: 裏当てを用いる方法と、裏はつり後に裏溶接する方法では初層・ルート部の品質を確保する手順が異なるため。
   conditions:
-  - ルート間隔6mm以上
+  - 完全溶込み溶接の施工方法を選ぶ場合
+  - ルート間隔・母材との密着・溶接方法を仕様に従って管理
   source:
     pages:
     - 188
     question_codes: []
+    authoritative_sources:
+    - kind: government_spec
+      title: 公共建築工事標準仕様書（建築工事編）令和7年版
+      locator: 7.6.7(1)(コ)、(2)(ア)（裏当て・裏はつり・裏溶接）
+      url: https://www.mlit.go.jp/gobuild/content/001888816.pdf
+      supports:
+      - statement
+      - explanation
+      - conditions
+    - kind: professional_body
+      title: 日本溶接協会 接合・溶接技術Q&A
+      locator: Q-01-02-14、裏当て金タイプと裏はつりタイプ・健全なルート部
+      url: https://www-it.jwes.or.jp/qa/details.jsp?pg_no=0010020140
+      supports:
+      - statement
+      - explanation
+      - conditions
   prerequisites: []
   editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete

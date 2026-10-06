@@ -49,9 +49,9 @@ principles:
   question:
     prompt: 通常の高力ボルト摩擦接合で、摩擦面の表面状態について、正しい結論はどちらか。
     choices:
-      A: 黒皮・塗料・油・塵埃を残す
-      B: 黒皮・塗料・油・塵埃を除去する
-    correct: B
+      A: 黒皮・塗料・油・塵埃を除去する
+      B: 黒皮・塗料・油・塵埃を残す
+    correct: A
   conclusion: 摩擦面は黒皮・塗料・油・塵埃を除去し、浮き錆ではない赤錆程度に処理する。
   reason: 所定のすべり係数0.45を確保するため。
   conditions:
@@ -77,14 +77,11 @@ principles:
   order: 3
   type: rule
   principle: 部分溶込み溶接を用いてよい応力状態
-  conclusion: 部分溶込み溶接はせん断力だけが作用する場合に用い、溶接線直角方向の引張、溶接線を軸とする曲げ、又は繰返し荷重を受ける箇所には用いない。
+  conclusion: 部分溶込み溶接は、溶接線直角方向の引張、溶接線を軸とする曲げ、又は繰返し荷重を受ける部分には用いない。せん断力を伝える場合も、応力状態と必要耐力を確認する。
   reason: 教材に記載なし
   conditions:
-  - 部分溶込み溶接
-  - 作用応力と荷重履歴
-  - 繰返し荷重
-  - 溶接線に直交する引張力
-  - 溶接線を軸とする曲げ
+  - 建築鉄骨の部分溶込み溶接
+  - 溶接線に対する応力方向と荷重履歴を確認する
   source:
     pages:
     - 162
@@ -97,7 +94,23 @@ principles:
     - '24171'
   prerequisites:
   - S-K6-WELD-TYPE-IDENTIFICATION
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 静的なせん断力だけを伝える接合と、溶接線に直交する引張力を伝える接合を比べ、部分溶込み溶接を検討できる側について、正しい結論はどちらか。
+    choices:
+      A: 溶接線直角方向の引張力を伝える側
+      B: 静的なせん断力だけを伝える側
+    correct: B
+  display_content:
+    rule: 部分溶込み溶接は、溶接線直角方向の引張、溶接線を軸とする曲げ、又は繰返し荷重を受ける部分には用いない。せん断力を伝える場合も、応力状態と必要耐力を確認する。
+    applicability:
+    - 建築鉄骨の部分溶込み溶接
+    - 溶接線に対する応力方向と荷重履歴を確認する
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-SQUARE-TUBE-COLUMN-DIAPHRAGM-TYPES
   order: 4
   type: identification
@@ -112,9 +125,9 @@ principles:
   question:
     prompt: 角形鋼管柱と梁の仕口に設けるダイアフラムの役割について、正しい結論はどちらか。
     choices:
-      A: 仕口剛性を高める
-      B: 仕口剛性を低くする
-    correct: A
+      A: 仕口剛性を低くする
+      B: 仕口剛性を高める
+    correct: B
   conclusion: 梁が取り付く柱部分には仕口剛性を高めるダイアフラムを設け、角形鋼管柱の形式は外ダイアフラム、通しダイアフラム、内ダイアフラムの3種類である。
   reason: 梁から伝わる力による柱板厚方向の局部変形を抑え、仕口の剛性を確保するため。
   conditions:
@@ -170,10 +183,11 @@ principles:
   order: 6
   type: principle
   principle: 溶接接合の断面欠損と剛性
-  conclusion: 溶接接合はボルト接合などに比べて断面欠損がなく、接合部の剛性が最も高い。
-  reason: 教材に記載なし
+  conclusion: 溶接だけで接合する部分ではボルト孔による母材の断面欠損がなく、部材の連続性を確保しやすい。接合部の剛性が常に他形式より最大になるとは限らない。
+  reason: ボルト軸を通す孔を設けずに、溶着金属で母材同士を連続して接合するため。
   conditions:
-  - 溶接接合とボルト接合などを比較する場合
+  - ボルト孔を設けない溶接継手と孔を設けるボルト継手の比較
+  - スカラップ等の切欠きや溶接欠陥は別に検討する
   source:
     pages:
     - 179
@@ -181,15 +195,25 @@ principles:
     question_codes: []
   prerequisites:
   - S-K6-STEEL-CONNECTION-TYPE-IDENTIFICATION
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 同じ引張材の継手を、ボルト孔を設けない溶接だけで構成したとき、有効断面の検討について、正しい結論はどちらか。
+    choices:
+      A: ボルト孔分の断面控除は生じない
+      B: ボルト孔分と同じ断面控除を行う
+    correct: A
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-WELD-TYPE-IDENTIFICATION
   order: 7
   type: identification
   principle: 溶接接合の種類
-  conclusion: 教材では溶接接合を、突合せ溶接（完全溶込み溶接）・すみ肉溶接・部分溶込み溶接に整理する。
+  conclusion: 建築鉄骨の溶接では、接合部全厚まで溶け込ませる完全溶込み、母材の隅角部に盛るすみ肉、全厚まで溶け込ませない部分溶込みを区別する。
   reason: 教材に記載なし
   conditions:
-  - 溶接形式を識別する場合
+  - 継手の外形だけでなく溶込み範囲を識別する場合
   source:
     pages:
     - 179
@@ -198,4 +222,20 @@ principles:
     - '24171'
   prerequisites:
   - S-K6-STEEL-CONNECTION-TYPE-IDENTIFICATION
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 母材の接合部全厚までは溶け込ませない開先溶接の分類について、正しい結論はどちらか。
+    choices:
+      A: 完全溶込み溶接
+      B: 部分溶込み溶接
+    correct: B
+  display_content:
+    definition: 建築鉄骨の溶接では、接合部全厚まで溶け込ませる完全溶込み、母材の隅角部に盛るすみ肉、全厚まで溶け込ませない部分溶込みを区別する。
+    distinguishing_conditions:
+    - 継手の外形だけでなく溶込み範囲を識別する場合
+    confusable_points:
+    - 本問では「完全溶込み溶接」と区別する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete

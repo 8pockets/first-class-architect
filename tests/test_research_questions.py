@@ -44,7 +44,12 @@ def _write_yaml(path: Path, document: object) -> None:
 def _tiny_catalog():
     catalog = load_catalog()
     selected = {PUBLISHED, *RESEARCH_KEYS}
-    principles = tuple(item for item in catalog.principles if item.id in selected)
+    fixture_types = {PRINCIPLE: "principle", IDENTIFICATION: "identification", RULE: "rule"}
+    principles = tuple(
+        replace(item, editorial_status="source_gap", question=None, type=fixture_types[item.id])
+        if item.id in fixture_types else item
+        for item in catalog.principles if item.id in selected
+    )
     assignments = {
         key: subtopic
         for key, subtopic in catalog.taxonomy.assignments.items()
@@ -1005,10 +1010,24 @@ def test_production_research_ledgers_keep_the_approved_v1_snapshot() -> None:
     catalog = load_catalog()
     questions = load_research_questions(catalog)
     coverage = load_research_coverage(catalog, questions)
-    active = questions.active_keys
+    assert coverage.active_keys == questions.active_keys
+    assert set(questions.active_keys) == {
+        item.id for item in catalog.principles if item.editorial_status != "source_checked"
+    }
+    question_release = questions.releases[0]
+    coverage_release = coverage.releases[0]
+    active = question_release.active
+    questions = replace(questions, items={
+        key: replace(record, revision_history=record.revision_history[: question_release.revisions[key]])
+        for key, record in questions.items.items() if key in question_release.revisions
+    })
+    coverage = replace(coverage, items={
+        key: replace(record, revision_history=record.revision_history[: coverage_release.revisions[key]])
+        for key, record in coverage.items.items() if key in coverage_release.revisions
+    })
 
     assert len(active) == 100
-    assert coverage.active_keys == active
+    assert coverage_release.active == active
     assert Counter(questions.items[key].type for key in active) == {
         "principle": 14,
         "rule": 55,
@@ -1029,8 +1048,6 @@ def test_production_research_ledgers_keep_the_approved_v1_snapshot() -> None:
         3: 48,
     }
 
-    question_release = questions.releases[-1]
-    coverage_release = coverage.releases[-1]
     assert (question_release.id, question_release.content_sha256) == (
         "steel-research-questions-v1",
         "79fa55b2e60cfb3f5021533e0d2573eb459fc6832221ef0123f56ddd7455a549",
@@ -1104,6 +1121,8 @@ def test_validate_cli_loads_both_fixed_research_ledgers(
         active_keys=(IDENTIFICATION, RULE),
     )
     monkeypatch.setattr(cli, "load_catalog", lambda: catalog)
+    # The tiny research fixture intentionally omits the production exam corpus.
+    monkeypatch.setattr(cli, "load_exam_coverage", lambda loaded: SimpleNamespace(verified=0, objectives=0))
     monkeypatch.setattr(
         cli,
         "load_research_queries",

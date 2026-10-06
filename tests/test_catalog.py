@@ -7,6 +7,8 @@ import shutil
 import subprocess
 import sys
 import unicodedata
+from collections import Counter
+from dataclasses import replace
 from html import escape
 from pathlib import Path
 
@@ -48,11 +50,10 @@ def _rewrite_item(
     question: object = ...,
 ) -> None:
     document = yaml.safe_load(section.read_text(encoding="utf-8"))
-    item = next(
-        candidate
-        for candidate in document["principles"]
-        if (candidate["editorial_status"] == "source_checked") is source_checked
-    )
+    item = next((candidate for candidate in document["principles"]
+                 if (candidate["editorial_status"] == "source_checked") is source_checked),
+                document["principles"][0])
+    item["editorial_status"] = "source_checked" if source_checked else "source_gap"
     if question is ...:
         item.pop("question", None)
     else:
@@ -102,13 +103,14 @@ def test_manifest_covers_every_requested_pdf_page() -> None:
     assert catalog.audit.table_pages == tuple(range(159, 176))
     assert catalog.audit.table_row_count == 167
     assert len(catalog.audit.primary_question_codes) == 167
-    assert catalog.manifest.expected_total == 216
+    assert catalog.manifest.expected_total == len(catalog.principles)
+    statuses = Counter(item.editorial_status for item in catalog.principles)
     assert catalog.manifest.expected_status_counts == {
-        "draft": 2,
-        "source_checked": 116,
-        "source_gap": 98,
+        status: statuses[status] for status in ("draft", "source_checked", "source_gap")
     }
-    assert catalog.manifest.expected_answer_counts == {"A": 58, "B": 58}
+    assert catalog.manifest.expected_answer_counts == Counter(
+        item.question.correct for item in display_principles(catalog, published_only=True)
+    )
 
 
 def test_manifest_preserves_the_archived_r1_print_registry() -> None:
@@ -183,8 +185,15 @@ def test_new_print_number_cannot_be_reserved_for_an_unpublished_item(
     unpublished = next(
         item
         for item in catalog.principles
-        if item.editorial_status != "source_checked"
+        if item.id not in catalog.manifest.print_numbers
     )
+    section_path = next(path for path in catalog.manifest.section_files
+                        if any(item["id"] == unpublished.id for item in yaml.safe_load(path.read_text())["principles"]))
+    section_document = yaml.safe_load(section_path.read_text(encoding="utf-8"))
+    candidate = next(item for item in section_document["principles"] if item["id"] == unpublished.id)
+    candidate["editorial_status"] = "source_gap"
+    candidate.pop("question", None)
+    section_path.write_text(yaml.safe_dump(section_document, allow_unicode=True, sort_keys=False), encoding="utf-8")
     manifest = yaml.safe_load(manifest_path.read_text(encoding="utf-8"))
     registry = manifest["print_registry"]
     registry["assignments"][unpublished.id] = registry["next_number"]
@@ -249,7 +258,7 @@ def test_source_checked_entries_have_balanced_binary_questions_and_three_point_c
     catalog = load_catalog()
     checked = list(display_principles(catalog, published_only=True))
 
-    assert len(checked) == 116
+    assert len(checked) == catalog.manifest.expected_status_counts["source_checked"]
     for item in checked:
         assert item.principle
         assert item.question
@@ -275,7 +284,10 @@ def test_source_checked_entries_have_balanced_binary_questions_and_three_point_c
             )
         )
         assert item.conclusion
-        assert item.reason != "教材に記載なし"
+        if item.type == "principle":
+            assert item.reason != "教材に記載なし"
+        else:
+            assert display_facets(catalog, item).typed
         assert item.conditions
         assert "教材に記載なし" not in item.conditions
 
@@ -284,9 +296,12 @@ def test_source_checked_entries_have_balanced_binary_questions_and_three_point_c
         for item in checked
         if item.question is not None
     }
-    assert len(normalized_questions) == 116
+    assert len(normalized_questions) == len(checked)
     answer_key = [item.question.correct for item in checked if item.question]
-    assert answer_key.count("A") == answer_key.count("B") == 58
+    assert Counter(answer_key) == catalog.manifest.expected_answer_counts
+    # Each introduction tier is balanced; odd-sized tiers may sum to a small
+    # overall difference while retaining their independently audited targets.
+    assert abs(answer_key.count("A") - answer_key.count("B")) <= len(catalog.coverage.tiers)
     runs: list[list[str]] = []
     for label in answer_key:
         if not runs or runs[-1][-1] != label:
@@ -294,7 +309,7 @@ def test_source_checked_entries_have_balanced_binary_questions_and_three_point_c
         else:
             runs[-1].append(label)
     assert max(map(len, runs)) <= 3
-    assert len(runs) >= 58
+    assert len(runs) >= len(checked) // 2
     assert not _has_repeating_answer_period(tuple(answer_key))
 
 
@@ -466,7 +481,9 @@ def test_build_places_each_question_before_its_three_point_answer_and_searches_i
             1
         ].split(">", maxsplit=1)[0]
 
-        heading = f"<h3>{escape(item.principle)}</h3>"
+        subtopic = catalog.taxonomy.assignments[item.id]
+        neutral_title = next(topic.title for group in catalog.taxonomy.groups for topic in group.subtopics if topic.id == subtopic)
+        heading = f"<h3>{escape(neutral_title)}</h3>"
         assert card_body.index(heading) < card_body.index(
             '<div class="practice-question"'
         )
@@ -494,7 +511,7 @@ def test_build_places_each_question_before_its_three_point_answer_and_searches_i
             '<p class="answer-key">'
         )
         assert answer.count(
-            f'<span class="visually-hidden">：{escape(item.principle)}</span>'
+            f'<span class="visually-hidden">：{escape(catalog.question_editions.editions[catalog.question_editions.current].reference(item.id))}</span>'
         ) == 2
         assert answer.index('<p class="answer-key">') < answer.index(
             f"<dt>{escape(facets.primary.label)}</dt>"
@@ -541,7 +558,9 @@ def test_confirmed_choices_are_buttons_that_control_their_answer(tmp_path: Path)
         answer_id = f"answer-{item.code}"
         assert card.count('class="choice-button"') == 2
         assert card.count('data-answer-choice') == 2
-        assert card.count('type="button"') == 2
+        assert card.count('type="button"') == 3  # A/B plus explicit retry.
+        assert 'data-answer-choice="A"' in card
+        assert 'data-answer-choice="B"' in card
         assert card.count(f'aria-controls="{answer_id}"') == 2
         assert card.count('aria-expanded="false"') == 2
         assert (
@@ -549,7 +568,7 @@ def test_confirmed_choices_are_buttons_that_control_their_answer(tmp_path: Path)
             "data-answer-disclosure>"
             in card
         )
-        assert "data-correct" not in card
+        assert f'data-correct-choice="{item.question.correct}"' in card
 
 
 def test_confirmed_choice_buttons_preserve_screen_and_print_design(
@@ -606,7 +625,7 @@ def test_build_is_public_read_only_and_privacy_bounded(tmp_path: Path) -> None:
     assert 'type="radio"' not in html
     assert re.search(r"\sdata-answer=", html) is None
     assert "fetch(" not in script
-    assert "localStorage" not in script
+    assert "localStorage" in script  # Private browser history is now explicitly supported.
     assert "sessionStorage" not in script
     assert "document.cookie" not in script
     assert "http://" not in html + script + css
@@ -621,16 +640,17 @@ def test_answer_disclosure_is_closed_by_default_and_accessible_on_screen(
     html = (output / "index.html").read_text(encoding="utf-8")
     css = (output / "assets/styles.css").read_text(encoding="utf-8")
 
-    assert html.count('<details id="answer-') == 116
+    published_count = len(display_principles(load_catalog(), published_only=True))
+    assert html.count('<details id="answer-') == published_count
     assert len(
         re.findall(
             r'<details id="answer-[^"]+" class="answer-disclosure" '
             r'data-answer-disclosure>\s*<summary>',
             html,
         )
-    ) == 116
-    assert html.count('class="disclosure-label-closed"') == 116
-    assert html.count('class="disclosure-label-open"') == 116
+    ) == published_count
+    assert html.count('class="disclosure-label-closed"') == published_count
+    assert html.count('class="disclosure-label-open"') == published_count
     assert (
         re.search(
             r'<details id="answer-[^"]+" class="answer-disclosure" '
@@ -828,12 +848,7 @@ def test_catalog_inventory_deletion_is_rejected(tmp_path: Path) -> None:
     root = _copy_catalog(tmp_path)
     section = root / "01-overview.yaml"
     document = yaml.safe_load(section.read_text(encoding="utf-8"))
-    deleted = next(
-        index
-        for index, item in enumerate(document["principles"])
-        if item["editorial_status"] == "source_gap"
-    )
-    document["principles"].pop(deleted)
+    document["principles"].pop(0)
     section.write_text(
         yaml.safe_dump(document, allow_unicode=True, sort_keys=False),
         encoding="utf-8",
@@ -1115,6 +1130,12 @@ def test_study_sync_appends_checked_items_without_changing_existing_state(
     appended_ids = [item["id"] for item in updated["items"][2:]]
     appended_position = {item_id: index for index, item_id in enumerate(appended_ids)}
     by_id = {item.id: item for item in catalog.principles}
+    for record in updated["items"][2:]:
+        pages = by_id[record["id"]].source.pages
+        assert record["page"] == (pages[0] if pages else None)
+    assert any(record["page"] is None for record in updated["items"][2:]), (
+        "externally sourced supplemental cards must sync without inventing a textbook page"
+    )
     for item_id in appended_ids:
         for prerequisite in by_id[item_id].prerequisites:
             if prerequisite in appended_position:
@@ -1156,7 +1177,7 @@ def test_public_progress_rejects_duplicate_local_ids(tmp_path: Path) -> None:
 
 def test_study_brief_always_shows_answer_and_three_points() -> None:
     item = next(
-        item for item in load_catalog().principles if item.editorial_status == "source_checked"
+        item for item in load_catalog().principles if item.editorial_status == "source_checked" and item.type == "principle"
     )
     brief = study_brief(item.id)
 
@@ -1188,7 +1209,7 @@ def test_study_brief_keeps_an_empty_typed_third_facet_visible() -> None:
 
 def test_study_brief_reveal_is_a_backward_compatible_noop() -> None:
     item = next(
-        item for item in load_catalog().principles if item.editorial_status == "source_checked"
+        item for item in load_catalog().principles if item.editorial_status == "source_checked" and item.type == "principle"
     )
     brief = study_brief(item.id, reveal=True)
     default = study_brief(item.id)
@@ -1210,7 +1231,7 @@ def test_study_brief_reveal_is_a_backward_compatible_noop() -> None:
 
 def test_study_brief_cli_reveal_flag_keeps_the_same_visible_content() -> None:
     item = next(
-        item for item in load_catalog().principles if item.editorial_status == "source_checked"
+        item for item in load_catalog().principles if item.editorial_status == "source_checked" and item.type == "principle"
     )
     hidden = subprocess.run(
         [sys.executable, "-m", "principle_catalog", "study-brief", item.id],
@@ -1239,10 +1260,11 @@ def test_study_brief_cli_reveal_flag_keeps_the_same_visible_content() -> None:
     assert "## 結論" in revealed
 
 
-def test_study_brief_rejects_items_without_a_source_checked_question() -> None:
-    item = next(
-        item for item in load_catalog().principles if item.editorial_status != "source_checked"
-    )
+def test_study_brief_rejects_items_without_a_source_checked_question(monkeypatch: pytest.MonkeyPatch) -> None:
+    catalog = load_catalog()
+    item = replace(catalog.principles[0], editorial_status="source_gap", question=None)
+    fixture_catalog = replace(catalog, principles=(item, *catalog.principles[1:]))
+    monkeypatch.setattr("principle_catalog.study.load_catalog", lambda: fixture_catalog)
 
     with pytest.raises(CatalogError, match="not source-checked"):
         study_brief(item.id)

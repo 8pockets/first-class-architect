@@ -8,72 +8,190 @@ principles:
   order: 1
   type: identification
   principle: 張付け耐火被覆の施工法と特徴
-  conclusion: 張付け耐火被覆はALC板やけい酸カルシウム板などを金物・接着剤で取り付ける。作業能率と品質管理に優れるが、破損や割付けによるロスが生じる。
+  conclusion: 耐火板張りは、けい酸カルシウム板やALC板などの成形板を用いて鉄骨を覆う工法である。材料・厚さ・取付け方法は要求性能を満たす法定仕様又は認定仕様等に従う。
   reason: 教材に記載なし
   conditions:
-  - 成形板を用いる張付け耐火被覆
+  - 成形板による耐火被覆
+  - 材料名だけで所要耐火時間を保証しない
   source:
     pages:
     - 205
     question_codes: []
+    authoritative_sources:
+    - kind: government_spec
+      title: 公共建築工事標準仕様書（建築工事編）令和7年版
+      locator: 7.9.2、7.9.3、7.9.5（工法区分・性能・法定又は認定仕様）
+      url: https://www.mlit.go.jp/gobuild/content/001888816.pdf
+      supports:
+      - statement
+      - explanation
+      - conditions
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 成形されたけい酸カルシウム板で鉄骨を覆う耐火被覆の分類について、正しい結論はどちらか。
+    choices:
+      A: 耐火板張り
+      B: 耐火材吹付け
+    correct: A
+  display_content:
+    definition: 耐火板張りは、けい酸カルシウム板やALC板などの成形板を用いて鉄骨を覆う工法である。材料・厚さ・取付け方法は要求性能を満たす法定仕様又は認定仕様等に従う。
+    distinguishing_conditions:
+    - 成形板による耐火被覆
+    - 材料名だけで所要耐火時間を保証しない
+    confusable_points:
+    - 本問では「耐火材吹付け」と区別する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-FIREPROOFING-CAST-IN
   order: 2
   type: identification
   principle: 打込み耐火被覆の施工法と特徴
-  conclusion: 打込み耐火被覆は軽量コンクリートなどを打設する。接合部がなく施工しやすく安全性も高いが、打設・養生に時間がかかり、ひび割れが生じやすい。
+  conclusion: 教材でいう打込み耐火被覆は、鉄骨の周囲に軽量コンクリート等を打設して覆う方式である。教材の『接合部がない・施工性に優れる』という一律の比較評価は採らない。
   reason: 教材に記載なし
   conditions:
-  - 軽量コンクリートなどを用いる打込み耐火被覆
+  - 教材P205の打込み工法の識別
+  - 必要な被覆厚・材料・耐火性能は採用仕様ごとに確認する
   source:
     pages:
     - 205
     question_codes: []
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 鉄骨の周囲に型枠を設けてコンクリート系の材料を打設する、教材の耐火被覆工法について、正しい結論はどちらか。
+    choices:
+      A: 打込み
+      B: 塗仕上げ
+    correct: A
+  display_content:
+    definition: 教材でいう打込み耐火被覆は、鉄骨の周囲に軽量コンクリート等を打設して覆う方式である。教材の『接合部がない・施工性に優れる』という一律の比較評価は採らない。
+    distinguishing_conditions:
+    - 教材P205の打込み工法の識別
+    - 必要な被覆厚・材料・耐火性能は採用仕様ごとに確認する
+    confusable_points:
+    - 本問では「塗仕上げ」と区別する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-FIREPROOFING-PLASTER-FINISH
   order: 3
   type: identification
   principle: 塗仕上げ耐火被覆の施工法と特徴
-  conclusion: 塗仕上げ耐火被覆は、丸鋼で補強したラスへモルタルなどを塗る。材料が安価で仕上げを兼ねられるが、施工に熟練を要する。
+  conclusion: ラス張りモルタル塗りは、ラス下地にモルタルを塗って鉄骨を覆う耐火被覆工法である。塗厚は要求される耐火性能に対応させる。
   reason: 教材に記載なし
   conditions:
-  - モルタルなどを用いる塗仕上げ耐火被覆
+  - ラス下地を用いたモルタル塗り耐火被覆
+  - 材料・工法・塗厚は所定仕様に従う
   source:
     pages:
     - 205
     question_codes: []
+    authoritative_sources:
+    - kind: government_spec
+      title: 公共建築工事標準仕様書（建築工事編）令和7年版
+      locator: 7.9.2、7.9.3、7.9.7（ラス張りモルタル塗り）
+      url: https://www.mlit.go.jp/gobuild/content/001888816.pdf
+      supports:
+      - statement
+      - explanation
+      - conditions
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: ラス下地を設け、その上にモルタルを塗る耐火被覆の分類について、正しい結論はどちらか。
+    choices:
+      A: ラス張りモルタル塗り
+      B: 耐火板張り
+    correct: A
+  display_content:
+    definition: ラス張りモルタル塗りは、ラス下地にモルタルを塗って鉄骨を覆う耐火被覆工法である。塗厚は要求される耐火性能に対応させる。
+    distinguishing_conditions:
+    - ラス下地を用いたモルタル塗り耐火被覆
+    - 材料・工法・塗厚は所定仕様に従う
+    confusable_points:
+    - 本問では「耐火板張り」と区別する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-FIREPROOFING-REQUIRED-ABOVE-250C
   order: 4
   type: principle
   principle: 鋼材の高温強度低下と耐火被覆
-  conclusion: 鋼材は250℃以上の高温へ長時間さらされると強度が低下するため、火災時の強度低下を防ぐ耐火被覆が必要である。
-  reason: 高温が長時間続くと鋼材強度が低下するため。
+  conclusion: 鋼材が燃えないことと、火災時に部材が荷重を支え続けられることは別である。高温時の強度・剛性と荷重条件を考慮して耐火性能を確保する。
+  reason: 鋼材は不燃でも高温で強度・剛性が低下し、柱や梁の耐力を失うことがあるため。
   conditions:
-  - 火災時の鉄骨部材
-  - 250℃以上へ長時間さらされる場合
+  - 火災時の鋼部材の構造安全性
+  - 鋼種・部材・荷重比・加熱条件により性能は異なる
+  - 250℃という一つの温度を全鋼材の被覆要否の閾値にはしない
   source:
     pages:
     - 205
     question_codes: []
+    authoritative_sources:
+    - kind: government_research
+      title: 建築研究所 BRI NEWS Vol.47（2009年10月）
+      locator: P3 鋼構造部材の耐火性・温度上昇による耐力低下
+      url: https://www.kenken.go.jp/japanese/contents/publications/epistura/pdf/47.pdf
+      supports:
+      - statement
+      - explanation
+      - conditions
   prerequisites:
   - S-K6-STEEL-F-VALUE-DEFINITION
-  editorial_status: draft
+  editorial_status: source_checked
+  question:
+    prompt: 鋼材が不燃材料であることを理由に、火災時の荷重支持能力の確認を省く判断について、正しい結論はどちらか。
+    choices:
+      A: 不燃性と高温時耐力は別なので省けない
+      B: 燃焼しない鋼材なら耐力確認を省ける
+    correct: A
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-FIREPROOFING-SPRAY-APPLIED
   order: 5
   type: identification
   principle: 吹付け耐火被覆の施工法と特徴
-  conclusion: 吹付け耐火被覆は、接着剤を塗った鉄骨またはラス下地へ岩綿などを吹き付ける。複雑・不整形にも対応できるが、表面が粗く、飛散が公害要因となり、雨水で剥落するため内部に用いる。
+  conclusion: 耐火材吹付けはロックウール等の耐火材を吹き付けて鉄骨を覆う工法である。所定の認定工法に従い、周辺への飛散を防ぐ養生を行う。
   reason: 教材に記載なし
   conditions:
-  - 吹付け岩綿などの耐火被覆
-  - 雨掛かりを避ける内部使用
+  - 鉄骨の耐火材吹付け
+  - 下地・材料・厚さ・使用環境は採用する認定仕様に従う
   source:
     pages:
     - 205
     question_codes: []
+    authoritative_sources:
+    - kind: government_spec
+      title: 公共建築工事標準仕様書（建築工事編）令和7年版
+      locator: 7.9.2～7.9.4（工法区分・認定工法・飛散防止）
+      url: https://www.mlit.go.jp/gobuild/content/001888816.pdf
+      supports:
+      - statement
+      - explanation
+      - conditions
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 鉄骨への耐火材吹付けを行うとき、周辺への影響を抑える施工計画について、正しい結論はどちらか。
+    choices:
+      A: 乾燥後に清掃する前提で養生を省く
+      B: 飛散防止の養生を行う
+    correct: B
+  display_content:
+    definition: 耐火材吹付けはロックウール等の耐火材を吹き付けて鉄骨を覆う工法である。所定の認定工法に従い、周辺への飛散を防ぐ養生を行う。
+    distinguishing_conditions:
+    - 鉄骨の耐火材吹付け
+    - 下地・材料・厚さ・使用環境は採用する認定仕様に従う
+    confusable_points:
+    - 本問では「乾燥後に清掃する前提で養生を省く」と区別する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete

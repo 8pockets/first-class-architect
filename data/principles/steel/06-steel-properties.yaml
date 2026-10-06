@@ -8,50 +8,102 @@ principles:
   order: 1
   type: identification
   principle: 鋼部材の座屈形式
-  conclusion: 教材では座屈を、曲げ座屈・局部座屈・横座屈の3形式に整理する。
+  conclusion: 部材全体が横に曲がる曲げ座屈、断面を構成する板がはらみ出す局部座屈、梁の横移動とねじれが連成する横座屈を区別する。
   reason: 教材に記載なし
   conditions:
-  - 鋼部材の座屈形式を識別する場合
-  source:
-    pages:
-    - 181
-    question_codes: []
-  prerequisites: []
-  editorial_status: source_gap
-- id: S-K6-STEEL-CORROSION-PROTECTION
-  order: 2
-  type: principle
-  principle: 鋼材の発錆と防錆処理
-  question:
-    prompt: 教材が説明する一般的な鋼材の発錆への対応について、正しい結論はどちらか。
-    choices:
-      A: 防錆塗料やめっきによる処理は不要である
-      B: 防錆塗料やめっきによる処理が必要である
-    correct: B
-  conclusion: 鋼材には防錆塗料やめっきなどの防錆処理が必要である。
-  reason: 鋼材は錆びやすいため。
-  conditions:
-  - 教材が説明する一般的な鋼材
+  - 鋼部材で代表的な三つの座屈形式を識別する場合
+  - 全ての座屈形式を三つに限定する分類ではない
   source:
     pages:
     - 181
     question_codes: []
   prerequisites: []
   editorial_status: source_checked
-- id: S-K6-STEEL-FIRE-STRENGTH-FIREPROOFING
-  order: 3
+  question:
+    prompt: 圧縮されたH形鋼のフランジ板の一部分だけが波状にはらみ出す現象について、正しい結論はどちらか。
+    choices:
+      A: 部材全体の曲げ座屈
+      B: 局部座屈
+    correct: B
+  display_content:
+    definition: 部材全体が横に曲がる曲げ座屈、断面を構成する板がはらみ出す局部座屈、梁の横移動とねじれが連成する横座屈を区別する。
+    distinguishing_conditions:
+    - 鋼部材で代表的な三つの座屈形式を識別する場合
+    - 全ての座屈形式を三つに限定する分類ではない
+    confusable_points:
+    - 本問では「部材全体の曲げ座屈」と区別する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-STEEL-CORROSION-PROTECTION
+  order: 2
   type: principle
-  principle: 鋼材の高温強度と耐火被覆
-  conclusion: 鋼部材には耐火被覆が必要である。
-  reason: 鋼材は火に弱く、300℃を超えると強度が急激に低下するため。
+  principle: 鋼材の発錆と防錆処理
+  question:
+    prompt: 標準仕様書で特記のない鉄骨の錆止め塗装を計画する。コンクリートに密着する部分の扱いとして正しい結論はどちらか。
+    choices:
+      A: 一般の露出面と同じ範囲で塗装する
+      B: 原則の塗装範囲から除く
+    correct: B
+  conclusion: 一般的な鋼材は環境に応じて塗装・めっきなどで防錆する。ただし錆止め塗装の範囲は一律ではなく、コンクリートに密着する部分や摩擦接合面などには別の扱いがある。
+  reason: 鋼材は錆びやすいため。
   conditions:
-  - 火災時など、鋼材温度が300℃を超える場合
+  - 一般的な鋼材の防錆
+  - 塗装範囲と接合面・コンクリート接触面の条件を区別する
   source:
     pages:
     - 181
     question_codes: []
+    authoritative_sources:
+    - kind: government_spec
+      title: 公共建築工事標準仕様書（建築工事編）令和7年版
+      locator: 7.8.2(1)（塗装の範囲）
+      url: https://www.mlit.go.jp/gobuild/content/001888816.pdf
+      supports:
+      - statement
+      - conditions
   prerequisites: []
-  editorial_status: draft
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+- id: S-K6-STEEL-FIRE-STRENGTH-FIREPROOFING
+  order: 3
+  type: principle
+  principle: 鋼材の高温強度と耐火被覆
+  conclusion: 耐火被覆は鋼部材への熱伝達を遅らせ、火災時の鋼材温度上昇と耐力低下を抑える。
+  reason: 鋼材は不燃でも高温では耐力が低下するため、断熱性を持つ被覆によって温度上昇を遅らせる。
+  conditions:
+  - 火災時の鉄骨部材
+  - 必要な耐火性能と採用する仕様・検証方法に応じて対策する
+  - 鋼材温度300℃だけで全鋼部材の被覆要否を一律に決めない
+  source:
+    pages:
+    - 181
+    question_codes: []
+    authoritative_sources:
+    - kind: government_research
+      title: 建築研究所 BRI NEWS Vol.47（2009年10月）
+      locator: P3 鋼構造部材の耐火性・温度上昇による耐力低下
+      url: https://www.kenken.go.jp/japanese/contents/publications/epistura/pdf/47.pdf
+      supports:
+      - statement
+      - explanation
+      - conditions
+  prerequisites: []
+  editorial_status: source_checked
+  question:
+    prompt: 耐火被覆が鋼部材の耐火性能に寄与する主な仕組みについて、正しい結論はどちらか。
+    choices:
+      A: 常温時の鋼材の降伏点を高める
+      B: 鋼材への熱伝達を遅らせる
+    correct: B
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-STEEL-STRUCTURE-DEFINITION
   order: 6
   type: identification
@@ -65,24 +117,46 @@ principles:
     - 181
     question_codes: []
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 形鋼や鋼管を接合して骨組を構成する鉄骨構造で、部材間の力を伝える代表的な接合法について、正しい結論はどちらか。
+    choices:
+      A: 重ね継手・付着による定着
+      B: 高力ボルト接合・溶接接合
+    correct: B
+  display_content:
+    definition: 形鋼や角形鋼管などの鋼材を、高力ボルトや溶接で接合して組み立てる構造を鉄骨構造という。
+    distinguishing_conditions:
+    - 鋼材で造られた形鋼・角形鋼管などを用いる場合
+    confusable_points:
+    - 本問では「重ね継手・付着による定着」と区別する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-STEEL-THIN-SECTION-BUCKLING
   order: 7
   type: principle
   principle: 薄い鋼部材と座屈
   question:
-    prompt: 薄い形の鋼部材の座屈しやすさについて、正しい結論はどちらか。
+    prompt: 同じ材料・板幅・支持条件の圧縮板要素で、板厚だけを薄くした。局部座屈への影響として正しい結論はどちらか。
     choices:
-      A: 座屈しやすい
-      B: 座屈しにくい
+      A: 局部座屈しやすくなる
+      B: 局部座屈しにくくなる
     correct: A
-  conclusion: 鋼部材は座屈しやすい。
-  reason: 部材が薄い形になりやすいため。
+  conclusion: 圧縮を受ける鋼材の板要素は、幅に対して薄いほど局部座屈に注意を要する。鋼材強度だけでなく断面形状も安定性を左右する。
+  reason: 薄い板要素は圧縮によって面外に変形しやすく、断面が材料強度を十分発揮する前に局部座屈することがあるため。
   conditions:
-  - 薄い鋼部材
+  - 圧縮を受ける板要素
+  - 材料・板幅などを同じにして板厚の影響を比較
   source:
     pages:
     - 181
+    - 196
     question_codes: []
   prerequisites: []
   editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete

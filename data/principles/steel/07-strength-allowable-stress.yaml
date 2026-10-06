@@ -18,4 +18,19 @@ principles:
     question_codes: []
   prerequisites:
   - S-K6-STEEL-F-VALUE-DEFINITION
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 鋼材の長期許容支圧応力度について、正しい結論はどちらか。
+    choices:
+      A: F/1.1である
+      B: F/1.5である
+    correct: A
+  display_content:
+    rule: 長期許容支圧応力度はF/1.1で、長期許容引張応力度F/1.5より大きい。
+    applicability:
+    - 鋼材の長期支圧を検討する場合
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete

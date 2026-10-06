@@ -9,17 +9,17 @@ principles:
   type: principle
   principle: 通しダイアフラムの食い違い防止板厚
   question:
-    prompt: 梁フランジと完全溶込み溶接する通しダイアフラムについて、梁フランジとの板厚関係として正しい結論はどちらか。
+    prompt: 板厚25mmの通しダイアフラムに19mmの梁フランジを突合せ溶接する。フランジ上面が1mmはみ出し別途補強を行わない場合、正しい結論はどちらか。
     choices:
-      A: 梁フランジより1〜2サイズ厚くする
-      B: 梁フランジより1〜2サイズ薄くする
-    correct: A
-  conclusion: 通しダイアフラムは梁フランジより1〜2サイズ、約3〜6mm厚くすることが多い。
+      A: 板厚差6mmがあるため位置をそのままとする
+      B: フランジが板厚内部に納まるよう位置を是正する
+    correct: B
+  conclusion: 梁フランジは通しダイアフラムの板厚内部に納めて突合せ溶接する。板厚を梁フランジより1〜2サイズ大きくするだけでなく、実際の上下位置を確認する。
   reason: 鋼材許容誤差の累積や溶接変形があっても梁フランジをダイアフラム板厚内へ納め、補修困難な食い違いを防ぐため。
   conditions:
   - 通しダイアフラムと梁フランジの完全溶込み溶接
   - 一般的な鋼板寸法は3mm刻み
-  - 通し又は内ダイアフラムと梁フランジの突合せ溶接
+  - 設問は通しダイアフラム接合で、食い違いに対する別途補強を行わない場合
   source:
     pages:
     - 173
@@ -28,6 +28,23 @@ principles:
     - '01171'
     - '06162'
     - '25181'
+    authoritative_sources:
+    - kind: local_government
+      title: 大阪府 建築構造設計における主な指摘事例集（2021年版・2023年一部改正）
+      locator: 4.1.2−4 補足事項／通しダイアフラムと梁フランジの板厚・上下位置（PDF9頁）
+      url: https://www.pref.osaka.lg.jp/documents/35034/05_a41kakusyukouzounosekkei_1.pdf
+      supports:
+      - statement
+      - explanation
+      - conditions
+    - kind: professional_body
+      title: 建築鉄骨構造技術支援協会 鉄骨Q&A 3-3
+      locator: 通しダイアフラムと梁フランジの食違い防止方法／上下位置・鋼材精度・肩折れ
+      url: https://sasst.jp/qa/q3/q3-3.html
+      supports:
+      - statement
+      - explanation
+      - conditions
   prerequisites:
   - S-K6-SQUARE-TUBE-COLUMN-DIAPHRAGM-TYPES
   editorial_status: source_checked
@@ -35,28 +52,34 @@ principles:
   order: 2
   type: identification
   display_content:
-    definition: 内ダイアフラムは柱内部の梁上下フランジ位置へ設け、角形鋼管では一度柱を切断してダイアフラムを溶接した後、柱を再び溶接接合する。
+    definition: 内ダイアフラムは柱内部の梁上下フランジ位置へ設ける。教材の既成角形鋼管を使う製作例では、柱を切断して内部へ取り付けた後、柱を再接合する。全ての箱形柱の製作法をこの手順に限定しない。
     distinguishing_conditions:
-    - 角形鋼管柱の内ダイアフラム形式
+    - 教材の既成角形鋼管柱を用いた製作例
+    - 内ダイアフラムを柱内部の梁上下フランジ位置に設ける
     confusable_points:
-    - 「柱を切断せずに内部へ直接取り付ける」とは区別する。
+    - 内ダイアフラムの配置位置と、鋼板から組み立てる箱形柱などの別の製作手順を区別する。
   principle: 内ダイアフラム形式の製作手順
   question:
-    prompt: 角形鋼管柱の内部へ梁上下フランジ位置の内ダイアフラムを取り付けるとき、製作手順として正しい結論はどちらか。
+    prompt: 教材の既成角形鋼管柱に内ダイアフラムを設ける製作例で、柱を切断する目的として正しい結論はどちらか。
     choices:
-      A: 柱を切断せずに内部へ直接取り付ける
-      B: 柱を切断して取り付けた後に再接合する
-    correct: B
-  conclusion: 内ダイアフラムは柱内部の梁上下フランジ位置へ設け、角形鋼管では一度柱を切断してダイアフラムを溶接した後、柱を再び溶接接合する。
+      A: 柱内部へダイアフラムを溶接するため
+      B: ダイアフラムを柱の外側へ突出させるため
+    correct: A
+  conclusion: 内ダイアフラムは柱内部の梁上下フランジ位置へ設ける。教材の既成角形鋼管を使う製作例では、柱を切断して内部へ取り付けた後、柱を再接合する。全ての箱形柱の製作法をこの手順に限定しない。
   reason: 柱内部へダイアフラムを取り付ける必要があるため。
   conditions:
-  - 角形鋼管柱の内ダイアフラム形式
+  - 教材の既成角形鋼管柱を用いた製作例
+  - 内ダイアフラムを柱内部の梁上下フランジ位置に設ける
   source:
     pages:
     - 209
     question_codes: []
   prerequisites: []
   editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-THROUGH-DIAPHRAGM-CONSTRUCTION-AND-WELD
   order: 3
   type: identification
@@ -71,4 +94,20 @@ principles:
     question_codes: []
   prerequisites:
   - S-K6-FULL-PENETRATION-WELD-DEFINITION-REPEATED-STRESS
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 通しダイアフラム形式で柱を切断する位置について、正しい結論はどちらか。
+    choices:
+      A: 梁ウェブ中央位置で柱を切断する
+      B: 梁フランジ位置で柱を切断する
+    correct: B
+  display_content:
+    definition: 通しダイアフラム形式は柱を梁の上下フランジ位置で切断し、上下柱とダイアフラムを完全溶込み溶接する。
+    distinguishing_conditions:
+    - 角形鋼管柱の通しダイアフラム形式
+    confusable_points:
+    - 本問では「梁ウェブ中央位置で柱を切断する」と区別する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete

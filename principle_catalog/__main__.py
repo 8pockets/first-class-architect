@@ -25,6 +25,7 @@ from principle_catalog.research_questions import (
     validate_research_question_history,
 )
 from principle_catalog.site import build_site
+from principle_catalog.exam_coverage import load_exam_coverage
 from principle_catalog.study import (
     new_study_candidates_from_path,
     study_brief,
@@ -158,6 +159,7 @@ def main() -> int:
     args = _parser().parse_args()
     if args.command == "validate":
         catalog = load_catalog()
+        exam_audit = load_exam_coverage(catalog)
         research_queries = load_research_queries(catalog)
         research_questions = load_research_questions(catalog)
         research_coverage = load_research_coverage(catalog, research_questions)
@@ -179,7 +181,8 @@ def main() -> int:
             f"research_queries={len(research_queries.items)} "
             f"research_questions={len(research_questions.active_keys)} "
             f"research_tiers={research_tier_summary} "
-            f"projected_progress={len(progress.items)}"
+            f"projected_progress={len(progress.items)} "
+            f"exam_objectives={exam_audit.verified}/{exam_audit.objectives}"
         )
         return 0
     if args.command == "sync-progress":

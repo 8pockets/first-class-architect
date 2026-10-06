@@ -11,9 +11,9 @@ principles:
   question:
     prompt: 細長比λが限界細長比Λ以上で、断面・座屈長さ・ヤング係数Eが同じ圧縮材について、基準強度Fを高くしたときの許容圧縮応力度として正しい結論はどちらか。
     choices:
-      A: 許容圧縮応力度は大きくなる
-      B: 許容圧縮応力度は変わらない
-    correct: B
+      A: 許容圧縮応力度は変わらない
+      B: 許容圧縮応力度は大きくなる
+    correct: A
   conclusion: 細長比λが限界細長比Λ以上の弾性座屈領域では、許容圧縮応力度はヤング係数Eとλで決まり、基準強度Fを高くしても変わらない。
   reason: 弾性座屈域の座屈耐力はオイラー座屈荷重π²EI/Lk²で決まり、鋼材強度Fを含まないため。
   conditions:
@@ -69,13 +69,12 @@ principles:
   order: 3
   type: rule
   principle: 圧縮材の有効細長比上限
-  conclusion: 圧縮力を負担する主要柱は200以下、柱以外は250以下、ラチス材は160以下とする。
+  conclusion: 圧縮材の有効細長比は、主要な柱を200以下、柱以外を250以下とする。教材に示すラチス材の160以下は別の部材条件の制限として区別する。
   reason: 教材に記載なし
   conditions:
   - 圧縮力を負担する構造耐力上主要な部材
-  - 柱は200以下
-  - 柱以外は250以下
-  - ラチス材は160以下
+  - 柱・柱以外の上限は施行令第65条
+  - 有効細長比の制限と圧縮耐力の照査は別に行う
   source:
     pages:
     - 164
@@ -91,9 +90,34 @@ principles:
     - '28172'
     - '29254'
     - '29302'
+    authoritative_sources:
+    - kind: law
+      title: 建築基準法施行令（e-Gov現行本文、2026-10-06照合）
+      locator: 第65条（柱200・柱以外250）
+      url: https://laws.e-gov.go.jp/law/325CO0000000338
+      supports:
+      - statement
+      - conditions
   prerequisites:
   - S-K6-18-SLENDERNESS
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 有効細長比220の圧縮材を主要な柱として用いる計画の上限照査について、正しい結論はどちらか。
+    choices:
+      A: 柱の上限200を超える
+      B: 柱の上限250以内に収まる
+    correct: A
+  display_content:
+    rule: 圧縮材の有効細長比は、主要な柱を200以下、柱以外を250以下とする。教材に示すラチス材の160以下は別の部材条件の制限として区別する。
+    applicability:
+    - 圧縮力を負担する構造耐力上主要な部材
+    - 柱・柱以外の上限は施行令第65条
+    - 有効細長比の制限と圧縮耐力の照査は別に行う
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-LIMIT-SLENDERNESS-STRENGTH-RELATION
   order: 4
   type: principle

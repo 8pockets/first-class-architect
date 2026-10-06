@@ -36,14 +36,16 @@ def test_public_coverage_backlog_is_the_exact_unpublished_primary_code_gap() -> 
     ]
 
     assert backlog["priority"] == 1
-    assert backlog["count"] == len(codes) == 30
+    assert backlog["count"] == len(codes) == 0
+    assert backlog["status"] == "resolved"
     assert codes == expected
     assert len(codes) == len(set(codes))
 
 
-def test_topic_backlog_is_exactly_the_private_fire_and_special_load_group() -> None:
+def test_resolved_topic_backlog_preserves_the_original_fire_and_special_load_scope() -> None:
     catalog = load_catalog()
-    backlog = _backlog()["topic_backlog"]
+    data = _backlog()
+    backlog = data["initial_snapshot"]["topic_backlog"]
     assert isinstance(backlog, dict)
     subtopics = backlog["subtopics"]
     keys = backlog["keys"]
@@ -62,19 +64,23 @@ def test_topic_backlog_is_exactly_the_private_fire_and_special_load_group() -> N
 
     assert backlog["priority"] == 2
     assert subtopics == expected_subtopics
-    assert set(keys) == set(expected_keys)
+    assert len(keys) == 8
+    assert set(keys) <= set(expected_keys)
     assert all(
-        item.editorial_status != "source_checked"
+        item.editorial_status == "source_checked"
         for item in catalog.principles
         if item.id in set(keys)
     )
+    assert data["topic_backlog"]["keys"] == []
+    assert data["topic_backlog"]["subtopics"] == []
+    assert data["topic_backlog"]["status"] == "resolved"
 
 
-def test_authoritative_source_backlog_uses_allowed_sources_and_private_keys() -> None:
+def test_resolved_authoritative_backlog_uses_allowed_sources_and_preserves_original_keys() -> None:
     catalog = load_catalog()
     data = _backlog()
     policy = data["policy"]
-    backlog = data["authoritative_source_backlog"]
+    backlog = data["initial_snapshot"]["authoritative_source_backlog"]
     assert isinstance(policy, dict)
     assert isinstance(backlog, dict)
     keys = backlog["keys"]
@@ -92,13 +98,16 @@ def test_authoritative_source_backlog_uses_allowed_sources_and_private_keys() ->
         "conditions",
     ]
     assert len(keys) == len(set(keys)) == 3
-    assert all(by_key[key].editorial_status == "source_gap" for key in keys)
-    assert all(not by_key[key].source.authoritative_sources for key in keys)
+    assert all(by_key[key].editorial_status == "source_checked" for key in keys)
+    assert all(by_key[key].source.authoritative_sources for key in keys)
+    assert data["authoritative_source_backlog"]["keys"] == []
+    assert data["authoritative_source_backlog"]["status"] == "resolved"
 
 
-def test_atomicity_source_gap_is_kept_private_until_all_supports_are_found() -> None:
+def test_atomicity_source_gap_is_resolved_without_deleting_its_original_audit_trail() -> None:
     catalog = load_catalog()
-    backlog = _backlog()["source_gap_backlog"]
+    data = _backlog()
+    backlog = data["initial_snapshot"]["source_gap_backlog"]
     assert isinstance(backlog, dict)
     keys = backlog["keys"]
     assert isinstance(keys, list)
@@ -111,6 +120,18 @@ def test_atomicity_source_gap_is_kept_private_until_all_supports_are_found() -> 
         "conditions",
     ]
     assert keys == ["S-K6-BRACED-FRAME-COLUMN-BRACE-CAPACITY-SUM"]
-    assert by_key[keys[0]].editorial_status == "source_gap"
-    assert "P170" in by_key[keys[0]].reason
-    assert "P200〜204" in by_key[keys[0]].reason
+    assert by_key[keys[0]].editorial_status == "source_checked"
+    assert "P170" in backlog["description"]
+    assert "P200〜204" in backlog["description"]
+    assert data["source_gap_backlog"]["keys"] == []
+    assert data["source_gap_backlog"]["status"] == "resolved"
+
+
+def test_backlog_resolution_retains_the_initial_30_primary_codes_and_a_report() -> None:
+    data = _backlog()
+    original = data["initial_snapshot"]["public_coverage_backlog"]
+    assert original["count"] == len(original["primary_question_codes"]) == 30
+    assert len(set(original["primary_question_codes"])) == 30
+    assert set(original["primary_question_codes"]) <= set(load_catalog().audit.primary_question_codes)
+    assert data["status"] == "resolved"
+    assert Path(data["resolution_report"]).is_file()

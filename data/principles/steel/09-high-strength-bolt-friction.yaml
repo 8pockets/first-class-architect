@@ -11,9 +11,9 @@ principles:
   question:
     prompt: せん断力とボルト軸方向引張力を同時に受ける高力ボルト摩擦接合の許容せん断耐力について、正しい結論はどちらか。
     choices:
-      A: 引張力の大きさに応じて低減する
-      B: 引張力の大きさに応じて増加する
-    correct: A
+      A: 引張力の大きさに応じて増加する
+      B: 引張力の大きさに応じて低減する
+    correct: B
   conclusion: せん断力と引張力を同時に受ける摩擦接合では、引張力の大きさに応じて許容せん断耐力を低減する。
   reason: ボルト軸方向の引張りで接合面の圧縮力が減り、摩擦力とすべり耐力が低下するため。
   conditions:
@@ -38,9 +38,9 @@ principles:
   question:
     prompt: 高力ボルト摩擦接合の破断耐力を検討する場合の接合状態について、正しい結論はどちらか。
     choices:
-      A: 支圧接合状態として扱う
-      B: 摩擦接合状態として扱う
-    correct: A
+      A: 摩擦接合状態として扱う
+      B: 支圧接合状態として扱う
+    correct: B
   conclusion: 破断耐力の検討では、摩擦面がすべって支圧接合状態になり、ボルト軸部のせん断と母材支圧で応力を伝えるものとして扱える。
   reason: 板同士の摩擦力を超える力が作用した終局時は、接合部が破断しないことを確認する考え方へ移るため。
   conditions:
@@ -66,9 +66,9 @@ principles:
   question:
     prompt: すべり耐力以下の繰返し応力を受ける高力ボルト摩擦接合で、すべり耐力の低減について、正しい結論はどちらか。
     choices:
-      A: ボルト張力低下や摩擦面変化による低減を考慮する
-      B: ボルト張力低下や摩擦面変化による低減を考慮しない
-    correct: B
+      A: ボルト張力低下や摩擦面変化による低減を考慮しない
+      B: ボルト張力低下や摩擦面変化による低減を考慮する
+    correct: A
   conclusion: すべり耐力以下の繰返し応力なら、ボルト張力低下や摩擦面変化によるすべり耐力の低減を考慮せず、母材について疲労設計する。
   reason: すべり前は材間摩擦で応力を伝え、高力ボルト自体に繰返しせん断を負担させないため。
   conditions:
@@ -96,17 +96,29 @@ principles:
   order: 4
   type: principle
   principle: 高力ボルト接合の施工性
-  conclusion: 高力ボルト接合は施工が比較的容易で、工期を短縮できる。
-  reason: 教材に記載なし
+  conclusion: 一般的な鉄骨現場継手では、高力ボルト接合は現場溶接より施工条件の管理がしやすく、工期短縮を図りやすい。
+  reason: 工場で準備した部材を現場では締付けで接合でき、現場溶接に比べて気象条件の影響を受けにくいため。
   conditions:
-  - 教材が説明する一般的な高力ボルト接合
+  - 工場でボルト孔等を準備した一般的な鉄骨現場継手
+  - 天候対策や締付け検査自体が不要になるわけではない
   source:
     pages:
     - 184
+    - 206
     question_codes:
     - '27182'
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 現場溶接と高力ボルト接合を一般的な鉄骨現場継手で比較した施工計画について、正しい結論はどちらか。
+    choices:
+      A: 高力ボルト接合は気象の影響を受けにくい
+      B: 現場溶接は気象の影響を受けにくい
+    correct: A
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-HIGH-STRENGTH-BOLT-STRESS-DISTRIBUTION
   order: 5
   type: principle
@@ -114,9 +126,9 @@ principles:
   question:
     prompt: 主に摩擦接合を用いる高力ボルト接合の応力集中について、正しい結論はどちらか。
     choices:
-      A: 応力集中が生じやすい
-      B: 応力集中が生じにくい
-    correct: B
+      A: 応力集中が生じにくい
+      B: 応力集中が生じやすい
+    correct: A
   conclusion: 高力ボルト摩擦接合は、応力集中が生じにくい。
   reason: 応力を伝達する面積が広いため。
   conditions:
@@ -138,14 +150,31 @@ principles:
   order: 6
   type: rule
   principle: 高力ボルトと普通ボルトの引張強度
-  conclusion: 高力ボルトの引張強度は、普通ボルトの2〜3倍である。
+  conclusion: 教材では高力ボルトの引張強さを普通ボルトの概ね2〜3倍としている。倍率は比較する強度区分に依存する。
   reason: 教材に記載なし
   conditions:
-  - 教材の概略比較
+  - 代表的な強度区分による概略比較
+  - 高力ボルトと普通ボルトの全製品で一定倍率とはしない
   source:
     pages:
     - 184
     question_codes:
     - '02162'
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 引張強さ1000N/mm²級の高力ボルトと400N/mm²級の普通ボルトを比べると、強さの比について、正しい結論はどちらか。
+    choices:
+      A: 約1.5倍
+      B: 約2.5倍
+    correct: B
+  display_content:
+    rule: 教材では高力ボルトの引張強さを普通ボルトの概ね2〜3倍としている。倍率は比較する強度区分に依存する。
+    applicability:
+    - 代表的な強度区分による概略比較
+    - 高力ボルトと普通ボルトの全製品で一定倍率とはしない
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete

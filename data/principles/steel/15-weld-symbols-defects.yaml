@@ -34,17 +34,33 @@ principles:
   order: 2
   type: identification
   principle: オーバーラップの識別
-  conclusion: オーバーラップは、溶接金属の上端が母材に融合せず重なった表面欠陥である。
+  conclusion: オーバーラップは、溶接金属の端部が母材に融合しないまま表面へ重なった欠陥である。母材側に溝が残るアンダーカットと区別する。
   reason: 教材に記載なし
   conditions:
-  - 溶接金属が母材へ融合せず表面で重なる場合
+  - 溶接部表面の欠陥を識別する場合
   source:
     pages:
     - 190
     question_codes: []
   prerequisites:
   - S-K6-WELD-CONSTRUCTION-DEFECT-RISK
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 溶接欠陥オーバーラップの状態について、正しい結論はどちらか。
+    choices:
+      A: 母材表面が溝状にえぐれる欠陥
+      B: 母材に融合せず表面で重なる欠陥
+    correct: B
+  display_content:
+    definition: オーバーラップは、溶接金属の端部が母材に融合しないまま表面へ重なった欠陥である。母材側に溝が残るアンダーカットと区別する。
+    distinguishing_conditions:
+    - 溶接部表面の欠陥を識別する場合
+    confusable_points:
+    - 本問では「母材表面が溝状にえぐれる欠陥」と区別する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-WELD-DEFECT-PIT
   order: 3
   type: identification
@@ -58,9 +74,9 @@ principles:
   question:
     prompt: ガスによる空洞が溶接部表面に開口している欠陥の名称として、正しい結論はどちらか。
     choices:
-      A: ブローホール
-      B: ピット
-    correct: B
+      A: ピット
+      B: ブローホール
+    correct: A
   conclusion: ピットは、ブローホールと同じ現象が表面に開口した表面欠陥である。
   reason: 内部の空洞が表面へ開口するため。
   conditions:
@@ -137,9 +153,9 @@ principles:
   question:
     prompt: 複数の溶接線の交差を避けるために設ける扇状切欠きの名称として、正しい結論はどちらか。
     choices:
-      A: スカラップ
-      B: ノンスカラップ
-    correct: A
+      A: ノンスカラップ
+      B: スカラップ
+    correct: B
   conclusion: スカラップは溶接線の交差を避けるための扇状切欠きで、切欠きのないノンスカラップ工法を用いる場合もある。
   reason: 溶接線同士の交差を避けるため。
   conditions:
@@ -173,4 +189,21 @@ principles:
   prerequisites:
   - S-K6-WELD-BASIC-SYMBOL-SHAPES
   - S-K6-WELD-TYPE-IDENTIFICATION
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 矢印側の溶接を示す基本記号の位置について、正しい結論はどちらか。
+    choices:
+      A: 基本記号を基準線の下側に描く
+      B: 基本記号を基準線の上側に描く
+    correct: A
+  display_content:
+    definition: 溶接箇所が矢印側・手前側なら基本記号を基準線の下側に、反対側・向こう側なら上側に描く。
+    distinguishing_conditions:
+    - 溶接記号の施工側を読み取る場合
+    - JIS溶接記号の基線と矢の側を読む場合
+    confusable_points:
+    - 本問では「基本記号を基準線の上側に描く」と区別する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete

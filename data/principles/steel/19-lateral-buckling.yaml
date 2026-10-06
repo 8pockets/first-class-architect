@@ -8,13 +8,11 @@ principles:
   order: 1
   type: principle
   principle: 梁の横座屈
-  conclusion: H形鋼などの開断面梁が曲げを受けると、ねじれを伴って圧縮フランジが面外にはらみ出す横座屈を生じる。スパンが長く、梁幅に対して梁せいが大きいほど生じやすい。
-  reason: 教材に記載なし
+  conclusion: 強軸曲げを受けるH形鋼等の開断面梁では、圧縮フランジの面外移動と断面のねじれが連成する横座屈に注意する。横補剛間隔が長く、梁幅に対してせいが大きいほど生じやすい。
+  reason: 圧縮側のフランジが横方向に変形すると、開断面のねじり抵抗が小さいことから断面のねじれを伴いやすいため。
   conditions:
-  - H形鋼などの開断面梁
-  - 曲げを受ける場合
-  - スパンが長い場合
-  - 梁幅に対して梁せいが大きい場合
+  - 強軸曲げを受けるH形鋼・I形鋼等の開断面梁
+  - 横補剛条件と断面形状を確認する
   source:
     pages:
     - 165
@@ -23,7 +21,17 @@ principles:
     - '02172'
   prerequisites:
   - S-K6-H-SECTION-AXIS-LATERAL-BUCKLING
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 強軸曲げを受けるH形鋼梁の圧縮フランジが横へ移動し、断面もねじれる不安定現象について、正しい結論はどちらか。
+    choices:
+      A: フランジ板だけの局部座屈
+      B: 横座屈
+    correct: B
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-LATERAL-BRACE-STRENGTH-AND-STIFFNESS
   order: 2
   type: rule
@@ -34,12 +42,13 @@ principles:
     - 圧縮部分の支点に設ける補剛材
     numbers_exceptions:
     - 横補剛材は強度と剛性の両方を持たせ、圧縮側合力の2%以上の集中横力に耐え、剛性は圧縮側合力の5倍を横補剛区間長で除した値以上を目安とする。
+    - 設問では必要横力0.02×1000=20kN、必要剛性5×1000÷5000=1kN/mm。
   principle: 中間横補剛材に必要な強度と剛性
   question:
-    prompt: 許容応力度設計で必要強度を持つ中間横補剛材について、圧縮部分の支点での剛性の扱いとして正しい結論はどちらか。
+    prompt: 許容応力度設計で圧縮側合力1000kN、横補剛区間長5000mmとするとき、中間横補剛材の強度と剛性の目安として正しい結論はどちらか。
     choices:
-      A: 所定の剛性を持たせない
-      B: 所定の剛性を持たせる
+      A: 横力20kN以上に耐えれば剛性の確認は省ける
+      B: 横力20kN以上に耐え剛性1kN/mm以上を確保する
     correct: B
   conclusion: 横補剛材は強度と剛性の両方を持たせ、圧縮側合力の2%以上の集中横力に耐え、剛性は圧縮側合力の5倍を横補剛区間長で除した値以上を目安とする。
   reason: 梁が塑性変形するまで圧縮側フランジの横変位を拘束し続ける必要があるため。
@@ -74,9 +83,9 @@ principles:
   question:
     prompt: 強軸曲げを受けるH形鋼梁の保有耐力横補剛について、配置方法として正しい結論はどちらか。
     choices:
-      A: 配置方式は全長均等配置の一種である
-      B: 配置方式は均等配置と集中配置の二種である
-    correct: B
+      A: 配置方式は均等配置と集中配置の二種である
+      B: 配置方式は全長均等配置の一種である
+    correct: A
   conclusion: 保有耐力横補剛には、梁全長へ均等配置する方法と、梁端など曲げモーメントが大きい部分へ多く配置する方法がある。
   reason: 横座屈を防ぐべき領域を、全長又は曲げ需要の大きい領域として扱えるため。
   conditions:
@@ -104,9 +113,9 @@ principles:
   question:
     prompt: 同一断面・同じ弱軸細長比のH形鋼梁で横補剛を均等配置するとき、SN490BをSN400Bと比べた必要箇所数として正しい結論はどちらか。
     choices:
-      A: SN490Bのほうが必要箇所数は多い
-      B: SN490Bのほうが必要箇所数は少ない
-    correct: A
+      A: SN490Bのほうが必要箇所数は少ない
+      B: SN490Bのほうが必要箇所数は多い
+    correct: B
   conclusion: 同一断面・同じ弱軸細長比なら、SN490BはSN400Bより横補剛間隔を短くし、必要箇所数を多くする。
   reason: 高強度鋼ほど高い応力まで横座屈を防いで塑性変形させる必要があるため。
   conditions:
@@ -162,7 +171,9 @@ principles:
   conclusion: 教材図ではH形鋼・I形鋼は横座屈しやすく、箱形鋼は横座屈しにくい。
   reason: 教材に記載なし
   conditions:
-  - H形鋼・I形鋼と箱形鋼を比較する場合
+  - 同程度の寸法・横補剛条件の梁断面の概略比較
+  - H形・I形は強軸曲げ
+  - 箱形も全ての荷重条件で不安定現象がないという意味ではない
   source:
     pages:
     - 194
@@ -170,4 +181,22 @@ principles:
     - '03174'
   prerequisites:
   - S-K6-19-LATERAL-BUCKLING
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: H形鋼と箱形鋼の横座屈の生じやすさについて、正しい結論はどちらか。
+    choices:
+      A: 箱形鋼よりH形鋼が生じやすい
+      B: H形鋼より箱形鋼が生じやすい
+    correct: A
+  display_content:
+    definition: 教材図ではH形鋼・I形鋼は横座屈しやすく、箱形鋼は横座屈しにくい。
+    distinguishing_conditions:
+    - 同程度の寸法・横補剛条件の梁断面の概略比較
+    - H形・I形は強軸曲げ
+    - 箱形も全ての荷重条件で不安定現象がないという意味ではない
+    confusable_points:
+    - 本問では「H形鋼より箱形鋼が生じやすい」と区別する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete

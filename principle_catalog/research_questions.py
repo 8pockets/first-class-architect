@@ -663,7 +663,13 @@ def _load_research_questions(
             raise CatalogError(
                 f"{path}: {key} published code must remain {expected_code!r}"
             )
-        if item is not None and item_type != item.type:
+        # A completed source review may correct the canonical content type.
+        # Released provisional records remain immutable historical evidence.
+        if (
+            item is not None
+            and item.editorial_status != "source_checked"
+            and item_type != item.type
+        ):
             raise CatalogError(
                 f"{path}: {key} type must remain {item.type!r}"
             )

@@ -11,9 +11,9 @@ principles:
   question:
     prompt: 弾性範囲で断面・材長・荷重条件が同じ梁をSN400からSN490へ替えた場合、たわみの変化として正しい結論はどちらか。
     choices:
-      A: 弾性たわみは小さくならない
-      B: 弾性たわみは小さくなる
-    correct: A
+      A: 弾性たわみは小さくなる
+      B: 弾性たわみは小さくならない
+    correct: B
   conclusion: 同一断面・同一材長ならSN400からSN490へ替えても弾性たわみは小さくならない。たわみを小さくするには断面を大きくするか材長を短くする。
   reason: 弾性たわみはヤング係数Eと断面剛性に支配され、SN400とSN490のEは同じため。
   conditions:
@@ -38,16 +38,34 @@ principles:
   order: 2
   type: identification
   principle: 梁によく使う形鋼
-  conclusion: 教材図では、梁によく使う形鋼としてH形鋼・溝形鋼・等辺山形鋼を示す。
+  conclusion: 梁に使う代表的な開断面形鋼にはH形鋼、溝形鋼、山形鋼がある。上下フランジと中央ウェブを持つH形と、ウェブが片側にある溝形を区別する。
   reason: 教材に記載なし
   conditions:
-  - 梁に用いる形鋼を識別する場合
+  - 代表的な梁断面の形状識別
+  - 使用できる断面を列挙した三種類だけに限定しない
   source:
     pages:
     - 192
     question_codes: []
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 上下のフランジが中央のウェブを挟んで左右対称に配置された梁断面について、正しい結論はどちらか。
+    choices:
+      A: H形鋼
+      B: 溝形鋼
+    correct: A
+  display_content:
+    definition: 梁に使う代表的な開断面形鋼にはH形鋼、溝形鋼、山形鋼がある。上下フランジと中央ウェブを持つH形と、ウェブが片側にある溝形を区別する。
+    distinguishing_conditions:
+    - 代表的な梁断面の形状識別
+    - 使用できる断面を列挙した三種類だけに限定しない
+    confusable_points:
+    - 本問では「溝形鋼」と区別する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-STEEL-BEAM-DEFLECTION-CHECK
   order: 3
   type: rule
@@ -62,15 +80,32 @@ principles:
     question_codes: []
   prerequisites:
   - S-K6-STEEL-BEAM-DESIGN-ACTIONS
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 省略条件に該当しない鉄骨梁の検討項目について、正しい結論はどちらか。
+    choices:
+      A: 応力とたわみを検討する
+      B: 応力を検討し、たわみは省く
+    correct: A
+  display_content:
+    rule: 鉄骨梁は応力だけでなく、たわみも検討する。
+    applicability:
+    - たわみ検討を省略できる条件に該当しない鉄骨梁
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-STEEL-BEAM-DEFLECTION-CHECK-OMISSION
   order: 4
   type: rule
   principle: 梁たわみ検討の省略条件
-  conclusion: 梁せいが有効長さの1/15を超える場合は、たわみの検討を省略できる。
+  conclusion: 教材のたわみ検討省略の目安は梁せいが有効長さの1/15を超える場合である。等号の場合はこの省略条件を満たさず、振動や仕上げ等の使用性確認まで不要になるものではない。
   reason: 教材に記載なし
   conditions:
-  - 梁せい > 有効長さ/15
+  - 教材P192の梁たわみ検討省略条件
+  - 梁せい>有効長さ/15
+  - 個別に指定された使用性の検討は別途必要
   source:
     pages:
     - 192
@@ -79,16 +114,34 @@ principles:
     - '26304'
   prerequisites:
   - S-K6-STEEL-BEAM-DEFLECTION-CHECK
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 有効長さ6m、梁せい400mmの梁に教材の1/15超の省略条件を適用するとき、正しい結論はどちらか。
+    choices:
+      A: 等号のためこの省略条件を満たさない
+      B: 等号も含めてこの省略条件を満たす
+    correct: A
+  display_content:
+    rule: 教材のたわみ検討省略の目安は梁せいが有効長さの1/15を超える場合である。等号の場合はこの省略条件を満たさず、振動や仕上げ等の使用性確認まで不要になるものではない。
+    applicability:
+    - 教材P192の梁たわみ検討省略条件
+    - 梁せい>有効長さ/15
+    - 個別に指定された使用性の検討は別途必要
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-STEEL-BEAM-DEFLECTION-LIMITS
   order: 5
   type: rule
   principle: 鉄骨梁のたわみ制限
-  conclusion: 両端支持梁のたわみはスパンの1/300以下、片持ち梁はスパンの1/250以下とする。
+  conclusion: 教材で示す長期荷重時のたわみの目安は、通常の両端支持梁でL/300以下、片持ち梁でL/250以下である。Lはそれぞれのスパンとする。別途の振動・仕上げ等の条件も確認する。
   reason: 教材に記載なし
   conditions:
-  - 両端支持梁はL/300以下
-  - 片持ち梁はL/250以下
+  - 教材P192の通常の梁のたわみ制限
+  - 長期荷重に対するたわみ
+  - 両端支持と片持ちを区別する
   source:
     pages:
     - 192
@@ -96,7 +149,24 @@ principles:
     - '05174'
   prerequisites:
   - S-K6-STEEL-BEAM-DEFLECTION-CHECK
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: スパン6mの両端支持梁にL/300の制限を使うとき、たわみの上限について、正しい結論はどちらか。
+    choices:
+      A: 20mm
+      B: 24mm
+    correct: A
+  display_content:
+    rule: 教材で示す長期荷重時のたわみの目安は、通常の両端支持梁でL/300以下、片持ち梁でL/250以下である。Lはそれぞれのスパンとする。別途の振動・仕上げ等の条件も確認する。
+    applicability:
+    - 教材P192の通常の梁のたわみ制限
+    - 長期荷重に対するたわみ
+    - 両端支持と片持ちを区別する
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-STEEL-BEAM-DEPTH-SPAN-RANGE
   order: 6
   type: rule
@@ -111,15 +181,31 @@ principles:
     question_codes:
     - '28173'
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: スパン9mの通常の鉄骨梁について、教材の概略梁せいの範囲に対応するものについて、正しい結論はどちらか。
+    choices:
+      A: 900〜1800mm程度
+      B: 300〜600mm程度
+    correct: B
+  display_content:
+    rule: 一般的な鉄骨構造の梁せいは、スパンの1/15〜1/30程度である。
+    applicability:
+    - 一般的な鉄骨構造の概略寸法
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-STEEL-BEAM-DESIGN-ACTIONS
   order: 7
   type: rule
   principle: 鉄骨梁に生じる設計用応力
-  conclusion: 鉄骨梁は、曲げモーメントとせん断力が生じるものとして計算する。
+  conclusion: 通常の鉛直荷重を受ける鉄骨梁では、曲げモーメントとせん断力を基本の設計応力として検討する。軸力・ねじりが生じる条件では、それらも無視しない。
   reason: 教材に記載なし
   conditions:
-  - 鉄骨梁の応力を計算する場合
+  - 通常の鉛直荷重を受ける梁の基本計算
+  - 軸力・ねじりを伴う特殊な荷重条件は別途加味する
   source:
     pages:
     - 192
@@ -127,4 +213,20 @@ principles:
   prerequisites:
   - S-K6-H-SECTION-FLANGE-BENDING
   - S-K6-H-SECTION-WEB-SHEAR
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 鉄骨梁に生じるものとして計算する設計用応力について、正しい結論はどちらか。
+    choices:
+      A: 曲げモーメントとせん断力
+      B: 軸方向力とねじりモーメント
+    correct: A
+  display_content:
+    rule: 通常の鉛直荷重を受ける鉄骨梁では、曲げモーメントとせん断力を基本の設計応力として検討する。軸力・ねじりが生じる条件では、それらも無視しない。
+    applicability:
+    - 通常の鉛直荷重を受ける梁の基本計算
+    - 軸力・ねじりを伴う特殊な荷重条件は別途加味する
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete

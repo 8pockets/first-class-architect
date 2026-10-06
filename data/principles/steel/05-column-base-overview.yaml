@@ -11,9 +11,8 @@ principles:
   conclusion: 所定の構造計算を行わない場合、鉄骨柱の埋込み深さを柱の大きい見付け幅の2倍以上とする。
   reason: 教材に記載なし
   conditions:
-  - 埋込み形式柱脚
-  - 所定の構造計算を行わない場合
-  - 埋込み柱脚
+  - 通常の埋込み形式柱脚
+  - 告示の所定の構造計算による適用除外を用いない場合
   source:
     pages:
     - 171
@@ -22,9 +21,40 @@ principles:
     question_codes:
     - '19161'
     - '23164'
+    authoritative_sources:
+    - kind: notification
+      title: 平成12年建設省告示第1456号（平成19年改正を含む公表本文）
+      locator: 前文ただし書・第一号・第三号（通常の柱脚。後続のコンテナ等特例は令和7年技術的助言を参照）
+      url: https://www.mlit.go.jp/notice/noticedata/pdf/201703/00006502.pdf
+      supports:
+      - statement
+      - conditions
+    - kind: government_spec
+      title: 国土交通省 国住指第502号（令和7年4月1日）
+      locator: 3. コンテナ等建築物の柱の脚部の構造方法の合理化
+      url: https://www.mlit.go.jp/jutakukentiku/build/content/001881640.pdf
+      supports:
+      - conditions
   prerequisites:
   - S-K6-COLUMN-BASE-TYPES-FIXITY-ORDER
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 柱の大きい見付け幅400mmの埋込み柱脚で、所定の構造計算による除外を用いない場合の埋込み深さについて、正しい結論はどちらか。
+    choices:
+      A: 800mm以上
+      B: 600mm以上
+    correct: A
+  display_content:
+    rule: 所定の構造計算を行わない場合、鉄骨柱の埋込み深さを柱の大きい見付け幅の2倍以上とする。
+    applicability:
+    - 通常の埋込み形式柱脚
+    - 告示の所定の構造計算による適用除外を用いない場合
+    numbers_exceptions:
+    - 告示の所定の構造計算による適用除外を用いない場合
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-EXPOSED-BASE-ANCHOR-AREA-RATIO
   order: 2
   type: rule
@@ -32,9 +62,8 @@ principles:
   conclusion: 所定の構造計算を行わない場合、アンカーボルト全断面積を柱最下端断面積の20%以上とする。
   reason: 教材に記載なし
   conditions:
-  - 露出形式柱脚
-  - 所定の構造計算を行わない場合
-  - 露出柱脚
+  - 通常の露出形式柱脚
+  - 所定の構造計算による当該仕様の適用除外を用いない場合
   source:
     pages:
     - 171
@@ -44,9 +73,40 @@ principles:
     - 施工06144
     - '23162'
     - '28163'
+    authoritative_sources:
+    - kind: notification
+      title: 平成12年建設省告示第1456号（平成19年改正を含む公表本文）
+      locator: 前文ただし書・第一号・第三号（通常の柱脚。後続のコンテナ等特例は令和7年技術的助言を参照）
+      url: https://www.mlit.go.jp/notice/noticedata/pdf/201703/00006502.pdf
+      supports:
+      - statement
+      - conditions
+    - kind: government_spec
+      title: 国土交通省 国住指第502号（令和7年4月1日）
+      locator: 3. コンテナ等建築物の柱の脚部の構造方法の合理化
+      url: https://www.mlit.go.jp/jutakukentiku/build/content/001881640.pdf
+      supports:
+      - conditions
   prerequisites:
   - S-K6-EXPOSED-BASE-MODEL-BY-DESIGN-TARGET
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 柱最下端の断面積10000mm²で、所定の計算による除外を用いない露出柱脚のアンカーボルト全断面積について、正しい結論はどちらか。
+    choices:
+      A: 1000mm²以上
+      B: 2000mm²以上
+    correct: B
+  display_content:
+    rule: 所定の構造計算を行わない場合、アンカーボルト全断面積を柱最下端断面積の20%以上とする。
+    applicability:
+    - 通常の露出形式柱脚
+    - 所定の構造計算による当該仕様の適用除外を用いない場合
+    numbers_exceptions:
+    - 所定の構造計算による当該仕様の適用除外を用いない場合
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-EXPOSED-BASE-ANCHOR-EMBEDMENT-LENGTH
   order: 3
   type: rule
@@ -63,9 +123,9 @@ principles:
   question:
     prompt: 付着力を考慮した安全確認を別途行わない露出柱脚で、アンカーボルトの定着長さについて、正しい結論はどちらか。
     choices:
-      A: ボルト径の20倍未満とする
-      B: ボルト径の20倍以上とする
-    correct: B
+      A: ボルト径の20倍以上とする
+      B: ボルト径の20倍未満とする
+    correct: A
   conclusion: 所定の構造計算を行わない場合、定着長さはアンカーボルト径の20倍以上とし、先端をかぎ状に折り曲げるか定着金物を設ける。
   reason: 抜け出しとコンクリート破壊を防ぐため。
   conditions:
@@ -92,9 +152,8 @@ principles:
   conclusion: アンカーボルト孔径は、公称軸径に5mm以下を加えた大きさとする。
   reason: 教材に記載なし
   conditions:
-  - 露出形式柱脚
-  - 露出柱脚
-  - 露出形式柱脚のベースプレート孔
+  - 通常の露出柱脚のベースプレートのアンカーボルト孔
+  - 公称軸径に対する孔径の上限
   source:
     pages:
     - 171
@@ -105,29 +164,45 @@ principles:
     - '28163'
   prerequisites:
   - S-K6-EXPOSED-BASE-MODEL-BY-DESIGN-TARGET
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 通常の露出柱脚で公称軸径24mmのアンカーボルトを用いるとき、教材の孔径上限について、正しい結論はどちらか。
+    choices:
+      A: 26mm
+      B: 29mm
+    correct: B
+  display_content:
+    rule: アンカーボルト孔径は、公称軸径に5mm以下を加えた大きさとする。
+    applicability:
+    - 通常の露出柱脚のベースプレートのアンカーボルト孔
+    - 公称軸径に対する孔径の上限
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-EXPOSED-BASE-PLATE-MINIMUM-THICKNESS
   order: 5
   type: rule
   display_content:
     rule: ベースプレート厚さはアンカーボルト径の1.3倍以上とする。
     applicability:
-    - 露出形式柱脚
-    - 露出柱脚
+    - 教材で示す通常の露出柱脚の仕様
+    - アンカーボルト径の1.3倍という厚さの条件を適用する場合
     numbers_exceptions:
     - ベースプレート厚さはアンカーボルト径の1.3倍以上とする。
   principle: 露出柱脚ベースプレートの厚さ
   question:
-    prompt: 露出柱脚のベースプレート厚さとアンカーボルト径の関係について、正しい結論はどちらか。
+    prompt: 教材の露出柱脚の仕様を適用し、アンカーボルト径を24mmとする。ベースプレート厚さの下限として正しい結論はどちらか。
     choices:
-      A: アンカーボルト径の1.3倍以上とする
-      B: アンカーボルト径の1.3倍未満とする
+      A: 31.2mm以上とする
+      B: 28.8mm以上とする
     correct: A
   conclusion: ベースプレート厚さはアンカーボルト径の1.3倍以上とする。
   reason: ベースプレートの変形を抑えるため。
   conditions:
-  - 露出形式柱脚
-  - 露出柱脚
+  - 教材で示す通常の露出柱脚の仕様
+  - アンカーボルト径の1.3倍という厚さの条件を適用する場合
   source:
     pages:
     - 171
@@ -139,6 +214,10 @@ principles:
   prerequisites:
   - S-K6-EXPOSED-BASE-MODEL-BY-DESIGN-TARGET
   editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-EXPOSED-BASE-SHEAR-CAPACITY-NOT-ADDITIVE
   order: 6
   type: rule
@@ -146,10 +225,8 @@ principles:
   conclusion: 露出柱脚のせん断耐力は、ベースプレート下面の摩擦耐力とアンカーボルトせん断耐力のうち大きい方とし、両者を加算しない。
   reason: 教材に記載なし
   conditions:
-  - 露出柱脚
-  - 最大又は降伏せん断耐力の評価
-  - 露出柱脚部のせん断力を算定する場合
-  - 露出形式柱脚のせん断耐力算定
+  - 通常の露出柱脚の最大又は降伏せん断耐力
+  - 摩擦耐力とアンカーボルトせん断耐力の同時加算を見込まない評価
   source:
     pages:
     - 171
@@ -161,29 +238,45 @@ principles:
     - '18184'
   prerequisites:
   - S-K6-EXPOSED-BASE-MODEL-BY-DESIGN-TARGET
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 露出柱脚で下面摩擦耐力80kN、アンカーボルトせん断耐力50kNと評価した場合、教材のせん断耐力の扱いについて、正しい結論はどちらか。
+    choices:
+      A: 80kNを採用する
+      B: 130kNを採用する
+    correct: A
+  display_content:
+    rule: 露出柱脚のせん断耐力は、ベースプレート下面の摩擦耐力とアンカーボルトせん断耐力のうち大きい方とし、両者を加算しない。
+    applicability:
+    - 通常の露出柱脚の最大又は降伏せん断耐力
+    - 摩擦耐力とアンカーボルトせん断耐力の同時加算を見込まない評価
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-WRAPPED-BASE-HEIGHT-AND-TOP-CONFINEMENT
   order: 7
   type: rule
   display_content:
     rule: 根巻き高さは柱の大きい見付け幅の2.5倍以上とし、上端部の帯筋を密に配置する。
     applicability:
-    - 根巻き形式柱脚
-    - 根巻き柱脚
+    - 教材で示す根巻き柱脚の仕様
+    - 根巻き高さを大きい見付け幅の2.5倍以上とする条件を適用
     numbers_exceptions:
     - 根巻き高さは柱の大きい見付け幅の2.5倍以上とし、上端部の帯筋を密に配置する。
   principle: 根巻き柱脚の高さと上端拘束
   question:
-    prompt: 根巻き柱脚の根巻き高さと柱の大きい見付け幅の関係について、正しい結論はどちらか。
+    prompt: 教材の根巻き柱脚の高さの仕様を適用し、柱の大きい見付け幅を400mmとする。根巻き高さの下限として正しい結論はどちらか。
     choices:
-      A: 柱の大きい見付け幅の2.5倍以上とする
-      B: 柱の大きい見付け幅の2.5倍未満とする
-    correct: A
+      A: 800mm以上とする
+      B: 1000mm以上とする
+    correct: B
   conclusion: 根巻き高さは柱の大きい見付け幅の2.5倍以上とし、上端部の帯筋を密に配置する。
   reason: 根巻き部のせん断降伏を防いで曲げ降伏を先行させ、上端へ集中する力に対してコンクリートを拘束するため。
   conditions:
-  - 根巻き形式柱脚
-  - 根巻き柱脚
+  - 教材で示す根巻き柱脚の仕様
+  - 根巻き高さを大きい見付け幅の2.5倍以上とする条件を適用
   source:
     pages:
     - 171
@@ -195,6 +288,10 @@ principles:
     - '29163'
   prerequisites: []
   editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-EMBEDDED-BASE-EFFECTIVE-FIXED-POINT
   order: 8
   type: rule
@@ -203,9 +300,7 @@ principles:
   reason: 教材に記載なし
   conditions:
   - 埋込み形式柱脚の応力解析
-  - 埋込み形式柱脚
-  - 特別な剛性検討を行わない場合
-  - 埋込み柱脚を構造計算でモデル化する場合
+  - 特別な剛性検討を行わない教材の標準的モデル
   source:
     pages:
     - 172
@@ -216,7 +311,23 @@ principles:
     - '29164'
   prerequisites:
   - S-K6-EMBEDDED-BASE-MINIMUM-DEPTH
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 柱幅400mmの埋込み柱脚を教材の標準的モデルで計算するとき、固定位置について、正しい結論はどちらか。
+    choices:
+      A: 基礎上端から800mm下
+      B: 基礎上端から600mm下
+    correct: B
+  display_content:
+    rule: 埋込み柱脚は、ベースプレート位置ではなく、基礎コンクリートまたは地中梁上端から柱幅の1.5倍下がった位置を固定点として計算する。
+    applicability:
+    - 埋込み形式柱脚の応力解析
+    - 特別な剛性検討を行わない教材の標準的モデル
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-EXPOSED-BASE-MODEL-BY-DESIGN-TARGET
   order: 9
   type: principle
@@ -261,6 +372,36 @@ principles:
     - 204
     question_codes:
     - '23161'
+    authoritative_sources:
+    - kind: notification
+      title: 平成12年建設省告示第1456号（平成19年改正を含む公表本文）
+      locator: 前文ただし書・第一号・第三号（通常の柱脚。後続のコンテナ等特例は令和7年技術的助言を参照）
+      url: https://www.mlit.go.jp/notice/noticedata/pdf/201703/00006502.pdf
+      supports:
+      - statement
+      - conditions
+    - kind: government_spec
+      title: 国土交通省 国住指第502号（令和7年4月1日）
+      locator: 3. コンテナ等建築物の柱の脚部の構造方法の合理化
+      url: https://www.mlit.go.jp/jutakukentiku/build/content/001881640.pdf
+      supports:
+      - conditions
   prerequisites:
   - S-K6-EXPOSED-BASE-MODEL-BY-DESIGN-TARGET
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 露出柱脚アンカーボルトのナットの戻り止めについて、正しい結論はどちらか。
+    choices:
+      A: 一重ナットだけで戻り止めを行う
+      B: 二重ナット等で戻り止めを行う
+    correct: B
+  display_content:
+    rule: アンカーボルトには座金を用い、ナットは二重使用または同等以上の効力を持つ戻り止めを行う。
+    applicability:
+    - 露出形式柱脚
+    - 露出柱脚
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete

@@ -5,6 +5,7 @@ import json
 import shutil
 import subprocess
 import sys
+from collections import Counter
 from copy import deepcopy
 from pathlib import Path
 
@@ -76,9 +77,10 @@ def test_coverage_views_are_cumulative_filters_of_the_existing_display_order() -
     standard = coverage_principles(catalog, ceiling=2)
     all_coverage = coverage_principles(catalog)
 
-    assert len(foundation) == 32
-    assert len(standard) == 74
-    assert len(all_coverage) == 116
+    constraints = catalog.coverage.schemes[catalog.coverage.current].constraints
+    assert len(foundation) == constraints.tier_counts[1]
+    assert len(standard) == constraints.tier_counts[1] + constraints.tier_counts[2]
+    assert len(all_coverage) == sum(constraints.tier_counts.values())
     assert all_coverage == published
     assert foundation == tuple(
         item for item in published if coverage_assignment(catalog, item).tier == 1
@@ -98,7 +100,7 @@ def test_manifest_uses_the_fixed_independently_audited_coverage_projection() -> 
         CATALOG_ROOT / "coverage-tiers.yaml"
     )
     assert len(catalog.manifest.coverage_tiers_audit_sha256) == 64
-    assert catalog.coverage.current == "steel-coverage-v1"
+    assert catalog.coverage.schemes[catalog.coverage.current].status == "current"
     assert {
         tier: (definition.slug, definition.label)
         for tier, definition in catalog.coverage.tiers.items()
@@ -109,9 +111,9 @@ def test_manifest_uses_the_fixed_independently_audited_coverage_projection() -> 
     }
 
 
-def test_current_coverage_scheme_records_the_agreed_balancing_constraints() -> None:
+def test_original_coverage_scheme_preserves_the_agreed_balancing_constraints() -> None:
     catalog = load_catalog()
-    scheme = catalog.coverage.schemes[catalog.coverage.current]
+    scheme = catalog.coverage.schemes["steel-coverage-v1"]
 
     assert scheme.constraints.tier_counts == {1: 32, 2: 42, 3: 42}
     assert scheme.constraints.answer_counts == {
@@ -130,6 +132,20 @@ def test_current_coverage_scheme_records_the_agreed_balancing_constraints() -> N
         assignment.introduction_order
         for assignment in scheme.assignments.values()
     ) == list(range(1, 117))
+
+
+def test_current_coverage_constraints_match_the_current_published_questions() -> None:
+    catalog = load_catalog()
+    scheme = catalog.coverage.schemes[catalog.coverage.current]
+    published = display_principles(catalog, published_only=True)
+    assert set(scheme.assignments) == {item.id for item in published}
+    assert scheme.constraints.tier_counts == Counter(coverage_assignment(catalog, item).tier for item in published)
+    for tier in (1, 2, 3):
+        members = [item for item in published if coverage_assignment(catalog, item).tier == tier]
+        assert scheme.constraints.answer_counts[tier] == Counter(item.question.correct for item in members)
+        assert scheme.constraints.type_counts[tier] == Counter(item.type for item in members)
+    assert scheme.constraints.max_same_answer_run == 3
+    assert scheme.constraints.foundation_covers_all_published_subtopics is True
 
 
 def test_manifest_rejects_coverage_projection_path_substitution(tmp_path: Path) -> None:
@@ -314,12 +330,12 @@ def test_prerequisite_cannot_be_in_a_later_coverage_tier(tmp_path: Path) -> None
         assignments[dependent]["tier"],
         assignments[prerequisite]["tier"],
     )
-    assignments[prerequisite]["introduction_order"], assignments[dependent][
-        "introduction_order"
-    ] = (
-        assignments[dependent]["introduction_order"],
-        assignments[prerequisite]["introduction_order"],
-    )
+    # Preserve all same-tier prerequisite ordering so the deliberately inverted
+    # tier dependency is the first violated contract.
+    for number, key in enumerate(sorted(assignments, key=lambda key: (
+        assignments[key]["tier"], current.assignments[key].introduction_order,
+    )), start=1):
+        assignments[key]["introduction_order"] = number
     _refresh_scheme_digest(scheme)
     _write_yaml(path, document)
 
@@ -548,7 +564,7 @@ def test_new_study_candidates_cli_lists_eligible_new_items_only(tmp_path) -> Non
 
     lines = completed.stdout.splitlines()
     assert lines[0].startswith("eligible new items only")
-    assert len(lines[1:]) == 32
+    assert len(lines[1:]) == len(coverage_principles(load_catalog(), ceiling=1))
     assert state_path.read_text(encoding="utf-8") == '{"items": []}\n'
 
 
@@ -561,7 +577,7 @@ def test_coverage_history_allows_only_append_only_new_versions(tmp_path: Path) -
     appended = deepcopy(original)
     old_id = appended["current"]
     appended["schemes"][old_id]["status"] = "archived"
-    new_id = "steel-coverage-v2"
+    new_id = f"steel-coverage-v{int(old_id.rsplit('v', 1)[1]) + 1}"
     appended["schemes"][new_id] = deepcopy(appended["schemes"][old_id])
     appended["schemes"][new_id]["status"] = "current"
     appended["current"] = new_id
@@ -621,7 +637,8 @@ def test_current_coverage_scheme_must_be_the_highest_version(
     old_id = document["current"]
     newer = deepcopy(document["schemes"][old_id])
     newer["status"] = "archived"
-    document["schemes"]["steel-coverage-v2"] = newer
+    new_id = f"steel-coverage-v{int(old_id.rsplit('v', 1)[1]) + 1}"
+    document["schemes"][new_id] = newer
     _write_yaml(current, document)
 
     with pytest.raises(ValueError, match="must have the highest version"):

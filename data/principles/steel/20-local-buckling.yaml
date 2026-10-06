@@ -11,9 +11,9 @@ principles:
   question:
     prompt: 圧縮を受けるフランジ・ウェブなどの板要素で幅厚比b/tを大きくしたとき、局部座屈のしやすさとして正しい結論はどちらか。
     choices:
-      A: 局部座屈しにくくなる
-      B: 局部座屈しやすくなる
-    correct: B
+      A: 局部座屈しやすくなる
+      B: 局部座屈しにくくなる
+    correct: A
   conclusion: 板要素の幅厚比b/tが大きいほど局部座屈しやすく、幅厚比を小さくすると局部座屈を抑えて塑性化後の変形能力・靭性を確保しやすい。
   reason: 板幅に対して板厚が薄いほど、圧縮を受ける板要素が面外へ変形しやすいため。
   conditions:
@@ -66,9 +66,9 @@ principles:
   question:
     prompt: 基準強度Fが同じ柱ウェブと梁ウェブについて、幅厚比上限の大小関係として正しい結論はどちらか。
     choices:
-      A: 柱ウェブの上限は梁ウェブより大きく緩い
-      B: 柱ウェブの上限は梁ウェブより小さく厳しい
-    correct: B
+      A: 柱ウェブの上限は梁ウェブより小さく厳しい
+      B: 柱ウェブの上限は梁ウェブより大きく緩い
+    correct: A
   conclusion: 基準強度Fが同じなら、ウェブ幅厚比の上限は梁より柱のほうが小さく厳しい。
   reason: 柱は軸圧縮力を負担し、局部座屈に対して梁より不利なため。
   conditions:
@@ -113,7 +113,24 @@ principles:
   prerequisites:
   - S-K6-STEEL-F-VALUE-DEFINITION
   - S-K6-WIDTH-THICKNESS-LIMIT-MEANING
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: F=235N/mm²のFA材H形鋼梁で、教材のフランジ幅厚比上限について、正しい結論はどちらか。
+    choices:
+      A: '60'
+      B: '9'
+    correct: B
+  display_content:
+    rule: FA材の炭素鋼H形鋼梁では、フランジ上限は9√(235/F)、ウェブ上限は60√(235/F)で、ウェブの上限が大きい。
+    applicability:
+    - 炭素鋼H形鋼梁
+    - 部材種別FA
+    - 同じH形鋼のフランジとウェブを比較する場合
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-WIDTH-THICKNESS-LIMIT-DECREASES-WITH-STRENGTH
   order: 5
   type: principle

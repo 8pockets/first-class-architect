@@ -648,6 +648,291 @@ active:
   S-K6-X-BRACE-TENSION-COMPRESSION-CAPACITY:
     code: structure.steel.x-brace-tension-compression-capacity
     aliases: []
+  S-K6-EXAM-SN-A-USE:
+    code: structure.steel.exam-sn-a-use
+    aliases: []
+  S-K6-EXAM-SN-C-THICKNESS:
+    code: structure.steel.exam-sn-c-thickness
+    aliases: []
+  S-K6-EXAM-SN-YIELD-RANGE:
+    code: structure.steel.exam-sn-yield-range
+    aliases: []
+  S-K6-EXAM-SN-CHARPY-GRADE:
+    code: structure.steel.exam-sn-charpy-grade
+    aliases: []
+  S-K6-EXAM-SN490-SYMBOL:
+    code: structure.steel.exam-sn490-symbol
+    aliases: []
+  S-K6-EXAM-SN490-F40:
+    code: structure.steel.exam-sn490-f40
+    aliases: []
+  S-K6-EXAM-SN-THICKNESS-F:
+    code: structure.steel.exam-sn-thickness-f
+    aliases: []
+  S-K6-EXAM-SN-TOLERANCE:
+    code: structure.steel.exam-sn-tolerance
+    aliases: []
+  S-K6-EXAM-STEEL-ANISOTROPY:
+    code: structure.steel.exam-steel-anisotropy
+    aliases: []
+  S-K6-EXAM-CHARPY-ENERGY:
+    code: structure.steel.exam-charpy-energy
+    aliases: []
+  S-K6-EXAM-CHARPY-TEMPERATURE:
+    code: structure.steel.exam-charpy-temperature
+    aliases: []
+  S-K6-EXAM-CARBON-WELDABILITY:
+    code: structure.steel.exam-carbon-weldability
+    aliases: []
+  S-K6-EXAM-SULFUR-TOUGHNESS:
+    code: structure.steel.exam-sulfur-toughness
+    aliases: []
+  S-K6-EXAM-PHOSPHORUS-TOUGHNESS:
+    code: structure.steel.exam-phosphorus-toughness
+    aliases: []
+  S-K6-EXAM-COLD-FORMING:
+    code: structure.steel.exam-cold-forming
+    aliases: []
+  S-K6-EXAM-BCR-BCP-PROCESS:
+    code: structure.steel.exam-bcr-bcp-process
+    aliases: []
+  S-K6-EXAM-BCR295-SYMBOL:
+    code: structure.steel.exam-bcr295-symbol
+    aliases: []
+  S-K6-EXAM-BCR-YIELD-RATIO:
+    code: structure.steel.exam-bcr-yield-ratio
+    aliases: []
+  S-K6-EXAM-BCP325-STRENGTH:
+    code: structure.steel.exam-bcp325-strength
+    aliases: []
+  S-K6-EXAM-TMCP-THICK-PLATE:
+    code: structure.steel.exam-tmcp-thick-plate
+    aliases: []
+  S-K6-EXAM-SUS-OFFSET:
+    code: structure.steel.exam-sus-offset
+    aliases: []
+  S-K6-EXAM-SUS-F:
+    code: structure.steel.exam-sus-f
+    aliases: []
+  S-K6-EXAM-STEEL-HEAT-YIELD:
+    code: structure.steel.exam-steel-heat-yield
+    aliases: []
+  S-K6-EXAM-ROUTE11-SCALE:
+    code: structure.steel.exam-route11-scale
+    aliases: []
+  S-K6-EXAM-ROUTE12-SCALE:
+    code: structure.steel.exam-route12-scale
+    aliases: []
+  S-K6-EXAM-ROUTE12-ONE-STORY:
+    code: structure.steel.exam-route12-one-story
+    aliases: []
+  S-K6-EXAM-ROUTE13-HEIGHT:
+    code: structure.steel.exam-route13-height
+    aliases: []
+  S-K6-EXAM-ROUTE1-CO:
+    code: structure.steel.exam-route1-co
+    aliases: []
+  S-K6-EXAM-ROUTE2-CO:
+    code: structure.steel.exam-route2-co
+    aliases: []
+  S-K6-EXAM-ROUTE11-CHECKS:
+    code: structure.steel.exam-route11-checks
+    aliases: []
+  S-K6-EXAM-ROUTE12-ECCENTRICITY:
+    code: structure.steel.exam-route12-eccentricity
+    aliases: []
+  S-K6-EXAM-ROUTE12-BRACING:
+    code: structure.steel.exam-route12-bracing
+    aliases: []
+  S-K6-EXAM-ROUTE13-DRIFT:
+    code: structure.steel.exam-route13-drift
+    aliases: []
+  S-K6-EXAM-ROUTE2-ASPECT:
+    code: structure.steel.exam-route2-aspect
+    aliases: []
+  S-K6-EXAM-ROUTE2-STIFFNESS:
+    code: structure.steel.exam-route2-stiffness
+    aliases: []
+  S-K6-EXAM-COLD-ROUTE1:
+    code: structure.steel.exam-cold-route1
+    aliases: []
+  S-K6-EXAM-COLD-ROUTE2-RATIO:
+    code: structure.steel.exam-cold-route2-ratio
+    aliases: []
+  S-K6-EXAM-COLD-ROUTE3-LOCAL:
+    code: structure.steel.exam-cold-route3-local
+    aliases: []
+  S-K6-EXAM-ROUTE-BRACE-END:
+    code: structure.steel.exam-route-brace-end
+    aliases: []
+  S-K6-EXAM-ROUTE-CEILING:
+    code: structure.steel.exam-route-ceiling
+    aliases: []
+  S-K6-EXAM-DS-MEMBER:
+    code: structure.steel.exam-ds-member
+    aliases: []
+  S-K6-EXAM-PANEL-DS:
+    code: structure.steel.exam-panel-ds
+    aliases: []
+  S-K6-EXAM-COMPOSITE-STUD:
+    code: structure.steel.exam-composite-stud
+    aliases: []
+  S-K6-EXAM-COMPOSITE-FULL:
+    code: structure.steel.exam-composite-full
+    aliases: []
+  S-K6-EXAM-COMPOSITE-WIDTH:
+    code: structure.steel.exam-composite-width
+    aliases: []
+  S-K6-EXAM-COMPOSITE-TOP-FLANGE:
+    code: structure.steel.exam-composite-top-flange
+    aliases: []
+  S-K6-EXAM-COMPOSITE-BOTTOM-FLANGE:
+    code: structure.steel.exam-composite-bottom-flange
+    aliases: []
+  S-K6-EXAM-DECK-INPLANE:
+    code: structure.steel.exam-deck-inplane
+    aliases: []
+  S-K6-EXAM-CFT-BUCKLING:
+    code: structure.steel.exam-cft-buckling
+    aliases: []
+  S-K6-EXAM-CFT-CONFINEMENT:
+    code: structure.steel.exam-cft-confinement
+    aliases: []
+  S-K6-EXAM-CFT-CIRCLE:
+    code: structure.steel.exam-cft-circle
+    aliases: []
+  S-K6-EXAM-CFT-WIDTH-THICKNESS:
+    code: structure.steel.exam-cft-width-thickness
+    aliases: []
+  S-K6-EXAM-CFT-FIRE:
+    code: structure.steel.exam-cft-fire
+    aliases: []
+  S-K6-EXAM-CFT-TRANSFER:
+    code: structure.steel.exam-cft-transfer
+    aliases: []
+  S-K6-EXAM-SRC-BENDING:
+    code: structure.steel.exam-src-bending
+    aliases: []
+  S-K6-EXAM-SRC-SHEAR:
+    code: structure.steel.exam-src-shear
+    aliases: []
+  S-K6-EXAM-SRC-CRACK-STIFFNESS:
+    code: structure.steel.exam-src-crack-stiffness
+    aliases: []
+  S-K6-EXAM-SRC-WEB-TYPE:
+    code: structure.steel.exam-src-web-type
+    aliases: []
+  S-K6-EXAM-SRC-TENSION-BASE:
+    code: structure.steel.exam-src-tension-base
+    aliases: []
+  S-K6-EXAM-SRC-NONEMBEDDED-DS:
+    code: structure.steel.exam-src-nonembedded-ds
+    aliases: []
+  S-K6-EXAM-SRC-EMBEDDED-MIN:
+    code: structure.steel.exam-src-embedded-min
+    aliases: []
+  S-K6-EXAM-SRC-NONEMBEDDED-SUM:
+    code: structure.steel.exam-src-nonembedded-sum
+    aliases: []
+  S-K6-EXAM-MIXED-RC-S-TRANSFER:
+    code: structure.steel.exam-mixed-rc-s-transfer
+    aliases: []
+  S-K6-EXAM-MIXED-CORE:
+    code: structure.steel.exam-mixed-core
+    aliases: []
+  S-K6-EXAM-DAMPER-PLASTICITY:
+    code: structure.steel.exam-damper-plasticity
+    aliases: []
+  S-K6-EXAM-DAMPER-YIELD-SEQUENCE:
+    code: structure.steel.exam-damper-yield-sequence
+    aliases: []
+  S-K6-EXAM-DAMPER-LY225:
+    code: structure.steel.exam-damper-ly225
+    aliases: []
+  S-K6-EXAM-DAMPER-HIGH-STRENGTH-FRAME:
+    code: structure.steel.exam-damper-high-strength-frame
+    aliases: []
+  S-K6-EXAM-DAMPER-CONNECTION:
+    code: structure.steel.exam-damper-connection
+    aliases: []
+  S-K6-EXAM-DAMPER-LAYOUT:
+    code: structure.steel.exam-damper-layout
+    aliases: []
+  S-K6-EXAM-DAMPER-FATIGUE:
+    code: structure.steel.exam-damper-fatigue
+    aliases: []
+  S-K6-EXAM-DAMPER-PANEL-ANGLE:
+    code: structure.steel.exam-damper-panel-angle
+    aliases: []
+  S-K6-EXAM-DAMPER-RESIDUAL:
+    code: structure.steel.exam-damper-residual
+    aliases: []
+  S-K6-EXAM-FLOOR-FREQUENCY:
+    code: structure.steel.exam-floor-frequency
+    aliases: []
+  S-K6-EXAM-LIGHT-BUILDING-WIND:
+    code: structure.steel.exam-light-building-wind
+    aliases: []
+  S-K6-EXAM-STEEL-PERIOD:
+    code: structure.steel.exam-steel-period
+    aliases: []
+  S-K6-EXAM-STEEL-DAMPING:
+    code: structure.steel.exam-steel-damping
+    aliases: []
+  S-K6-EXAM-PILE-CORROSION:
+    code: structure.steel.exam-pile-corrosion
+    aliases: []
+  S-K6-EXAM-ROUTE-DIRECTION:
+    code: structure.steel.exam-route-direction
+    aliases: []
+  S-K6-EXAM-ROUTE-UPPER-SELECTION:
+    code: structure.steel.exam-route-upper-selection
+    aliases: []
+  S-K6-EXAM-SRC-ALLOWABLE-SHEAR:
+    code: structure.steel.exam-src-allowable-shear
+    aliases: []
+  S-K6-EXAM-SRC-WEB-HOLE:
+    code: structure.steel.exam-src-web-hole
+    aliases: []
+  S-K6-EXAM-SRC-ELASTIC-STIFFNESS:
+    code: structure.steel.exam-src-elastic-stiffness
+    aliases: []
+  S-K6-EXAM-MIXED-VERTICAL-DS:
+    code: structure.steel.exam-mixed-vertical-ds
+    aliases: []
+  S-K6-EXAM-MIXED-DIRECTION-RULES:
+    code: structure.steel.exam-mixed-direction-rules
+    aliases: []
+  S-K6-EXAM-STEEL-RETROFIT:
+    code: structure.steel.exam-steel-retrofit
+    aliases: []
+  S-K6-EXAM-COMPOSITE-STUD-FORCE:
+    code: structure.steel.exam-composite-stud-force
+    aliases: []
+  S-K6-EXAM-DECK-DEFORMATION:
+    code: structure.steel.exam-deck-deformation
+    aliases: []
+  S-K6-EXAM-ALUMINUM-EXPANSION:
+    code: structure.steel.exam-aluminum-expansion
+    aliases: []
+  S-K6-EXAM-CONCRETE-EXPANSION:
+    code: structure.steel.exam-concrete-expansion
+    aliases: []
+  S-K6-EXAM-DAMPER-BRACE-STUD:
+    code: structure.steel.exam-damper-brace-stud
+    aliases: []
+  S-K6-EXAM-FATIGUE-STEEL-GRADE:
+    code: structure.steel.exam-fatigue-steel-grade
+    aliases: []
+  S-K6-EXAM-HEAT-TENSILE-F:
+    code: structure.steel.exam-heat-tensile-f
+    aliases: []
+  S-K6-EXAM-PANEL-EARLY-YIELD:
+    code: structure.steel.exam-panel-early-yield
+    aliases: []
+  S-K6-EXAM-EAF-CARBON:
+    code: structure.steel.exam-eaf-carbon
+    aliases: []
 retired:
   S-K6-BOX-COLUMN-H-BEAM-RIGID-JOINT-WELD-TYPES:
     code: structure.steel.box-column-h-beam-rigid-joint-weld-types

@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import shutil
+from dataclasses import replace
 from pathlib import Path
 from typing import Callable
 
@@ -15,6 +16,7 @@ from principle_catalog.catalog import (
     display_facets,
     display_principles,
     load_catalog,
+    _load_section,
     validate_question_edition_history,
 )
 from principle_catalog.models import (
@@ -50,7 +52,7 @@ def _find_section_item(
     raise AssertionError("matching catalog item not found")
 
 
-def test_display_taxonomy_assigns_every_active_card_once_to_7_by_37_tree() -> None:
+def test_display_taxonomy_assigns_every_active_card_once_to_9_by_47_tree() -> None:
     catalog = load_catalog()
     taxonomy = catalog.taxonomy
     subtopics = [
@@ -59,14 +61,14 @@ def test_display_taxonomy_assigns_every_active_card_once_to_7_by_37_tree() -> No
         for subtopic in group.subtopics
     ]
 
-    assert len(taxonomy.groups) == 7
-    assert len(subtopics) == 37
+    assert len(taxonomy.groups) == 9
+    assert len(subtopics) == 47
     assert set(taxonomy.assignments) == {item.id for item in catalog.principles}
     assert len(taxonomy.assignments) == len(catalog.principles)
     assert set(taxonomy.assignments.values()) == {
         subtopic.id for subtopic in subtopics
     }
-    assert [group.order for group in taxonomy.groups] == list(range(1, 8))
+    assert [group.order for group in taxonomy.groups] == list(range(1, len(taxonomy.groups) + 1))
     for group in taxonomy.groups:
         assert [subtopic.order for subtopic in group.subtopics] == list(
             range(1, len(group.subtopics) + 1)
@@ -123,11 +125,11 @@ def test_current_question_edition_covers_each_published_card_once() -> None:
         if item.editorial_status == "source_checked"
     }
 
-    assert editions.current == "K6-R2"
     assert current.status == "current"
-    assert len(catalog.principles) == 216
-    assert len(published) == 116
+    assert len(catalog.principles) == catalog.manifest.expected_total
+    assert len(published) == catalog.manifest.expected_status_counts["source_checked"]
     assert len(editions.editions["K6-R1"].assignments) == 116
+    assert len(editions.editions["K6-R2"].assignments) == 116
     assert set(current.assignments) == published
     assert set(current.assignments.values()) == set(range(1, len(published) + 1))
     assert len(current.content_sha256) == 64
@@ -273,7 +275,13 @@ def test_physical_collection_reordering_does_not_change_semantic_audits(
 def test_source_model_exposes_pdf_and_optional_authoritative_source_kinds() -> None:
     catalog = load_catalog()
 
-    assert all("pdf" in item.source.kinds for item in catalog.principles)
+    assert all(("pdf" in item.source.kinds) == bool(item.source.pages) for item in catalog.principles)
+    supplemental = [item for item in catalog.principles if not item.source.pages]
+    assert supplemental
+    assert all(item.source.authoritative_sources for item in supplemental)
+    assert all(item.source.kinds for item in catalog.principles)
+    assert all(source.kind in item.source.kinds for item in catalog.principles
+               for source in item.source.authoritative_sources)
     assert all(
         source.supports
         for item in catalog.principles
@@ -316,13 +324,11 @@ def test_every_published_rule_and_identification_has_typed_display_content() -> 
 
 def test_unpublished_untyped_item_keeps_generic_labels() -> None:
     catalog = load_catalog()
-    item = next(
+    item = replace(next(
         item
         for item in catalog.principles
-        if item.editorial_status != "source_checked"
-        and item.type in {"rule", "identification"}
-        and item.display_content is None
-    )
+        if item.type in {"rule", "identification"}
+    ), editorial_status="source_gap", question=None, display_content=None)
 
     facets = display_facets(catalog, item)
 
@@ -402,7 +408,7 @@ def test_optional_authoritative_source_and_review_fields_are_loaded(
             (
                 item
                 for item in section["principles"]
-                if item["editorial_status"] == "source_gap"
+                if item["type"] == "principle"
             ),
             None,
         )
@@ -410,6 +416,8 @@ def test_optional_authoritative_source_and_review_fields_are_loaded(
             selected_path = section_path
             break
     assert selected is not None and selected_path is not None
+    selected["editorial_status"] = "source_gap"
+    selected.pop("question", None)
     selected["source"]["authoritative_sources"] = [
         {
             "kind": "law",
@@ -428,6 +436,7 @@ def test_optional_authoritative_source_and_review_fields_are_loaded(
     replacement = next(
         item for item in section["principles"] if item["id"] == selected["id"]
     )
+    replacement.clear()
     replacement.update(selected)
     selected_path.write_text(
         yaml.safe_dump(section, allow_unicode=True, sort_keys=False),
@@ -436,7 +445,7 @@ def test_optional_authoritative_source_and_review_fields_are_loaded(
 
     item = next(
         item
-        for item in load_catalog(root / "manifest.yaml").principles
+        for item in _load_section(selected_path, load_catalog().manifest)
         if item.id == selected["id"]
     )
 

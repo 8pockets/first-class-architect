@@ -101,6 +101,9 @@ def _patch_research_registries_for_catalog(
     catalog,
     changed_catalog,
 ) -> None:
+    # Synthetic retirements/demotions exercise routing without making a false
+    # claim that the changed fixture still satisfies the official-exam audit.
+    monkeypatch.setattr(site_module, "load_exam_coverage", lambda actual_catalog: None)
     questions = load_research_questions(catalog)
     coverage = load_research_coverage(catalog, questions)
     question_items = dict(questions.items)
@@ -216,14 +219,18 @@ def _patch_research_registries_for_catalog(
     )
 
 
-def test_pages_omit_only_the_zero_public_fire_group_from_the_taxonomy_outline(
+def test_pages_outline_contains_exactly_the_groups_and_subtopics_with_public_cards(
     tmp_path: Path,
 ) -> None:
     outline = _TaxonomyOutline()
     outline.feed(_built_html(tmp_path))
 
-    assert len(outline.group_depths) == 6
-    assert len(outline.subtopic_depths) == 34
+    catalog = load_catalog()
+    published_subtopics = {catalog.taxonomy.assignments[item.id]
+                          for item in display_principles(catalog, published_only=True)}
+    assert len(outline.group_depths) == sum(any(topic.id in published_subtopics for topic in group.subtopics)
+                                          for group in catalog.taxonomy.groups)
+    assert len(outline.subtopic_depths) == len(published_subtopics)
     assert min(outline.subtopic_depths) > min(outline.group_depths)
 
 
@@ -265,7 +272,8 @@ def test_card_uses_public_code_and_edition_reference_with_legacy_anchor(
     html = _built_html(tmp_path)
 
     assert f'id="{item.code}"' in html
-    assert f'<p class="card-id">{item.code} / {reference}</p>' in html
+    assert f'<p class="card-id">{reference}</p>' in html
+    assert f'<p class="card-id">{item.code}</p>' in html
     assert (
         f'id="{item.id}" data-legacy-anchor '
         f'data-canonical-fragment="{item.code}"' in html
@@ -291,12 +299,12 @@ def test_every_central_identity_route_lands_on_a_card_or_explicit_notice(
     html = _built_html(tmp_path)
 
     identifiers = _identity_identifiers(catalog, set(published))
-    html_ids = re.findall(r'\bid="([^"]+)"', html)
+    html_ids = re.findall(r'\sid="([^"]+)"', html)
     assert len(html_ids) == len(set(html_ids))
     for identifier in identifiers:
         resolution = resolve_principle(catalog, identifier)
         escaped_identifier = escape(identifier)
-        assert html.count(f'id="{escaped_identifier}"') == 1
+        assert len(re.findall(rf'\sid="{re.escape(escaped_identifier)}"', html)) == 1
 
         if resolution.is_split:
             opening = (
@@ -346,13 +354,16 @@ def test_every_central_identity_route_lands_on_a_card_or_explicit_notice(
                 f"ほか{pending_count}件は根拠確認中のため非公開" in notice
             )
 
-    private_split_target = next(
+    split_target = next(
         item
         for item in catalog.principles
         if item.id == "S-K6-BRACED-FRAME-COLUMN-BRACE-CAPACITY-SUM"
     )
-    assert private_split_target.code not in html
-    assert escape(private_split_target.principle) not in html
+    if split_target.editorial_status == "source_checked":
+        assert f'<article class="principle-card" id="{split_target.code}"' in html
+    else:
+        assert split_target.code not in html
+        assert escape(split_target.principle) not in html
 
 
 def test_issued_active_card_that_becomes_private_keeps_only_generic_routes(
@@ -389,7 +400,7 @@ def test_issued_active_card_that_becomes_private_keeps_only_generic_routes(
     }
     future_edition = replace(
         issued_edition,
-        id="K6-R3",
+        id=f"K6-R{int(issued_edition.id.split('-R')[1]) + 1}",
         status="current",
         assignments=future_assignments,
     )
@@ -481,9 +492,16 @@ def test_never_published_card_does_not_gain_public_routes_when_retired(
     item = next(
         candidate
         for candidate in catalog.principles
-        if candidate.editorial_status != "source_checked"
-        and candidate.id not in issued_keys
+        if candidate.id not in catalog.manifest.print_numbers
     )
+    # Make a never-issued fixture explicitly; production no longer needs pending cards.
+    catalog = replace(catalog, question_editions=replace(
+        catalog.question_editions, editions={
+            key: replace(edition, assignments={item_key: number for item_key, number in edition.assignments.items()
+                                               if item_key != item.id})
+            for key, edition in catalog.question_editions.editions.items()
+        },
+    ))
     target = display_principles(catalog, published_only=True)[0]
     identity = catalog.identities.active[item.id]
     active_identities = dict(catalog.identities.active)
@@ -590,12 +608,9 @@ def test_historical_split_stays_an_index_after_its_leaves_converge(
         for key, record in catalog.migration.retired.items()
         if record.operation == "split"
         and len(record.targets) == 2
-        and sum(target in published for target in record.targets) == 1
+        and all(target in active for target in record.targets)
     )
-    intermediate = next(
-        target for target in split_record.targets if target not in published
-    )
-    leaf = next(target for target in split_record.targets if target in published)
+    intermediate, leaf = split_record.targets
     intermediate_identity = catalog.identities.active[intermediate]
     active_identities = dict(catalog.identities.active)
     del active_identities[intermediate]
@@ -647,7 +662,8 @@ def test_historical_split_stays_an_index_after_its_leaves_converge(
 
     assert "旧IDは複数の原理に分割されました" in notice
     assert f'href="#{published[leaf].code}"' in notice
-    assert intermediate_identity.code not in html
+    assert f'<article class="principle-card" id="{intermediate_identity.code}"' not in html
+    assert f'id="{intermediate_identity.code}" data-legacy-anchor' in html
     assert escape(active[intermediate].principle) not in html
 
 
@@ -715,8 +731,10 @@ def test_every_prior_section_fragment_lists_its_exact_taxonomy_destinations(
             r'id="section-(K6-[^"]+)" data-section-migration',
             html,
         )
-    ) == set(routes) == {item.section_id for item in published.values()}
-    assert len(routes) == 34
+    ) == set(routes)
+    assert set(routes) <= {item.section_id for item in catalog.principles} | {
+        record.legacy_section for record in catalog.migration.retired.values()
+    }
     assert "本試験知識（横断）の再分類先" in html.split(
         'id="section-K6-00"', maxsplit=1
     )[1].split("</section>", maxsplit=1)[0]

@@ -14,13 +14,12 @@ principles:
       A: 片側へ1本取り付ける場合より小さくなる
       B: 片側へ1本取り付ける場合より大きくなる
     correct: A
-  conclusion: 山形鋼・溝形鋼を背中合わせに2本使い、ガセットプレートの両側へ対称に取り付けると偏心引張の影響が小さくなり、全断面を有効とみなせる。
+  conclusion: 山形鋼・溝形鋼を背中合わせに2本使い、ガセットプレートの両側へ対称に取り付けると、片側1本の場合より偏心引張の影響を小さくできる。対称配置であってもボルト孔欠損は別途控除する。
   reason: 1本を片側だけへ取り付ける配置より、接合が対称になり力の作用線を材軸へ近づけられるため。
   conditions:
-  - 山形鋼筋かい
-  - 小規模建築物を除く
-  - 山形鋼または溝形鋼を背中合わせに2本使用
-  - 引張材
+  - 山形鋼又は溝形鋼を背中合わせに2本使用
+  - ガセットプレートの両側に対称接合した引張材
+  - 対称配置による偏心の低減と、孔欠損の控除を区別する
   source:
     pages:
     - 170
@@ -30,3 +29,7 @@ principles:
   prerequisites:
   - S-K6-GUSSET-PLATE-MEMBER-CONNECTION
   editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete

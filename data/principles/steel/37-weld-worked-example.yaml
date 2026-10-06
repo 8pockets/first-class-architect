@@ -17,9 +17,9 @@ principles:
   question:
     prompt: 母材と溶接金属の中間にあり、溶接熱で性質が変化した母材部分の名称として正しい結論はどちらか。
     choices:
-      A: 熱影響部
-      B: 溶接金属
-    correct: A
+      A: 溶接金属
+      B: 熱影響部
+    correct: B
   conclusion: 熱影響部は母材と溶接金属の中間にあり、溶接熱で組織・冶金的性質・機械的性質が変化した母材部分である。
   reason: 溶融には至らない周辺母材も溶接熱の影響を受けるため。
   conditions:
@@ -47,7 +47,23 @@ principles:
     - '21171'
   prerequisites:
   - S-K6-FILLET-WELD-DEFINITION-REPEATED-STRESS
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: V形の開先を持つ突合せ溶接とすみ肉溶接の基本記号を区別するとき、すみ肉側の形状について、正しい結論はどちらか。
+    choices:
+      A: V形
+      B: 直角三角形
+    correct: B
+  display_content:
+    definition: JISの基本記号は、すみ肉溶接を直角三角形、V形突合せ溶接をV形、U形突合せ溶接をU形で表し、すみ肉・V形記号の角度は90度とする。
+    distinguishing_conditions:
+    - JIS Z 3021の溶接記号を識別する場合
+    confusable_points:
+    - 本問では「V形」と区別する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-WELD-METAL-COMPOSITION
   order: 3
   type: identification

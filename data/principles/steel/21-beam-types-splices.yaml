@@ -38,13 +38,29 @@ principles:
   order: 2
   type: identification
   principle: 形鋼梁と組立梁の識別
-  conclusion: 形鋼梁にはH形鋼梁・I形鋼梁があり、組立梁にはトラス梁・ラチス梁がある。
+  conclusion: 圧延H形鋼・I形鋼を用いる梁を形鋼梁、鋼板や複数部材を組み立てる梁を組立梁という。組立H形鋼もあるのでH形という断面形状だけでは製作形式を決めない。
   reason: 教材に記載なし
   conditions:
-  - 梁を製作形式で識別する場合
+  - 断面形状と製作方法を区別する場合
   source:
     pages:
     - 196
     question_codes: []
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 鋼板のフランジとウェブを溶接してH形断面に製作した梁の分類について、正しい結論はどちらか。
+    choices:
+      A: 組立梁
+      B: 圧延形鋼梁
+    correct: A
+  display_content:
+    definition: 圧延H形鋼・I形鋼を用いる梁を形鋼梁、鋼板や複数部材を組み立てる梁を組立梁という。組立H形鋼もあるのでH形という断面形状だけでは製作形式を決めない。
+    distinguishing_conditions:
+    - 断面形状と製作方法を区別する場合
+    confusable_points:
+    - 本問では「圧延形鋼梁」と区別する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete

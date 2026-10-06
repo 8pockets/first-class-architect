@@ -34,6 +34,12 @@ groups:
   - id: steel.framework.corrosion-protection
     title: 腐食・防錆
     order: 4
+  - id: steel.framework.steel-grades
+    title: 鋼材の種別・材料規格
+    order: 5
+  - id: steel.framework.environment
+    title: 鋼材の環境負荷
+    order: 6
 - id: steel.beam-column
   title: 梁・柱・座屈
   order: 2
@@ -157,6 +163,38 @@ groups:
   - id: steel.fire-special.special-loads-equipment
     title: 特殊荷重・付帯設備
     order: 3
+- id: steel.composite
+  title: 合成構造・混構造
+  order: 8
+  subtopics:
+  - id: steel.composite.beams-decks
+    title: 合成梁・合成床
+    order: 1
+  - id: steel.composite.cft
+    title: CFT柱
+    order: 2
+  - id: steel.composite.src
+    title: SRC部材・柱脚
+    order: 3
+  - id: steel.composite.mixed
+    title: 混構造の力の伝達
+    order: 4
+- id: steel.seismic
+  title: 耐震設計・制振
+  order: 9
+  subtopics:
+  - id: steel.seismic.routes
+    title: 構造計算ルート・耐震規定
+    order: 1
+  - id: steel.seismic.cold-formed
+    title: 冷間成形角形鋼管の設計
+    order: 2
+  - id: steel.seismic.dampers
+    title: 鋼材ダンパー・制振
+    order: 3
+  - id: steel.seismic.dynamic-basics
+    title: 振動特性・耐震改修
+    order: 4
 assignments:
   S-K6-18-ELASTIC-STRENGTH: steel.beam-column.global-buckling-slenderness
   S-K6-18-SLENDERNESS: steel.beam-column.global-buckling-slenderness
@@ -374,3 +412,98 @@ assignments:
   S-K6-WRAPPED-BASE-MOMENT-DISTRIBUTION: steel.joint-base.wrapped-base
   S-K6-WRAPPED-BASE-SHEAR-Q2-GREATER-THAN-Q1: steel.joint-base.wrapped-base
   S-K6-X-BRACE-TENSION-COMPRESSION-CAPACITY: steel.brace.buckling-ultimate-capacity
+  S-K6-EXAM-SN-A-USE: steel.framework.steel-grades
+  S-K6-EXAM-SN-C-THICKNESS: steel.framework.steel-grades
+  S-K6-EXAM-SN-YIELD-RANGE: steel.framework.steel-grades
+  S-K6-EXAM-SN-CHARPY-GRADE: steel.framework.steel-grades
+  S-K6-EXAM-SN490-SYMBOL: steel.framework.strength-allowable-stress
+  S-K6-EXAM-SN490-F40: steel.framework.strength-allowable-stress
+  S-K6-EXAM-SN-THICKNESS-F: steel.framework.strength-allowable-stress
+  S-K6-EXAM-SN-TOLERANCE: steel.framework.steel-grades
+  S-K6-EXAM-STEEL-ANISOTROPY: steel.framework.steel-properties
+  S-K6-EXAM-CHARPY-ENERGY: steel.framework.steel-properties
+  S-K6-EXAM-CHARPY-TEMPERATURE: steel.framework.steel-properties
+  S-K6-EXAM-CARBON-WELDABILITY: steel.framework.steel-properties
+  S-K6-EXAM-SULFUR-TOUGHNESS: steel.framework.steel-properties
+  S-K6-EXAM-PHOSPHORUS-TOUGHNESS: steel.framework.steel-properties
+  S-K6-EXAM-COLD-FORMING: steel.framework.steel-grades
+  S-K6-EXAM-BCR-BCP-PROCESS: steel.framework.steel-grades
+  S-K6-EXAM-BCR295-SYMBOL: steel.framework.steel-grades
+  S-K6-EXAM-BCR-YIELD-RATIO: steel.framework.steel-grades
+  S-K6-EXAM-BCP325-STRENGTH: steel.framework.steel-grades
+  S-K6-EXAM-TMCP-THICK-PLATE: steel.framework.steel-grades
+  S-K6-EXAM-SUS-OFFSET: steel.framework.steel-grades
+  S-K6-EXAM-SUS-F: steel.framework.strength-allowable-stress
+  S-K6-EXAM-STEEL-HEAT-YIELD: steel.fire-special.high-temperature-fire-load
+  S-K6-EXAM-ROUTE11-SCALE: steel.seismic.routes
+  S-K6-EXAM-ROUTE12-SCALE: steel.seismic.routes
+  S-K6-EXAM-ROUTE12-ONE-STORY: steel.seismic.routes
+  S-K6-EXAM-ROUTE13-HEIGHT: steel.seismic.routes
+  S-K6-EXAM-ROUTE1-CO: steel.seismic.routes
+  S-K6-EXAM-ROUTE2-CO: steel.seismic.routes
+  S-K6-EXAM-ROUTE11-CHECKS: steel.seismic.routes
+  S-K6-EXAM-ROUTE12-ECCENTRICITY: steel.seismic.routes
+  S-K6-EXAM-ROUTE12-BRACING: steel.seismic.routes
+  S-K6-EXAM-ROUTE13-DRIFT: steel.seismic.routes
+  S-K6-EXAM-ROUTE2-ASPECT: steel.seismic.routes
+  S-K6-EXAM-ROUTE2-STIFFNESS: steel.seismic.routes
+  S-K6-EXAM-COLD-ROUTE1: steel.seismic.cold-formed
+  S-K6-EXAM-COLD-ROUTE2-RATIO: steel.seismic.cold-formed
+  S-K6-EXAM-COLD-ROUTE3-LOCAL: steel.seismic.cold-formed
+  S-K6-EXAM-ROUTE-BRACE-END: steel.seismic.routes
+  S-K6-EXAM-ROUTE-CEILING: steel.seismic.routes
+  S-K6-EXAM-DS-MEMBER: steel.seismic.routes
+  S-K6-EXAM-PANEL-DS: steel.joint-base.beam-column-joints
+  S-K6-EXAM-COMPOSITE-STUD: steel.composite.beams-decks
+  S-K6-EXAM-COMPOSITE-FULL: steel.composite.beams-decks
+  S-K6-EXAM-COMPOSITE-WIDTH: steel.composite.beams-decks
+  S-K6-EXAM-COMPOSITE-TOP-FLANGE: steel.composite.beams-decks
+  S-K6-EXAM-COMPOSITE-BOTTOM-FLANGE: steel.composite.beams-decks
+  S-K6-EXAM-DECK-INPLANE: steel.composite.beams-decks
+  S-K6-EXAM-CFT-BUCKLING: steel.composite.cft
+  S-K6-EXAM-CFT-CONFINEMENT: steel.composite.cft
+  S-K6-EXAM-CFT-CIRCLE: steel.composite.cft
+  S-K6-EXAM-CFT-WIDTH-THICKNESS: steel.composite.cft
+  S-K6-EXAM-CFT-FIRE: steel.composite.cft
+  S-K6-EXAM-CFT-TRANSFER: steel.composite.cft
+  S-K6-EXAM-SRC-BENDING: steel.composite.src
+  S-K6-EXAM-SRC-SHEAR: steel.composite.src
+  S-K6-EXAM-SRC-CRACK-STIFFNESS: steel.composite.src
+  S-K6-EXAM-SRC-WEB-TYPE: steel.composite.src
+  S-K6-EXAM-SRC-TENSION-BASE: steel.composite.src
+  S-K6-EXAM-SRC-NONEMBEDDED-DS: steel.composite.src
+  S-K6-EXAM-SRC-EMBEDDED-MIN: steel.composite.src
+  S-K6-EXAM-SRC-NONEMBEDDED-SUM: steel.composite.src
+  S-K6-EXAM-MIXED-RC-S-TRANSFER: steel.composite.mixed
+  S-K6-EXAM-MIXED-CORE: steel.composite.mixed
+  S-K6-EXAM-DAMPER-PLASTICITY: steel.seismic.dampers
+  S-K6-EXAM-DAMPER-YIELD-SEQUENCE: steel.seismic.dampers
+  S-K6-EXAM-DAMPER-LY225: steel.seismic.dampers
+  S-K6-EXAM-DAMPER-HIGH-STRENGTH-FRAME: steel.seismic.dampers
+  S-K6-EXAM-DAMPER-CONNECTION: steel.seismic.dampers
+  S-K6-EXAM-DAMPER-LAYOUT: steel.seismic.dampers
+  S-K6-EXAM-DAMPER-FATIGUE: steel.seismic.dampers
+  S-K6-EXAM-DAMPER-PANEL-ANGLE: steel.seismic.dampers
+  S-K6-EXAM-DAMPER-RESIDUAL: steel.seismic.dampers
+  S-K6-EXAM-FLOOR-FREQUENCY: steel.beam-column.strength-section-deflection
+  S-K6-EXAM-LIGHT-BUILDING-WIND: steel.fire-special.special-loads-equipment
+  S-K6-EXAM-STEEL-PERIOD: steel.seismic.dynamic-basics
+  S-K6-EXAM-STEEL-DAMPING: steel.seismic.dynamic-basics
+  S-K6-EXAM-PILE-CORROSION: steel.framework.corrosion-protection
+  S-K6-EXAM-ROUTE-DIRECTION: steel.seismic.routes
+  S-K6-EXAM-ROUTE-UPPER-SELECTION: steel.seismic.routes
+  S-K6-EXAM-SRC-ALLOWABLE-SHEAR: steel.composite.src
+  S-K6-EXAM-SRC-WEB-HOLE: steel.composite.src
+  S-K6-EXAM-SRC-ELASTIC-STIFFNESS: steel.composite.src
+  S-K6-EXAM-MIXED-VERTICAL-DS: steel.composite.mixed
+  S-K6-EXAM-MIXED-DIRECTION-RULES: steel.composite.mixed
+  S-K6-EXAM-STEEL-RETROFIT: steel.seismic.dynamic-basics
+  S-K6-EXAM-COMPOSITE-STUD-FORCE: steel.composite.beams-decks
+  S-K6-EXAM-DECK-DEFORMATION: steel.composite.beams-decks
+  S-K6-EXAM-ALUMINUM-EXPANSION: steel.framework.steel-properties
+  S-K6-EXAM-CONCRETE-EXPANSION: steel.framework.steel-properties
+  S-K6-EXAM-DAMPER-BRACE-STUD: steel.seismic.dampers
+  S-K6-EXAM-FATIGUE-STEEL-GRADE: steel.bolt.cyclic-fatigue
+  S-K6-EXAM-HEAT-TENSILE-F: steel.fire-special.high-temperature-fire-load
+  S-K6-EXAM-PANEL-EARLY-YIELD: steel.joint-base.beam-column-joints
+  S-K6-EXAM-EAF-CARBON: steel.framework.environment

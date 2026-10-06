@@ -9,12 +9,12 @@ principles:
   type: principle
   principle: 入熱量・パス間温度と溶接部強度
   question:
-    prompt: 多パス溶接で入熱量とパス間温度を高くしたとき、溶接部の強度・靭性への影響として正しい結論はどちらか。
+    prompt: 多パス溶接で品質を確保するため、入熱量とパス間温度の管理基準を設定する。正しい結論はどちらか。
     choices:
-      A: 溶接部の強度・靭性は向上する
-      B: 溶接部の強度・靭性は低下する
+      A: 規定値を下限として高い側へ管理する
+      B: 規定値を上限として超過を防止する
     correct: B
-  conclusion: 入熱量とパス間温度が規定上限を超えないよう管理する。大きい入熱・高いパス間温度ほど溶接部の強度・靭性が低下する。
+  conclusion: 多パス溶接では入熱量とパス間温度を規定上限以内に管理する。過大な入熱や高すぎるパス間温度は溶接部の強度・靭性低下につながる。
   reason: 溶接部の機械的性質は溶接条件の影響を受け、過大な入熱や高いパス間温度が強度低下・欠陥につながるため。
   conditions:
   - 多パス溶接
@@ -32,24 +32,26 @@ principles:
   prerequisites:
   - S-K6-WELD-METAL-COMPOSITION
   editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-PREHEAT-PREVENTS-LOW-TEMPERATURE-CRACKING
   order: 2
   type: principle
   principle: 予熱と低温割れ防止
   question:
-    prompt: 厚板又は低温環境で低温割れを防ぐとき、溶接部周辺を50〜100℃程度に温める時期として正しい結論はどちらか。
+    prompt: 厚板の溶接で低温割れ防止の予熱が必要となった。予熱と多パス溶接のパス間温度管理の組合せとして、正しい結論はどちらか。
     choices:
-      A: 溶接完了後に母材を温める
-      B: 溶接開始前に母材を温める
-    correct: B
-  conclusion: 板厚が厚い又は気温が低い場合は、溶接前に溶接部周辺を50-100℃程度で予熱し、開始時温度が規定下限を下回らないようにする。
+      A: 予熱は開始前、パス間温度は上限を管理する
+      B: 予熱は開始前、パス間温度は下限を管理する
+    correct: A
+  conclusion: 低温割れのおそれがある場合は、溶接前に母材を予熱する。教材の50〜100℃程度は例であり、実際の予熱条件は溶接方法・鋼種・板厚・気温などに応じて定める。
   reason: 冷たい母材への溶接では欠陥が生じやすいため、母材を事前に温めて溶接部の低温割れを防ぐため。
   conditions:
-  - 厚板又は低温環境
-  - 低温割れ防止
-  - 厚板
-  - 低気温
-  - 溶接開始前
+  - 厚板や低温環境など低温割れのおそれがある場合
+  - 必要な予熱温度は溶接条件ごとに定める
+  - 予熱は溶接開始前に行う
   source:
     pages:
     - 175
@@ -57,30 +59,42 @@ principles:
     question_codes:
     - '22173'
     - '28153'
+    authoritative_sources:
+    - kind: government_spec
+      title: 公共建築工事標準仕様書（建築工事編）令和7年版
+      locator: 7.6.7(1)(オ)、7.6.8（予熱・施工条件）
+      url: https://www.mlit.go.jp/gobuild/content/001888816.pdf
+      supports:
+      - statement
+      - conditions
   prerequisites: []
   editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-WELD-PASS-AND-MULTIPASS-IDENTIFICATION
   order: 3
   type: identification
   display_content:
-    definition: 溶接棒を一周させる一回の溶接作業を1パスといい、開先を埋めるため複数回のパスを行う施工を多パス溶接という。
+    definition: 溶接線に沿った1回の溶接操作を1パスという。開先の断面を複数のパスで順に充填する施工が多パス溶接であり、溶接線の長さ方向に溶接部分と無溶接部分を設ける断続溶接とは区別する。
     distinguishing_conditions:
-    - 開先溶接
-    - 一回で開先全体を充填できない場合
+    - 開先溶接の断面を充填する操作
+    - パスを重ねる施工と、長さ方向に間隔を置く施工を区別する
     confusable_points:
-    - 「1パス溶接」とは区別する。
+    - 多パスは断面を埋めるための反復であり、断続溶接のように溶接線の長さ方向の配置を表す語ではない。
   principle: 1パスと多パス溶接
   question:
-    prompt: 開先を埋めるために複数回のパスを行う溶接施工の名称として、正しい結論はどちらか。
+    prompt: 同じ開先の断面を、ビードを順に重ねて埋める施工を指している。名称として正しい結論はどちらか。
     choices:
       A: 多パス溶接
-      B: 1パス溶接
+      B: 断続すみ肉溶接
     correct: A
-  conclusion: 溶接棒を一周させる一回の溶接作業を1パスといい、開先を埋めるため複数回のパスを行う施工を多パス溶接という。
+  conclusion: 溶接線に沿った1回の溶接操作を1パスという。開先の断面を複数のパスで順に充填する施工が多パス溶接であり、溶接線の長さ方向に溶接部分と無溶接部分を設ける断続溶接とは区別する。
   reason: 開先が大きいと1パスだけでは全断面を溶接できないため。
   conditions:
-  - 開先溶接
-  - 一回で開先全体を充填できない場合
+  - 開先溶接の断面を充填する操作
+  - パスを重ねる施工と、長さ方向に間隔を置く施工を区別する
   source:
     pages:
     - 211
@@ -88,3 +102,7 @@ principles:
   prerequisites:
   - S-K6-MULTIPASS-HEAT-INPUT-INTERPASS-UPPER-CONTROL
   editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete

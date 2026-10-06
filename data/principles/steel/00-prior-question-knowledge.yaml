@@ -8,7 +8,7 @@ principles:
   order: 1
   type: rule
   principle: 異種鋼材の突合せ溶接の許容応力度
-  conclusion: 強度の異なる鋼材を突合せ溶接する場合、継目の許容応力度は接合母材のうち強度が小さい側で決める。
+  conclusion: 異なる種類・品質の鋼材を溶接する場合、溶接部の基準強度には接合鋼材の基準強度のうち小さい値を用いる。
   reason: 教材に記載なし
   conditions:
   - 異種鋼材の突合せ溶接
@@ -18,10 +18,36 @@ principles:
     question_codes:
     - '01172'
     - '06161'
+    authoritative_sources:
+    - kind: professional_body
+      title: 建築鉄骨構造技術支援協会 鉄骨Q&A 4-23
+      locator: 1.設計について／異強度材の溶接部に用いる基準強度（2026-10-06閲覧）
+      url: https://sasst.jp/qa/q4/q4-23.html
+      supports:
+      - statement
+      - explanation
+      - conditions
   prerequisites: []
   related:
   - S-K6-FULL-PENETRATION-WELD-DEFINITION-REPEATED-STRESS
-  editorial_status: source_gap
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+  display_content:
+    rule: 異なる種類・品質の鋼材を溶接する場合、溶接部の基準強度には接合鋼材の基準強度のうち小さい値を用いる。
+    applicability:
+    - 異種鋼材の溶接部
+    - 母材に適合する溶接材料・施工条件を用いる
+    numbers_exceptions:
+    - 溶接材料を高強度にしても、弱い側の母材に対応する基準強度を超えて扱わない。
+  question:
+    prompt: 基準強度235N/mm²と325N/mm²の鋼材を適切な材料で突合せ溶接する。溶接部に用いる基準強度について、正しい結論はどちらか。
+    choices:
+      A: 235N/mm²を用いる
+      B: 325N/mm²を用いる
+    correct: A
 - id: S-K6-FRAME-H-SECTION-AXIS-ROLE
   order: 2
   type: principle
@@ -29,9 +55,9 @@ principles:
   question:
     prompt: H形断面柱で強軸方向と弱軸方向に異なる架構形式を採用できる場合、一般的な組合せとして正しい結論はどちらか。
     choices:
-      A: 強軸方向をラーメン構造、弱軸方向をブレース構造とする。
-      B: 強軸方向をブレース構造、弱軸方向をラーメン構造とする。
-    correct: A
+      A: 強軸方向をブレース構造、弱軸方向をラーメン構造とする。
+      B: 強軸方向をラーメン構造、弱軸方向をブレース構造とする。
+    correct: B
   conclusion: H形断面柱は、強軸方向をラーメン構造、弱軸方向をブレース構造とすることが多い。
   reason: 強軸は断面二次モーメントが大きく曲げを負担しやすく、弱軸方向はブレースで水平力に抵抗できるため。
   conditions:
@@ -58,9 +84,9 @@ principles:
   question:
     prompt: 接合鋼材の基準強度Fが同じとき、完全溶込み・部分溶込み・すみ肉溶接ののど断面について、正しい結論はどちらか。
     choices:
-      A: 溶接形式によって許容せん断応力度は異なる。
-      B: 溶接形式によらず許容せん断応力度は等しい。
-    correct: B
+      A: 溶接形式によらず許容せん断応力度は等しい。
+      B: 溶接形式によって許容せん断応力度は異なる。
+    correct: A
   conclusion: 同じ基準強度なら、完全溶込み・部分溶込み・すみ肉の各溶接で、のど断面の許容せん断応力度は等しい。長期はF/(1.5√3)、短期はF/√3である。
   reason: 各形式とも、せん断に対するのど断面の許容応力度が同じ式で定められるため。
   conditions:
@@ -117,9 +143,9 @@ principles:
   question:
     prompt: アルミニウム合金材を摩擦接合する場合、一般的に用いる高力ボルトとして、正しい結論はどちらか。
     choices:
-      A: 溶融亜鉛めっき高力ボルトを用いる。
-      B: めっきのない高力ボルトを用いる。
-    correct: A
+      A: めっきのない高力ボルトを用いる。
+      B: 溶融亜鉛めっき高力ボルトを用いる。
+    correct: B
   conclusion: アルミニウム合金材の摩擦接合には、一般に溶融亜鉛めっき高力ボルトを用いる。
   reason: 接触腐食を防ぐため。
   conditions:
@@ -138,9 +164,9 @@ principles:
   question:
     prompt: 適用可能な高力ボルト接合でF10TをF14T級へ変更した場合、接合部への影響として、正しい結論はどちらか。
     choices:
-      A: 必要ボルト本数を減らし、接合部を小型化できる。
-      B: 必要ボルト本数が増え、接合部は大型化する。
-    correct: A
+      A: 必要ボルト本数が増え、接合部は大型化する。
+      B: 必要ボルト本数を減らし、接合部を小型化できる。
+    correct: B
   conclusion: F10Tの代わりにF14T級超高力ボルトを用いると、必要ボルト本数を減らし、スプライスプレートを小さくできる。
   reason: F14Tは遅れ破壊抵抗が高く、1本当たりの締付け力を大きくできるため。
   conditions:
@@ -187,7 +213,7 @@ principles:
   order: 8
   type: rule
   principle: 梁端接合部の最大曲げ耐力の構成
-  conclusion: 梁端接合部の最大曲げ耐力は、梁フランジ接合部と梁ウェブ接合部の耐力の和で算定する。
+  conclusion: 角形鋼管柱とH形鋼梁の梁端接合部の最大曲げ耐力は、フランジ接合部とウェブ接合部の曲げ耐力の寄与を加算する。
   reason: 教材に記載なし
   conditions:
   - 角形鋼管柱とH形鋼梁の梁端接合部
@@ -197,7 +223,24 @@ principles:
     question_codes:
     - '03164'
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+  display_content:
+    rule: 角形鋼管柱とH形鋼梁の梁端接合部の最大曲げ耐力は、フランジ接合部とウェブ接合部の曲げ耐力の寄与を加算する。
+    applicability:
+    - 角形鋼管柱とH形鋼梁の梁端接合部
+    - 各寄与に断面欠損・鋼管面外変形の影響を適切に考慮
+    numbers_exceptions:
+    - 完全溶込み溶接でもスカラップや鋼管フランジの面外変形を無視しない。
+  question:
+    prompt: 角形鋼管柱とH形鋼梁の接合で、影響を考慮したフランジ・ウェブの曲げ耐力の寄与がそれぞれ180kN·m、40kN·mのとき、最大曲げ耐力について正しい結論はどちらか。
+    choices:
+      A: 180kN·mとしてウェブの寄与を除く
+      B: 220kN·mとしてウェブの寄与を含める
+    correct: B
 - id: S-K6-BEAM-END-STRENGTH-SECTION-LOSS-AND-TUBE-DEFORMATION
   order: 9
   type: principle
@@ -225,7 +268,7 @@ principles:
   order: 10
   type: rule
   principle: リベット既存継手を溶接補強する増築時の応力分担
-  conclusion: 既存リベットに既存部分の固定荷重を負担させ、追加する溶接に増築部分の固定荷重・積載荷重を負担させる併用継手として設計できる。
+  conclusion: 既存のリベット継手の周囲を溶接補強する増築では、既存固定荷重をリベットに残し、増築分の固定荷重・積載荷重による応力を追加溶接へ負担させる設計ができる。
   reason: 教材に記載なし
   conditions:
   - リベット継手を持つ既存建築物への増築
@@ -236,7 +279,24 @@ principles:
     question_codes:
     - '18182'
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+  display_content:
+    rule: 既存のリベット継手の周囲を溶接補強する増築では、既存固定荷重をリベットに残し、増築分の固定荷重・積載荷重による応力を追加溶接へ負担させる設計ができる。
+    applicability:
+    - 既存の固定荷重がリベット継手に作用している状態で周囲を溶接補強する
+    - 増築で新たに加わる荷重の応力を区別する
+    numbers_exceptions:
+    - 荷重の導入順序を無視して既存固定荷重まで追加溶接へ移したと扱わない。
+  question:
+    prompt: 既存固定荷重が作用するリベット継手の周囲を溶接補強して増築する。既存固定荷重による応力の扱いとして、正しい結論はどちらか。
+    choices:
+      A: 追加溶接だけが負担するとして設計できる
+      B: 既存リベットが負担するとして設計できる
+    correct: B
 - id: S-K6-NO-SCALLOP-IMPROVES-BEAM-END-DUCTILITY
   order: 11
   type: principle
@@ -244,9 +304,9 @@ principles:
   question:
     prompt: 対応可能な材料・溶接施工を用いる梁端で、ノンスカラップ工法又はひずみを緩和する形状について、正しい結論はどちらか。
     choices:
-      A: 梁端の塑性変形能力を低下させる。
-      B: 梁端の塑性変形能力を向上させる。
-    correct: B
+      A: 梁端の塑性変形能力を向上させる。
+      B: 梁端の塑性変形能力を低下させる。
+    correct: A
   conclusion: 梁ウェブのスカラップ底はひずみが集中しやすいため、ノンスカラップ工法又はひずみを緩和する形状にすると塑性変形能力の向上を期待できる。
   reason: 従来は溶接線交差による欠陥・多重入熱を避けるためスカラップを設けたが、現在は鋼材・溶接技術の向上で交差部欠陥を抑えやすく、断面欠損とひずみ集中を避けられるため。
   conditions:
@@ -303,9 +363,9 @@ principles:
   question:
     prompt: 断面が曲げ強度で決まり、曲げ剛性に余裕がある梁をSN400BからSN490Bへ変更する場合、正しい結論はどちらか。
     choices:
-      A: 梁せいを小さくできる。
-      B: 梁せいを小さくできない。
-    correct: A
+      A: 梁せいを小さくできない。
+      B: 梁せいを小さくできる。
+    correct: B
   conclusion: 鋼材は材料強度が高いため断面を小さくできる。特に、たわみではなく曲げ応力度が断面を決め、曲げ剛性に余裕がある梁なら、SN400BをSN490Bへ替えて梁せいを小さくできる場合がある。
   reason: 高強度鋼は許容応力度を大きくでき、断面縮小で断面係数が下がっても応力度を許容値内に保てるため。
   conditions:
@@ -328,9 +388,9 @@ principles:
   question:
     prompt: 大地震時に梁端の塑性化を期待するH形鋼梁で、塑性変形能力を確認する設計として、正しい結論はどちらか。
     choices:
-      A: 二次設計の保有耐力横補剛検討まで確認する
-      B: 一次設計の許容曲げ応力度検討だけで確認する
-    correct: A
+      A: 一次設計の許容曲げ応力度検討だけで確認する
+      B: 二次設計の保有耐力横補剛検討まで確認する
+    correct: B
   conclusion: 地震時に梁端が塑性化するH形鋼梁は、一次設計の許容曲げ応力度検討だけでは塑性変形能力を確認できず、二次設計で保有耐力横補剛を確認する。
   reason: 一次設計は中地震時の許容応力度を扱う一方、塑性変形能力には梁が十分変形するまで横座屈しない条件が必要なため。
   conditions:
@@ -348,7 +408,7 @@ principles:
   order: 16
   type: rule
   principle: H形断面梁の許容曲げ応力度を決める要素
-  conclusion: H形断面梁の許容曲げ応力度は、鋼種、断面寸法、曲げモーメント分布、圧縮フランジの支点間距離を用いて算定する。
+  conclusion: H形断面梁の許容曲げ応力度は、鋼種・断面寸法だけでなく曲げモーメント分布と圧縮フランジの支点間距離を考慮して算定する。
   reason: 教材に記載なし
   conditions:
   - H形断面梁
@@ -360,7 +420,24 @@ principles:
     - '23152'
   prerequisites:
   - S-K6-19-LATERAL-BUCKLING
-  editorial_status: source_gap
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+  display_content:
+    rule: H形断面梁の許容曲げ応力度は、鋼種・断面寸法だけでなく曲げモーメント分布と圧縮フランジの支点間距離を考慮して算定する。
+    applicability:
+    - 横座屈の影響を評価するH形断面梁
+    - 許容応力度設計
+    numbers_exceptions:
+    - 保有耐力横補剛による塑性変形能力の確認とは別の検討である。
+  question:
+    prompt: 鋼種と断面寸法が同じH形鋼梁で、曲げモーメント分布と圧縮フランジの支点間距離を変更した。許容曲げ応力度について、正しい結論はどちらか。
+    choices:
+      A: 変更した分布と支点間距離で再評価する
+      B: 鋼種と断面が同じなので同じ値を使う
+    correct: A
 - id: S-K6-H-SECTION-COLUMN-WEAK-AXIS-GOVERNS-BUCKLING
   order: 17
   type: principle
@@ -392,9 +469,9 @@ principles:
   question:
     prompt: 塑性化を期待するH形鋼梁で、圧縮側フランジを拘束する横補剛の役割として、正しい結論はどちらか。
     choices:
-      A: 梁端が塑性状態に達する前の横座屈を許容する。
-      B: 梁端が十分回転変形するまで横座屈を防ぐ。
-    correct: B
+      A: 梁端が十分回転変形するまで横座屈を防ぐ。
+      B: 梁端が塑性状態に達する前の横座屈を許容する。
+    correct: A
   conclusion: 圧縮側フランジの横変位を拘束する横補剛を設け、梁端が十分回転変形するまで横座屈を防ぐ。直交小梁を増やす方法もある。
   reason: 梁端が塑性状態に達する前に横座屈すると、想定した全塑性モーメントを発揮できないため。
   conditions:
@@ -415,9 +492,9 @@ principles:
   question:
     prompt: 剛床を期待せず、小梁と水平ブレースで床トラスを形成して水平せん断力を伝える場合、正しい結論はどちらか。
     choices:
-      A: 小梁を曲げ材だけでなく軸力部材としても検討する。
-      B: 小梁は曲げ材としてのみ検討し、軸力部材とは扱わない。
-    correct: A
+      A: 小梁は曲げ材としてのみ検討し、軸力部材とは扱わない。
+      B: 小梁を曲げ材だけでなく軸力部材としても検討する。
+    correct: B
   conclusion: 床の水平せん断力を小梁と水平ブレースのトラスで伝える場合、小梁を軸力部材としても検討する。
   reason: 水平力が床トラスを通って各骨組へ流れ、小梁もトラス弦・圧縮引張材として力を負担するため。
   conditions:
@@ -434,7 +511,7 @@ principles:
   order: 20
   type: rule
   principle: 均等配置横補剛の細長比条件
-  conclusion: 梁全長に均等配置する場合、弱軸細長比はSN400Bでλ≤170+20n、SN490Bでλ≤130+20nを満たすよう補剛数nを決める。
+  conclusion: 教材の均等配置横補剛では、梁全長の弱軸細長比λについてSN400Bはλ≤170+20n、SN490Bはλ≤130+20nを満たす補剛箇所数nを求める。
   reason: 教材に記載なし
   conditions:
   - 梁全長に横補剛を均等配置
@@ -446,7 +523,26 @@ principles:
     - '01153'
     - 07183
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+  display_content:
+    rule: 教材の均等配置横補剛では、梁全長の弱軸細長比λについてSN400Bはλ≤170+20n、SN490Bはλ≤130+20nを満たす補剛箇所数nを求める。
+    applicability:
+    - SN400B・SN490BのH形鋼梁
+    - 梁全長に均等配置する保有耐力横補剛の方法
+    - λは補剛区間ではなく梁全長に対する弱軸細長比
+    numbers_exceptions:
+    - 必要箇所数は整数へ切り上げる。
+    - 端部集中補剛にはこの均等配置式をそのまま適用しない。
+  question:
+    prompt: 教材の均等配置横補剛で梁全長の弱軸細長比を200とする。SN400BからSN490Bへ変更したときの必要補剛箇所数nについて、正しい結論はどちらか。
+    choices:
+      A: 4箇所から2箇所へ減らす
+      B: 2箇所から4箇所へ増やす
+    correct: B
 - id: S-K6-BRACE-TO-HOLLOW-COLUMN-DIAPHRAGM-REINFORCEMENT
   order: 21
   type: principle
@@ -454,9 +550,9 @@ principles:
   question:
     prompt: 中空断面の冷間成形角形鋼管柱へ筋かいを接合する場合、接合部の補強として、正しい結論はどちらか。
     choices:
-      A: 通し・内・外ダイアフラム等で鋼管の局部変形を防ぐ。
-      B: ダイアフラムを設けず、鋼管の局部変形を許容する。
-    correct: A
+      A: ダイアフラムを設けず、鋼管の局部変形を許容する。
+      B: 通し・内・外ダイアフラム等で鋼管の局部変形を防ぐ。
+    correct: B
   conclusion: 冷間成形角形鋼管柱に筋かいを接合するときは、通し・内・外ダイアフラムなどで局部変形を防ぐ。
   reason: 筋かいの引張・圧縮力で鋼管の板要素に大きな面外曲げ変形が生じると、筋かい耐力を十分発揮できないため。
   conditions:
@@ -475,7 +571,7 @@ principles:
   order: 22
   type: rule
   principle: 高力ボルト摩擦接合の肌すき処理
-  conclusion: 肌すき1mm以下は処理不要、1mmを超える場合は両面を摩擦面処理したフィラーを挿入する。フィラー材は母材にかかわらずSN400Aでよい。
+  conclusion: 高力ボルト摩擦接合では、肌すきが1mm以下ならフィラー処理は不要、1mmを超えると両面を摩擦面処理したフィラープレートを挿入する。
   reason: 教材に記載なし
   conditions:
   - 高力ボルト摩擦接合
@@ -489,12 +585,30 @@ principles:
     - '23172'
   prerequisites:
   - S-K6-FRICTION-SURFACE-PREPARATION
-  editorial_status: source_gap
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+  display_content:
+    rule: 高力ボルト摩擦接合では、肌すきが1mm以下ならフィラー処理は不要、1mmを超えると両面を摩擦面処理したフィラープレートを挿入する。
+    applicability:
+    - 高力ボルト摩擦接合の接合面
+    - 教材の肌すき処理の規定
+    numbers_exceptions:
+    - 教材ではフィラーの材質は母材にかかわらずSN400Aでよいとされる。
+    - フィラーは片面だけでなく両面を摩擦面処理する。
+  question:
+    prompt: 高力ボルト摩擦接合に1.5mmの肌すきがあり、フィラープレートを挿入する。表面処理として、正しい結論はどちらか。
+    choices:
+      A: 両面を摩擦面として処理する
+      B: 片面を摩擦面として処理する
+    correct: A
 - id: S-K6-NONSEISMIC-TRUSS-JOINT-MINIMUM-STRENGTH
   order: 23
   type: rule
   principle: 地震力を受けないトラス接合部の最低耐力
-  conclusion: 接合部は存在応力を伝え、かつ部材の許容耐力の1/2を上回る耐力を持たせる。
+  conclusion: 地震力を受けないトラス部材の接合部は、存在応力を十分に伝え、部材の許容耐力に対する最低耐力の条件も満たすように設計する。
   reason: 教材に記載なし
   conditions:
   - 地震力を受けないトラス部材の接合部
@@ -504,7 +618,25 @@ principles:
     question_codes:
     - '18181'
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+  display_content:
+    rule: 地震力を受けないトラス部材の接合部は、存在応力を十分に伝え、部材の許容耐力に対する最低耐力の条件も満たすように設計する。
+    applicability:
+    - 地震力を受けないトラス部材の接合部
+    - 許容応力度設計
+    numbers_exceptions:
+    - 教材の例では接合部耐力を部材許容耐力の1/2を上回る値としている。
+    - 存在応力が小さいことだけを理由に最低耐力を省略しない。
+  question:
+    prompt: 地震力を受けないトラス部材の許容耐力が200kN、接合部の存在応力が40kNのとき、接合部耐力の計画として正しい結論はどちらか。
+    choices:
+      A: 部材許容耐力の半分を上回る120kNとする
+      B: 存在応力を上回る60kNとする
+    correct: A
 - id: S-K6-BRACE-SIDE-FILLET-WELD-FORCE-TRANSFER
   order: 24
   type: principle
@@ -578,9 +710,9 @@ principles:
   question:
     prompt: 圧縮力を受ける筋かいで、有効細長比が小さいものと中程度のものを比較したときの座屈しやすさについて、正しい結論はどちらか。
     choices:
-      A: 有効細長比が小さいほど座屈しにくい
-      B: 有効細長比が小さいほど座屈しやすい
-    correct: A
+      A: 有効細長比が小さいほど座屈しやすい
+      B: 有効細長比が小さいほど座屈しにくい
+    correct: B
   conclusion: 有効細長比が小さい筋かいは、中程度の筋かいより座屈しにくく、許容圧縮応力度と変形性能が高い。
   reason: λ=Lk/iが小さいほど圧縮座屈しにくいため。
   conditions:
@@ -644,7 +776,7 @@ principles:
   order: 31
   type: rule
   principle: メタルタッチ継手の直接伝達分
-  conclusion: 引張応力のおそれがなく端面を密着させる柱継手では、圧縮力・曲げモーメントの各1/4までを接触面から直接伝達するとみなせる。柱脚では1/2までである。
+  conclusion: 引張応力が生じるおそれがなく、端面を削り仕上げ等で密着させる柱継手では、圧縮力・曲げモーメントそれぞれの1/4までを接触面から直接伝達するとみなせる。
   reason: 教材に記載なし
   conditions:
   - 断面に引張応力が生じない
@@ -655,12 +787,31 @@ principles:
     question_codes:
     - '24162'
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+  display_content:
+    rule: 引張応力が生じるおそれがなく、端面を削り仕上げ等で密着させる柱継手では、圧縮力・曲げモーメントそれぞれの1/4までを接触面から直接伝達するとみなせる。
+    applicability:
+    - 断面内に引張応力が生じるおそれがない
+    - 端面を削り仕上げ等で密着させる
+    - 建築基準法施行令第67条第2項
+    numbers_exceptions:
+    - 柱脚における直接伝達分は1/2まで。
+    - 柱継手と柱脚の割合を混同しない。
+  question:
+    prompt: 引張応力のおそれがなく端面を密着させた柱継手に圧縮力800kNが作用する。接触面から直接伝達するとみなす圧縮力の上限として、正しい結論はどちらか。
+    choices:
+      A: 200kNまでとする
+      B: 400kNまでとする
+    correct: A
 - id: S-K6-MINIMIZE-WELD-DISTORTION-AND-RESIDUAL-STRESS
   order: 32
-  type: principle
+  type: rule
   principle: 溶接ひずみ・残留応力の低減
-  conclusion: 継手は溶接ひずみと残留応力が小さくなるように設計する。
+  conclusion: 溶接継手は、溶接ひずみと残留応力が小さくなるように設計する。
   reason: 教材に記載なし
   conditions:
   - 溶接継手
@@ -670,12 +821,28 @@ principles:
     question_codes:
     - '20181'
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+  display_content:
+    rule: 溶接継手は、溶接ひずみと残留応力が小さくなるように設計する。
+    applicability:
+    - 鉄骨の溶接継手の計画
+    - 必要な接合耐力の確保に加えて施工によるひずみ・残留応力も検討する
+    numbers_exceptions: []
+  question:
+    prompt: 必要な接合耐力を満たす溶接継手を計画する。設計時の溶接ひずみ・残留応力の扱いとして、正しい結論はどちらか。
+    choices:
+      A: 耐力を満たしたうえでひずみ・残留応力を小さくする
+      B: 耐力を満たせばひずみ・残留応力は検討しない
+    correct: A
 - id: S-K6-DIAPHRAGM-FLANGE-MISALIGNMENT-LIMIT
   order: 33
   type: rule
   principle: ダイアフラム・梁フランジ突合せ継手の食い違い
-  conclusion: 鋼材厚15mm以下では食い違い・仕口ずれを1.5mm以下とし、許容値を超えた場合は所定耐力を持つよう補強する。
+  conclusion: 通しダイアフラムと梁フランジの突合せ継手で食い違い・仕口ずれが許容値を超える場合は、所定の耐力を有するよう適切に補強する。
   reason: 教材に記載なし
   conditions:
   - 通しダイアフラムと梁フランジの突合せ溶接
@@ -689,7 +856,24 @@ principles:
     - '28152'
   prerequisites:
   - S-K6-FULL-PENETRATION-WELD-DEFINITION-REPEATED-STRESS
-  editorial_status: source_gap
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+  display_content:
+    rule: 通しダイアフラムと梁フランジの突合せ継手で食い違い・仕口ずれが許容値を超える場合は、所定の耐力を有するよう適切に補強する。
+    applicability:
+    - 通しダイアフラムと梁フランジの突合せ溶接
+    - 板厚に応じた許容値と実際の食い違い量を照合する
+    numbers_exceptions:
+    - 教材の板厚15mm以下の例では許容値は1.5mm以下。
+  question:
+    prompt: 板厚12mmの梁フランジと通しダイアフラムの突合せ継手に2mmの食い違いがある。教材の許容値との比較に基づく対応として、正しい結論はどちらか。
+    choices:
+      A: 許容値超過として所定耐力を確保する補強を行う
+      B: 許容範囲として補強せず施工を完了する
+    correct: A
 - id: S-K6-DUCTILE-ANCHOR-BOLT-TYPES-AND-YIELD-SEQUENCE
   order: 34
   type: identification
@@ -703,9 +887,9 @@ principles:
   question:
     prompt: 露出形式柱脚に用いるABR・ABMの、伸び能力を確保する降伏と破断の順序として、正しい結論はどちらか。
     choices:
-      A: ねじ部が破断する前に、軸部全断面が降伏・塑性変形する。
-      B: 軸部全断面が降伏する前に、ねじ部が破断する。
-    correct: A
+      A: 軸部全断面が降伏する前に、ねじ部が破断する。
+      B: ねじ部が破断する前に、軸部全断面が降伏・塑性変形する。
+    correct: B
   conclusion: ABR（転造ねじ）・ABM（切削ねじ）は、ねじ部破断に先立ち軸部全断面が降伏・塑性変形する伸び能力を持つ。
   reason: 降伏比の上限を規定し、ねじ部より先に軸部が降伏するようにしているため。
   conditions:
@@ -792,7 +976,7 @@ principles:
   order: 38
   type: rule
   principle: 露出柱脚の保有耐力接合とDs割増し
-  conclusion: 伸び能力のあるアンカーボルトを用いても保有耐力接合条件を満たさない場合は、1階のDsを0.05割増しして保有水平耐力を確認する。条件を満たせば割増し不要である。
+  conclusion: 伸び能力のあるアンカーボルトを用いた露出柱脚でも、保有耐力接合条件を満たさなければ、1階のDsを0.05割増しして保有水平耐力を確認する。
   reason: 教材に記載なし
   conditions:
   - 露出形式柱脚
@@ -803,7 +987,26 @@ principles:
     question_codes:
     - '24184'
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+  display_content:
+    rule: 伸び能力のあるアンカーボルトを用いた露出柱脚でも、保有耐力接合条件を満たさなければ、1階のDsを0.05割増しして保有水平耐力を確認する。
+    applicability:
+    - 露出形式柱脚
+    - 伸び能力のあるアンカーボルトを使用
+    - 保有水平耐力計算における柱脚接合条件の確認
+    numbers_exceptions:
+    - 柱脚の保有耐力接合条件を満足すれば、この条件による割増しは不要。
+    - 伸び能力のあるアンカーボルトの採用だけで保有耐力接合の成立としない。
+  question:
+    prompt: 伸び能力のあるアンカーボルトを使う露出柱脚が保有耐力接合条件を満たさない。割増し前の1階Dsが0.30なら、正しい結論はどちらか。
+    choices:
+      A: Dsを0.30のまま保有水平耐力を確認する
+      B: Dsを0.35として保有水平耐力を確認する
+    correct: B
 - id: S-K6-WRAPPED-BASE-MOMENT-DISTRIBUTION
   order: 39
   type: principle
@@ -852,7 +1055,7 @@ principles:
   order: 40
   type: identification
   principle: 引張を受ける箱形断面柱の現場継手
-  conclusion: 箱形断面の上柱・下柱を現場接合する場合、工場取付けの裏当て金を用いて突合せ溶接する方法がある。
+  conclusion: 引張力を受ける箱形断面柱の現場継手には、工場で取り付けた裏当て金を用いて上下柱を突合せ溶接する方法がある。
   reason: 教材に記載なし
   conditions:
   - 引張力を受ける箱形断面柱
@@ -864,7 +1067,24 @@ principles:
     - '19154'
   prerequisites:
   - S-K6-FULL-PENETRATION-WELD-DEFINITION-REPEATED-STRESS
-  editorial_status: source_gap
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+  display_content:
+    definition: 引張力を受ける箱形断面柱の現場継手には、工場で取り付けた裏当て金を用いて上下柱を突合せ溶接する方法がある。
+    distinguishing_conditions:
+    - 箱形断面の上下柱を現場接合する
+    - 引張力を伝達する継手
+    confusable_points:
+    - 圧縮力を接触面から伝達するメタルタッチだけの継手とは異なる。
+  question:
+    prompt: 引張力を受ける箱形断面の上下柱を現場接合する。教材に示された接合方法として、正しい結論はどちらか。
+    choices:
+      A: 端面接触だけで引張力を伝達する
+      B: 裏当て金を用いた突合せ溶接で接合する
+    correct: B
 - id: S-K6-COLUMN-SPLICE-MINIMUM-DESIGN-STRENGTH
   order: 41
   type: rule
@@ -878,9 +1098,9 @@ principles:
   question:
     prompt: 柱継手の許容応力度設計で、存在応力が小さい場合にも確保する最低耐力として、正しい結論はどちらか。
     choices:
-      A: 柱断面の許容耐力の1/2以上を確保する。
-      B: 存在応力を伝える耐力だけを確保すればよい。
-    correct: A
+      A: 存在応力を伝える耐力だけを確保すればよい。
+      B: 柱断面の許容耐力の1/2以上を確保する。
+    correct: B
   conclusion: 柱継手は存在応力を伝えられるだけでなく、存在応力が小さくても柱断面の許容耐力の1/2以上の耐力を確保する。
   reason: 骨組計算では柱を1本の連続材として扱うため、継手にも材の連続性を保証する最低耐力が必要になる。
   conditions:
@@ -896,7 +1116,7 @@ principles:
   order: 42
   type: identification
   principle: 耐火設計の火災荷重
-  conclusion: 火災区画内の固定可燃物量と積載可燃物量を加算して火災荷重とし、単位床面積当たりの発熱量を木材火災に等価な木材重量で表す。
+  conclusion: 教材の火災荷重は、火災区画内の固定可燃物と積載可燃物の寄与を合わせて評価する。
   reason: 教材に記載なし
   conditions:
   - 耐火設計
@@ -907,7 +1127,25 @@ principles:
     question_codes:
     - '18165'
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+  display_content:
+    definition: 教材の火災荷重は、火災区画内の固定可燃物と積載可燃物の寄与を合わせて評価する。
+    distinguishing_conditions:
+    - 火災区画内の可燃物を対象とする
+    - 教材における火災荷重の整理
+    confusable_points:
+    - 単位床面積当たりの発熱量を等価な木材重量へ換算する表し方がある。
+    - 重量荷重としての固定荷重・積載荷重と、燃焼による発熱量を混同しない。
+  question:
+    prompt: 耐火設計で同じ火災区画内の可燃物量を調べる。家具等の積載可燃物に加えて確認する対象として、正しい結論はどちらか。
+    choices:
+      A: 内装等の固定可燃物を確認する
+      B: 燃えない構造鋼材の自重を確認する
+    correct: A
 - id: S-K6-HIGH-STRENGTH-STEEL-BEAM-DEFLECTION-CHECK
   order: 43
   type: principle
@@ -959,7 +1197,7 @@ principles:
   order: 45
   type: rule
   principle: 天井走行クレーンの地震力算定
-  conclusion: クレーン地震力は走行レール上端に作用させ、特別な場合を除きクレーン重量に吊り荷重量を含めなくてよい。
+  conclusion: 天井走行クレーンに加わる地震力の算定では、特別な場合を除き、クレーン重量に吊り荷重量を含めなくてよい。
   reason: 教材に記載なし
   conditions:
   - 天井走行クレーン
@@ -970,7 +1208,26 @@ principles:
     question_codes:
     - '18173'
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
+  display_content:
+    rule: 天井走行クレーンに加わる地震力の算定では、特別な場合を除き、クレーン重量に吊り荷重量を含めなくてよい。
+    applicability:
+    - 天井走行クレーンを有する建築物
+    - 地震力の算定
+    - 特別な場合を除く
+    numbers_exceptions:
+    - 教材ではクレーンに加わる地震力を走行レール上端に作用させる。
+    - 通常運転時の鉛直荷重・吊上げ荷重の扱いとは区別する。
+  question:
+    prompt: 特別な場合を除く天井走行クレーンの地震力を算定する。吊り荷重量の扱いとして、正しい結論はどちらか。
+    choices:
+      A: クレーン本体重量へ吊り荷重量を加える
+      B: クレーン本体重量から吊り荷重量を除外する
+    correct: B
 - id: S-K6-PREHEAT-LOWER-BOUND-VS-INTERPASS-UPPER-BOUND
   order: 46
   type: principle

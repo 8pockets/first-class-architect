@@ -25,31 +25,50 @@ principles:
     - 06184
     - '24161'
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 疲労検討を要する繰返し数の閾値について、正しい結論はどちらか。
+    choices:
+      A: 1×10^4回を超える場合
+      B: 1×10^3回を超える場合
+    correct: A
+  display_content:
+    rule: 1×10^4回を超える繰返し応力を受ける部材・接合部は疲労検討を行う。繰返し応力を受けない場合、又は応力範囲が打切り限界以下なら疲労を考慮しなくてよい。
+    applicability:
+    - 部材又は接合部
+    - 繰返し数が1×10^4回を超えるか
+    - 応力範囲が打切り限界を超えるか
+    - 繰返し応力が1万回を超える場合
+    - 繰返し応力を受けない場合は検討不要
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-REFERENCE-FATIGUE-STRENGTH-JOINT-TYPE
   order: 2
   type: rule
   display_content:
-    rule: 2×10^6回で疲労破壊する応力範囲を基準疲労強さとし、高力ボルト摩擦接合部は140N/mm²、完全溶込み溶接継手は100N/mm²である。
+    rule: 教材で比較する継手の基準疲労強さ（2×10^6回に対応する応力範囲）は、高力ボルト摩擦接合部140N/mm²、完全溶込み溶接継手100N/mm²である。実際の継手では詳細・仕上げ等に応じた疲労等級を確認する。
     applicability:
-    - 基準疲労強さ
-    - 高力ボルト摩擦接合部又は完全溶込み溶接継手
-    - 継手部の基準疲労強さを比較する場合
+    - 教材p.160・185で比較する継手区分
+    - 静的な許容応力度と基準疲労強さを区別する
+    - 全ての継手詳細を同一数値で評価するものではない
     numbers_exceptions:
-    - 2×10^6回で疲労破壊する応力範囲を基準疲労強さとし、高力ボルト摩擦接合部は140N/mm²、完全溶込み溶接継手は100N/mm²である。
+    - 教材で比較する継手の基準疲労強さ（2×10^6回に対応する応力範囲）は、高力ボルト摩擦接合部140N/mm²、完全溶込み溶接継手100N/mm²である。実際の継手では詳細・仕上げ等に応じた疲労等級を確認する。
   principle: 接合形式別の基準疲労強さ
   question:
-    prompt: 2×10^6回で疲労破壊する応力範囲を基準疲労強さとするとき、高力ボルト摩擦接合部と完全溶込み溶接継手の大小関係として正しい結論はどちらか。
+    prompt: 教材で比較する標準的な接合部について、2×10^6回に対応する基準疲労強さの大小関係として正しい結論はどちらか。
     choices:
-      A: 高力ボルト摩擦接合部のほうが大きい
-      B: 完全溶込み溶接継手のほうが大きい
-    correct: A
-  conclusion: 2×10^6回で疲労破壊する応力範囲を基準疲労強さとし、高力ボルト摩擦接合部は140N/mm²、完全溶込み溶接継手は100N/mm²である。
+      A: 完全溶込み溶接継手のほうが大きい
+      B: 高力ボルト摩擦接合部のほうが大きい
+    correct: B
+  conclusion: 教材で比較する継手の基準疲労強さ（2×10^6回に対応する応力範囲）は、高力ボルト摩擦接合部140N/mm²、完全溶込み溶接継手100N/mm²である。実際の継手では詳細・仕上げ等に応じた疲労等級を確認する。
   reason: 高力ボルト摩擦接合部の基準値が完全溶込み溶接継手より40N/mm²高いため。
   conditions:
-  - 基準疲労強さ
-  - 高力ボルト摩擦接合部又は完全溶込み溶接継手
-  - 継手部の基準疲労強さを比較する場合
+  - 教材p.160・185で比較する継手区分
+  - 静的な許容応力度と基準疲労強さを区別する
+  - 全ての継手詳細を同一数値で評価するものではない
   source:
     pages:
     - 160
@@ -60,41 +79,75 @@ principles:
     - '24161'
   prerequisites: []
   editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-HIGH-STRENGTH-BOLT-PRODUCT-TYPES
   order: 3
   type: identification
   principle: 高力ボルト製品の種類
-  conclusion: 高力ボルトには、JIS形高力ボルトとトルシア形高力ボルトがある。
+  conclusion: 教材では六角頭のJIS形高力ボルトと、ピンテールを持つトルシア形高力ボルトを区別する。トルシア形でもピンテール破断だけで共回りの有無を判定しない。
   reason: 教材に記載なし
   conditions:
-  - 高力ボルト製品を識別する場合
+  - 建築鉄骨の高力ボルト製品形式を識別する場合
   source:
     pages:
     - 185
     question_codes: []
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 締付け管理にピンテールの破断を用いる高力ボルトの形式について、正しい結論はどちらか。
+    choices:
+      A: 六角頭のJIS形高力ボルト
+      B: トルシア形高力ボルト
+    correct: B
+  display_content:
+    definition: 教材では六角頭のJIS形高力ボルトと、ピンテールを持つトルシア形高力ボルトを区別する。トルシア形でもピンテール破断だけで共回りの有無を判定しない。
+    distinguishing_conditions:
+    - 建築鉄骨の高力ボルト製品形式を識別する場合
+    confusable_points:
+    - 本問では「六角頭のJIS形高力ボルト」と区別する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-TORSHEAR-BOLT-PINTAIL-SECONDARY-TIGHTENING
   order: 4
   type: principle
   principle: トルシア形高力ボルトのピンテール破断
   question:
-    prompt: トルシア形高力ボルトでピンテールが破断したとき、示される締付け状態として正しい結論はどちらか。
+    prompt: トルシア形高力ボルトの本締め後、全てのピンテールが破断していた。共回りの有無の扱いとして正しい結論はどちらか。
     choices:
-      A: 所要のボルト張力へ未到達の状態を示す
-      B: 所要のボルト張力へ到達した状態を示す
-    correct: B
-  conclusion: ピンテールの破断は、所要のボルト張力に達して二次締めトルクが入ったことを示す。
-  reason: 所要値まで締めると破断溝が破断してピンテールが取れる構造だから。
+      A: 一次締めのマークで別途確認する
+      B: 破断をもって確認を省略できる
+    correct: A
+  conclusion: 適切な施工条件でのピンテール破断は、所定の締付けトルクに達した目安となる。ただし、締付け後は破断だけでなくマークによる共回り・軸回り、ナット回転量、ボルト余長も確認する。
+  reason: 所定の締付けで破断溝が切れる仕組みだが、破断の確認だけでは共回りなどを判別できないため。
   conditions:
-  - トルシア形高力ボルトの締付け完了を確認する場合
+  - トルシア形高力ボルト
+  - 適切な施工条件で本締めした後の確認
   source:
     pages:
     - 185
     question_codes:
     - '17045'
+    authoritative_sources:
+    - kind: government_spec
+      title: 公共建築工事標準仕様書（建築工事編）令和7年版
+      locator: 7.4.8(1)(ア)（締付け後の確認）
+      url: https://www.mlit.go.jp/gobuild/content/001888816.pdf
+      supports:
+      - statement
+      - explanation
+      - conditions
   prerequisites: []
   editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-TORSHEAR-BOLT-ROTATION-MARKING-INSPECTION
   order: 5
   type: rule
@@ -108,9 +161,9 @@ principles:
   question:
     prompt: トルシア形高力ボルトの締付け後に共回り・軸回りの有無を確認するとき、用いる検査方法として正しい結論はどちらか。
     choices:
-      A: 一次締め後のマーキングで確認する
-      B: ピンテールの破断状態で確認する
-    correct: A
+      A: ピンテールの破断状態で確認する
+      B: 一次締め後のマーキングで確認する
+    correct: B
   conclusion: 共回り・軸回りの有無は、一次締め後のマーキングで確認し、ピンテール破断では判定しない。
   reason: ピンテール破断は二次締めトルクを示すだけで、共回り・軸回りとは関係しないため。
   conditions:

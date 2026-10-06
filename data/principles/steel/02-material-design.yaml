@@ -38,19 +38,26 @@ principles:
     question_codes:
     - '19165'
     - '23303'
+    authoritative_sources:
+    - kind: law
+      title: 建築基準法施行令（e-Gov現行本文、2026-10-06照合）
+      locator: 第90条第1項表一・第2項
+      url: https://laws.e-gov.go.jp/law/325CO0000000338
+      supports:
+      - statement
+      - conditions
   prerequisites: []
   editorial_status: source_checked
 - id: S-K6-STEEL-MATERIAL-STRENGTH-JIS-FACTOR
   order: 2
   type: rule
   principle: 構造用鋼材の材料強度とJIS規格品補正
-  conclusion: 構造用鋼材の材料強度は、圧縮・引張・曲げでF、せん断でF/√3とし、炭素鋼のJIS規格品は教材表の値を1.1倍する。
+  conclusion: 鋼材の材料強度は圧縮・引張・曲げでF、せん断でF/√3とする。告示で対象とするJIS適合炭素鋼では、材料強度用の基準強度を許容応力度用の値の1.1倍以下にできる。許容応力度への一律の1.1倍加算ではない。
   reason: 教材に記載なし
   conditions:
-  - 構造用鋼材の材料強度を扱う場合
-  - 1.1倍は炭素鋼のJIS規格品に適用
-  - SN材
-  - 材料強度の算定
+  - 建築基準法施行令第96条の材料強度
+  - 1.1倍以下の特例は平成12年建設省告示第2464号第三の対象JIS適合品
+  - 材料強度用Fと許容応力度用Fを区別する
   source:
     pages:
     - 159
@@ -59,9 +66,42 @@ principles:
     question_codes:
     - '19165'
     - '23303'
+    authoritative_sources:
+    - kind: law
+      title: 建築基準法施行令（e-Gov現行本文、2026-10-06照合）
+      locator: 第96条表一（材料強度用のFについては告示2464号も参照）
+      url: https://laws.e-gov.go.jp/law/325CO0000000338
+      supports:
+      - statement
+      - conditions
+    - kind: local_government
+      title: 大阪府 構造計算適合性判定 指摘事例集 2021年版（2023年一部改正版）
+      locator: B-1・1.1 材料強度の設定
+      url: https://www.pref.osaka.lg.jp/documents/35034/09_btyuuikannkizikou_1.pdf
+      supports:
+      - statement
+      - conditions
   prerequisites:
   - S-K6-STEEL-F-VALUE-DEFINITION
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 対象JIS鋼材に認められる基準強度の1.1倍以下の特例の適用先について、正しい結論はどちらか。
+    choices:
+      A: 材料強度を算定する基準強度
+      B: 短期許容応力度を算定する基準強度
+    correct: A
+  display_content:
+    rule: 鋼材の材料強度は圧縮・引張・曲げでF、せん断でF/√3とする。告示で対象とするJIS適合炭素鋼では、材料強度用の基準強度を許容応力度用の値の1.1倍以下にできる。許容応力度への一律の1.1倍加算ではない。
+    applicability:
+    - 建築基準法施行令第96条の材料強度
+    - 1.1倍以下の特例は平成12年建設省告示第2464号第三の対象JIS適合品
+    - 材料強度用Fと許容応力度用Fを区別する
+    numbers_exceptions:
+    - 1.1倍以下の特例は平成12年建設省告示第2464号第三の対象JIS適合品
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-WELD-ALLOWABLE-STRESS-FULL-PENETRATION
   order: 3
   type: rule
@@ -69,11 +109,9 @@ principles:
   conclusion: 完全溶込み溶接部は、長期の圧縮・引張・曲げをF/1.5、長期せん断をF/(1.5√3)、短期の圧縮・引張・曲げをF、短期せん断をF/√3とする。
   reason: 教材に記載なし
   conditions:
-  - 突合せ溶接のうち完全溶込み溶接
-  - 母材の種類に応じた適切な溶接材料を使用
-  - 突合せ又は完全溶込み溶接
-  - 突合せ完全溶込み溶接
-  - 母材鋼種に応じた溶接材料を使用
+  - 建築基準法施行令第92条の突合せ溶接に相当する完全溶込み溶接
+  - 母材鋼種に応じた適切な溶接材料を使用
+  - Fは許容応力度用の溶接部基準強度
   source:
     pages:
     - 159
@@ -90,21 +128,53 @@ principles:
     - '26164'
     - '28154'
     - '30152'
+    authoritative_sources:
+    - kind: law
+      title: 建築基準法施行令（e-Gov現行本文、2026-10-06照合）
+      locator: 第92条・第98条の突合せ欄
+      url: https://laws.e-gov.go.jp/law/325CO0000000338
+      supports:
+      - statement
+      - conditions
+    - kind: professional_body
+      title: 日本溶接協会 溶接管理技術者2級電子化教材
+      locator: 冊子P177（電子版179/332）、3.7.2〔1〕建築鉄骨の完全溶込みを突合せと呼ぶ用語対応
+      url: https://www-it.jwes.or.jp/we2/pageindices/index179.html
+      supports:
+      - statement
+      - conditions
   prerequisites:
   - S-K6-STEEL-F-VALUE-DEFINITION
   related:
   - S-K6-FULL-PENETRATION-WELD-DEFINITION-REPEATED-STRESS
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 基準強度F=300N/mm²の完全溶込み溶接の長期許容引張応力度について、正しい結論はどちらか。
+    choices:
+      A: 約173N/mm²
+      B: 200N/mm²
+    correct: B
+  display_content:
+    rule: 完全溶込み溶接部は、長期の圧縮・引張・曲げをF/1.5、長期せん断をF/(1.5√3)、短期の圧縮・引張・曲げをF、短期せん断をF/√3とする。
+    applicability:
+    - 建築基準法施行令第92条の突合せ溶接に相当する完全溶込み溶接
+    - 母材鋼種に応じた適切な溶接材料を使用
+    - Fは許容応力度用の溶接部基準強度
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-WELD-ALLOWABLE-STRESS-NONFULL-PENETRATION
   order: 4
   type: rule
   principle: 完全溶込み以外の溶接部の許容応力度
-  conclusion: 完全溶込み以外の突合せ溶接・隅肉溶接は、長期の圧縮・引張・曲げ・せん断をF/(1.5√3)、短期および材料強度をF/√3とする。
+  conclusion: 施行令第92条の突合せ以外の溶接（すみ肉溶接等）は、のど断面の長期許容応力度をF/(1.5√3)、短期をF/√3とする。材料強度は第98条により定め、材料強度用Fと許容応力度用Fを混同しない。
   reason: 教材に記載なし
   conditions:
-  - 完全溶込みではない突合せ溶接、または隅肉溶接
-  - 炭素鋼のJIS規格品は教材表の値を1.1倍
-  - すみ肉溶接ののど断面
+  - すみ肉溶接等の有効のど断面
+  - 許容応力度の比較には同じ溶接部基準強度Fを用いる
+  - 部分溶込み溶接の使用可否は別に確認する
   source:
     pages:
     - 159
@@ -119,33 +189,78 @@ principles:
     - '26164'
     - '28154'
     - '30152'
+    authoritative_sources:
+    - kind: law
+      title: 建築基準法施行令（e-Gov現行本文、2026-10-06照合）
+      locator: 第92条・第98条の突合せ以外欄
+      url: https://laws.e-gov.go.jp/law/325CO0000000338
+      supports:
+      - statement
+      - conditions
   prerequisites:
   - S-K6-STEEL-F-VALUE-DEFINITION
   related:
   - S-K6-FILLET-WELD-DEFINITION-REPEATED-STRESS
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 同じ基準強度Fのすみ肉溶接と完全溶込み溶接について、長期許容せん断応力度を比較したとき、正しい結論はどちらか。
+    choices:
+      A: いずれの形式もF/(1.5√3)で等しい
+      B: すみ肉溶接だけF/1.5となる
+    correct: A
+  display_content:
+    rule: 施行令第92条の突合せ以外の溶接（すみ肉溶接等）は、のど断面の長期許容応力度をF/(1.5√3)、短期をF/√3とする。材料強度は第98条により定め、材料強度用Fと許容応力度用Fを混同しない。
+    applicability:
+    - すみ肉溶接等の有効のど断面
+    - 許容応力度の比較には同じ溶接部基準強度Fを用いる
+    - 部分溶込み溶接の使用可否は別に確認する
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-STEEL-DIAMETER-THICKNESS-RATIO-SMALLER-PREFERRED
   order: 5
   type: rule
   principle: 径厚比の大小
-  conclusion: 教材の概略整理では、径厚比は小さい方がよい。
+  conclusion: 円形鋼管では径厚比D/tが小さい方が、同じ径に対する板厚が厚くなり局部座屈を抑えやすい。
   reason: 教材に記載なし
   conditions:
-  - 教材P177の概略整理
+  - 円形鋼管の局部座屈に関する比較
+  - 同じ鋼種・外径・載荷条件
+  - 軽量化などを含む設計全体の最適性とは別の比較
   source:
     pages:
     - 177
     question_codes: []
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 外径D=300mmの円形鋼管で、板厚を6mmから9mmへ増す場合の径厚比D/tについて、正しい結論はどちらか。
+    choices:
+      A: 約33から50へ大きくなる
+      B: 50から約33へ小さくなる
+    correct: B
+  display_content:
+    rule: 円形鋼管では径厚比D/tが小さい方が、同じ径に対する板厚が厚くなり局部座屈を抑えやすい。
+    applicability:
+    - 円形鋼管の局部座屈に関する比較
+    - 同じ鋼種・外径・載荷条件
+    - 軽量化などを含む設計全体の最適性とは別の比較
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-STEEL-F-VALUE-DEFINITION
   order: 6
   type: rule
   principle: 鋼材の基準強度Fの決め方
-  conclusion: 基準強度Fは、降伏点の下限値と引張強度の下限値の70%を比較し、小さい方とする。
+  conclusion: 教材の基本的なF値の考え方は、規格の降伏点下限と引張強さ下限の0.7倍のうち小さい値を採ることである。実際の設計用Fは、鋼種・板厚に対応する告示値又は認定値を確認する。
   reason: 教材に記載なし
   conditions:
-  - 鋼材の基準強度Fを定める場合
+  - 教材のF値決定の基本則を問う場合
+  - 実測した降伏点・引張強さをそのままFに代入しない
   source:
     pages:
     - 177
@@ -154,29 +269,68 @@ principles:
     - '19165'
     - '23303'
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 降伏点下限325N/mm²、引張強さ下限490N/mm²を教材の基本則に当てはめたF値について、正しい結論はどちらか。
+    choices:
+      A: 343N/mm²
+      B: 325N/mm²
+    correct: B
+  display_content:
+    rule: 教材の基本的なF値の考え方は、規格の降伏点下限と引張強さ下限の0.7倍のうち小さい値を採ることである。実際の設計用Fは、鋼種・板厚に対応する告示値又は認定値を確認する。
+    applicability:
+    - 教材のF値決定の基本則を問う場合
+    - 実測した降伏点・引張強さをそのままFに代入しない
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-STEEL-YIELD-RATIO-SMALLER-PREFERRED
   order: 7
-  type: rule
+  type: principle
   principle: 降伏比の大小
-  conclusion: 教材の概略整理では、降伏比は小さい方がよい。
-  reason: 教材に記載なし
+  conclusion: 降伏比は降伏点を引張強さで割った値である。同じ引張強さなら降伏比が小さいほど降伏後の強度余裕が大きい。局部座屈や接合部の早期破断を防いだ部材では塑性化領域を広げやすく、塑性変形能力を確保しやすい。
+  reason: 降伏点に対する引張強さの余裕が大きく、降伏後の耐力上昇とともに塑性化する部材範囲を長くできるため。設問のXは325÷500×100=65%、Yは450÷500×100=90%となる。
   conditions:
-  - 教材P177の概略整理
+  - 塑性変形能力を重視する鋼材の概略比較
+  - 降伏比だけで部材・接合部全体の靭性が保証されるものではない
+  - 同等の断面・荷重条件で比較し、局部座屈や接合部破断が先行しない場合
   source:
     pages:
     - 177
     question_codes: []
+    authoritative_sources:
+    - kind: professional_body
+      title: 日本鉄鋼連盟 鉄骨造建物の耐震・耐津波安全性と鋼材について
+      locator: 2013年3月改訂／冊子P9–10（PDF6頁）「降伏比」「降伏比の上限値」「降伏比の影響」
+      url: https://www.jisf.or.jp/business/tech/infrastructure/docs/infrastructure_pdf_02.pdf
+      supports:
+      - statement
+      - explanation
+      - conditions
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 降伏点X=325・Y=450N/mm²、引張強さはいずれも500N/mm²の鋼材を比較する。早期の座屈・破断を抑えた同等の部材について、正しい結論はどちらか。
+    choices:
+      A: Xの降伏比は65%で、塑性化領域はYより広がりやすい
+      B: Xの降伏比は90%で、塑性化領域はYより狭まりやすい
+    correct: A
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-STEEL-YOUNGS-MODULUS-STRENGTH-INDEPENDENT
   order: 8
-  type: principle
+  type: rule
   principle: 鋼材強度とヤング係数
-  conclusion: 鋼材の強度が変わっても、ヤング係数Eは一定である。
+  conclusion: 常温の通常の構造用鋼では、SN400からSN490へ鋼種の強度を変えても、設計上のヤング係数Eを同じ値として扱う。
   reason: 教材に記載なし
   conditions:
-  - 鋼種の強度だけを変えて比較する場合
+  - 常温・弾性範囲
+  - SN400とSN490など通常の構造用鋼
+  - 火災時の高温状態は対象外
   source:
     pages:
     - 177
@@ -186,18 +340,50 @@ principles:
     - '20161'
     - '27173'
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 常温のSN400からSN490へ鋼種だけを変更した場合の、弾性域の応力-ひずみ関係の傾きについて、正しい結論はどちらか。
+    choices:
+      A: 設計上は490/400倍になる
+      B: 設計上は変わらない
+    correct: B
+  display_content:
+    rule: 常温の通常の構造用鋼では、SN400からSN490へ鋼種の強度を変えても、設計上のヤング係数Eを同じ値として扱う。
+    applicability:
+    - 常温・弾性範囲
+    - SN400とSN490など通常の構造用鋼
+    - 火災時の高温状態は対象外
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-STEEL-YOUNGS-MODULUS-VS-CONCRETE
   order: 9
   type: rule
   principle: 鋼材とコンクリートのヤング係数
-  conclusion: 鋼材のヤング係数Eは、コンクリートの約10倍である。
+  conclusion: 鋼材のヤング係数は通常のコンクリートの概ね10倍程度である。ただしコンクリートのEは圧縮強度・単位容積質量などで変わり、厳密な一定比ではない。
   reason: 教材に記載なし
   conditions:
-  - 教材の概略比較
+  - 常温の通常の構造用鋼と普通コンクリートの概略比較
   source:
     pages:
     - 177
     question_codes: []
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 鋼材Eを2.0×10^5N/mm²としたとき、教材の概略比に対応する普通コンクリートEについて、正しい結論はどちらか。
+    choices:
+      A: 約2.0×10^5N/mm²
+      B: 約2.0×10^4N/mm²
+    correct: B
+  display_content:
+    rule: 鋼材のヤング係数は通常のコンクリートの概ね10倍程度である。ただしコンクリートのEは圧縮強度・単位容積質量などで変わり、厳密な一定比ではない。
+    applicability:
+    - 常温の通常の構造用鋼と普通コンクリートの概略比較
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete

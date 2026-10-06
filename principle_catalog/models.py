@@ -17,6 +17,11 @@ AuthoritativeSourceKind = Literal[
     "jis",
     "aij",
     "government_spec",
+    "government_research",
+    "professional_body",
+    "local_government",
+    "official_exam",
+    "study_material",
 ]
 SourceSupport = Literal["statement", "explanation", "conditions"]
 StatementSourceStatus = Literal["verified", "gap", "unreviewed"]
@@ -59,7 +64,7 @@ class SourceRef:
         """Return stable values suitable for the public source-kind filter."""
 
         kinds = dict.fromkeys(
-            ("pdf", *(source.kind for source in self.authoritative_sources))
+            (*(("pdf",) if self.pages else ()), *(source.kind for source in self.authoritative_sources))
         )
         return tuple(kinds)
 
@@ -108,6 +113,7 @@ class BinaryQuestion:
     choice_a: str
     choice_b: str
     correct: ChoiceLabel
+    figure: str | None = None
 
 
 @dataclass(frozen=True)

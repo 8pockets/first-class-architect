@@ -22,9 +22,9 @@ principles:
   question:
     prompt: 幅厚比・径厚比の制限を満たし横座屈のおそれがない断面・曲げ軸の許容曲げ応力度について、正しい結論はどちらか。
     choices:
-      A: 材長にかかわらず許容引張応力度と同じ値にする
-      B: 材長にかかわらず許容引張応力度より小さい値にする
-    correct: A
+      A: 材長にかかわらず許容引張応力度より小さい値にする
+      B: 材長にかかわらず許容引張応力度と同じ値にする
+    correct: B
   conclusion: 鋼管・箱形断面、又は弱軸曲げを受ける対称H形断面は、幅厚比・径厚比の制限を満たせば、材長にかかわらず許容曲げ応力度を許容引張応力度と同じ値にできる。
   reason: これらの条件では横座屈のおそれがなく、局部座屈も制限されるため。
   conditions:
@@ -104,9 +104,10 @@ principles:
   type: principle
   principle: H形鋼の曲げ軸と横座屈
   conclusion: 弱軸まわりの曲げでは横座屈しにくく、強軸まわりの曲げでは横座屈しやすい。
-  reason: 教材に記載なし
+  reason: H形断面の強軸曲げでは、圧縮側フランジが弱軸方向へ曲がる変形と断面のねじれが連成しやすいため。
   conditions:
-  - H形鋼が曲げを受ける場合
+  - 二軸対称のH形鋼梁
+  - 同じ横補剛条件で強軸曲げと弱軸曲げを比較する場合
   source:
     pages:
     - 178
@@ -118,30 +119,44 @@ principles:
     - '25163'
   prerequisites:
   - S-K6-H-SECTION-STRONG-WEAK-AXIS-RIGIDITY
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 同じH形鋼梁で横補剛条件を同じとしたとき、横座屈に対する検討が特に重要となる曲げ方向について、正しい結論はどちらか。
+    choices:
+      A: 弱軸まわりの曲げ
+      B: 強軸まわりの曲げ
+    correct: B
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-H-SECTION-STRONG-AXIS-LATERAL-RESTRAINT
   order: 4
   type: rule
   display_content:
-    rule: 強軸まわりに曲げを受けるH形鋼は、横補剛材を設けるか許容圧縮応力度を低減する。
+    rule: 強軸曲げを受けるH形鋼梁は横座屈を検討し、必要な横補剛を設ける。許容曲げ応力度は横補剛間隔などによる横座屈の影響を考慮する。
     applicability:
-    - H形鋼が強軸まわりに曲げを受ける場合
-    numbers_exceptions: []
+    - H形鋼梁の強軸曲げ
+    - 横補剛により圧縮側フランジの横移動や断面のねじれを拘束する
+    numbers_exceptions:
+    - 強軸曲げを受けるH形鋼梁は横座屈を検討し、必要な横補剛を設ける。許容曲げ応力度は横補剛間隔などによる横座屈の影響を考慮する。
   principle: 強軸曲げを受けるH形鋼の横座屈対応
   question:
-    prompt: 強軸曲げを受けるH形鋼で、許容圧縮応力度を低減せずに横座屈へ対応する場合、正しい結論はどちらか。
+    prompt: 強軸曲げを受けるH形鋼梁の横座屈を抑える横補剛で、重点的に拘束する側として正しい結論はどちらか。
     choices:
-      A: 横補剛材を設ける
-      B: 横補剛材を設けない
+      A: 圧縮側フランジを拘束する
+      B: 引張側だけを横方向に拘束する
     correct: A
-  conclusion: 強軸まわりに曲げを受けるH形鋼は、横補剛材を設けるか許容圧縮応力度を低減する。
+  conclusion: 強軸曲げを受けるH形鋼梁は横座屈を検討し、必要な横補剛を設ける。許容曲げ応力度は横補剛間隔などによる横座屈の影響を考慮する。
   reason: 強軸まわりの曲げでは横座屈しやすいため。
   conditions:
-  - H形鋼が強軸まわりに曲げを受ける場合
+  - H形鋼梁の強軸曲げ
+  - 横補剛により圧縮側フランジの横移動や断面のねじれを拘束する
   source:
     pages:
     - 178
     - 193
+    - 194
     question_codes:
     - '04164'
     - 07182
@@ -149,6 +164,10 @@ principles:
     - '25163'
   prerequisites: []
   editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-H-SECTION-STRONG-WEAK-AXIS-RIGIDITY
   order: 5
   type: identification
@@ -167,7 +186,23 @@ principles:
     - '21151'
     - '25163'
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 同じH形鋼断面の強軸・弱軸まわりの曲がりやすさについて、正しい結論はどちらか。
+    choices:
+      A: 強軸まわりの方が曲がりにくい
+      B: 弱軸まわりの方が曲がりにくい
+    correct: A
+  display_content:
+    definition: H形鋼は強軸まわりでは曲がりにくく、弱軸まわりでは曲がりやすい。
+    distinguishing_conditions:
+    - 同じH形鋼断面の曲げ方向を比較する場合
+    confusable_points:
+    - 本問では「弱軸まわりの方が曲がりにくい」と区別する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-STEEL-COMPRESSION-CAPACITY-BUCKLING
   order: 6
   type: principle
@@ -175,9 +210,9 @@ principles:
   question:
     prompt: 鋼製圧縮材の耐力と座屈の関係について、正しい結論はどちらか。
     choices:
-      A: 座屈の有無にかかわらず、圧縮耐力は引張耐力と同等とする。
-      B: 座屈しなければ引張耐力と同等だが、先に座屈する場合は座屈時の耐力とする。
-    correct: B
+      A: 座屈しなければ引張耐力と同等だが、先に座屈する場合は座屈時の耐力とする。
+      B: 座屈の有無にかかわらず、圧縮耐力は引張耐力と同等とする。
+    correct: A
   conclusion: 座屈のおそれがなければ圧縮耐力・許容圧縮応力度は引張側と同等だが、それより小さい荷重で座屈する場合は座屈時の耐力まで低減する。
   reason: 鋼材は圧縮力を受けると座屈する場合があり、座屈しない場合だけ座屈による耐力低減を考慮する必要がないため。
   conditions:

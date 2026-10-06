@@ -11,9 +11,9 @@ principles:
   question:
     prompt: 節点の水平移動が拘束されていないラーメン架構柱について、座屈長さと階高の関係として正しい結論はどちらか。
     choices:
-      A: 座屈長さは階高より短くなる
-      B: 座屈長さは階高より長くなる
-    correct: B
+      A: 座屈長さは階高より長くなる
+      B: 座屈長さは階高より短くなる
+    correct: A
   conclusion: 節点水平移動が拘束された柱は、理論上ピン・ピンで階高、固定・固定で階高の1/2、実架構ではその中間だが、安全側に階高を座屈長さとすることが多い。水平移動が拘束されない柱は座屈長さが階高より長くなる。
   reason: 架構全体の横移動を伴う座屈モードでは、節点回転を拘束しても柱の側方移動が残るため。
   conditions:
@@ -55,4 +55,22 @@ principles:
   prerequisites: []
   related:
   - S-K6-LATERAL-BRACING-ENABLES-FULL-PLASTIC-MOMENT
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 節点間距離2m、構面外の横補剛間隔4mのトラス圧縮弦材を精算せず評価するとき、構面外座屈長さについて、正しい結論はどちらか。
+    choices:
+      A: 2m
+      B: 4m
+    correct: B
+  display_content:
+    rule: トラス圧縮材の構面内座屈長さは節点間距離、構面外座屈長さは横補剛間隔とする。
+    applicability:
+    - トラスを構成する圧縮部材
+    - 構面内座屈と構面外座屈を区別
+    - トラス弦材
+    - 精算によらない場合
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete

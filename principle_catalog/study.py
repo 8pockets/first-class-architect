@@ -41,7 +41,9 @@ def _catalog_item(item: Principle) -> dict[str, Any]:
     return {
         "id": item.id,
         "title": item.principle,
-        "page": item.source.pages[0],
+        # Supplemental cards cite their own precise authoritative locator;
+        # never invent a page in the original audited steel chapter.
+        "page": item.source.pages[0] if item.source.pages else None,
         "status": "not_started",
         "retention_anchor": False,
         "stage": "day0",

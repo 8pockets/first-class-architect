@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import shutil
@@ -12,6 +13,8 @@ from pathlib import Path
 from urllib.parse import urljoin
 
 import principle_catalog.catalog as catalog_module
+from principle_catalog.figures import question_figure
+from principle_catalog.exam_coverage import ExamCoverageAudit, load_exam_coverage
 from principle_catalog.catalog import (
     display_facets,
     display_principles,
@@ -75,6 +78,11 @@ _SOURCE_KIND_LABELS = {
     "jis": "JIS",
     "aij": "日本建築学会",
     "government_spec": "官庁仕様",
+    "government_research": "公的研究機関",
+    "professional_body": "専門団体",
+    "local_government": "自治体技術資料",
+    "official_exam": "公式試験資料",
+    "study_material": "教材・補完範囲",
     **_PAGE_KIND_LABELS,
 }
 _SUPPORT_LABELS = {
@@ -120,13 +128,14 @@ def _source_filter_kinds(catalog: Catalog, item: Principle) -> tuple[str, ...]:
 
 def _source_label(catalog: Catalog, item: Principle) -> str:
     pages = "・".join(f"P{page}" for page in item.source.pages)
-    parts = [f"PDF {pages}"]
+    parts = [f"PDF {pages}"] if pages else []
     if item.source.question_codes:
         parts.append(f"問題コード {'・'.join(item.source.question_codes)}")
     kinds = "・".join(
         _PAGE_KIND_LABELS.get(kind, kind) for kind in _page_kinds(catalog, item)
     )
-    parts.append(f"ページ種別 {kinds}")
+    if kinds:
+        parts.append(f"ページ種別 {kinds}")
     return " / ".join(parts)
 
 
@@ -158,7 +167,7 @@ def _binary_choices(item: Principle) -> str:
         raise ValueError(f"published principle has no confirmation question: {item.id}")
     answer_id = f"answer-{item.code}"
     return "".join(
-        f'<li><button type="button" class="choice-button" data-answer-choice '
+        f'<li><button type="button" class="choice-button" data-answer-choice="{label}" '
         f'aria-controls="{escape(answer_id)}" aria-expanded="false">'
         f'<span class="choice-label">{label}</span>'
         f'<span class="choice-text">{escape(text)}</span></button></li>'
@@ -187,11 +196,13 @@ def _facet_list(facets: CardDisplayFacets) -> str:
 def _explanation_search_action(
     item: Principle,
     queries: ResearchQueryPair | None,
+    *,
+    neutral: str | None = None,
 ) -> str:
     if queries is None:
         return ""
     accessible_name = (
-        f"{item.principle}：分かりやすい解説をGoogleで検索（別タブ）"
+        f"{neutral or item.principle}：分かりやすい解説をGoogleで検索（別タブ）"
     )
     return f"""
 <div class="explanation-search-action">
@@ -218,6 +229,15 @@ def _card(
         raise ValueError(f"published principle has no confirmation question: {item.id}")
     coverage = catalog_module.coverage_assignment(catalog, item)
     coverage_tier = catalog.coverage.tiers[coverage.tier]
+    # Numbering/taxonomy/source metadata can change without regrading history.
+    # A changed question, answer, or taught content starts a separate revision.
+    revision = hashlib.sha256(json.dumps({
+        "prompt": item.question.prompt,
+        "choices": [item.question.choice_a, item.question.choice_b],
+        "correct": item.question.correct,
+        "figure": item.question.figure,
+        "content": [facets.primary.values, facets.secondary.values, facets.tertiary.values],
+    }, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
     page_kinds = _page_kinds(catalog, item)
     source_kinds = _source_filter_kinds(catalog, item)
     authoritative_search = tuple(
@@ -281,6 +301,9 @@ def _card(
     )
     return f"""
 <article class="principle-card" id="{escape(item.code)}"
+  data-study-id="{escape(item.id)}"
+  data-question-revision="{revision}"
+  data-correct-choice="{item.question.correct}"
   data-type="{escape(item.type)}"
   data-section="{escape(catalog.taxonomy.assignments[item.id])}"
   data-progress="{escape(progress)}"
@@ -292,36 +315,44 @@ def _card(
   <header class="card-header">
     <div class="badge-row">
       <span class="type-badge type-{escape(item.type)}">{_TYPE_LABELS[item.type]}</span>
-      <span class="progress-badge progress-{escape(progress)}">{_PROGRESS_LABELS[progress]}</span>
       <span class="coverage-badge coverage-{escape(coverage_tier.slug)}">{escape(coverage_tier.label)}</span>
     </div>
-    <p class="card-id">{escape(item.code)} / {escape(question_reference)}</p>
-    <h3>{escape(item.principle)}</h3>
+    <p class="card-id">{escape(question_reference)}</p>
+    <h3>{escape(taxonomy_context[-1])}</h3>
   </header>
   <div class="practice-question">
     <p class="print-question-number" aria-hidden="true"><span data-print-position>問{print_position}</span> [{escape(question_reference)}]</p>
     <p class="practice-question-label">確認問題（自作・2択）</p>
     <p class="practice-question-text">{escape(item.question.prompt)}</p>
+    {question_figure(item.question.figure)}
     <ul class="binary-choices">{_binary_choices(item)}</ul>
   </div>
+  <div class="answer-feedback" data-answer-result role="status" aria-live="polite">未回答</div>
+  <button class="answer-retry" type="button" data-answer-retry hidden>もう一度解く</button>
   <details id="answer-{escape(item.code)}" class="answer-disclosure" data-answer-disclosure>
     <summary>
-      <span class="disclosure-label-closed">正解と解説を見る<span class="visually-hidden">：{escape(item.principle)}</span></span>
-      <span class="disclosure-label-open">正解と解説を閉じる<span class="visually-hidden">：{escape(item.principle)}</span></span>
+      <span class="disclosure-label-closed">正解と解説を見る<span class="visually-hidden">：{escape(question_reference)}</span></span>
+      <span class="disclosure-label-open">正解と解説を閉じる<span class="visually-hidden">：{escape(question_reference)}</span></span>
     </summary>
     <div class="answer-content">
+      <h4>{escape(item.principle)}</h4>
       <p class="answer-key"><span>正解</span><strong>{escape(item.question.correct)}</strong></p>
       <dl class="three-point">{_facet_list(facets)}</dl>
+      <p class="card-id">{escape(item.code)}</p>
+      {_authoritative_sources(item)}
     </div>
   </details>
-  {_explanation_search_action(item, research_queries)}
+  {_explanation_search_action(item, research_queries, neutral=question_reference)}
+  <details class="answer-history" data-answer-history>
+    <summary>この問題の回答履歴</summary>
+    <ul data-answer-history-list><li>この端末にはまだ履歴がありません。</li></ul>
+  </details>
   <footer class="card-source">
     <div class="source-provenance">
       <span>{escape(_source_label(catalog, item))}</span>
       <span>主張根拠 {escape(item.verification.statement_source)} / 説明 {escape(item.verification.explanation_completeness)} / 条件 {escape(item.verification.conditions_completeness)}</span>
-      {_authoritative_sources(item)}
     </div>
-    <a href="#{escape(item.code)}" data-principle-link aria-label="{escape(item.principle)}への固定リンク">#</a>
+    <a href="#{escape(item.code)}" data-principle-link aria-label="{escape(question_reference)}への固定リンク">#</a>
   </footer>
 </article>""".strip()
 
@@ -934,6 +965,31 @@ def _research_page(
     stylesheet_url = urljoin(base_url, "assets/styles.css")
     script_url = urljoin(base_url, "assets/research.js")
     home_url = urljoin(base_url, "./")
+    if not visible:
+        return f'''<!doctype html>
+<html lang="ja" class="research-document">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="robots" content="noindex,follow">
+  <title>確認済みカードへの移行案内 — 鉄骨構造 原理台帳</title>
+  <link rel="canonical" href="{escape(canonical_url)}">
+  <link rel="stylesheet" href="{escape(stylesheet_url)}">
+</head>
+<body class="research-page">
+  <header class="site-header research-header">
+    <div class="eyebrow">EVIDENCE REVIEW COMPLETED</div>
+    <h1>確認済みの<br><span>学習カードへ</span></h1>
+    <p class="lead">旧調査ページの確認待ち項目は、出典と適用条件を確認・修正し、学習カードへ移しました。現在、根拠確認中のカードはありません。</p>
+    <p><a href="{escape(home_url)}">鉄骨構造の問題を解く →</a></p>
+  </header>
+  <main id="research-items" data-research-catalog-root>
+    <h2>以前の固定リンクから探す</h2>
+    {sections}
+  </main>
+  <script src="{escape(script_url)}" defer></script>
+</body>
+</html>'''
     summary = (
         "根拠確認中の鉄骨構造項目について、暫定内容と分かりやすい解説を探す"
         "Google検索ボタンを掲載する調査ページ。"
@@ -1010,6 +1066,7 @@ def _page(
     base_url: str,
     catalog: Catalog,
     research_queries: ResearchQueryRegistry,
+    exam_audit: ExamCoverageAudit | None = None,
 ) -> str:
     projection = load_public_progress()
     validate_public_progress(catalog, projection)
@@ -1034,6 +1091,7 @@ def _page(
     stylesheet_url = urljoin(base_url, "assets/styles.css")
     script_url = urljoin(base_url, "assets/catalog.js")
     research_url = urljoin(base_url, "research/")
+    history_script_url = urljoin(base_url, "assets/answer-history.js")
     current_edition = catalog.question_editions.editions[
         catalog.question_editions.current
     ]
@@ -1075,6 +1133,7 @@ def _page(
   <meta property="og:image" content="{escape(og_url)}">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="stylesheet" href="{escape(stylesheet_url)}">
+  <script defer src="{escape(history_script_url)}"></script>
   <script defer src="{escape(script_url)}"></script>
 </head>
 <body>
@@ -1083,23 +1142,40 @@ def _page(
     <div class="eyebrow">FIRST-CLASS ARCHITECT / STEEL STRUCTURE</div>
     <h1>鉄骨構造<br><span>原理台帳</span></h1>
     <p class="lead">2択から結論を選び、<strong>理由・条件</strong>までつなげて理解する。</p>
-    <div class="scope-note">対象：2026 構造・文章問題 / PDF P{catalog.manifest.first_page}-P{catalog.manifest.last_page}</div>
+    <div class="scope-note">対象：教材の鉄骨構造（PDF P{catalog.manifest.first_page}-P{catalog.manifest.last_page}）＋鋼材・合成構造・耐震設計の関連論点</div>
     <div class="hero-stats" aria-label="台帳の進捗">
       <div><strong>{len(published)}</strong><span>公開項目</span></div>
       <div><strong>{group_count}</strong><span>大項目</span></div>
       <div><strong>{subtopic_count}</strong><span>小項目</span></div>
     </div>
+    {f'''<details class="exam-scope">
+      <summary>教材・本試験との対応範囲</summary>
+      <p><a href="{escape(exam_audit.index_url)}" target="_blank" rel="noopener noreferrer">2017–2026年の公式問題</a>の構造{exam_audit.questions}問・全選択肢から鉄骨関連{exam_audit.steel_questions}問を選別。学習目標{exam_audit.objectives}件のうち、成立条件と設問の対応を{exam_audit.verified}件確認しています。</p>
+      <p>一般力学の基礎問題は別枠です。過去10年の対応は将来の全出題や合格を保証しません。図は独自の学習用模式図で、試験原図の転載ではありません。</p>
+    </details>''' if exam_audit else ''}
   </header>
 
   <main>
-    <section class="research-entry" aria-labelledby="research-entry-title">
+    {f'''<section class="research-entry" aria-labelledby="research-entry-title">
       <div>
         <p class="section-kicker">EVIDENCE REVIEW</p>
         <h2 id="research-entry-title">根拠確認中の項目を調べる</h2>
         <p>根拠確認中の{research_count}件について、暫定内容と「分かりやすい解説」ボタンを別ページに分けました。</p>
-        <p class="search-disclosure">「分かりやすい解説」を開くと、項目ごとの解説向け検索語がGoogleへ送信されます。Googleの検索結果は台帳の根拠ではありません。</p>
       </div>
       <a href="{escape(research_url)}">根拠確認中の項目を見る <span aria-hidden="true">→</span></a>
+    </section>''' if research_count else ''}
+
+    <section class="study-history-controls" aria-labelledby="study-history-title">
+      <h2 id="study-history-title">解いて、間違えた論点に戻る</h2>
+      <p>A/Bを選ぶと初回回答を採点・保存します。解説を見るだけでは回答になりません。答えを見た日の解き直しは練習として記録し、独力の成績には含めません。</p>
+      <p>誤答は要復習、独力で2回連続誤答すると重点復習。日を分けた初回回答で2回連続正解すると復習対象から外れます。合格や習得を保証する判定ではありません。</p>
+      <p class="search-disclosure">「分かりやすい解説」を開くと、項目ごとの解説向け検索語がGoogleへ送信されます。Googleの検索結果は台帳の根拠ではありません。</p>
+      <div class="history-backup-actions">
+        <button type="button" id="history-export">履歴をバックアップ</button>
+        <label>履歴を復元・統合<input id="history-import" type="file" accept="application/json,.json"></label>
+      </div>
+      <p id="history-status" role="status" aria-live="polite">履歴はこの端末のブラウザ内だけに保存します。端末間の自動同期はありません。ブラウザのデータ削除に備えてバックアップしてください。</p>
+      <noscript><p>回答の採点・保存・絞込みにはJavaScriptが必要です。正解と解説は各カードで開けます。</p></noscript>
     </section>
 
     <section class="controls" aria-labelledby="filter-title">
@@ -1119,13 +1195,23 @@ def _page(
         <button type="button" class="filter-chip" data-filter-type="identification" aria-pressed="false">識別</button>
       </fieldset>
       <label class="select-field">
-        <span>学習状態</span>
+        <span>学習計画の状態（回答履歴とは別）</span>
         <select id="progress-filter">
           <option value="all">すべて</option>
           <option value="unstarted">未学習</option>
           <option value="learning">学習中</option>
           <option value="reviewing">復習中</option>
           <option value="retained_14d">14日保持</option>
+        </select>
+      </label>
+      <label class="select-field">
+        <span>この端末の回答・復習</span>
+        <select id="review-filter">
+          <option value="all">すべて</option>
+          <option value="unanswered">未回答</option>
+          <option value="review">要復習（重点を含む）</option>
+          <option value="priority">重点復習（連続誤答）</option>
+          <option value="history">回答履歴あり</option>
         </select>
       </label>
       <label class="select-field">
@@ -1172,7 +1258,7 @@ def _page(
 
   <footer class="site-footer">
     <p>2択問題は台帳の内容から作成した自作です。原典の問題文・図版・PDFは掲載していません。</p>
-    <p>閲覧専用 / Cookie・外部解析なし / 導入層版：{escape(catalog.coverage.current)}</p>
+    <p>回答履歴は端末内のみ / Cookie・外部解析なし / 導入層版：{escape(catalog.coverage.current)}</p>
   </footer>
   <script type="application/json" id="catalog-stats">{stats}</script>
 </body>
@@ -1193,6 +1279,7 @@ def build_site(output: Path, base_url: str) -> tuple[int, int]:
     if not _BASE_URL.fullmatch(base_url):
         raise ValueError("base URL must be an HTTPS directory URL ending in /")
     catalog = load_catalog()
+    exam_audit = load_exam_coverage(catalog)
     research_queries = load_research_queries(catalog)
     research_questions = load_research_questions(catalog)
     research_coverage = load_research_coverage(catalog, research_questions)
@@ -1207,7 +1294,7 @@ def build_site(output: Path, base_url: str) -> tuple[int, int]:
         research = temp / "research"
         assets.mkdir(parents=True)
         research.mkdir(parents=True)
-        root_page = _page(base_url, catalog, research_queries)
+        root_page = _page(base_url, catalog, research_queries, exam_audit)
         (temp / "index.html").write_text(root_page, encoding="utf-8")
         (temp / "404.html").write_text(root_page, encoding="utf-8")
         (research / "index.html").write_text(
@@ -1224,6 +1311,7 @@ def build_site(output: Path, base_url: str) -> tuple[int, int]:
         (temp / _OUTPUT_MARKER).write_text(_OUTPUT_MARKER_CONTENT, encoding="utf-8")
         (assets / "styles.css").write_text(_asset_text("styles.css"), encoding="utf-8")
         (assets / "catalog.js").write_text(_asset_text("catalog.js"), encoding="utf-8")
+        (assets / "answer-history.js").write_text(_asset_text("answer-history.js"), encoding="utf-8")
         (assets / "research.js").write_text(
             _asset_text("research.js"),
             encoding="utf-8",

@@ -8,28 +8,28 @@ principles:
   order: 1
   type: rule
   display_content:
-    rule: 組立溶接は脚長4mm以上とし、最小ビード長を板厚6mm以下では30mm、6mm超では40mmとする。
+    rule: 本溶接が被覆アーク・ガスシールドアーク・セルフシールドアーク溶接の場合、組立溶接の最小ビード長は板厚6mm以下で30mm、6mm超で40mmとする。サブマージアーク溶接の場合はそれぞれ50mm、70mmとする。
     applicability:
-    - 組立溶接
-    - 板厚6mm以下又は6mm超
-    - 板厚6mm超は40mm以上
-    - 板厚6mm以下は30mm以上
+    - 組立溶接のビード長
+    - 本溶接の方法を区別する
+    - 異なる板厚を接合するときは厚い方の板厚で判定する
     numbers_exceptions:
-    - 組立溶接は脚長4mm以上とし、最小ビード長を板厚6mm以下では30mm、6mm超では40mmとする。
+    - 被覆・ガスシールド・セルフシールド：6mm以下30mm、6mm超40mm
+    - サブマージアーク：6mm以下50mm、6mm超70mm
+    - 教材の脚長4mm以上の記述とは別に、長さの条件を判定する
   principle: 組立溶接のショートビード防止
   question:
-    prompt: 板厚が6mmを超える組立溶接について、最小ビード長として正しい結論はどちらか。
+    prompt: 板厚12mmの鋼板を組み立て、本溶接をガスシールドアーク溶接で行う。組立溶接の最小ビード長として正しい結論はどちらか。
     choices:
-      A: 40mm以上とする
-      B: 30mm以上とする
-    correct: A
-  conclusion: 組立溶接は脚長4mm以上とし、最小ビード長を板厚6mm以下では30mm、6mm超では40mmとする。
+      A: 70mmとする
+      B: 40mmとする
+    correct: B
+  conclusion: 本溶接が被覆アーク・ガスシールドアーク・セルフシールドアーク溶接の場合、組立溶接の最小ビード長は板厚6mm以下で30mm、6mm超で40mmとする。サブマージアーク溶接の場合はそれぞれ50mm、70mmとする。
   reason: 極端に短いビードは周囲の冷たい鋼材で急冷・硬化し、靭性が低下して応力や低温で割れやすくなるため。
   conditions:
-  - 組立溶接
-  - 板厚6mm以下又は6mm超
-  - 板厚6mm超は40mm以上
-  - 板厚6mm以下は30mm以上
+  - 組立溶接のビード長
+  - 本溶接の方法を区別する
+  - 異なる板厚を接合するときは厚い方の板厚で判定する
   source:
     pages:
     - 162
@@ -40,9 +40,21 @@ principles:
     - '07162'
     - '24173'
     - '30154'
+    authoritative_sources:
+    - kind: government_spec
+      title: 公共建築工事標準仕様書（建築工事編）令和7年版
+      locator: 7.6.5(4)、表7.6.1（p.78）
+      url: https://www.mlit.go.jp/gobuild/content/001888816.pdf
+      supports:
+      - statement
+      - conditions
   prerequisites:
   - S-K6-PREHEAT-PREVENTS-LOW-TEMPERATURE-CRACKING
   editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-BEAM-FLANGE-WEB-FORCE-SHARING
   order: 2
   type: principle
@@ -94,11 +106,11 @@ principles:
   order: 3
   type: rule
   principle: 組立H形鋼のフランジ・ウェブ接合
-  conclusion: 組立H形鋼そのもののフランジとウェブの接合は、隅肉溶接とする。
+  conclusion: 通常の組立H形鋼を製作するフランジとウェブの長手方向接合には、すみ肉溶接を用いる。梁端のフランジと柱の接合とは区別する。
   reason: 教材に記載なし
   conditions:
-  - 組立H形鋼の断面を製作する場合
-  - 梁端の柱梁接合と混同しない
+  - 通常の組立H形鋼の断面製作
+  - 特別に完全溶込みを要求する設計は別扱い
   source:
     pages:
     - 187
@@ -108,69 +120,156 @@ principles:
     - '26163'
   prerequisites:
   - S-K6-WELD-TYPE-IDENTIFICATION
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 通常の組立H形鋼でフランジ板とウェブ板の長手方向を接合する方法について、正しい結論はどちらか。
+    choices:
+      A: すみ肉溶接
+      B: 梁端と同じ完全溶込み溶接
+    correct: A
+  display_content:
+    rule: 通常の組立H形鋼を製作するフランジとウェブの長手方向接合には、すみ肉溶接を用いる。梁端のフランジと柱の接合とは区別する。
+    applicability:
+    - 通常の組立H形鋼の断面製作
+    - 特別に完全溶込みを要求する設計は別扱い
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-WELD-BEAD-DEFINITION
   order: 4
   type: identification
   principle: 溶接ビード
-  conclusion: 溶接の長さをビードという。
+  conclusion: ビードは1回の溶接パスによって作られる溶接金属である。パスは1回分の溶接操作であり、ビードそのものやその長さではない。
   reason: 教材に記載なし
   conditions:
-  - 溶接用語を識別する場合
+  - ビード・パス・ビード長を区別する場合
   source:
     pages:
     - 187
     question_codes: []
+    authoritative_sources:
+    - kind: professional_body
+      title: 日本溶接協会 溶接管理技術者2級電子化教材
+      locator: 冊子P177（電子版179/332）、3.7.1〔5〕ビードの定義
+      url: https://www-it.jwes.or.jp/we2/pageindices/index179.html
+      supports:
+      - statement
+      - explanation
+      - conditions
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 1回の溶接操作の結果、継手に形成された溶接金属を指す用語について、正しい結論はどちらか。
+    choices:
+      A: パス
+      B: ビード
+    correct: B
+  display_content:
+    definition: ビードは1回の溶接パスによって作られる溶接金属である。パスは1回分の溶接操作であり、ビードそのものやその長さではない。
+    distinguishing_conditions:
+    - ビード・パス・ビード長を区別する場合
+    confusable_points:
+    - 本問では「パス」と区別する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-WELD-CONSTRUCTION-DEFECT-RISK
   order: 5
   type: principle
   principle: 溶接施工不良と欠陥
-  conclusion: 溶接接合は施工不良による欠陥が生じやすい。
-  reason: 教材に記載なし
+  conclusion: 溶接では施工条件や清掃が不適切だと、溶込み不足・融合不良・スラグ巻込みなどを生じ得るため、施工管理が重要である。
+  reason: 母材と溶接金属が健全に溶け合うことが必要であり、溶込みを妨げる条件や残留スラグが継手内部の欠陥につながるため。
   conditions:
-  - 施工品質が不良な溶接接合
+  - 鋼材のアーク溶接
+  - 外観検査だけで内部の健全性を保証しない
   source:
     pages:
     - 187
     question_codes: []
+    authoritative_sources:
+    - kind: government_spec
+      title: 公共建築工事標準仕様書（建築工事編）令和7年版
+      locator: 7.6.6、7.6.7(1)(キ)、7.6.10（清掃・層間スラグ・内部欠陥）
+      url: https://www.mlit.go.jp/gobuild/content/001888816.pdf
+      supports:
+      - statement
+      - explanation
+      - conditions
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 多層溶接で前層のスラグが残る状態のまま次層を施工する計画について、正しい結論はどちらか。
+    choices:
+      A: スラグ巻込みの原因となるため除去する
+      B: 次層の加熱で消えると考えて残してよい
+    correct: A
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-WELD-CONTINUOUS-STRESS-FLOW
   order: 6
   type: principle
   principle: 溶接接合の連続性と応力集中
   question:
-    prompt: 教材が説明する一般的な溶接接合について、接合部の連続性が力の流れに与える影響として正しい結論はどちらか。
+    prompt: 部材を連続的に一体化した溶接接合で、溶接止端などの局部的な応力集中を扱う。正しい結論はどちらか。
     choices:
-      A: 力の流れが集中しにくい
-      B: 力の流れが集中しやすい
+      A: 接合の連続性とは別に検討する
+      B: 接合が連続するため検討を省略する
     correct: A
-  conclusion: 溶接接合は力の流れが集中しにくい。
-  reason: 接合部が連続性に富むため。
+  conclusion: 適切な溶接接合は部材を連続的に一体化できる。ただし、溶接止端・形状変化・欠陥などの局部的な応力集中の検討まで不要になるわけではない。
+  reason: 接合の連続性と、溶接止端や断面変化による局部的な力の集中は別に評価する必要があるため。
   conditions:
-  - 教材が説明する一般的な溶接接合
+  - 適切な溶接形状と品質を確保すること
+  - 全体的な力の伝達と局部的な応力集中を区別する
   source:
     pages:
     - 187
+    - 192
     question_codes: []
   prerequisites: []
   editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-WELD-FORM-FLEXIBILITY
   order: 7
   type: principle
   principle: 溶接接合の形式自由度
-  conclusion: 溶接接合は形式が簡単で、自由な接合形式をとれる。
-  reason: 教材に記載なし
+  conclusion: 溶接は突合せ・T・十字・重ねなどの継手を構成でき、ボルト孔配置に依存しない接合形式を選びやすい。
+  reason: 接合位置に合わせて溶着金属で母材同士を接合できるため。ただし溶接姿勢・施工空間・検査性の制約を受ける。
   conditions:
-  - 教材が説明する一般的な溶接接合
+  - 溶接継手の形式選択
+  - 施工可能性と検査可能性を確認する
   source:
     pages:
     - 187
     question_codes: []
+    authoritative_sources:
+    - kind: professional_body
+      title: 日本溶接協会 溶接管理技術者2級電子化教材
+      locator: 冊子P177（電子版179/332）、3.7.2 溶接継手の種類
+      url: https://www-it.jwes.or.jp/we2/pageindices/index179.html
+      supports:
+      - statement
+      - explanation
+      - conditions
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 鋼材をT字形に組み合わせる溶接継手の形式について、正しい結論はどちらか。
+    choices:
+      A: T継手としてすみ肉等で接合できる
+      B: 同一平面の突合せ継手に限られる
+    correct: A
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-WELD-HEAT-DISTORTION
   order: 8
   type: principle
@@ -195,27 +294,67 @@ principles:
   order: 9
   type: principle
   principle: 溶接箇所の検査
-  conclusion: 溶接接合は接合箇所の検査が難しい。
-  reason: 教材に記載なし
+  conclusion: 溶接部は外観検査だけでは内部欠陥を十分に把握できず、要求に応じて超音波探傷等で内部を確認する。
+  reason: 溶込み不足などは表面から見えない位置に残ることがあるため。
   conditions:
-  - 溶接接合部を検査する場合
+  - 建築鉄骨の溶接部検査
+  - 検査方法・範囲・合否基準は仕様に従う
   source:
     pages:
     - 187
     question_codes: []
+    authoritative_sources:
+    - kind: government_spec
+      title: 公共建築工事標準仕様書（建築工事編）令和7年版
+      locator: 7.6.10～7.6.12（外観・内部欠陥・超音波探傷）
+      url: https://www.mlit.go.jp/gobuild/content/001888816.pdf
+      supports:
+      - statement
+      - explanation
+      - conditions
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 表面が良好な完全溶込み溶接で、内部の溶込み不足を確認する検査計画について、正しい結論はどちらか。
+    choices:
+      A: 必要な超音波探傷等も実施する
+      B: 外観検査の結果だけで内部も合格とする
+    correct: A
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-WELD-NO-CONSTRUCTION-NOISE
   order: 10
   type: principle
   principle: 溶接施工時の騒音
-  conclusion: 溶接接合は施工時に騒音が発生しない。
-  reason: 教材に記載なし
+  conclusion: パルスアーク溶接では、アークの変動によって音が生じる。溶接施工を一律に無騒音とは扱わない。
+  reason: 電流変化に伴うアーク形態の変動が周囲の空気を振動させるため。音の大きさは電流波形などに左右される。
   conditions:
-  - 溶接施工
+  - パルスアーク溶接
+  - ボルト締結作業との一律の音量比較は行わない
   source:
     pages:
     - 187
     question_codes: []
+    authoritative_sources:
+    - kind: professional_body
+      title: 日本溶接協会 接合・溶接技術Q&A（2012年新規）
+      locator: Q-07-01-16、パルスアーク形態の変動による発音・波形による低減
+      url: https://www-it.jwes.or.jp/qa/details.jsp?pg_no=0070010160
+      supports:
+      - statement
+      - explanation
+      - conditions
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: パルスアーク溶接で電流波形を急変から緩やかな変化へ変えるとき、アーク音について、正しい結論はどちらか。
+    choices:
+      A: 波形は関係せず音の大きさは一定である
+      B: アークの急変が弱まり音を低減し得る
+    correct: B
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete

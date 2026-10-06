@@ -17,10 +17,10 @@ principles:
     - 筋かい端部・接合部の破断耐力を、使用する筋かい断面の軸部降伏耐力より十分大きくし、炭素鋼では1.2倍以上、ステンレス鋼では1.5倍以上とする。
   principle: 筋かい端部・接合部の保有耐力接合
   question:
-    prompt: 炭素鋼の耐震ブレース端部・接合部を保有耐力接合とするとき、破断耐力と実断面の軸部降伏耐力との関係として正しい結論はどちらか。
+    prompt: 炭素鋼ブレースの実断面の軸部降伏耐力が100kNである。教材の保有耐力接合条件による端部・接合部の破断耐力の下限として、正しい結論はどちらか。
     choices:
-      A: 破断耐力を軸部降伏耐力の1.2倍未満とする
-      B: 破断耐力を軸部降伏耐力の1.2倍以上とする
+      A: 100kN以上とする
+      B: 120kN以上とする
     correct: B
   conclusion: 筋かい端部・接合部の破断耐力を、使用する筋かい断面の軸部降伏耐力より十分大きくし、炭素鋼では1.2倍以上、ステンレス鋼では1.5倍以上とする。
   reason: ブレース軸部の降伏による塑性変形より先に脆性的な接合破断を生じさせないため。
@@ -45,6 +45,10 @@ principles:
     - '29151'
   prerequisites: []
   editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-BRACE-BALANCED-DIRECTIONAL-LAYOUT
   order: 2
   type: rule
@@ -59,7 +63,22 @@ principles:
     question_codes:
     - 06182
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 同じ総耐力のブレースを建物の片側だけへ集中させる案と、平面的に釣り合わせる案の配置方針について、正しい結論はどちらか。
+    choices:
+      A: 平面的に釣り合わせて配置する
+      B: 総耐力が同じなら片側へ集中させる
+    correct: A
+  display_content:
+    rule: ブレースは、すべての方向に釣り合いよく配置する。
+    applicability:
+    - 建物のブレース配置計画
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-BRACE-HORIZONTAL-LOAD-AXIAL-FORCE
   order: 3
   type: principle
@@ -94,9 +113,9 @@ principles:
   question:
     prompt: 鉄骨造の鉛直面に設ける鉛直ブレースについて、主に抑える変形として正しい結論はどちらか。
     choices:
-      A: 水平面の変形を抑える。
-      B: 壁面の水平変形を抑える。
-    correct: B
+      A: 壁面の水平変形を抑える。
+      B: 水平面の変形を抑える。
+    correct: A
   conclusion: 鉛直ブレースは壁面の水平変形を抑え、水平ブレースは水平面の剛性を高めて水平面の変形を抑える。
   reason: 鉛直面または水平面へ配置した斜材が、その配置面の剛性を高めるため。
   conditions:
@@ -122,4 +141,20 @@ principles:
     - 199
     question_codes: []
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 圧縮側にも抵抗を期待する高層建築の筋かいとして教材が示す断面例について、正しい結論はどちらか。
+    choices:
+      A: 細い鉄筋バー
+      B: H形鋼
+    correct: B
+  display_content:
+    definition: 教材図では、軽微な建築物に鉄筋バー、一般的な建築物に鋼管・山形鋼、高層・超高層建築物にH形鋼を用いる例を示している。
+    distinguishing_conditions:
+    - 教材図による代表的な使用例であり、絶対的な適用規定ではない
+    confusable_points:
+    - 本問では「細い鉄筋バー」と区別する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete

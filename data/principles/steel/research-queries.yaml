@@ -320,59 +320,482 @@ releases:
     S-K6-EMBEDDED-BASE-MINIMUM-DEPTH: 1
     S-K6-EMBEDDED-BASE-EFFECTIVE-FIXED-POINT: 1
   content_sha256: f79947bc249d6b978f1a1bf648ed20599916a334207e61d565a7952109c45743
+- id: steel-search-v2
+  revisions:
+    S-K6-FIRE-LOAD-FIXED-PLUS-LIVE-COMBUSTIBLES: 1
+    S-K6-STEEL-FIRE-STRENGTH-FIREPROOFING: 1
+    S-K6-FIREPROOFING-REQUIRED-ABOVE-250C: 1
+    S-K6-FIREPROOFING-BOARD-ATTACHMENT: 1
+    S-K6-FIREPROOFING-CAST-IN: 1
+    S-K6-FIREPROOFING-PLASTER-FINISH: 1
+    S-K6-FIREPROOFING-SPRAY-APPLIED: 1
+    S-K6-OVERHEAD-CRANE-SEISMIC-WEIGHT: 1
+    S-K6-FRAME-H-SECTION-AXIS-ROLE: 1
+    S-K6-H-SECTION-FLANGE-BENDING: 1
+    S-K6-H-SECTION-WEB-SHEAR: 1
+    S-K6-STEEL-DUCTILITY-PREVENTS-BRITTLE-FRACTURE: 1
+    S-K6-STEEL-ALLOWABLE-STRESS-DURATION: 1
+    S-K6-STEEL-MATERIAL-STRENGTH-JIS-FACTOR: 1
+    S-K6-STEEL-F-VALUE-DEFINITION: 1
+    S-K6-STEEL-YIELD-RATIO-SMALLER-PREFERRED: 1
+    S-K6-STEEL-YOUNGS-MODULUS-STRENGTH-INDEPENDENT: 1
+    S-K6-STEEL-YOUNGS-MODULUS-VS-CONCRETE: 1
+    S-K6-H-SECTION-STRONG-WEAK-AXIS-RIGIDITY: 1
+    S-K6-STEEL-CORROSION-PROTECTION: 1
+    S-K6-STEEL-STRUCTURE-DEFINITION: 1
+    S-K6-STEEL-LONG-TERM-BEARING-ALLOWABLE-STRESS: 1
+    S-K6-HIGHER-STRENGTH-STEEL-REDUCES-DEPTH-ONLY-STRENGTH-GOVERNS: 1
+    S-K6-FIRST-STAGE-BENDING-CHECK-NOT-PLASTIC-BRACING-CHECK: 1
+    S-K6-H-BEAM-ALLOWABLE-BENDING-INPUTS: 1
+    S-K6-H-SECTION-COLUMN-WEAK-AXIS-GOVERNS-BUCKLING: 1
+    S-K6-LATERAL-BRACING-ENABLES-FULL-PLASTIC-MOMENT: 1
+    S-K6-UNIFORM-BRACING-SLENDERNESS-FORMULAS: 1
+    S-K6-BUILT-UP-COLUMN-NON-SOLID-AXIS-SLENDERNESS-INCREASE: 1
+    S-K6-HIGH-STRENGTH-STEEL-BEAM-DEFLECTION-CHECK: 1
+    S-K6-STEEL-DIAMETER-THICKNESS-RATIO-SMALLER-PREFERRED: 1
+    S-K6-NO-LATERAL-BUCKLING-SECTION-ALLOWABLE-BENDING: 1
+    S-K6-BEAM-LATERAL-BUCKLING-COUNTERMEASURES: 1
+    S-K6-H-SECTION-AXIS-LATERAL-BUCKLING: 1
+    S-K6-H-SECTION-STRONG-AXIS-LATERAL-RESTRAINT: 1
+    S-K6-STEEL-COMPRESSION-CAPACITY-BUCKLING: 1
+    S-K6-STEEL-BUCKLING-MODE-IDENTIFICATION: 1
+    S-K6-STEEL-THIN-SECTION-BUCKLING: 1
+    S-K6-ELASTIC-DEFLECTION-NOT-REDUCED-BY-HIGHER-STEEL-GRADE: 1
+    S-K6-STEEL-BEAM-COMMON-SECTIONS: 1
+    S-K6-STEEL-BEAM-DEFLECTION-CHECK: 1
+    S-K6-STEEL-BEAM-DEFLECTION-CHECK-OMISSION: 1
+    S-K6-STEEL-BEAM-DEFLECTION-LIMITS: 1
+    S-K6-STEEL-BEAM-DEPTH-SPAN-RANGE: 1
+    S-K6-STEEL-BEAM-DESIGN-ACTIONS: 1
+    S-K6-18-ELASTIC-STRENGTH: 1
+    S-K6-18-SLENDERNESS: 1
+    S-K6-EFFECTIVE-SLENDERNESS-MAXIMUMS: 1
+    S-K6-LIMIT-SLENDERNESS-STRENGTH-RELATION: 1
+    S-K6-19-LATERAL-BUCKLING: 1
+    S-K6-LATERAL-BRACE-STRENGTH-AND-STIFFNESS: 1
+    S-K6-FULL-PLASTIC-LATERAL-BRACING-PLACEMENT-METHODS: 1
+    S-K6-HIGHER-STRENGTH-REQUIRES-MORE-UNIFORM-BRACING: 1
+    S-K6-WIDER-FLANGE-REDUCES-BRACING-DEMAND: 1
+    S-K6-BEAM-SECTION-SHAPE-LATERAL-BUCKLING: 1
+    S-K6-20-LOCAL-BUCKLING: 1
+    S-K6-LATERAL-LOCAL-BUCKLING-INTERACTION: 1
+    S-K6-COLUMN-WEB-WIDTH-THICKNESS-STRICTER-THAN-BEAM: 1
+    S-K6-FA-H-BEAM-FLANGE-WEB-WIDTH-THICKNESS-LIMITS: 1
+    S-K6-WIDTH-THICKNESS-LIMIT-DECREASES-WITH-STRENGTH: 1
+    S-K6-WIDTH-THICKNESS-LIMIT-MEANING: 1
+    S-K6-BEAM-TYPES-ROLLED-BUILT-UP: 1
+    S-K6-STIFFENER-ROLE-BY-POSITION-AND-STRESS: 1
+    S-K6-FRAME-COLUMN-BUCKLING-LENGTH-RESTRAINT: 1
+    S-K6-TRUSS-MEMBER-IN-OUT-PLANE-BUCKLING-LENGTH: 1
+    S-K6-ORDINARY-BOLTS-PROHIBITED-FOR-REPEATED-LOAD: 1
+    S-K6-ALUMINUM-FRICTION-JOINT-GALVANIZED-BOLTS: 1
+    S-K6-F14T-CLAMPING-FORCE-REDUCES-BOLT-COUNT: 1
+    S-K6-FRICTION-JOINT-GAP-FILLER-RULE: 1
+    S-K6-HIGH-STRENGTH-BOLT-CONNECTION-TYPES: 1
+    S-K6-STEEL-CONNECTION-TYPE-IDENTIFICATION: 1
+    S-K6-FRICTION-JOINT-PRE-SLIP-FORCE-TRANSFER: 1
+    S-K6-FRICTION-SURFACE-PREPARATION: 1
+    S-K6-ORDINARY-BOLT-HOLE-CLEARANCE: 1
+    S-K6-HIGH-STRENGTH-BOLT-SLIP-RIGIDITY: 1
+    S-K6-ORDINARY-BOLT-CLEARANCE-LOOSENING: 1
+    S-K6-ORDINARY-BOLT-HOLE-DIAMETER-AIJ: 1
+    S-K6-ORDINARY-BOLT-SHEAR-TRANSFER: 1
+    S-K6-ORDINARY-BOLT-THREAD-PROJECTION: 1
+    S-K6-ORDINARY-BOLT-WASHER-UNDER-NUT: 1
+    S-K6-FRICTION-JOINT-SHEAR-TENSION-INTERACTION: 1
+    S-K6-FRICTION-JOINT-POST-SLIP-RUPTURE-MODEL: 1
+    S-K6-FRICTION-JOINT-REPEATED-LOAD-BELOW-SLIP: 1
+    S-K6-HIGH-STRENGTH-BOLT-CONSTRUCTION-ADVANTAGE: 1
+    S-K6-HIGH-STRENGTH-BOLT-STRESS-DISTRIBUTION: 1
+    S-K6-HIGH-STRENGTH-BOLT-TENSILE-STRENGTH-RATIO: 1
+    S-K6-FATIGUE-CHECK-CYCLE-THRESHOLD: 1
+    S-K6-REFERENCE-FATIGUE-STRENGTH-JOINT-TYPE: 1
+    S-K6-HIGH-STRENGTH-BOLT-PRODUCT-TYPES: 1
+    S-K6-TORSHEAR-BOLT-PINTAIL-SECONDARY-TIGHTENING: 1
+    S-K6-TORSHEAR-BOLT-ROTATION-MARKING-INSPECTION: 1
+    S-K6-FRICTION-JOINT-SLIP-COEFFICIENT: 1
+    S-K6-HIGH-STRENGTH-BOLT-ALLOWABLE-SHEAR-TABLE: 1
+    S-K6-BOLT-MINIMUM-EDGE-DISTANCE: 1
+    S-K6-F10T-TENSILE-STRENGTH-MEANING: 1
+    S-K6-HIGH-STRENGTH-BOLT-HOLE-CLEARANCE: 1
+    S-K6-HIGH-STRENGTH-BOLT-MINIMUM-PITCH: 1
+    S-K6-BOLT-EDGE-DISTANCE-TERM-IDENTIFICATION: 1
+    S-K6-BOLT-MAXIMUM-EDGE-DISTANCE: 1
+    S-K6-WELD-METAL-COMPOSITION: 1
+    S-K6-HEAT-AFFECTED-ZONE-IDENTIFICATION: 1
+    S-K6-WELD-CONTINUOUS-STRESS-FLOW: 1
+    S-K6-WELD-NO-SECTION-LOSS-HIGH-RIGIDITY: 1
+    S-K6-WELD-TYPE-IDENTIFICATION: 1
+    S-K6-WELD-BEAD-DEFINITION: 1
+    S-K6-WELD-FORM-FLEXIBILITY: 1
+    S-K6-WELD-NO-CONSTRUCTION-NOISE: 1
+    S-K6-WELD-THROAT-ALLOWABLE-SHEAR-INDEPENDENT-OF-JOINT-FORM: 1
+    S-K6-DISSIMILAR-STEEL-WELD-WEAKER-BASE-GOVERNS: 1
+    S-K6-WELD-ALLOWABLE-STRESS-FULL-PENETRATION: 1
+    S-K6-WELD-ALLOWABLE-STRESS-NONFULL-PENETRATION: 1
+    S-K6-END-TABS-SECURE-SOUND-WELD-ENDS: 1
+    S-K6-FULL-PENETRATION-WELD-EFFECTIVE-LENGTH: 1
+    S-K6-WELD-BACK-GOUGING-PURPOSE: 1
+    S-K6-WELD-BACKING-BAR-ROOT-GAP: 1
+    S-K6-STEEL-END-TAB-TACK-WELD-TO-BACKING: 1
+    S-K6-STEEL-END-TAB-RETENTION-CONDITIONS: 1
+    S-K6-FULL-PENETRATION-WELD-DEFINITION-REPEATED-STRESS: 1
+    S-K6-FULL-PENETRATION-WELD-ANATOMY: 1
+    S-K6-FULL-PENETRATION-WELD-EFFECTIVE-THROAT: 1
+    S-K6-FILLET-WELD-EFFECTIVE-LENGTH: 1
+    S-K6-PARTIAL-PENETRATION-EFFECTIVE-THROAT-DEDUCTION: 1
+    S-K6-PARTIAL-PENETRATION-WELD-APPLICABILITY: 1
+    S-K6-BUILT-UP-H-SECTION-FLANGE-WEB-FILLET: 1
+    S-K6-FILLET-WELD-DEFINITION-REPEATED-STRESS: 1
+    S-K6-FILLET-WELD-ANATOMY: 1
+    S-K6-FILLET-WELD-SIZE-EFFECTIVE-THROAT: 1
+    S-K6-FILLET-WELD-EFFECTIVE-AREA: 1
+    S-K6-WELD-SCALLOP-DEFINITION: 1
+    S-K6-WELD-DEFECT-UNDERCUT: 1
+    S-K6-WELD-DEFECT-SLAG-INCLUSION: 1
+    S-K6-WELD-NDT-INTERNAL-VS-SURFACE-DEFECTS: 1
+    S-K6-WELD-DEFECT-BLOWHOLE: 1
+    S-K6-WELD-DEFECT-PIT: 1
+    S-K6-WELD-CONSTRUCTION-DEFECT-RISK: 1
+    S-K6-WELD-INSPECTION-DIFFICULTY: 1
+    S-K6-WELD-DEFECT-OVERLAP: 1
+    S-K6-WELD-BASIC-SYMBOL-SHAPES: 1
+    S-K6-WELD-SYMBOL-ARROW-SIDE-POSITION: 1
+    S-K6-PREHEAT-PREVENTS-LOW-TEMPERATURE-CRACKING: 1
+    S-K6-TACK-WELD-MINIMUM-BEAD: 1
+    S-K6-MULTIPASS-HEAT-INPUT-INTERPASS-UPPER-CONTROL: 1
+    S-K6-WELD-PASS-AND-MULTIPASS-IDENTIFICATION: 1
+    S-K6-PREHEAT-LOWER-BOUND-VS-INTERPASS-UPPER-BOUND: 1
+    S-K6-WELD-HEAT-DISTORTION: 1
+    S-K6-MINIMIZE-WELD-DISTORTION-AND-RESIDUAL-STRESS: 1
+    S-K6-COMBINED-BOLT-WELD-CONSTRUCTION-ORDER: 1
+    S-K6-EXISTING-RIVET-JOINT-WELDED-EXTENSION-LOAD-SHARING: 1
+    S-K6-MIXED-BUTT-FILLET-WELD-LOAD-SHARING: 1
+    S-K6-MIXED-WELD-ORDINARY-BOLT-LOAD-SHARING: 1
+    S-K6-BRACE-HORIZONTAL-LOAD-AXIAL-FORCE: 1
+    S-K6-VERTICAL-HORIZONTAL-BRACE-ROLES: 1
+    S-K6-FLOOR-HORIZONTAL-TRUSS-SECONDARY-BEAM-AXIAL-FORCE: 1
+    S-K6-BRACE-BALANCED-DIRECTIONAL-LAYOUT: 1
+    S-K6-BRACE-SECTION-USE-IDENTIFICATION: 1
+    S-K6-GUSSET-PLATE-MEMBER-CONNECTION: 1
+    S-K6-BRACE-TO-HOLLOW-COLUMN-DIAPHRAGM-REINFORCEMENT: 1
+    S-K6-BRACE-SIDE-FILLET-WELD-FORCE-TRANSFER: 1
+    S-K6-BRACE-CAPACITY-DESIGN-JOINT-OVERSTRENGTH: 1
+    S-K6-NONSEISMIC-TRUSS-JOINT-MINIMUM-STRENGTH: 1
+    S-K6-ANGLE-CHANNEL-BRACE-EFFECTIVE-AREA: 1
+    S-K6-BRACE-ECCENTRIC-JOINT-EFFECTS: 1
+    S-K6-DOUBLE-ANGLE-BRACE-REDUCES-ECCENTRICITY: 1
+    S-K6-BRACE-BOLT-COUNT-INCREASES-EFFECTIVE-AREA: 1
+    S-K6-BRACE-TENSION-YIELD-COMPRESSION-BUCKLING: 1
+    S-K6-BRACE-SLENDERNESS-AND-DEFORMATION-CAPACITY: 1
+    S-K6-X-BRACE-TENSION-COMPRESSION-CAPACITY: 1
+    S-K6-BRACED-FRAME-COLUMN-BRACE-CAPACITY-SUM: 1
+    S-K6-BUCKLING-RESTRAINED-BRACE-FORCE-ROLES: 1
+    S-K6-MOMENT-FRAME-HYSTERESIS: 1
+    S-K6-BRACE-HYSTERESIS-BY-SLENDERNESS: 1
+    S-K6-ECCENTRIC-K-BRACE-ENERGY-DISSIPATION: 1
+    S-K6-BRACE-SHARE-SEISMIC-STRESS-AMPLIFICATION: 1
+    S-K6-HYSTERESIS-LOOP-AREA-ENERGY-ABSORPTION: 1
+    S-K6-BEAM-END-STRENGTH-SECTION-LOSS-AND-TUBE-DEFORMATION: 1
+    S-K6-NO-SCALLOP-IMPROVES-BEAM-END-DUCTILITY: 1
+    S-K6-SN490-BEAM-COLUMN-JOINT-OVERSTRENGTH: 1
+    S-K6-BEAM-FLANGE-WEB-FORCE-SHARING: 1
+    S-K6-HORIZONTAL-HAUNCH-REDUCES-BEAM-END-STRESS: 1
+    S-K6-BOX-COLUMN-H-BEAM-WELD-TYPES: 1
+    S-K6-BEAM-END-MOMENT-STRENGTH-FLANGE-PLUS-WEB: 1
+    S-K6-SQUARE-TUBE-COLUMN-DIAPHRAGM-TYPES: 1
+    S-K6-INTERNAL-DIAPHRAGM-CONSTRUCTION: 1
+    S-K6-THROUGH-DIAPHRAGM-THICKNESS-MISMATCH-PREVENTION: 1
+    S-K6-DIAPHRAGM-FLANGE-MISALIGNMENT-LIMIT: 1
+    S-K6-THROUGH-DIAPHRAGM-CONSTRUCTION-AND-WELD: 1
+    S-K6-JOINT-SPLICE-LOCATION-FABRICATION: 1
+    S-K6-BEAM-SPLICE-METHODS-FIELD-SHOP: 1
+    S-K6-COLUMN-SPLICE-NEAR-MIDSTORY: 1
+    S-K6-COLUMN-SPLICE-MINIMUM-DESIGN-STRENGTH: 1
+    S-K6-METAL-TOUCH-SPLICE-DIRECT-TRANSFER-FRACTIONS: 1
+    S-K6-BOX-COLUMN-FIELD-BUTT-WELD-WITH-BACKING: 1
+    S-K6-FILLER-PLATE-EQUALIZES-THICKNESS: 1
+    S-K6-SPLICE-PLATE-TRANSFERS-FORCE: 1
+    S-K6-SPLICE-FRICTION-JOINT-SELECTION: 1
+    S-K6-COLUMN-BASE-TYPES-FIXITY-ORDER: 1
+    S-K6-COLUMN-BASE-NOTIFICATION-1456: 1
+    S-K6-EXPOSED-BASE-RC-ANALOGY-FOR-AXIAL-AND-BENDING: 1
+    S-K6-ANCHOR-BOLT-RESISTANCE-TYPES: 1
+    S-K6-DUCTILE-ANCHOR-BOLT-TYPES-AND-YIELD-SEQUENCE: 1
+    S-K6-EXPOSED-BASE-MODEL-BY-DESIGN-TARGET: 1
+    S-K6-EXPOSED-BASE-ANCHOR-EMBEDMENT-LENGTH: 1
+    S-K6-EXPOSED-BASE-PLATE-MINIMUM-THICKNESS: 1
+    S-K6-EXPOSED-BASE-CAPACITY-DESIGN-DS-PENALTY: 1
+    S-K6-EXPOSED-BASE-ANCHOR-AREA-RATIO: 1
+    S-K6-EXPOSED-BASE-ANCHOR-HOLE-CLEARANCE: 1
+    S-K6-EXPOSED-BASE-SHEAR-CAPACITY-NOT-ADDITIVE: 1
+    S-K6-EXPOSED-BASE-ANCHOR-LOCKING: 1
+    S-K6-ENCASED-BASE-BOTTOM-PIN-MOMENT-TRANSFER: 1
+    S-K6-WRAPPED-BASE-DUCTILE-FAILURE-MODE: 1
+    S-K6-WRAPPED-BASE-MOMENT-DISTRIBUTION: 1
+    S-K6-WRAPPED-BASE-SHEAR-Q2-GREATER-THAN-Q1: 1
+    S-K6-WRAPPED-BASE-HEIGHT-AND-TOP-CONFINEMENT: 1
+    S-K6-EMBEDDED-BASE-FORCE-TRANSFER: 1
+    S-K6-EMBEDDED-BASE-MINIMUM-DEPTH: 1
+    S-K6-EMBEDDED-BASE-EFFECTIVE-FIXED-POINT: 1
+    S-K6-EXAM-SN-A-USE: 1
+    S-K6-EXAM-SN-C-THICKNESS: 1
+    S-K6-EXAM-SN-YIELD-RANGE: 1
+    S-K6-EXAM-SN-CHARPY-GRADE: 1
+    S-K6-EXAM-SN490-SYMBOL: 1
+    S-K6-EXAM-SN490-F40: 1
+    S-K6-EXAM-SN-THICKNESS-F: 1
+    S-K6-EXAM-SN-TOLERANCE: 1
+    S-K6-EXAM-STEEL-ANISOTROPY: 1
+    S-K6-EXAM-CHARPY-ENERGY: 1
+    S-K6-EXAM-CHARPY-TEMPERATURE: 1
+    S-K6-EXAM-CARBON-WELDABILITY: 1
+    S-K6-EXAM-SULFUR-TOUGHNESS: 1
+    S-K6-EXAM-PHOSPHORUS-TOUGHNESS: 1
+    S-K6-EXAM-COLD-FORMING: 1
+    S-K6-EXAM-BCR-BCP-PROCESS: 1
+    S-K6-EXAM-BCR295-SYMBOL: 1
+    S-K6-EXAM-BCR-YIELD-RATIO: 1
+    S-K6-EXAM-BCP325-STRENGTH: 1
+    S-K6-EXAM-TMCP-THICK-PLATE: 1
+    S-K6-EXAM-SUS-OFFSET: 1
+    S-K6-EXAM-SUS-F: 1
+    S-K6-EXAM-STEEL-HEAT-YIELD: 1
+    S-K6-EXAM-ROUTE11-SCALE: 1
+    S-K6-EXAM-ROUTE12-SCALE: 1
+    S-K6-EXAM-ROUTE12-ONE-STORY: 1
+    S-K6-EXAM-ROUTE13-HEIGHT: 1
+    S-K6-EXAM-ROUTE1-CO: 1
+    S-K6-EXAM-ROUTE2-CO: 1
+    S-K6-EXAM-ROUTE11-CHECKS: 1
+    S-K6-EXAM-ROUTE12-ECCENTRICITY: 1
+    S-K6-EXAM-ROUTE12-BRACING: 1
+    S-K6-EXAM-ROUTE13-DRIFT: 1
+    S-K6-EXAM-ROUTE2-ASPECT: 1
+    S-K6-EXAM-ROUTE2-STIFFNESS: 1
+    S-K6-EXAM-COLD-ROUTE1: 1
+    S-K6-EXAM-COLD-ROUTE2-RATIO: 1
+    S-K6-EXAM-COLD-ROUTE3-LOCAL: 1
+    S-K6-EXAM-ROUTE-BRACE-END: 1
+    S-K6-EXAM-ROUTE-CEILING: 1
+    S-K6-EXAM-DS-MEMBER: 1
+    S-K6-EXAM-PANEL-DS: 1
+    S-K6-EXAM-COMPOSITE-STUD: 1
+    S-K6-EXAM-COMPOSITE-FULL: 1
+    S-K6-EXAM-COMPOSITE-WIDTH: 1
+    S-K6-EXAM-COMPOSITE-TOP-FLANGE: 1
+    S-K6-EXAM-COMPOSITE-BOTTOM-FLANGE: 1
+    S-K6-EXAM-DECK-INPLANE: 1
+    S-K6-EXAM-CFT-BUCKLING: 1
+    S-K6-EXAM-CFT-CONFINEMENT: 1
+    S-K6-EXAM-CFT-CIRCLE: 1
+    S-K6-EXAM-CFT-WIDTH-THICKNESS: 1
+    S-K6-EXAM-CFT-FIRE: 1
+    S-K6-EXAM-CFT-TRANSFER: 1
+    S-K6-EXAM-SRC-BENDING: 1
+    S-K6-EXAM-SRC-SHEAR: 1
+    S-K6-EXAM-SRC-CRACK-STIFFNESS: 1
+    S-K6-EXAM-SRC-WEB-TYPE: 1
+    S-K6-EXAM-SRC-TENSION-BASE: 1
+    S-K6-EXAM-SRC-NONEMBEDDED-DS: 1
+    S-K6-EXAM-SRC-EMBEDDED-MIN: 1
+    S-K6-EXAM-SRC-NONEMBEDDED-SUM: 1
+    S-K6-EXAM-MIXED-RC-S-TRANSFER: 1
+    S-K6-EXAM-MIXED-CORE: 1
+    S-K6-EXAM-DAMPER-PLASTICITY: 1
+    S-K6-EXAM-DAMPER-YIELD-SEQUENCE: 1
+    S-K6-EXAM-DAMPER-LY225: 1
+    S-K6-EXAM-DAMPER-HIGH-STRENGTH-FRAME: 1
+    S-K6-EXAM-DAMPER-CONNECTION: 1
+    S-K6-EXAM-DAMPER-LAYOUT: 1
+    S-K6-EXAM-DAMPER-FATIGUE: 1
+    S-K6-EXAM-DAMPER-PANEL-ANGLE: 1
+    S-K6-EXAM-DAMPER-RESIDUAL: 1
+    S-K6-EXAM-FLOOR-FREQUENCY: 1
+    S-K6-EXAM-LIGHT-BUILDING-WIND: 1
+    S-K6-EXAM-STEEL-PERIOD: 1
+    S-K6-EXAM-STEEL-DAMPING: 1
+    S-K6-EXAM-PILE-CORROSION: 1
+    S-K6-EXAM-ROUTE-DIRECTION: 1
+    S-K6-EXAM-ROUTE-UPPER-SELECTION: 1
+    S-K6-EXAM-SRC-ALLOWABLE-SHEAR: 1
+    S-K6-EXAM-SRC-WEB-HOLE: 1
+    S-K6-EXAM-SRC-ELASTIC-STIFFNESS: 1
+    S-K6-EXAM-MIXED-VERTICAL-DS: 1
+    S-K6-EXAM-MIXED-DIRECTION-RULES: 1
+    S-K6-EXAM-STEEL-RETROFIT: 1
+    S-K6-EXAM-COMPOSITE-STUD-FORCE: 1
+    S-K6-EXAM-DECK-DEFORMATION: 1
+    S-K6-EXAM-ALUMINUM-EXPANSION: 1
+    S-K6-EXAM-CONCRETE-EXPANSION: 1
+    S-K6-EXAM-DAMPER-BRACE-STUD: 1
+    S-K6-EXAM-FATIGUE-STEEL-GRADE: 1
+    S-K6-EXAM-HEAT-TENSILE-F: 1
+    S-K6-EXAM-PANEL-EARLY-YIELD: 1
+    S-K6-EXAM-EAF-CARBON: 1
+  route_history_lengths:
+    S-K6-FIRE-LOAD-FIXED-PLUS-LIVE-COMBUSTIBLES: 1
+    S-K6-STEEL-FIRE-STRENGTH-FIREPROOFING: 1
+    S-K6-FIREPROOFING-REQUIRED-ABOVE-250C: 1
+    S-K6-FIREPROOFING-BOARD-ATTACHMENT: 1
+    S-K6-FIREPROOFING-CAST-IN: 1
+    S-K6-FIREPROOFING-PLASTER-FINISH: 1
+    S-K6-FIREPROOFING-SPRAY-APPLIED: 1
+    S-K6-OVERHEAD-CRANE-SEISMIC-WEIGHT: 1
+    S-K6-H-SECTION-FLANGE-BENDING: 1
+    S-K6-H-SECTION-WEB-SHEAR: 1
+    S-K6-STEEL-MATERIAL-STRENGTH-JIS-FACTOR: 1
+    S-K6-STEEL-F-VALUE-DEFINITION: 1
+    S-K6-STEEL-YIELD-RATIO-SMALLER-PREFERRED: 1
+    S-K6-STEEL-YOUNGS-MODULUS-STRENGTH-INDEPENDENT: 1
+    S-K6-STEEL-YOUNGS-MODULUS-VS-CONCRETE: 1
+    S-K6-H-SECTION-STRONG-WEAK-AXIS-RIGIDITY: 1
+    S-K6-STEEL-STRUCTURE-DEFINITION: 1
+    S-K6-STEEL-LONG-TERM-BEARING-ALLOWABLE-STRESS: 1
+    S-K6-H-BEAM-ALLOWABLE-BENDING-INPUTS: 1
+    S-K6-UNIFORM-BRACING-SLENDERNESS-FORMULAS: 1
+    S-K6-STEEL-DIAMETER-THICKNESS-RATIO-SMALLER-PREFERRED: 1
+    S-K6-H-SECTION-AXIS-LATERAL-BUCKLING: 1
+    S-K6-STEEL-BUCKLING-MODE-IDENTIFICATION: 1
+    S-K6-STEEL-BEAM-COMMON-SECTIONS: 1
+    S-K6-STEEL-BEAM-DEFLECTION-CHECK: 1
+    S-K6-STEEL-BEAM-DEFLECTION-CHECK-OMISSION: 1
+    S-K6-STEEL-BEAM-DEFLECTION-LIMITS: 1
+    S-K6-STEEL-BEAM-DEPTH-SPAN-RANGE: 1
+    S-K6-STEEL-BEAM-DESIGN-ACTIONS: 1
+    S-K6-EFFECTIVE-SLENDERNESS-MAXIMUMS: 1
+    S-K6-19-LATERAL-BUCKLING: 1
+    S-K6-BEAM-SECTION-SHAPE-LATERAL-BUCKLING: 1
+    S-K6-FA-H-BEAM-FLANGE-WEB-WIDTH-THICKNESS-LIMITS: 1
+    S-K6-BEAM-TYPES-ROLLED-BUILT-UP: 1
+    S-K6-TRUSS-MEMBER-IN-OUT-PLANE-BUCKLING-LENGTH: 1
+    S-K6-FRICTION-JOINT-GAP-FILLER-RULE: 1
+    S-K6-HIGH-STRENGTH-BOLT-CONNECTION-TYPES: 1
+    S-K6-ORDINARY-BOLT-HOLE-CLEARANCE: 1
+    S-K6-ORDINARY-BOLT-HOLE-DIAMETER-AIJ: 1
+    S-K6-ORDINARY-BOLT-THREAD-PROJECTION: 1
+    S-K6-ORDINARY-BOLT-WASHER-UNDER-NUT: 1
+    S-K6-HIGH-STRENGTH-BOLT-CONSTRUCTION-ADVANTAGE: 1
+    S-K6-HIGH-STRENGTH-BOLT-TENSILE-STRENGTH-RATIO: 1
+    S-K6-FATIGUE-CHECK-CYCLE-THRESHOLD: 1
+    S-K6-HIGH-STRENGTH-BOLT-PRODUCT-TYPES: 1
+    S-K6-FRICTION-JOINT-SLIP-COEFFICIENT: 1
+    S-K6-BOLT-MINIMUM-EDGE-DISTANCE: 1
+    S-K6-HIGH-STRENGTH-BOLT-HOLE-CLEARANCE: 1
+    S-K6-HIGH-STRENGTH-BOLT-MINIMUM-PITCH: 1
+    S-K6-BOLT-EDGE-DISTANCE-TERM-IDENTIFICATION: 1
+    S-K6-BOLT-MAXIMUM-EDGE-DISTANCE: 1
+    S-K6-WELD-NO-SECTION-LOSS-HIGH-RIGIDITY: 1
+    S-K6-WELD-TYPE-IDENTIFICATION: 1
+    S-K6-WELD-BEAD-DEFINITION: 1
+    S-K6-WELD-FORM-FLEXIBILITY: 1
+    S-K6-WELD-NO-CONSTRUCTION-NOISE: 1
+    S-K6-DISSIMILAR-STEEL-WELD-WEAKER-BASE-GOVERNS: 1
+    S-K6-WELD-ALLOWABLE-STRESS-FULL-PENETRATION: 1
+    S-K6-WELD-ALLOWABLE-STRESS-NONFULL-PENETRATION: 1
+    S-K6-STEEL-END-TAB-RETENTION-CONDITIONS: 1
+    S-K6-FULL-PENETRATION-WELD-DEFINITION-REPEATED-STRESS: 1
+    S-K6-FULL-PENETRATION-WELD-ANATOMY: 1
+    S-K6-FULL-PENETRATION-WELD-EFFECTIVE-THROAT: 1
+    S-K6-PARTIAL-PENETRATION-WELD-APPLICABILITY: 1
+    S-K6-BUILT-UP-H-SECTION-FLANGE-WEB-FILLET: 1
+    S-K6-FILLET-WELD-DEFINITION-REPEATED-STRESS: 1
+    S-K6-FILLET-WELD-ANATOMY: 1
+    S-K6-FILLET-WELD-SIZE-EFFECTIVE-THROAT: 1
+    S-K6-FILLET-WELD-EFFECTIVE-AREA: 1
+    S-K6-WELD-CONSTRUCTION-DEFECT-RISK: 1
+    S-K6-WELD-INSPECTION-DIFFICULTY: 1
+    S-K6-WELD-DEFECT-OVERLAP: 1
+    S-K6-WELD-BASIC-SYMBOL-SHAPES: 1
+    S-K6-WELD-SYMBOL-ARROW-SIDE-POSITION: 1
+    S-K6-MINIMIZE-WELD-DISTORTION-AND-RESIDUAL-STRESS: 1
+    S-K6-EXISTING-RIVET-JOINT-WELDED-EXTENSION-LOAD-SHARING: 1
+    S-K6-MIXED-BUTT-FILLET-WELD-LOAD-SHARING: 1
+    S-K6-MIXED-WELD-ORDINARY-BOLT-LOAD-SHARING: 1
+    S-K6-BRACE-BALANCED-DIRECTIONAL-LAYOUT: 1
+    S-K6-BRACE-SECTION-USE-IDENTIFICATION: 1
+    S-K6-NONSEISMIC-TRUSS-JOINT-MINIMUM-STRENGTH: 1
+    S-K6-BRACED-FRAME-COLUMN-BRACE-CAPACITY-SUM: 1
+    S-K6-HYSTERESIS-LOOP-AREA-ENERGY-ABSORPTION: 1
+    S-K6-BEAM-END-MOMENT-STRENGTH-FLANGE-PLUS-WEB: 1
+    S-K6-DIAPHRAGM-FLANGE-MISALIGNMENT-LIMIT: 1
+    S-K6-THROUGH-DIAPHRAGM-CONSTRUCTION-AND-WELD: 1
+    S-K6-METAL-TOUCH-SPLICE-DIRECT-TRANSFER-FRACTIONS: 1
+    S-K6-BOX-COLUMN-FIELD-BUTT-WELD-WITH-BACKING: 1
+    S-K6-FILLER-PLATE-EQUALIZES-THICKNESS: 1
+    S-K6-SPLICE-PLATE-TRANSFERS-FORCE: 1
+    S-K6-SPLICE-FRICTION-JOINT-SELECTION: 1
+    S-K6-COLUMN-BASE-TYPES-FIXITY-ORDER: 1
+    S-K6-COLUMN-BASE-NOTIFICATION-1456: 1
+    S-K6-EXPOSED-BASE-CAPACITY-DESIGN-DS-PENALTY: 1
+    S-K6-EXPOSED-BASE-ANCHOR-AREA-RATIO: 1
+    S-K6-EXPOSED-BASE-ANCHOR-HOLE-CLEARANCE: 1
+    S-K6-EXPOSED-BASE-SHEAR-CAPACITY-NOT-ADDITIVE: 1
+    S-K6-EXPOSED-BASE-ANCHOR-LOCKING: 1
+    S-K6-EMBEDDED-BASE-MINIMUM-DEPTH: 1
+    S-K6-EMBEDDED-BASE-EFFECTIVE-FIXED-POINT: 1
+  content_sha256: e325ce37f6258a799fe550d1cda7a639b77251c8ca7df27466dd3d342e0219e6
 items:
   S-K6-FIRE-LOAD-FIXED-PLUS-LIVE-COMBUSTIBLES:
     code: structure.steel.fire-load-fixed-plus-live-combustibles
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:mlit.go.jp 耐火性能検証法 可燃物 発熱量 収納可燃物 内装用建築材料
       explanation: 耐火設計 火災荷重 固定可燃物 積載可燃物 定義 木材等価
   S-K6-STEEL-FIRE-STRENGTH-FIREPROOFING:
     code: structure.steel.fire-strength-fireproofing
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:kenken.go.jp 鋼構造部材 高温 耐力低下 耐火被覆 鋼材温度
       explanation: 鋼材 300℃ 強度低下 耐火被覆 条件 鋼種 加熱時間
   S-K6-FIREPROOFING-REQUIRED-ABOVE-250C:
     code: structure.steel.fireproofing-required-above-250c
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:kenken.go.jp 鋼材 250℃ 長時間 高温強度 耐火被覆
       explanation: 鋼材 250℃ 長時間 強度低下 根拠 鋼種 加熱時間
   S-K6-FIREPROOFING-BOARD-ATTACHMENT:
     code: structure.steel.fireproofing-board-attachment
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:mlit.go.jp 鉄骨 耐火板張り ALC板 けい酸カルシウム板 留付け
       explanation: 張付け耐火被覆 ALC板 けい酸カルシウム板 工法 特徴
   S-K6-FIREPROOFING-CAST-IN:
     code: structure.steel.fireproofing-cast-in
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:mlit.go.jp 鉄骨 耐火被覆 コンクリート 打込み 軽量コンクリート
       explanation: 打込み耐火被覆 軽量コンクリート 工法 特徴 養生 ひび割れ
   S-K6-FIREPROOFING-PLASTER-FINISH:
     code: structure.steel.fireproofing-plaster-finish
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:mlit.go.jp 鉄骨 ラス張り モルタル塗り 耐火被覆 鉄網モルタル
       explanation: 塗仕上げ耐火被覆 ラス モルタル 工法 特徴 熟練
   S-K6-FIREPROOFING-SPRAY-APPLIED:
     code: structure.steel.fireproofing-spray-applied
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:mlit.go.jp 鉄骨 耐火材吹付け ロックウール 飛散 耐火被覆
       explanation: 吹付け耐火被覆 ロックウール 工法 特徴 雨水 剥落 屋内
   S-K6-OVERHEAD-CRANE-SEISMIC-WEIGHT:
     code: structure.steel.overhead-crane-seismic-weight
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鋼構造許容応力度設計規準 天井クレーン 走行レール 吊り荷 地震力
@@ -386,14 +809,16 @@ items:
       explanation: H形鋼柱 強軸 弱軸 ラーメン構造 ブレース構造 使い分け 解説
   S-K6-H-SECTION-FLANGE-BENDING:
     code: structure.steel.h-section-flange-bending
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp H形鋼 フランジ 曲げモーメント 引張力 圧縮力
       explanation: H形鋼 フランジ 曲げ 引張 圧縮 役割 解説
   S-K6-H-SECTION-WEB-SHEAR:
     code: structure.steel.h-section-web-shear
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp H形鋼 ウェブ せん断力 負担
@@ -414,42 +839,48 @@ items:
       explanation: 鋼材 長期許容応力度 短期許容応力度 基準強度 計算 解説
   S-K6-STEEL-MATERIAL-STRENGTH-JIS-FACTOR:
     code: structure.steel.material-strength-jis-factor
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:mlit.go.jp 炭素鋼 JIS規格品 材料強度 1.1倍 圧縮 引張 曲げ せん断
       explanation: 構造用鋼材 材料強度 JIS規格品 1.1倍 補正 根拠 解説
   S-K6-STEEL-F-VALUE-DEFINITION:
     code: structure.steel.f-value-definition
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:mlit.go.jp 鋼材 基準強度 降伏点 引張強さ 70パーセント 告示
       explanation: 鋼材 基準強度F 降伏点下限 引張強度下限 70% 決め方 解説
   S-K6-STEEL-YIELD-RATIO-SMALLER-PREFERRED:
     code: structure.steel.yield-ratio-smaller-preferred
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:jisc.go.jp 建築構造用圧延鋼材 降伏比 塑性変形能力
       explanation: 構造用鋼材 降伏比 小さい メリット 塑性変形能力 解説
   S-K6-STEEL-YOUNGS-MODULUS-STRENGTH-INDEPENDENT:
     code: structure.steel.youngs-modulus-strength-independent
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鋼材 ヤング係数 鋼種 強度 弾性係数
       explanation: 鋼材 強度が違っても ヤング係数 同じ 理由 解説
   S-K6-STEEL-YOUNGS-MODULUS-VS-CONCRETE:
     code: structure.steel.youngs-modulus-vs-concrete
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鋼材 コンクリート ヤング係数 比較
       explanation: 鋼材とコンクリート ヤング係数 比率 約10倍 解説
   S-K6-H-SECTION-STRONG-WEAK-AXIS-RIGIDITY:
     code: structure.steel.h-section-strong-weak-axis-rigidity
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp H形鋼 強軸 弱軸 断面二次モーメント 曲げ剛性
@@ -463,14 +894,16 @@ items:
       explanation: 建築鉄骨 発錆 防錆塗装 溶融亜鉛めっき 選び方 解説
   S-K6-STEEL-STRUCTURE-DEFINITION:
     code: structure.steel.structure-definition
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鉄骨構造 形鋼 角形鋼管 高力ボルト 溶接 構成
       explanation: 鉄骨構造とは 鋼材 接合 高力ボルト 溶接 基本 解説
   S-K6-STEEL-LONG-TERM-BEARING-ALLOWABLE-STRESS:
     code: structure.steel.long-term-bearing-allowable-stress
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:mlit.go.jp 鋼材 長期許容支圧応力度 F/1.1 長期許容引張応力度 F/1.5
@@ -491,7 +924,8 @@ items:
       explanation: 許容曲げ応力度検討 保有耐力横補剛 違い 梁端塑性化 解説
   S-K6-H-BEAM-ALLOWABLE-BENDING-INPUTS:
     code: structure.steel.h-beam-allowable-bending-inputs
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp H形断面梁 許容曲げ応力度 鋼種 断面寸法 モーメント分布 支点間距離
@@ -512,7 +946,8 @@ items:
       explanation: 横補剛 梁 全塑性モーメント 発揮 横座屈防止 解説
   S-K6-UNIFORM-BRACING-SLENDERNESS-FORMULAS:
     code: structure.steel.uniform-bracing-slenderness-formulas
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:mlit.go.jp 保有耐力横補剛 均等配置 SN400B SN490B 弱軸細長比 補剛数
@@ -533,7 +968,8 @@ items:
       explanation: 高強度鋼 梁 断面縮小 たわみが大きくなる 理由 解説
   S-K6-STEEL-DIAMETER-THICKNESS-RATIO-SMALLER-PREFERRED:
     code: structure.steel.diameter-thickness-ratio-smaller-preferred
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鋼管 径厚比 局部座屈 塑性変形能力
@@ -554,7 +990,8 @@ items:
       explanation: H形鋼梁 横座屈 対策 小梁 横補剛 箱形鋼 フランジ幅 解説
   S-K6-H-SECTION-AXIS-LATERAL-BUCKLING:
     code: structure.steel.h-section-axis-lateral-buckling
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp H形鋼 強軸曲げ 弱軸曲げ 横座屈
@@ -575,7 +1012,8 @@ items:
       explanation: 鋼材 圧縮耐力 座屈で低下 引張耐力との違い 解説
   S-K6-STEEL-BUCKLING-MODE-IDENTIFICATION:
     code: structure.steel.buckling-mode-identification
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鋼部材 曲げ座屈 局部座屈 横座屈 分類
@@ -596,42 +1034,48 @@ items:
       explanation: SN400からSN490 同じ断面 梁たわみ 変わらない 理由 解説
   S-K6-STEEL-BEAM-COMMON-SECTIONS:
     code: structure.steel.beam-common-sections
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鉄骨梁 H形鋼 溝形鋼 山形鋼 断面 用途
       explanation: 鉄骨梁 よく使う形鋼 H形鋼 溝形鋼 山形鋼 解説
   S-K6-STEEL-BEAM-DEFLECTION-CHECK:
     code: structure.steel.beam-deflection-check
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鉄骨梁 たわみ 使用性 応力 検討
       explanation: 鉄骨梁 応力度だけでなく たわみ検討 必要 理由 解説
   S-K6-STEEL-BEAM-DEFLECTION-CHECK-OMISSION:
     code: structure.steel.beam-deflection-check-omission
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:mlit.go.jp 鉄骨梁 たわみ 検討 省略 梁せい 有効長さ 15分の1
       explanation: 梁せい 有効長さ 1/15 たわみ検討 省略条件 根拠 解説
   S-K6-STEEL-BEAM-DEFLECTION-LIMITS:
     code: structure.steel.beam-deflection-limits
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:mlit.go.jp 鉄骨梁 たわみ制限 両端支持 300分の1 片持ち 250分の1
       explanation: 鉄骨梁 たわみ スパン L/300 片持ち L/250 基準 解説
   S-K6-STEEL-BEAM-DEPTH-SPAN-RANGE:
     code: structure.steel.beam-depth-span-range
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鉄骨梁 梁せい スパン 15分の1 30分の1 概略設計
       explanation: 鉄骨造 梁せい スパン比 1/15 1/30 目安 解説
   S-K6-STEEL-BEAM-DESIGN-ACTIONS:
     code: structure.steel.beam-design-actions
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鉄骨梁 曲げモーメント せん断力 設計応力
@@ -652,7 +1096,8 @@ items:
       explanation: 圧縮材 細長比 座屈長さ 断面二次半径 全体座屈 関係 解説
   S-K6-EFFECTIVE-SLENDERNESS-MAXIMUMS:
     code: structure.steel.effective-slenderness-maximums
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:mlit.go.jp 鉄骨 圧縮材 有効細長比 柱 200 柱以外 250 ラチス材 160
@@ -666,7 +1111,8 @@ items:
       explanation: 限界細長比 基準強度が大きいほど 小さくなる 式 意味 解説
   S-K6-19-LATERAL-BUCKLING:
     code: structure.steel.beam-lateral-buckling
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 開断面梁 H形鋼 横座屈 圧縮フランジ 面外変形 ねじれ
@@ -701,7 +1147,8 @@ items:
       explanation: フランジ幅が広い 梁 横座屈しにくい 横補剛数 理由 解説
   S-K6-BEAM-SECTION-SHAPE-LATERAL-BUCKLING:
     code: structure.steel.beam-section-shape-lateral-buckling
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp H形鋼 I形鋼 箱形鋼 横座屈 開断面 閉断面 比較
@@ -729,7 +1176,8 @@ items:
       explanation: 柱ウェブ 梁ウェブ 幅厚比制限 柱の方が厳しい 理由 解説
   S-K6-FA-H-BEAM-FLANGE-WEB-WIDTH-THICKNESS-LIMITS:
     code: structure.steel.fa-h-beam-flange-web-width-thickness-limits
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:mlit.go.jp FA材 炭素鋼 H形鋼梁 フランジ ウェブ 幅厚比 235 基準強度
@@ -750,7 +1198,8 @@ items:
       explanation: 幅厚比制限 厳しい 小さい 局部座屈しない 条件 解説
   S-K6-BEAM-TYPES-ROLLED-BUILT-UP:
     code: structure.steel.beam-types-rolled-built-up
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 形鋼梁 組立梁 H形鋼 I形鋼 トラス梁 ラチス梁 分類
@@ -771,7 +1220,8 @@ items:
       explanation: ラーメン柱 水平移動拘束 座屈長さ 階高より長い短い 解説
   S-K6-TRUSS-MEMBER-IN-OUT-PLANE-BUCKLING-LENGTH:
     code: structure.steel.truss-member-in-out-plane-buckling-length
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp トラス圧縮材 構面内 構面外 座屈長さ 節点間距離 横補剛間隔
@@ -799,14 +1249,16 @@ items:
       explanation: F14T F10T 高力ボルト 本数削減 接合部小型化 理由 解説
   S-K6-FRICTION-JOINT-GAP-FILLER-RULE:
     code: structure.steel.friction-joint-gap-filler-rule
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:mlit.go.jp 鉄骨工事 高力ボルト摩擦接合 肌すき フィラー 1mm SN400A
       explanation: 高力ボルト摩擦接合 肌すき 1mm フィラープレート 処理 解説
   S-K6-HIGH-STRENGTH-BOLT-CONNECTION-TYPES:
     code: structure.steel.high-strength-bolt-connection-types
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 高力ボルト接合 摩擦接合 引張接合 形式
@@ -834,7 +1286,8 @@ items:
       explanation: 高力ボルト摩擦面 黒皮除去 赤錆 表面処理 すべり係数 解説
   S-K6-ORDINARY-BOLT-HOLE-CLEARANCE:
     code: structure.steel.ordinary-bolt-hole-clearance
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:mlit.go.jp 普通ボルト 孔径 軸径 1mm 20mm 1.5mm 建築基準
@@ -855,7 +1308,8 @@ items:
       explanation: 普通ボルト接合 繰返し荷重 緩みやすい ボルト孔 隙間 解説
   S-K6-ORDINARY-BOLT-HOLE-DIAMETER-AIJ:
     code: structure.steel.ordinary-bolt-hole-diameter-aij
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鋼構造設計規準 普通ボルト 孔径 軸径 0.5mm
@@ -869,14 +1323,16 @@ items:
       explanation: 普通ボルト せん断力 ボルト軸側面 力の伝わり方 解説
   S-K6-ORDINARY-BOLT-THREAD-PROJECTION:
     code: structure.steel.ordinary-bolt-thread-projection
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:mlit.go.jp 鉄骨工事 普通ボルト ねじ部 ナット 2山 3山 余長
       explanation: 普通ボルト ナットから ねじ山 2山 3山 出す 理由 解説
   S-K6-ORDINARY-BOLT-WASHER-UNDER-NUT:
     code: structure.steel.ordinary-bolt-washer-under-nut
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:mlit.go.jp 鉄骨工事 普通ボルト 座金 ナット側 施工
@@ -904,7 +1360,8 @@ items:
       explanation: 高力ボルト すべり耐力以下 繰返し荷重 張力低下 疲労 解説
   S-K6-HIGH-STRENGTH-BOLT-CONSTRUCTION-ADVANTAGE:
     code: structure.steel.high-strength-bolt-construction-advantage
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:mlit.go.jp 鉄骨工事 高力ボルト接合 施工性 工期 品質管理
@@ -918,14 +1375,16 @@ items:
       explanation: 高力ボルト摩擦接合 応力集中が生じにくい 理由 解説
   S-K6-HIGH-STRENGTH-BOLT-TENSILE-STRENGTH-RATIO:
     code: structure.steel.high-strength-bolt-tensile-strength-ratio
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:jisc.go.jp 高力ボルト 普通ボルト 引張強さ 比較
       explanation: 高力ボルト 引張強度 普通ボルト 2倍 3倍 比較 解説
   S-K6-FATIGUE-CHECK-CYCLE-THRESHOLD:
     code: structure.steel.fatigue-check-cycle-threshold
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鋼構造 疲労設計 繰返し回数 10000回 打切り限界
@@ -939,7 +1398,8 @@ items:
       explanation: 基準疲労強さ 2×10^6回 高力ボルト摩擦接合140N/mm² 完全溶込み溶接100N/mm² 応力範囲 比較
   S-K6-HIGH-STRENGTH-BOLT-PRODUCT-TYPES:
     code: structure.steel.high-strength-bolt-product-types
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:mlit.go.jp 公共建築工事標準仕様書 JIS形高力ボルト トルシア形高力ボルト 種類
@@ -960,7 +1420,8 @@ items:
       explanation: トルシア形高力ボルト 共回り 軸回り マーキング 確認方法 解説
   S-K6-FRICTION-JOINT-SLIP-COEFFICIENT:
     code: structure.steel.friction-joint-slip-coefficient
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 高力ボルト摩擦接合 すべり係数 0.45 溶融亜鉛めっき 0.40
@@ -974,7 +1435,8 @@ items:
       explanation: 高力ボルト 許容せん断耐力 0.3T 0.45T 0.6T 0.9T 解説
   S-K6-BOLT-MINIMUM-EDGE-DISTANCE:
     code: structure.steel.bolt-minimum-edge-distance
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:mlit.go.jp 鉄骨 ボルト 最小縁端距離 軸径 切断縁 圧延縁
@@ -988,28 +1450,32 @@ items:
       explanation: F10T 10の意味 引張強さ せん断強さではない 解説
   S-K6-HIGH-STRENGTH-BOLT-HOLE-CLEARANCE:
     code: structure.steel.high-strength-bolt-hole-clearance
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:mlit.go.jp 高力ボルト 孔径 軸径 2mm 27mm 3mm 建築基準
       explanation: 高力ボルト 孔径 軸径との差 2mm 3mm 条件 解説
   S-K6-HIGH-STRENGTH-BOLT-MINIMUM-PITCH:
     code: structure.steel.high-strength-bolt-minimum-pitch
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:mlit.go.jp 高力ボルト 孔 中心間隔 軸径 2.5倍 M22 55mm
       explanation: 高力ボルト 最小ピッチ 2.5d M22 55mm 根拠 解説
   S-K6-BOLT-EDGE-DISTANCE-TERM-IDENTIFICATION:
     code: structure.steel.bolt-edge-distance-term-identification
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp ボルト はしあき へりあき 荷重方向 定義
       explanation: ボルト はしあき距離 へりあき距離 違い 図 解説
   S-K6-BOLT-MAXIMUM-EDGE-DISTANCE:
     code: structure.steel.bolt-maximum-edge-distance
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:mlit.go.jp 鉄骨 ボルト 最大縁端距離 材厚 12倍 150mm
@@ -1037,35 +1503,40 @@ items:
       explanation: 鉄骨溶接 溶接接合の連続性と応力集中 仕組み 設計上の考え方 解説
   S-K6-WELD-NO-SECTION-LOSS-HIGH-RIGIDITY:
     code: structure.steel.weld-no-section-loss-high-rigidity
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:jwes.or.jp 鉄骨溶接 溶接接合の断面欠損と剛性 設計指針 技術資料
       explanation: 鉄骨溶接 溶接接合の断面欠損と剛性 仕組み 設計上の考え方 解説
   S-K6-WELD-TYPE-IDENTIFICATION:
     code: structure.steel.weld-type-identification
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:jwes.or.jp 鉄骨溶接 溶接接合の種類 用語 技術資料
       explanation: 鉄骨溶接 溶接接合の種類 意味 違い 図解
   S-K6-WELD-BEAD-DEFINITION:
     code: structure.steel.weld-bead-definition
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:jwes.or.jp 鉄骨溶接 溶接ビード 用語 技術資料
       explanation: 鉄骨溶接 溶接ビード 意味 違い 図解
   S-K6-WELD-FORM-FLEXIBILITY:
     code: structure.steel.weld-form-flexibility
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:jwes.or.jp 鉄骨溶接 溶接接合の形式自由度 設計指針 技術資料
       explanation: 鉄骨溶接 溶接接合の形式自由度 仕組み 設計上の考え方 解説
   S-K6-WELD-NO-CONSTRUCTION-NOISE:
     code: structure.steel.weld-no-construction-noise
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:jwes.or.jp 鉄骨溶接 溶接施工時の騒音 設計指針 技術資料
@@ -1079,21 +1550,24 @@ items:
       explanation: 鉄骨溶接 溶接継目の形式と許容せん断応力度 適用条件 根拠 解説 長期 F/(1.5√3) 短期 F/√3
   S-K6-DISSIMILAR-STEEL-WELD-WEAKER-BASE-GOVERNS:
     code: structure.steel.dissimilar-steel-weld-weaker-base-governs
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鉄骨溶接 異種鋼材の突合せ溶接の許容応力度 設計規準 適用条件
       explanation: 鉄骨溶接 異種鋼材の突合せ溶接の許容応力度 適用条件 根拠 解説
   S-K6-WELD-ALLOWABLE-STRESS-FULL-PENETRATION:
     code: structure.steel.weld-allowable-stress-full-penetration
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鉄骨溶接 完全溶込み溶接部 許容応力度 長期 圧縮引張曲げ F/1.5 長期せん断 F/(1.5√3) 短期 圧縮引張曲げ F 短期せん断 F/√3
       explanation: 鉄骨溶接 完全溶込み溶接部 許容応力度 長期 圧縮引張曲げ F/1.5 長期せん断 F/(1.5√3) 短期 圧縮引張曲げ F 短期せん断 F/√3
   S-K6-WELD-ALLOWABLE-STRESS-NONFULL-PENETRATION:
     code: structure.steel.weld-allowable-stress-nonfull-penetration
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鉄骨溶接 完全溶込み以外の溶接部の許容応力度 設計規準 適用条件 長期 F/(1.5√3) 短期 F/√3
@@ -1135,28 +1609,32 @@ items:
       explanation: 鉄骨溶接 鋼製エンドタブの組立溶接位置 仕組み 設計上の考え方 解説
   S-K6-STEEL-END-TAB-RETENTION-CONDITIONS:
     code: structure.steel.end-tab-retention-conditions
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鋼製エンドタブ 切断 要否 塑性ヒンジを形成しない梁端 400N/mm²級梁材 H形断面柱 条件 組合せ
       explanation: 鋼製エンドタブ 切断しなくてよい条件 非塑性ヒンジ 400N/mm²級 H形断面柱 条件の組合せ 解説
   S-K6-FULL-PENETRATION-WELD-DEFINITION-REPEATED-STRESS:
     code: structure.steel.full-penetration-weld-definition-repeated-stress
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 完全溶込み溶接 構成 開先 溶着金属 繰返し応力 適用
       explanation: 完全溶込み溶接 構成 繰返し応力を伝達する部分 使用可否 解説
   S-K6-FULL-PENETRATION-WELD-ANATOMY:
     code: structure.steel.full-penetration-weld-anatomy
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鉄骨溶接 完全溶込み溶接断面の用語 用語 技術資料
       explanation: 鉄骨溶接 完全溶込み溶接断面の用語 意味 違い 図解
   S-K6-FULL-PENETRATION-WELD-EFFECTIVE-THROAT:
     code: structure.steel.full-penetration-weld-effective-throat
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鉄骨溶接 完全溶込み溶接の有効のど厚 設計規準 適用条件
@@ -1177,42 +1655,48 @@ items:
       explanation: 鉄骨溶接 部分溶込み溶接の有効のど厚 適用条件 根拠 解説 開先角度60度未満 3mm控除
   S-K6-PARTIAL-PENETRATION-WELD-APPLICABILITY:
     code: structure.steel.partial-penetration-weld-applicability
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 部分溶込み溶接 適用制限 せん断 引張 曲げ 繰返し荷重 使用可否
       explanation: 部分溶込み溶接 せん断のみ 引張 曲げ 繰返し荷重 適用可否 根拠 解説
   S-K6-BUILT-UP-H-SECTION-FLANGE-WEB-FILLET:
     code: structure.steel.built-up-h-section-flange-web-fillet
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鉄骨溶接 組立H形鋼のフランジ・ウェブ接合 設計規準 適用条件
       explanation: 鉄骨溶接 組立H形鋼のフランジ・ウェブ接合 適用条件 根拠 解説
   S-K6-FILLET-WELD-DEFINITION-REPEATED-STRESS:
     code: structure.steel.fillet-weld-definition-repeated-stress
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp すみ肉溶接 構成 隅角部 溶着金属 繰返し応力 適用
       explanation: すみ肉溶接 構成 繰返し応力を伝達する部分 使用可否 解説
   S-K6-FILLET-WELD-ANATOMY:
     code: structure.steel.fillet-weld-anatomy
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鉄骨溶接 すみ肉溶接断面の用語 用語 技術資料
       explanation: 鉄骨溶接 すみ肉溶接断面の用語 意味 違い 図解
   S-K6-FILLET-WELD-SIZE-EFFECTIVE-THROAT:
     code: structure.steel.fillet-weld-size-effective-throat
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鉄骨溶接 すみ肉溶接のサイズと有効のど厚 設計規準 適用条件 サイズ0.7倍
       explanation: 鉄骨溶接 すみ肉溶接のサイズと有効のど厚 適用条件 根拠 解説 サイズ0.7倍
   S-K6-FILLET-WELD-EFFECTIVE-AREA:
     code: structure.steel.fillet-weld-effective-area
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鉄骨溶接 すみ肉溶接の有効面積 設計規準 適用条件
@@ -1261,35 +1745,40 @@ items:
       explanation: 鉄骨溶接 ピットの識別 意味 違い 図解
   S-K6-WELD-CONSTRUCTION-DEFECT-RISK:
     code: structure.steel.weld-construction-defect-risk
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:jwes.or.jp 鉄骨溶接 溶接施工不良と欠陥 設計指針 技術資料
       explanation: 鉄骨溶接 溶接施工不良と欠陥 仕組み 設計上の考え方 解説
   S-K6-WELD-INSPECTION-DIFFICULTY:
     code: structure.steel.weld-inspection-difficulty
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:jwes.or.jp 溶接接合部 検査困難性 内部欠陥 非破壊検査 品質確認
       explanation: 溶接接合部 検査が難しい理由 内部欠陥 非破壊試験 解説
   S-K6-WELD-DEFECT-OVERLAP:
     code: structure.steel.weld-defect-overlap
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:jwes.or.jp 鉄骨溶接 オーバーラップの識別 用語 技術資料
       explanation: 鉄骨溶接 オーバーラップの識別 意味 違い 図解
   S-K6-WELD-BASIC-SYMBOL-SHAPES:
     code: structure.steel.weld-basic-symbol-shapes
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:jisc.go.jp 鉄骨溶接 すみ肉・V形・U形溶接の基本記号 用語 技術資料
       explanation: 鉄骨溶接 すみ肉・V形・U形溶接の基本記号 意味 違い 図解
   S-K6-WELD-SYMBOL-ARROW-SIDE-POSITION:
     code: structure.steel.weld-symbol-arrow-side-position
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:jisc.go.jp 鉄骨溶接 溶接記号の基準線上下と施工側 用語 技術資料
@@ -1338,7 +1827,8 @@ items:
       explanation: 鉄骨溶接 溶接熱とひずみ 仕組み 設計上の考え方 解説
   S-K6-MINIMIZE-WELD-DISTORTION-AND-RESIDUAL-STRESS:
     code: structure.steel.minimize-weld-distortion-and-residual-stress
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:jwes.or.jp 鉄骨溶接 溶接ひずみ・残留応力の低減 設計指針 技術資料
@@ -1352,21 +1842,24 @@ items:
       explanation: 鉄骨溶接 高力ボルト・溶接併用継手の施工順序 仕組み 設計上の考え方 解説
   S-K6-EXISTING-RIVET-JOINT-WELDED-EXTENSION-LOAD-SHARING:
     code: structure.steel.existing-rivet-joint-welded-extension-load-sharing
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鉄骨溶接 リベット既存継手を溶接補強する増築時の応力分担 設計規準 適用条件
       explanation: 鉄骨溶接 リベット既存継手を溶接補強する増築時の応力分担 適用条件 根拠 解説
   S-K6-MIXED-BUTT-FILLET-WELD-LOAD-SHARING:
     code: structure.steel.mixed-butt-fillet-weld-load-sharing
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鉄骨溶接 突合せ溶接とすみ肉溶接の応力分担 設計規準 適用条件
       explanation: 鉄骨溶接 突合せ溶接とすみ肉溶接の応力分担 適用条件 根拠 解説
   S-K6-MIXED-WELD-ORDINARY-BOLT-LOAD-SHARING:
     code: structure.steel.mixed-weld-ordinary-bolt-load-sharing
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鉄骨溶接 溶接と普通ボルトを混用する場合の応力負担 設計規準 適用条件
@@ -1394,14 +1887,16 @@ items:
       explanation: 鉄骨ブレース 小梁・水平ブレース床トラスの小梁軸力 仕組み 設計上の考え方 解説
   S-K6-BRACE-BALANCED-DIRECTIONAL-LAYOUT:
     code: structure.steel.brace-balanced-directional-layout
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鉄骨ブレース 平面配置 立面配置 方向別 釣り合い 偏心 ねじれ
       explanation: 鉄骨ブレース 各方向に釣り合いよく配置 偏心 ねじれ 配置計画 解説
   S-K6-BRACE-SECTION-USE-IDENTIFICATION:
     code: structure.steel.brace-section-use-identification
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鉄骨ブレース 建物規模に応じたブレース鋼材の例 用語 技術資料
@@ -1436,7 +1931,8 @@ items:
       explanation: 鉄骨ブレース 筋かい端部・接合部の保有耐力接合 適用条件 根拠 解説 炭素鋼1.2倍 ステンレス鋼1.5倍
   S-K6-NONSEISMIC-TRUSS-JOINT-MINIMUM-STRENGTH:
     code: structure.steel.nonseismic-truss-joint-minimum-strength
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鉄骨ブレース 地震力を受けないトラス接合部の最低耐力 設計規準 適用条件 許容耐力1/2
@@ -1492,7 +1988,8 @@ items:
       explanation: 鉄骨ブレース X形筋かいの引張側・圧縮側耐力の合算 適用条件 根拠 解説 圧縮座屈時水平力2倍 座屈後安定耐力
   S-K6-BRACED-FRAME-COLUMN-BRACE-CAPACITY-SUM:
     code: structure.steel.braced-frame-column-brace-capacity-sum
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 筋かい付き骨組 保有水平耐力 柱 筋かい 水平せん断耐力 分担 算定
@@ -1534,7 +2031,8 @@ items:
       explanation: 鉄骨ブレース 筋かい水平力分担率による地震時応力割増し 適用条件 根拠 解説 β 5/7 1.5倍 1+0.7β
   S-K6-HYSTERESIS-LOOP-AREA-ENERGY-ABSORPTION:
     code: structure.steel.hysteresis-loop-area-energy-absorption
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鉄骨ブレース 履歴曲線とエネルギー吸収能力 用語 技術資料
@@ -1583,7 +2081,8 @@ items:
       explanation: 鉄骨柱梁接合部 角形鋼管柱・H形鋼梁仕口の溶接形式 仕組み 設計上の考え方 解説
   S-K6-BEAM-END-MOMENT-STRENGTH-FLANGE-PLUS-WEB:
     code: structure.steel.beam-end-moment-strength-flange-plus-web
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鉄骨柱梁接合部 梁端接合部の最大曲げ耐力の構成 設計規準 適用条件
@@ -1611,14 +2110,16 @@ items:
       explanation: 角形鋼管柱梁接合部 通しダイアフラムの食い違い防止板厚 仕組み 設計上の考え方 解説
   S-K6-DIAPHRAGM-FLANGE-MISALIGNMENT-LIMIT:
     code: structure.steel.diaphragm-flange-misalignment-limit
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 角形鋼管柱梁接合部 ダイアフラム・梁フランジ突合せ継手の食い違い 設計規準 適用条件 板厚15mm以下 食い違い1.5mm以下
       explanation: 角形鋼管柱梁接合部 ダイアフラム・梁フランジ突合せ継手の食い違い 適用条件 根拠 解説 板厚15mm以下 食い違い1.5mm以下
   S-K6-THROUGH-DIAPHRAGM-CONSTRUCTION-AND-WELD:
     code: structure.steel.through-diaphragm-construction-and-weld
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 角形鋼管柱梁接合部 通しダイアフラム形式の柱切断位置と溶接 用語 技術資料
@@ -1653,49 +2154,56 @@ items:
       explanation: 鉄骨継手 柱継手の最低設計耐力 適用条件 根拠 解説 柱断面の許容耐力1/2
   S-K6-METAL-TOUCH-SPLICE-DIRECT-TRANSFER-FRACTIONS:
     code: structure.steel.metal-touch-splice-direct-transfer-fractions
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鉄骨継手 メタルタッチ継手の直接伝達分 設計規準 適用条件 柱継手1/4 柱脚1/2
       explanation: 鉄骨継手 メタルタッチ継手の直接伝達分 適用条件 根拠 解説 柱継手1/4 柱脚1/2
   S-K6-BOX-COLUMN-FIELD-BUTT-WELD-WITH-BACKING:
     code: structure.steel.box-column-field-butt-weld-with-backing
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鉄骨継手 引張を受ける箱形断面柱の現場継手 用語 技術資料
       explanation: 鉄骨継手 引張を受ける箱形断面柱の現場継手 意味 違い 図解
   S-K6-FILLER-PLATE-EQUALIZES-THICKNESS:
     code: structure.steel.filler-plate-equalizes-thickness
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鉄骨継手 フィラープレートの用途 用語 技術資料
       explanation: 鉄骨継手 フィラープレートの用途 意味 違い 図解
   S-K6-SPLICE-PLATE-TRANSFERS-FORCE:
     code: structure.steel.splice-plate-transfers-force
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鉄骨継手 スプライスプレートの用途 用語 技術資料
       explanation: 鉄骨継手 スプライスプレートの用途 意味 違い 図解
   S-K6-SPLICE-FRICTION-JOINT-SELECTION:
     code: structure.steel.splice-friction-joint-selection
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鉄骨継手 継手の高力ボルト摩擦接合形式の選択 用語 技術資料
       explanation: 鉄骨継手 継手の高力ボルト摩擦接合形式の選択 意味 違い 図解
   S-K6-COLUMN-BASE-TYPES-FIXITY-ORDER:
     code: structure.steel.column-base-types-fixity-order
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鉄骨柱脚 柱脚形式と固定度の大小 用語 技術資料
       explanation: 鉄骨柱脚 柱脚形式と固定度の大小 意味 違い 図解
   S-K6-COLUMN-BASE-NOTIFICATION-1456:
     code: structure.steel.column-base-notification-1456
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:mlit.go.jp 平成12年建設省告示第1456号 鉄骨造 柱脚 緊結 構造方法
@@ -1744,35 +2252,40 @@ items:
       explanation: 鉄骨柱脚 露出柱脚ベースプレートの厚さ 適用条件 根拠 解説 アンカーボルト径1.3倍
   S-K6-EXPOSED-BASE-CAPACITY-DESIGN-DS-PENALTY:
     code: structure.steel.exposed-base-capacity-design-ds-penalty
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:mlit.go.jp 露出形式柱脚 保有耐力接合 条件 Ds 0.05 加算
       explanation: 鉄骨柱脚 露出柱脚の保有耐力接合とDs割増し 適用条件 根拠 解説 1階 Ds 0.05割増し
   S-K6-EXPOSED-BASE-ANCHOR-AREA-RATIO:
     code: structure.steel.exposed-base-anchor-area-ratio
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:mlit.go.jp 平成12年建設省告示第1456号 露出形式柱脚 アンカーボルト全断面積 柱最下端断面積20%以上
       explanation: 鉄骨柱脚 露出柱脚アンカーボルトの全断面積 適用条件 根拠 解説 柱最下端断面積20%以上
   S-K6-EXPOSED-BASE-ANCHOR-HOLE-CLEARANCE:
     code: structure.steel.exposed-base-anchor-hole-clearance
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:mlit.go.jp 平成12年建設省告示第1456号 露出形式柱脚 アンカーボルト孔径 径+5mm以下
       explanation: 鉄骨柱脚 露出柱脚アンカーボルト孔径 適用条件 根拠 解説 公称軸径+5mm以下
   S-K6-EXPOSED-BASE-SHEAR-CAPACITY-NOT-ADDITIVE:
     code: structure.steel.exposed-base-shear-capacity-not-additive
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 露出柱脚 せん断耐力 ベースプレート下面 摩擦 アンカーボルト 併用 加算可否
       explanation: 露出柱脚 摩擦耐力 アンカーボルトせん断耐力 大きい方 加算可否 根拠 解説
   S-K6-EXPOSED-BASE-ANCHOR-LOCKING:
     code: structure.steel.exposed-base-anchor-locking
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:mlit.go.jp 平成12年建設省告示第1456号 露出形式柱脚 アンカーボルト 座金 二重ナット 戻り止め
@@ -1821,15 +2334,682 @@ items:
       explanation: 鉄骨柱脚 埋込み柱脚の応力伝達 仕組み 設計上の考え方 解説
   S-K6-EMBEDDED-BASE-MINIMUM-DEPTH:
     code: structure.steel.embedded-base-minimum-depth
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:mlit.go.jp 平成12年建設省告示第1456号 埋込み形式柱脚 埋込み深さ 柱幅2倍以上
       explanation: 鉄骨柱脚 埋込み柱脚の埋込み深さ 適用条件 根拠 解説 見付け幅2倍以上
   S-K6-EMBEDDED-BASE-EFFECTIVE-FIXED-POINT:
     code: structure.steel.embedded-base-effective-fixed-point
-    research_route_history: [steel-search-v1]
+    research_route_history:
+    - steel-search-v1
     query_history:
     - revision: 1
       authoritative: site:aij.or.jp 鉄骨柱脚 埋込み柱脚の構造計算上の固定位置 設計規準 適用条件 柱幅1.5倍下 固定点
       explanation: 鉄骨柱脚 埋込み柱脚の構造計算上の固定位置 適用条件 根拠 解説 柱幅1.5倍下 固定点
+  S-K6-EXAM-SN-A-USE:
+    code: structure.steel.exam-sn-a-use
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 SN材のA種の用途 基準 指針
+      explanation: 鉄骨構造 SN材のA種の用途 解説 図解
+  S-K6-EXAM-SN-C-THICKNESS:
+    code: structure.steel.exam-sn-c-thickness
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 SN材のB種とC種 基準 指針
+      explanation: 鉄骨構造 SN材のB種とC種 解説 図解
+  S-K6-EXAM-SN-YIELD-RANGE:
+    code: structure.steel.exam-sn-yield-range
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 SN材の降伏点の規定 基準 指針
+      explanation: 鉄骨構造 SN材の降伏点の規定 解説 図解
+  S-K6-EXAM-SN-CHARPY-GRADE:
+    code: structure.steel.exam-sn-charpy-grade
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 SN材の種別と衝撃試験 基準 指針
+      explanation: 鉄骨構造 SN材の種別と衝撃試験 解説 図解
+  S-K6-EXAM-SN490-SYMBOL:
+    code: structure.steel.exam-sn490-symbol
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 SN490Bの数値の意味 基準 指針
+      explanation: 鉄骨構造 SN490Bの数値の意味 解説 図解
+  S-K6-EXAM-SN490-F40:
+    code: structure.steel.exam-sn490-f40
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 SN490BのF値と板厚 基準 指針
+      explanation: 鉄骨構造 SN490BのF値と板厚 解説 図解
+  S-K6-EXAM-SN-THICKNESS-F:
+    code: structure.steel.exam-sn-thickness-f
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 SN材の板厚と許容値 基準 指針
+      explanation: 鉄骨構造 SN材の板厚と許容値 解説 図解
+  S-K6-EXAM-SN-TOLERANCE:
+    code: structure.steel.exam-sn-tolerance
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 SN材とSS材の板厚公差 基準 指針
+      explanation: 鉄骨構造 SN材とSS材の板厚公差 解説 図解
+  S-K6-EXAM-STEEL-ANISOTROPY:
+    code: structure.steel.exam-steel-anisotropy
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 圧延鋼材の方向別性質 基準 指針
+      explanation: 鉄骨構造 圧延鋼材の方向別性質 解説 図解
+  S-K6-EXAM-CHARPY-ENERGY:
+    code: structure.steel.exam-charpy-energy
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 シャルピー吸収エネルギー 基準 指針
+      explanation: 鉄骨構造 シャルピー吸収エネルギー 解説 図解
+  S-K6-EXAM-CHARPY-TEMPERATURE:
+    code: structure.steel.exam-charpy-temperature
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 鋼材の低温時の靱性 基準 指針
+      explanation: 鉄骨構造 鋼材の低温時の靱性 解説 図解
+  S-K6-EXAM-CARBON-WELDABILITY:
+    code: structure.steel.exam-carbon-weldability
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 炭素量と鋼材の性能 基準 指針
+      explanation: 鉄骨構造 炭素量と鋼材の性能 解説 図解
+  S-K6-EXAM-SULFUR-TOUGHNESS:
+    code: structure.steel.exam-sulfur-toughness
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 硫黄と板厚方向性能 基準 指針
+      explanation: 鉄骨構造 硫黄と板厚方向性能 解説 図解
+  S-K6-EXAM-PHOSPHORUS-TOUGHNESS:
+    code: structure.steel.exam-phosphorus-toughness
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 リンと鋼材の靱性 基準 指針
+      explanation: 鉄骨構造 リンと鋼材の靱性 解説 図解
+  S-K6-EXAM-COLD-FORMING:
+    code: structure.steel.exam-cold-forming
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 鋼材の冷間曲げ加工 基準 指針
+      explanation: 鉄骨構造 鋼材の冷間曲げ加工 解説 図解
+  S-K6-EXAM-BCR-BCP-PROCESS:
+    code: structure.steel.exam-bcr-bcp-process
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 BCR材とBCP材の成形方法 基準 指針
+      explanation: 鉄骨構造 BCR材とBCP材の成形方法 解説 図解
+  S-K6-EXAM-BCR295-SYMBOL:
+    code: structure.steel.exam-bcr295-symbol
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 BCR295の数値の意味 基準 指針
+      explanation: 鉄骨構造 BCR295の数値の意味 解説 図解
+  S-K6-EXAM-BCR-YIELD-RATIO:
+    code: structure.steel.exam-bcr-yield-ratio
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 BCR295の降伏比の規定 基準 指針
+      explanation: 鉄骨構造 BCR295の降伏比の規定 解説 図解
+  S-K6-EXAM-BCP325-STRENGTH:
+    code: structure.steel.exam-bcp325-strength
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 BCP325の規格値 基準 指針
+      explanation: 鉄骨構造 BCP325の規格値 解説 図解
+  S-K6-EXAM-TMCP-THICK-PLATE:
+    code: structure.steel.exam-tmcp-thick-plate
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 TMCP鋼の厚板への適用 基準 指針
+      explanation: 鉄骨構造 TMCP鋼の厚板への適用 解説 図解
+  S-K6-EXAM-SUS-OFFSET:
+    code: structure.steel.exam-sus-offset
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 SUS304Aの基準強度の指標 基準 指針
+      explanation: 鉄骨構造 SUS304Aの基準強度の指標 解説 図解
+  S-K6-EXAM-SUS-F:
+    code: structure.steel.exam-sus-f
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 SUS304AとSN400BのF値 基準 指針
+      explanation: 鉄骨構造 SUS304AとSN400BのF値 解説 図解
+  S-K6-EXAM-STEEL-HEAT-YIELD:
+    code: structure.steel.exam-steel-heat-yield
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 鋼材の温度と力学特性 基準 指針
+      explanation: 鉄骨構造 鋼材の温度と力学特性 解説 図解
+  S-K6-EXAM-ROUTE11-SCALE:
+    code: structure.steel.exam-route11-scale
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 ルート1-1の柱スパン 基準 指針
+      explanation: 鉄骨構造 ルート1-1の柱スパン 解説 図解
+  S-K6-EXAM-ROUTE12-SCALE:
+    code: structure.steel.exam-route12-scale
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 ルート1-2の階数条件 基準 指針
+      explanation: 鉄骨構造 ルート1-2の階数条件 解説 図解
+  S-K6-EXAM-ROUTE12-ONE-STORY:
+    code: structure.steel.exam-route12-one-story
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 ルート1-2の平屋の面積 基準 指針
+      explanation: 鉄骨構造 ルート1-2の平屋の面積 解説 図解
+  S-K6-EXAM-ROUTE13-HEIGHT:
+    code: structure.steel.exam-route13-height
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 ルート1-3の高さ条件 基準 指針
+      explanation: 鉄骨構造 ルート1-3の高さ条件 解説 図解
+  S-K6-EXAM-ROUTE1-CO:
+    code: structure.steel.exam-route1-co
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 ルート1の地震力算定 基準 指針
+      explanation: 鉄骨構造 ルート1の地震力算定 解説 図解
+  S-K6-EXAM-ROUTE2-CO:
+    code: structure.steel.exam-route2-co
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 ルート2の地震力算定 基準 指針
+      explanation: 鉄骨構造 ルート2の地震力算定 解説 図解
+  S-K6-EXAM-ROUTE11-CHECKS:
+    code: structure.steel.exam-route11-checks
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 ルート1-1の確認項目 基準 指針
+      explanation: 鉄骨構造 ルート1-1の確認項目 解説 図解
+  S-K6-EXAM-ROUTE12-ECCENTRICITY:
+    code: structure.steel.exam-route12-eccentricity
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 ルート1-2の偏心率 基準 指針
+      explanation: 鉄骨構造 ルート1-2の偏心率 解説 図解
+  S-K6-EXAM-ROUTE12-BRACING:
+    code: structure.steel.exam-route12-bracing
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 ルート1-2の梁の横補剛 基準 指針
+      explanation: 鉄骨構造 ルート1-2の梁の横補剛 解説 図解
+  S-K6-EXAM-ROUTE13-DRIFT:
+    code: structure.steel.exam-route13-drift
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 ルート1-3の層間変形角 基準 指針
+      explanation: 鉄骨構造 ルート1-3の層間変形角 解説 図解
+  S-K6-EXAM-ROUTE2-ASPECT:
+    code: structure.steel.exam-route2-aspect
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 ルート2の塔状比 基準 指針
+      explanation: 鉄骨構造 ルート2の塔状比 解説 図解
+  S-K6-EXAM-ROUTE2-STIFFNESS:
+    code: structure.steel.exam-route2-stiffness
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 剛性率と偏心率の対象 基準 指針
+      explanation: 鉄骨構造 剛性率と偏心率の対象 解説 図解
+  S-K6-EXAM-COLD-ROUTE1:
+    code: structure.steel.exam-cold-route1
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 冷間成形柱のルート1 基準 指針
+      explanation: 鉄骨構造 冷間成形柱のルート1 解説 図解
+  S-K6-EXAM-COLD-ROUTE2-RATIO:
+    code: structure.steel.exam-cold-route2-ratio
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 冷間成形柱の柱梁耐力比 基準 指針
+      explanation: 鉄骨構造 冷間成形柱の柱梁耐力比 解説 図解
+  S-K6-EXAM-COLD-ROUTE3-LOCAL:
+    code: structure.steel.exam-cold-route3-local
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 冷間成形柱の局部崩壊 基準 指針
+      explanation: 鉄骨構造 冷間成形柱の局部崩壊 解説 図解
+  S-K6-EXAM-ROUTE-BRACE-END:
+    code: structure.steel.exam-route-brace-end
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 ルート1・2の筋かい接合 基準 指針
+      explanation: 鉄骨構造 ルート1・2の筋かい接合 解説 図解
+  S-K6-EXAM-ROUTE-CEILING:
+    code: structure.steel.exam-route-ceiling
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 計算ルートと特定天井 基準 指針
+      explanation: 鉄骨構造 計算ルートと特定天井 解説 図解
+  S-K6-EXAM-DS-MEMBER:
+    code: structure.steel.exam-ds-member
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 鉄骨造のDsと部材性能 基準 指針
+      explanation: 鉄骨構造 鉄骨造のDsと部材性能 解説 図解
+  S-K6-EXAM-PANEL-DS:
+    code: structure.steel.exam-panel-ds
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 柱梁接合部パネルとDs 基準 指針
+      explanation: 鉄骨構造 柱梁接合部パネルとDs 解説 図解
+  S-K6-EXAM-COMPOSITE-STUD:
+    code: structure.steel.exam-composite-stud
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 合成梁の力の伝達 基準 指針
+      explanation: 鉄骨構造 合成梁の力の伝達 解説 図解
+  S-K6-EXAM-COMPOSITE-FULL:
+    code: structure.steel.exam-composite-full
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 完全合成梁のスタッド量 基準 指針
+      explanation: 鉄骨構造 完全合成梁のスタッド量 解説 図解
+  S-K6-EXAM-COMPOSITE-WIDTH:
+    code: structure.steel.exam-composite-width
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 合成梁のスラブ有効幅 基準 指針
+      explanation: 鉄骨構造 合成梁のスラブ有効幅 解説 図解
+  S-K6-EXAM-COMPOSITE-TOP-FLANGE:
+    code: structure.steel.exam-composite-top-flange
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 合成梁の上フランジ 基準 指針
+      explanation: 鉄骨構造 合成梁の上フランジ 解説 図解
+  S-K6-EXAM-COMPOSITE-BOTTOM-FLANGE:
+    code: structure.steel.exam-composite-bottom-flange
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 合成梁の下フランジ 基準 指針
+      explanation: 鉄骨構造 合成梁の下フランジ 解説 図解
+  S-K6-EXAM-DECK-INPLANE:
+    code: structure.steel.exam-deck-inplane
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 デッキ合成スラブの力伝達 基準 指針
+      explanation: 鉄骨構造 デッキ合成スラブの力伝達 解説 図解
+  S-K6-EXAM-CFT-BUCKLING:
+    code: structure.steel.exam-cft-buckling
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 CFT柱の局部座屈 基準 指針
+      explanation: 鉄骨構造 CFT柱の局部座屈 解説 図解
+  S-K6-EXAM-CFT-CONFINEMENT:
+    code: structure.steel.exam-cft-confinement
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 CFT柱の拘束効果 基準 指針
+      explanation: 鉄骨構造 CFT柱の拘束効果 解説 図解
+  S-K6-EXAM-CFT-CIRCLE:
+    code: structure.steel.exam-cft-circle
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 CFT短柱の断面形と拘束 基準 指針
+      explanation: 鉄骨構造 CFT短柱の断面形と拘束 解説 図解
+  S-K6-EXAM-CFT-WIDTH-THICKNESS:
+    code: structure.steel.exam-cft-width-thickness
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 CFT柱の幅厚比の扱い 基準 指針
+      explanation: 鉄骨構造 CFT柱の幅厚比の扱い 解説 図解
+  S-K6-EXAM-CFT-FIRE:
+    code: structure.steel.exam-cft-fire
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 CFT柱の耐火性能 基準 指針
+      explanation: 鉄骨構造 CFT柱の耐火性能 解説 図解
+  S-K6-EXAM-CFT-TRANSFER:
+    code: structure.steel.exam-cft-transfer
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 CFT柱の鋼管とコンクリート 基準 指針
+      explanation: 鉄骨構造 CFT柱の鋼管とコンクリート 解説 図解
+  S-K6-EXAM-SRC-BENDING:
+    code: structure.steel.exam-src-bending
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 SRC柱の曲げ終局耐力 基準 指針
+      explanation: 鉄骨構造 SRC柱の曲げ終局耐力 解説 図解
+  S-K6-EXAM-SRC-SHEAR:
+    code: structure.steel.exam-src-shear
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 SRC柱のせん断終局耐力 基準 指針
+      explanation: 鉄骨構造 SRC柱のせん断終局耐力 解説 図解
+  S-K6-EXAM-SRC-CRACK-STIFFNESS:
+    code: structure.steel.exam-src-crack-stiffness
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 SRC部材のひび割れ後の剛性 基準 指針
+      explanation: 鉄骨構造 SRC部材のひび割れ後の剛性 解説 図解
+  S-K6-EXAM-SRC-WEB-TYPE:
+    code: structure.steel.exam-src-web-type
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 SRC柱の鉄骨形式 基準 指針
+      explanation: 鉄骨構造 SRC柱の鉄骨形式 解説 図解
+  S-K6-EXAM-SRC-TENSION-BASE:
+    code: structure.steel.exam-src-tension-base
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 SRC造の最下階柱脚 基準 指針
+      explanation: 鉄骨構造 SRC造の最下階柱脚 解説 図解
+  S-K6-EXAM-SRC-NONEMBEDDED-DS:
+    code: structure.steel.exam-src-nonembedded-ds
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 SRC非埋込み柱脚と部材種別 基準 指針
+      explanation: 鉄骨構造 SRC非埋込み柱脚と部材種別 解説 図解
+  S-K6-EXAM-SRC-EMBEDDED-MIN:
+    code: structure.steel.exam-src-embedded-min
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 SRC埋込み柱脚の鉄骨部分 基準 指針
+      explanation: 鉄骨構造 SRC埋込み柱脚の鉄骨部分 解説 図解
+  S-K6-EXAM-SRC-NONEMBEDDED-SUM:
+    code: structure.steel.exam-src-nonembedded-sum
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 SRC非埋込み柱脚の曲げ耐力 基準 指針
+      explanation: 鉄骨構造 SRC非埋込み柱脚の曲げ耐力 解説 図解
+  S-K6-EXAM-MIXED-RC-S-TRANSFER:
+    code: structure.steel.exam-mixed-rc-s-transfer
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 RC柱・S梁の接合 基準 指針
+      explanation: 鉄骨構造 RC柱・S梁の接合 解説 図解
+  S-K6-EXAM-MIXED-CORE:
+    code: structure.steel.exam-mixed-core
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 RCコアと外周S骨組 基準 指針
+      explanation: 鉄骨構造 RCコアと外周S骨組 解説 図解
+  S-K6-EXAM-DAMPER-PLASTICITY:
+    code: structure.steel.exam-damper-plasticity
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 鋼材ダンパーの働き 基準 指針
+      explanation: 鉄骨構造 鋼材ダンパーの働き 解説 図解
+  S-K6-EXAM-DAMPER-YIELD-SEQUENCE:
+    code: structure.steel.exam-damper-yield-sequence
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 鋼材ダンパーと主架構 基準 指針
+      explanation: 鉄骨構造 鋼材ダンパーと主架構 解説 図解
+  S-K6-EXAM-DAMPER-LY225:
+    code: structure.steel.exam-damper-ly225
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 低降伏点鋼の選択 基準 指針
+      explanation: 鉄骨構造 低降伏点鋼の選択 解説 図解
+  S-K6-EXAM-DAMPER-HIGH-STRENGTH-FRAME:
+    code: structure.steel.exam-damper-high-strength-frame
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 制振建物の主架構用鋼材 基準 指針
+      explanation: 鉄骨構造 制振建物の主架構用鋼材 解説 図解
+  S-K6-EXAM-DAMPER-CONNECTION:
+    code: structure.steel.exam-damper-connection
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 ダンパー取付部の剛性 基準 指針
+      explanation: 鉄骨構造 ダンパー取付部の剛性 解説 図解
+  S-K6-EXAM-DAMPER-LAYOUT:
+    code: structure.steel.exam-damper-layout
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 ダンパーの配置計画 基準 指針
+      explanation: 鉄骨構造 ダンパーの配置計画 解説 図解
+  S-K6-EXAM-DAMPER-FATIGUE:
+    code: structure.steel.exam-damper-fatigue
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 鋼材ダンパーの繰返し検討 基準 指針
+      explanation: 鉄骨構造 鋼材ダンパーの繰返し検討 解説 図解
+  S-K6-EXAM-DAMPER-PANEL-ANGLE:
+    code: structure.steel.exam-damper-panel-angle
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 せん断パネルの変形角 基準 指針
+      explanation: 鉄骨構造 せん断パネルの変形角 解説 図解
+  S-K6-EXAM-DAMPER-RESIDUAL:
+    code: structure.steel.exam-damper-residual
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 履歴型ダンパーの耐力配分 基準 指針
+      explanation: 鉄骨構造 履歴型ダンパーの耐力配分 解説 図解
+  S-K6-EXAM-FLOOR-FREQUENCY:
+    code: structure.steel.exam-floor-frequency
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 床の鉛直振動と梁剛性 基準 指針
+      explanation: 鉄骨構造 床の鉛直振動と梁剛性 解説 図解
+  S-K6-EXAM-LIGHT-BUILDING-WIND:
+    code: structure.steel.exam-light-building-wind
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 軽量鉄骨建物の柱脚荷重 基準 指針
+      explanation: 鉄骨構造 軽量鉄骨建物の柱脚荷重 解説 図解
+  S-K6-EXAM-STEEL-PERIOD:
+    code: structure.steel.exam-steel-period
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 鉄骨造の略算固有周期 基準 指針
+      explanation: 鉄骨構造 鉄骨造の略算固有周期 解説 図解
+  S-K6-EXAM-STEEL-DAMPING:
+    code: structure.steel.exam-steel-damping
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 鉄骨造とRC造の内部減衰 基準 指針
+      explanation: 鉄骨構造 鉄骨造とRC造の内部減衰 解説 図解
+  S-K6-EXAM-PILE-CORROSION:
+    code: structure.steel.exam-pile-corrosion
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 鋼管杭の腐食への配慮 基準 指針
+      explanation: 鉄骨構造 鋼管杭の腐食への配慮 解説 図解
+  S-K6-EXAM-ROUTE-DIRECTION:
+    code: structure.steel.exam-route-direction
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 方向別の計算ルート 基準 指針
+      explanation: 鉄骨構造 方向別の計算ルート 解説 図解
+  S-K6-EXAM-ROUTE-UPPER-SELECTION:
+    code: structure.steel.exam-route-upper-selection
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 計算ルートの選択 基準 指針
+      explanation: 鉄骨構造 計算ルートの選択 解説 図解
+  S-K6-EXAM-SRC-ALLOWABLE-SHEAR:
+    code: structure.steel.exam-src-allowable-shear
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 SRC柱の短期許容せん断 基準 指針
+      explanation: 鉄骨構造 SRC柱の短期許容せん断 解説 図解
+  S-K6-EXAM-SRC-WEB-HOLE:
+    code: structure.steel.exam-src-web-hole
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 SRC接合部の帯筋の納まり 基準 指針
+      explanation: 鉄骨構造 SRC接合部の帯筋の納まり 解説 図解
+  S-K6-EXAM-SRC-ELASTIC-STIFFNESS:
+    code: structure.steel.exam-src-elastic-stiffness
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 SRC架構の応力計算用剛性 基準 指針
+      explanation: 鉄骨構造 SRC架構の応力計算用剛性 解説 図解
+  S-K6-EXAM-MIXED-VERTICAL-DS:
+    code: structure.steel.exam-mixed-vertical-ds
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 上下階で異なる構造種別のDs 基準 指針
+      explanation: 鉄骨構造 上下階で異なる構造種別のDs 解説 図解
+  S-K6-EXAM-MIXED-DIRECTION-RULES:
+    code: structure.steel.exam-mixed-direction-rules
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 方向別に異なる構造種別 基準 指針
+      explanation: 鉄骨構造 方向別に異なる構造種別 解説 図解
+  S-K6-EXAM-STEEL-RETROFIT:
+    code: structure.steel.exam-steel-retrofit
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 枠付き鉄骨ブレースの耐震改修 基準 指針
+      explanation: 鉄骨構造 枠付き鉄骨ブレースの耐震改修 解説 図解
+  S-K6-EXAM-COMPOSITE-STUD-FORCE:
+    code: structure.steel.exam-composite-stud-force
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 合成梁のスタッドの設計力 基準 指針
+      explanation: 鉄骨構造 合成梁のスタッドの設計力 解説 図解
+  S-K6-EXAM-DECK-DEFORMATION:
+    code: structure.steel.exam-deck-deformation
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 デッキ合成スラブの変形増大 基準 指針
+      explanation: 鉄骨構造 デッキ合成スラブの変形増大 解説 図解
+  S-K6-EXAM-ALUMINUM-EXPANSION:
+    code: structure.steel.exam-aluminum-expansion
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 鋼とアルミニウムの熱膨張 基準 指針
+      explanation: 鉄骨構造 鋼とアルミニウムの熱膨張 解説 図解
+  S-K6-EXAM-CONCRETE-EXPANSION:
+    code: structure.steel.exam-concrete-expansion
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 鋼と軽量コンクリートの熱膨張 基準 指針
+      explanation: 鉄骨構造 鋼と軽量コンクリートの熱膨張 解説 図解
+  S-K6-EXAM-DAMPER-BRACE-STUD:
+    code: structure.steel.exam-damper-brace-stud
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 ダンパーの取付形式 基準 指針
+      explanation: 鉄骨構造 ダンパーの取付形式 解説 図解
+  S-K6-EXAM-FATIGUE-STEEL-GRADE:
+    code: structure.steel.exam-fatigue-steel-grade
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 鋼種変更と疲労の許容値 基準 指針
+      explanation: 鉄骨構造 鋼種変更と疲労の許容値 解説 図解
+  S-K6-EXAM-HEAT-TENSILE-F:
+    code: structure.steel.exam-heat-tensile-f
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 高温引張強さと基準強度 基準 指針
+      explanation: 鉄骨構造 高温引張強さと基準強度 解説 図解
+  S-K6-EXAM-PANEL-EARLY-YIELD:
+    code: structure.steel.exam-panel-early-yield
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 柱梁パネルの早期降伏 基準 指針
+      explanation: 鉄骨構造 柱梁パネルの早期降伏 解説 図解
+  S-K6-EXAM-EAF-CARBON:
+    code: structure.steel.exam-eaf-carbon
+    research_route_history: []
+    query_history:
+    - revision: 1
+      authoritative: 鉄骨構造 鋼材選択と製造段階の環境負荷 基準 指針
+      explanation: 鉄骨構造 鋼材選択と製造段階の環境負荷 解説 図解

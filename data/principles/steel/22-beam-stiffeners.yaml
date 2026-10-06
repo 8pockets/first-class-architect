@@ -20,7 +20,23 @@ principles:
     - '23172'
   prerequisites:
   - S-K6-HIGH-STRENGTH-BOLT-CONNECTION-TYPES
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: フィラープレートの用途について、正しい結論はどちらか。
+    choices:
+      A: 部材応力を直接伝える添え板
+      B: 板厚差の隙間を埋める鋼板
+    correct: B
+  display_content:
+    definition: フィラープレートは、ボルト・高力ボルト接合で接合板厚が異なるとき、板厚をそろえるため隙間へ入れる鋼板である。
+    distinguishing_conditions:
+    - 接合する鋼板の板厚が異なるボルト接合部
+    confusable_points:
+    - 本問では「部材応力を直接伝える添え板」と区別する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-SPLICE-PLATE-TRANSFERS-FORCE
   order: 2
   type: identification
@@ -35,7 +51,23 @@ principles:
     question_codes:
     - '01173'
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: スプライスプレートの用途について、正しい結論はどちらか。
+    choices:
+      A: 部材に添えて応力を伝える鋼板
+      B: 板厚差の隙間を埋める鋼板
+    correct: A
+  display_content:
+    definition: スプライスプレートは、H形鋼などの柱・梁をボルト接合するとき、応力を伝達するため部材に添える接合用鋼板である。
+    distinguishing_conditions:
+    - 柱・梁などのボルト継手
+    confusable_points:
+    - 本問では「板厚差の隙間を埋める鋼板」と区別する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-STIFFENER-ROLE-BY-POSITION-AND-STRESS
   order: 3
   type: identification

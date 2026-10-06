@@ -11,17 +11,41 @@ principles:
   conclusion: 普通ボルト孔径はボルト径より1mmを超えて大きくできない。ただし径20mm以上で構造耐力上支障がなければ1.5mmまで大きくできる。
   reason: 教材に記載なし
   conditions:
-  - 普通ボルト
-  - 例外はボルト径20mm以上かつ構造耐力上支障なし
-  - 軸径16mm以下、または20mm以上の教材掲載区分
+  - 建築基準法施行令第68条の普通ボルト
+  - 1.5mmの例外は軸径20mm以上かつ構造耐力上支障がない場合
   source:
     pages:
     - 159
     - 183
     question_codes:
     - '23302'
+    authoritative_sources:
+    - kind: law
+      title: 建築基準法施行令（e-Gov現行本文、2026-10-06照合）
+      locator: 第68条第4項
+      url: https://laws.e-gov.go.jp/law/325CO0000000338
+      supports:
+      - statement
+      - conditions
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 軸径16mmの普通ボルトで、施行令による孔径の原則上限について、正しい結論はどちらか。
+    choices:
+      A: 18mm
+      B: 17mm
+    correct: B
+  display_content:
+    rule: 普通ボルト孔径はボルト径より1mmを超えて大きくできない。ただし径20mm以上で構造耐力上支障がなければ1.5mmまで大きくできる。
+    applicability:
+    - 建築基準法施行令第68条の普通ボルト
+    - 1.5mmの例外は軸径20mm以上かつ構造耐力上支障がない場合
+    numbers_exceptions:
+    - 1.5mmの例外は軸径20mm以上かつ構造耐力上支障がない場合
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-HIGH-STRENGTH-BOLT-SLIP-RIGIDITY
   order: 2
   type: principle
@@ -71,17 +95,35 @@ principles:
   order: 4
   type: rule
   principle: 普通ボルト孔径の鋼構造設計規準値
-  conclusion: 日本建築学会『鋼構造設計規準』では、普通ボルト孔径をボルト軸径+0.5mmとする。
+  conclusion: 教材が紹介する日本建築学会の設計規準値では、普通ボルト孔径を軸径+0.5mmとする。施行令の原則上限+1mmとは別の値である。
   reason: 教材に記載なし
   conditions:
-  - 日本建築学会『鋼構造設計規準』の値を問う場合
+  - 教材P183に示された設計規準値の学習
+  - 施行令の孔径上限と混同しない
   source:
     pages:
     - 183
     question_codes:
     - '23302'
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 軸径20mmの普通ボルトで、教材が紹介する学会規準値を使う孔径について、正しい結論はどちらか。
+    choices:
+      A: 21.5mm
+      B: 20.5mm
+    correct: B
+  display_content:
+    rule: 教材が紹介する日本建築学会の設計規準値では、普通ボルト孔径を軸径+0.5mmとする。施行令の原則上限+1mmとは別の値である。
+    applicability:
+    - 教材P183に示された設計規準値の学習
+    - 施行令の孔径上限と混同しない
+    numbers_exceptions:
+    - 施行令の孔径上限と混同しない
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-ORDINARY-BOLT-SHEAR-TRANSFER
   order: 5
   type: principle
@@ -89,9 +131,9 @@ principles:
   question:
     prompt: せん断力を受ける普通ボルト接合の応力伝達について、正しい結論はどちらか。
     choices:
-      A: 接触面の摩擦で伝達する
-      B: ボルト軸側面の支圧で伝達する
-    correct: B
+      A: ボルト軸側面の支圧で伝達する
+      B: 接触面の摩擦で伝達する
+    correct: A
   conclusion: せん断力を受ける普通ボルトは、ボルト軸の側面で力を伝達する。
   reason: ボルト軸と母材孔のかみ合い・支圧によってせん断力を伝えるため。
   conditions:
@@ -117,7 +159,22 @@ principles:
     - 183
     question_codes: []
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 普通ボルトのねじ部をナット外へ出す量について、正しい結論はどちらか。
+    choices:
+      A: ナット外へ2〜3山出す
+      B: ナット外へ5〜6山出す
+    correct: A
+  display_content:
+    rule: ねじ部はナットより外へ2〜3山程度出す。
+    applicability:
+    - 普通ボルトのせん断接合
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-ORDINARY-BOLT-WASHER-UNDER-NUT
   order: 7
   type: rule
@@ -131,4 +188,19 @@ principles:
     - 183
     question_codes: []
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 普通ボルト接合の座金位置について、正しい結論はどちらか。
+    choices:
+      A: ナット側に座金を置く
+      B: ボルト頭側だけに座金を置く
+    correct: A
+  display_content:
+    rule: 普通ボルト接合では、ナット側に必ず座金を用いる。
+    applicability:
+    - 普通ボルトのせん断接合
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete

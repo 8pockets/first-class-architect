@@ -37,16 +37,44 @@ principles:
   order: 2
   type: rule
   principle: 筋かい付き骨組の柱・筋かい耐力の合算
-  conclusion: 筋かい付き骨組の保有水平耐力は、柱と筋かいが負担する水平せん断耐力を合計して算定する。
+  conclusion: X形筋かい付きラーメンの水平耐力は、同一の層間変形・崩壊状態におけるラーメンと筋かいの負担水平力を合算して評価する。それぞれの最大耐力が異なる変形で生じる場合に単純加算してはならない。
   reason: 教材P170及びP200〜204を再確認したが、柱の水平せん断耐力と筋かいの水平せん断耐力を合算する根拠を確認できない。
   conditions:
-  - 筋かい付き骨組の終局時・保有水平耐力を算定する場合
+  - X形筋かい付きラーメン
+  - 筋かいの座屈後挙動を採用モデルに従って評価
+  - K形筋かい・基礎浮上り等では別途の崩壊機構確認が必要
   source:
     pages:
     - 203
     question_codes: []
+    authoritative_sources:
+    - kind: local_government
+      title: 大阪府 構造計算適合性判定 指摘事例集 2021年版（2023年一部改正版）
+      locator: 4.1.3-2～3・図4（同一変形時のX形筋かい付きラーメンの水平耐力）
+      url: https://www.pref.osaka.lg.jp/documents/35034/05_a41kakusyukouzounosekkei_1.pdf
+      supports:
+      - statement
+      - explanation
+      - conditions
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: ラーメンと筋かいの最大耐力が異なる層間変形で生じる骨組の水平耐力評価について、正しい結論はどちらか。
+    choices:
+      A: 同じ層間変形時の負担水平力を合算する
+      B: 異なる変形時の各最大耐力を合算する
+    correct: A
+  display_content:
+    rule: X形筋かい付きラーメンの水平耐力は、同一の層間変形・崩壊状態におけるラーメンと筋かいの負担水平力を合算して評価する。それぞれの最大耐力が異なる変形で生じる場合に単純加算してはならない。
+    applicability:
+    - X形筋かい付きラーメン
+    - 筋かいの座屈後挙動を採用モデルに従って評価
+    - K形筋かい・基礎浮上り等では別途の崩壊機構確認が必要
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-X-BRACE-TENSION-COMPRESSION-CAPACITY
   order: 102
   type: rule
@@ -55,25 +83,25 @@ principles:
     applicability:
     - X形筋かい付き骨組
     - 終局時・保有水平耐力の算定
-    - 圧縮側を考慮するか引張側だけを期待するかを区別
-    - 圧縮側の座屈後安定耐力を評価
+    - 引張側降伏時に圧縮側が座屈済みのモデルでは座屈後安定耐力を評価
+    - 水平力として合算し、異なる変形時点の各最大耐力を単純合算しない
     numbers_exceptions:
     - X形筋かいで圧縮側を考慮する場合は、一対の耐力を圧縮筋かい座屈時水平力の2倍とする方法、または引張側耐力と圧縮側座屈後安定耐力を合算する方法がある。
     - 引張側だけを期待する場合は引張降伏耐力の水平成分とする。
   principle: X形筋かいの引張側・圧縮側耐力の合算
   question:
-    prompt: 圧縮側の座屈後安定耐力を評価するX形筋かい付き骨組について、筋かいの終局時耐力の算定方法として正しい結論はどちらか。
+    prompt: X形筋かいの引張側降伏時に圧縮側は既に座屈している。圧縮側も抵抗に含める終局時評価で採用する圧縮耐力として、正しい結論はどちらか。
     choices:
-      A: 引張側耐力から圧縮側座屈後安定耐力を差し引く。
-      B: 引張側耐力に圧縮側座屈後安定耐力を加える。
+      A: 座屈前に到達した最大耐力を用いる
+      B: 座屈後の安定耐力を用いる
     correct: B
   conclusion: X形筋かいで圧縮側を考慮する場合は、一対の耐力を圧縮筋かい座屈時水平力の2倍とする方法、または引張側耐力と圧縮側座屈後安定耐力を合算する方法がある。引張側だけを期待する場合は引張降伏耐力の水平成分とする。
   reason: 圧縮筋かいは座屈後も安定耐力を残すため、終局時には引張側と圧縮側の寄与を組み合わせられる。
   conditions:
   - X形筋かい付き骨組
   - 終局時・保有水平耐力の算定
-  - 圧縮側を考慮するか引張側だけを期待するかを区別
-  - 圧縮側の座屈後安定耐力を評価
+  - 引張側降伏時に圧縮側が座屈済みのモデルでは座屈後安定耐力を評価
+  - 水平力として合算し、異なる変形時点の各最大耐力を単純合算しない
   source:
     pages:
     - 170
@@ -85,3 +113,7 @@ principles:
   prerequisites:
   - S-K6-BRACE-TENSION-YIELD-COMPRESSION-BUCKLING
   editorial_status: source_checked
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete

@@ -23,7 +23,23 @@ principles:
   prerequisites:
   - S-K6-FILLET-WELD-EFFECTIVE-LENGTH
   - S-K6-FILLET-WELD-SIZE-EFFECTIVE-THROAT
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: すみ肉溶接1本の有効長さ100mm、有効のど厚4.2mmのとき、有効面積について、正しい結論はどちらか。
+    choices:
+      A: 420mm²
+      B: 600mm²
+    correct: A
+  display_content:
+    rule: すみ肉溶接部の有効面積は、有効長さと有効のど厚の積で求める。
+    applicability:
+    - すみ肉溶接部
+    - すみ肉溶接の耐力計算
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-FILLET-WELD-EFFECTIVE-LENGTH
   order: 2
   type: rule
@@ -59,32 +75,68 @@ principles:
   order: 3
   type: identification
   principle: すみ肉溶接断面の用語
-  conclusion: 教材図は、脚長・サイズ・溶込み深さ・有効のど厚・余盛をすみ肉溶接断面の各部として示す。
+  conclusion: すみ肉溶接では、母材面に沿った長さが脚長、断面内に収まる基準三角形の脚がサイズで、有効のど厚はルートから有効断面の表面までの最短距離である。
   reason: 教材に記載なし
   conditions:
-  - すみ肉溶接断面図を識別する場合
+  - 教材図の等脚45度すみ肉溶接
+  - 余盛を有効のど厚へそのまま加えない
   source:
     pages:
     - 189
     question_codes: []
   prerequisites:
   - S-K6-FILLET-WELD-DEFINITION-REPEATED-STRESS
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 等脚45度すみ肉溶接で余盛がある場合、有効断面の評価について、正しい結論はどちらか。
+    choices:
+      A: 余盛分を除いた有効のど厚を用いる
+      B: 最も盛り上がった表面までをのど厚とする
+    correct: A
+  display_content:
+    definition: すみ肉溶接では、母材面に沿った長さが脚長、断面内に収まる基準三角形の脚がサイズで、有効のど厚はルートから有効断面の表面までの最短距離である。
+    distinguishing_conditions:
+    - 教材図の等脚45度すみ肉溶接
+    - 余盛を有効のど厚へそのまま加えない
+    confusable_points:
+    - 本問では「最も盛り上がった表面までをのど厚とする」と区別する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-FILLET-WELD-DEFINITION-REPEATED-STRESS
   order: 4
   type: identification
   principle: すみ肉溶接の構成と適用
-  conclusion: すみ肉溶接は母材の隅角部を溶着金属で満たして一体化する溶接で、繰返し応力を伝達する部分に使用できる。
+  conclusion: すみ肉溶接は母材の隅角部に溶着金属を置いて接合する溶接で、繰返し応力を伝える部分にも適用できる。疲労検討の要否は別に判断する。
   reason: 教材に記載なし
   conditions:
-  - すみ肉溶接
+  - 所定品質・有効断面を確保したすみ肉溶接
+  - 繰返し応力の場合は応力範囲・回数を確認
   source:
     pages:
     - 189
     question_codes: []
   prerequisites:
   - S-K6-WELD-TYPE-IDENTIFICATION
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: T字形の母材の隅角部に三角形状の溶接金属を置いて接合する形式について、正しい結論はどちらか。
+    choices:
+      A: 完全溶込み溶接
+      B: すみ肉溶接
+    correct: B
+  display_content:
+    definition: すみ肉溶接は母材の隅角部に溶着金属を置いて接合する溶接で、繰返し応力を伝える部分にも適用できる。疲労検討の要否は別に判断する。
+    distinguishing_conditions:
+    - 所定品質・有効断面を確保したすみ肉溶接
+    - 繰返し応力の場合は応力範囲・回数を確認
+    confusable_points:
+    - 本問では「完全溶込み溶接」と区別する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-FILLET-WELD-SIZE-EFFECTIVE-THROAT
   order: 5
   type: rule
@@ -92,11 +144,28 @@ principles:
   conclusion: すみ肉溶接のサイズは薄い方の母材板厚以下とし、有効のど厚はサイズの0.7倍とする。
   reason: 教材に記載なし
   conditions:
-  - 教材図の45度すみ肉溶接
+  - 等脚45度すみ肉溶接の有効のど厚
+  - 余盛・深溶込みを追加算入しない基本計算
   source:
     pages:
     - 189
     question_codes: []
   prerequisites:
   - S-K6-FILLET-WELD-DEFINITION-REPEATED-STRESS
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: サイズ6mmの等脚45度すみ肉溶接の有効のど厚について、正しい結論はどちらか。
+    choices:
+      A: 6.0mm
+      B: 4.2mm
+    correct: B
+  display_content:
+    rule: すみ肉溶接のサイズは薄い方の母材板厚以下とし、有効のど厚はサイズの0.7倍とする。
+    applicability:
+    - 等脚45度すみ肉溶接の有効のど厚
+    - 余盛・深溶込みを追加算入しない基本計算
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete

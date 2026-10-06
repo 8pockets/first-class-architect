@@ -11,9 +11,9 @@ principles:
   conclusion: 許容耐力算定のすべり係数は摩擦面数によらず0.45で、溶融亜鉛めっきの場合は0.40とする。
   reason: 教材に記載なし
   conditions:
-  - 高力ボルト摩擦接合
-  - 通常面又は溶融亜鉛めっき面
-  - 教材掲載の高力ボルト摩擦接合
+  - 所定の摩擦面処理を行った高力ボルト摩擦接合
+  - 通常面のすべり係数0.45と溶融亜鉛めっき面の0.40
+  - 摩擦面数とすべり係数を区別する
   source:
     pages:
     - 160
@@ -24,7 +24,24 @@ principles:
     - '19252'
   prerequisites:
   - S-K6-FRICTION-JOINT-PRE-SLIP-FORCE-TRANSFER
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 同じ通常摩擦面を一面摩擦から二面摩擦へ変えるときの設計すべり係数について、正しい結論はどちらか。
+    choices:
+      A: 0.90へ増やす
+      B: 0.45のままとする
+    correct: B
+  display_content:
+    rule: 許容耐力算定のすべり係数は摩擦面数によらず0.45で、溶融亜鉛めっきの場合は0.40とする。
+    applicability:
+    - 所定の摩擦面処理を行った高力ボルト摩擦接合
+    - 通常面のすべり係数0.45と溶融亜鉛めっき面の0.40
+    - 摩擦面数とすべり係数を区別する
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-HIGH-STRENGTH-BOLT-ALLOWABLE-SHEAR-TABLE
   order: 2
   type: rule
@@ -42,13 +59,13 @@ principles:
     - ボルト張力Tに対し、一面摩擦は長期0.3T・短期0.45T、二面摩擦は長期0.6T・短期0.9Tとする。
   principle: 摩擦面数・荷重期間と高力ボルト許容せん断耐力
   question:
-    prompt: ボルト張力をTとする二面摩擦の高力ボルト摩擦接合について、長期許容せん断耐力として正しい結論はどちらか。
+    prompt: ボルト張力T=200kN、二面摩擦、長期せん断力300kNの接合部で各ボルトが均等に負担するとき、必要本数として正しい結論はどちらか。
     choices:
-      A: 長期許容せん断耐力を0.6Tとする
-      B: 長期許容せん断耐力を0.3Tとする
+      A: 1本120kNとして3本以上とする
+      B: 1本60kNとして5本以上とする
     correct: A
   conclusion: ボルト張力Tに対し、一面摩擦は長期0.3T・短期0.45T、二面摩擦は長期0.6T・短期0.9Tとする。
-  reason: 二面摩擦は摩擦面が二つなので一面の2倍となり、短期は長期の1.5倍となるため。
+  reason: 二面摩擦は摩擦面が二つなので一面の2倍となり、短期は長期の1.5倍となるため。設問では0.6×200=120kN/本、300÷120=2.5を切り上げ3本。
   conditions:
   - 高力ボルト摩擦接合
   - 一面摩擦か二面摩擦かを区別
@@ -99,7 +116,26 @@ principles:
     - '25172'
   prerequisites:
   - S-K6-BOLT-EDGE-DISTANCE-TERM-IDENTIFICATION
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 軸径20mm、せん断縁の接合板で、教材表による最小縁端距離について、正しい結論はどちらか。
+    choices:
+      A: 34mm以上
+      B: 26mm以上
+    correct: A
+  display_content:
+    rule: 最小縁端距離は、縁端の種類と軸径に応じて教材表の値以上とする。
+    applicability:
+    - 軸径12/16/20/22/24/27mmの順に、せん断縁・手動ガス切断縁は22/28/34/38/44/49mm
+    - 同じ順に、圧延縁・自動ガス切断縁・のこ引き縁・機械仕上げ縁は18/22/26/28/32/36mm
+    - はしあき距離・へりあき距離の双方
+    - 高力ボルト接合
+    - 縁の加工方法
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-F10T-TENSILE-STRENGTH-MEANING
   order: 4
   type: identification
@@ -114,9 +150,9 @@ principles:
   question:
     prompt: F10T高力ボルトの等級表示に含まれる「10」が示す強度として正しい結論はどちらか。
     choices:
-      A: せん断強さ約10tf/cm²を示す
-      B: 引張強さ約10tf/cm²を示す
-    correct: B
+      A: 引張強さ約10tf/cm²を示す
+      B: せん断強さ約10tf/cm²を示す
+    correct: A
   conclusion: F10Tの引張強さは1,000-1,200N/mm²で、記号中の10は引張強さ約10tf/cm²を表し、せん断強さではない。
   reason: 10tf/cm²が約1,000N/mm²に相当するため。
   conditions:
@@ -135,13 +171,11 @@ principles:
   order: 5
   type: rule
   principle: 高力ボルト孔径の上限
-  conclusion: 高力ボルト孔径は軸径より2mmを超えて大きくできず、軸径27mm以上では3mmまでとする。
+  conclusion: 高力ボルトの孔径は原則として軸径+2mm以下とし、軸径27mm以上で構造耐力上支障がない場合は+3mmまでとできる。
   reason: 教材に記載なし
   conditions:
-  - 高力ボルト
-  - 軸径27mm未満又は27mm以上
-  - 施行令第68条の高力ボルト
-  - 軸径24mm以下、または27mm以上の教材掲載区分
+  - 建築基準法施行令第68条の高力ボルト
+  - 27mm以上の例外には構造耐力上支障がないことが必要
   source:
     pages:
     - 161
@@ -150,8 +184,33 @@ principles:
     - '05164'
     - '19251'
     - '23171'
+    authoritative_sources:
+    - kind: law
+      title: 建築基準法施行令（e-Gov現行本文、2026-10-06照合）
+      locator: 第68条第2項・第3項
+      url: https://laws.e-gov.go.jp/law/325CO0000000338
+      supports:
+      - statement
+      - conditions
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 軸径27mmで構造耐力上支障がない高力ボルトについて、施行令の孔径上限について、正しい結論はどちらか。
+    choices:
+      A: 32mm
+      B: 30mm
+    correct: B
+  display_content:
+    rule: 高力ボルトの孔径は原則として軸径+2mm以下とし、軸径27mm以上で構造耐力上支障がない場合は+3mmまでとできる。
+    applicability:
+    - 建築基準法施行令第68条の高力ボルト
+    - 27mm以上の例外には構造耐力上支障がないことが必要
+    numbers_exceptions:
+    - 27mm以上の例外には構造耐力上支障がないことが必要
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-HIGH-STRENGTH-BOLT-MINIMUM-PITCH
   order: 6
   type: rule
@@ -167,8 +226,32 @@ principles:
     - 186
     question_codes:
     - '23171'
+    authoritative_sources:
+    - kind: law
+      title: 建築基準法施行令（e-Gov現行本文、2026-10-06照合）
+      locator: 第68条第1項
+      url: https://laws.e-gov.go.jp/law/325CO0000000338
+      supports:
+      - statement
+      - conditions
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: M22高力ボルトの中心間隔を最小ピッチの規定で決める場合について、正しい結論はどちらか。
+    choices:
+      A: 44mm以上
+      B: 55mm以上
+    correct: B
+  display_content:
+    rule: 高力ボルト孔の中心間隔はボルト径の2.5倍以上とする。M22なら55mm以上である。
+    applicability:
+    - 高力ボルト接合
+    - 普通ボルト・高力ボルトの双方
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-BOLT-EDGE-DISTANCE-TERM-IDENTIFICATION
   order: 7
   type: identification
@@ -185,7 +268,23 @@ principles:
     - '06164'
     - '25172'
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 荷重方向の材端からボルト中心までの距離名について、正しい結論はどちらか。
+    choices:
+      A: へりあき距離
+      B: はしあき距離
+    correct: B
+  display_content:
+    definition: 教材図では、荷重方向の材端からボルト中心までをはしあき距離、荷重方向と直交する材縁からボルト中心までをへりあき距離として示す。
+    distinguishing_conditions:
+    - 引張力を受けるボルト接合板の縁端距離を読む場合
+    confusable_points:
+    - 本問では「へりあき距離」と区別する。
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
 - id: S-K6-BOLT-MAXIMUM-EDGE-DISTANCE
   order: 8
   type: rule
@@ -199,4 +298,19 @@ principles:
     - 186
     question_codes: []
   prerequisites: []
-  editorial_status: source_gap
+  editorial_status: source_checked
+  question:
+    prompt: 接合板厚9mmのボルト最大縁端距離を材厚と150mmの両上限から求める場合について、正しい結論はどちらか。
+    choices:
+      A: 150mm以下
+      B: 108mm以下
+    correct: B
+  display_content:
+    rule: 最大縁端距離は、材厚の12倍以下、かつ150mm以下とする。
+    applicability:
+    - ボルト接合の縁端距離の上限を検討する場合
+    numbers_exceptions: []
+  verification:
+    statement_source: verified
+    explanation_completeness: complete
+    conditions_completeness: complete
