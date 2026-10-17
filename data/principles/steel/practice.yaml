@@ -1,0 +1,74 @@
+version: 1
+variants:
+- id: fillet-area-different-values
+  parent_id: S-K6-FILLET-WELD-EFFECTIVE-AREA
+  title: 数値を変えて有効面積を求める
+  prompt: すみ肉溶接1本の有効長さ120mm、有効のど厚5.6mmとする。有効面積はいくらか。
+  choices:
+    A: 960mm²
+    B: 672mm²
+  correct: B
+  explanation: 有効面積＝有効長さ×有効のど厚なので、120×5.6＝672mm²。ここでは有効のど厚が与えられているため、その値を直接用いる。960mm²は5.6mmの代わりに8mmを掛けた値である。
+  source_pages: [189]
+  source_note: 教材の有効面積の式に、自作の数値を代入した確認問題。
+  figure: null
+- id: fillet-effective-length-calculation
+  parent_id: S-K6-FILLET-WELD-EFFECTIVE-LENGTH
+  title: 全長と有効長さを区別する
+  prompt: すみ肉サイズ6mm、まわし溶接を含む溶接全長132mmとする。有効長さはいくらか。
+  choices:
+    A: 120mm
+    B: 132mm
+  correct: A
+  explanation: 有効長さ＝溶接全長−2×サイズより、132−2×6＝120mm。全長をそのまま使うのではなく、サイズの2倍を差し引く。
+  source_pages: [189]
+  source_note: 教材の有効長さの定め方を使った自作数値例。最小長さの条件も満たす例としている。
+  figure: null
+- id: fillet-throat-different-size
+  parent_id: S-K6-FILLET-WELD-SIZE-EFFECTIVE-THROAT
+  title: サイズを変えてのど厚を求める
+  prompt: 薄い方の母材板厚が10mm、すみ肉サイズが8mmの等脚45度すみ肉溶接とする。余盛・深溶込みを追加算入しないとき、有効のど厚はいくらか。
+  choices:
+    A: 8.0mm
+    B: 5.6mm
+  correct: B
+  explanation: 有効のど厚＝0.7×サイズなので、0.7×8＝5.6mm。8mmはサイズであり、有効のど厚そのものではない。サイズ8mmは薄い方の母材板厚10mm以下である。
+  source_pages: [189]
+  source_note: 教材のサイズ・有効のど厚の関係を使った自作数値例。
+  figure: null
+- id: weld-symbol-opposite-side
+  parent_id: S-K6-WELD-SYMBOL-ARROW-SIDE-POSITION
+  title: 図から溶接の施工側を読む
+  prompt: 模式図では三角形の基本記号を基準線の上側に描いている。溶接する側はどちらか。
+  choices:
+    A: 矢印が指す側の反対側
+    B: 矢印が指す側
+  correct: A
+  explanation: 基本記号が基準線の上側なら、矢印が指す側の反対側を示す。矢印が指す側を示す場合は、基本記号を基準線の下側に描く。
+  source_pages: [190]
+  source_note: 教材の基準線上下と施工側の対応を、自作模式図で確認する問題。
+  figure: weld-symbol-above
+- id: h-section-axis-reading
+  parent_id: S-K6-H-SECTION-STRONG-WEAK-AXIS-RIGIDITY
+  title: 断面図から曲がりにくい軸を読む
+  prompt: 図の二軸対称H形断面について、曲がりにくい側の曲げ軸はどちらか。水平軸をx、鉛直軸をyとしている。
+  choices:
+    A: y軸まわり
+    B: x軸まわり
+  correct: B
+  explanation: 図の向きでは水平のx軸が強軸、鉛直のy軸が弱軸であり、x軸まわりの方が曲がりにくい。単に「縦・横」を暗記せず、断面の向きと軸を対応させる。
+  source_pages: [178]
+  source_note: 教材のH形断面と強軸・弱軸の対応を、自作模式図で確認する問題。
+  figure: h-section-axes
+- id: h-section-flange-identification
+  parent_id: S-K6-H-SECTION-FLANGE-BENDING
+  title: 断面図から曲げの主な負担部を読む
+  prompt: 強軸曲げを受けるH形鋼梁を簡略に考える。図のP・Qのうち、曲げによる引張・圧縮を主に負担する部分はどちらか。
+  choices:
+    A: 上下の横板P
+    B: 中央の縦板Q
+  correct: A
+  explanation: Pがフランジ、Qがウェブである。強軸曲げでは上下フランジを曲げによる引張・圧縮の主な負担部、ウェブをせん断力の主な負担部として扱う簡略化である。実際の応力を完全に分離する意味ではない。
+  source_pages: [178]
+  source_note: 教材のフランジ・ウェブの名称と役割を、自作模式図で確認する問題。
+  figure: h-section-parts

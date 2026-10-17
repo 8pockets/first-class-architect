@@ -11,6 +11,7 @@
   const historyExport = document.querySelector("#history-export");
   const historyImport = document.querySelector("#history-import");
   const toggleVisibleAnswers = document.querySelector("#toggle-visible-answers");
+  const answerToggleButtons = [toggleVisibleAnswers, document.querySelector("#study-toggle-answers")].filter(Boolean);
   const typeButtons = [...document.querySelectorAll("[data-filter-type]")];
   const reset = document.querySelector("#reset-filters");
   const visibleCount = document.querySelector("#visible-count");
@@ -35,11 +36,21 @@
   const disclosures = [...root.querySelectorAll("[data-answer-disclosure]")];
   const answerChoices = [...root.querySelectorAll("[data-answer-choice]")];
   const principleLinks = [...root.querySelectorAll("[data-principle-link]")];
+  const studyCardList = document.getElementById("study-card-list");
+  const cardLocations = new Map();
+  const restoreCardOrder = () => {
+    for (const [card, marker] of cardLocations) marker.replaceWith(card);
+    cardLocations.clear();
+    if (studyCardList) studyCardList.hidden = true;
+  };
   let activeType = "all";
   const historyAPI = globalThis.ArchitectAnswerHistory;
   const attempts = new Map();
   const viewedDays = new Map();
   const summaries = new Map();
+  const publish = (name, detail) => {
+    if (typeof CustomEvent === "function") document.dispatchEvent?.(new CustomEvent(name, { detail }));
+  };
   let historyStore = null;
   let historyFailure = false;
   const reportHistory = (message, failure = false) => {
@@ -103,11 +114,21 @@
     }
   };
 
+  const resetStaleAttempts = () => {
+    if (!historyAPI) return;
+    const today = historyAPI.localDay(new Date());
+    for (const [card, attempt] of attempts) {
+      if (attempt.day !== today) attempts.delete(card);
+    }
+  };
+
   const refreshHistory = () => {
     if (!historyStore) return false;
     try {
       const events = historyStore.read();
+      resetStaleAttempts();
       for (const card of cards) renderHistory(card, events);
+      publish("architect:history", null);
       return true;
     } catch (error) { reportHistory(error.message, true); return false; }
   };
@@ -139,7 +160,8 @@
     if ((card.querySelector("[data-answer-history]")?.open && summaries.get(card)?.hasHistory) ||
         viewedDays.get(card)?.has(historyAPI.localDay(new Date()))) markViewed(card);
     let attempt = attempts.get(card);
-    if (!attempt) { attempt = { id: uuid(), answered: false }; attempts.set(card, attempt); }
+    const day = historyAPI.localDay(new Date());
+    if (!attempt || attempt.day !== day) { attempt = { id: uuid(), answered: false, day }; attempts.set(card, attempt); }
     if (attempt.answered) return;
     // Lock before saving: repeated clicks never create another answer, even if storage fails.
     attempt.answered = true;
@@ -149,6 +171,7 @@
       attempt.answer = historyStore.answer({ ...metadata(card), attemptId: attempt.id,
         choice: choice.dataset.answerChoice });
       refreshHistory();
+      publish("architect:answer", { ...metadata(card), answer: attempt.answer });
       if (!historyFailure) reportHistory("回答をこのブラウザに保存しました。表示中のカードは、絞込みを操作するまで移動・非表示にしません。");
     } catch (error) {
       reportHistory(error.message, true);
@@ -172,11 +195,12 @@
     coverageTiersByFilter.get(filter)?.includes(tier) ?? false;
 
   const updateBulkAnswerButton = (answersOpen) => {
-    if (!toggleVisibleAnswers) return;
-    toggleVisibleAnswers.textContent = answersOpen
-      ? "表示中の答えをすべて閉じる"
-      : "表示中の答えをすべて開く";
-    toggleVisibleAnswers.setAttribute("aria-pressed", String(answersOpen));
+    for (const button of answerToggleButtons) {
+      button.textContent = answersOpen
+        ? "表示中の答えをすべて閉じる"
+        : "表示中の答えをすべて開く";
+      button.setAttribute("aria-pressed", String(answersOpen));
+    }
   };
 
   const visibleAnswerDisclosures = () =>
@@ -228,7 +252,7 @@
 
   const updatePrintPositions = () => {
     let position = 0;
-    for (const card of cards) {
+    for (const card of root.querySelectorAll(".principle-card")) {
       const label = card.querySelector("[data-print-position]");
       if (!label) {
         continue;
@@ -289,7 +313,7 @@
           setAnswerOpen(disclosure, false);
         }
       }
-      if (historyStore) attempts.set(card, { id: uuid(), answered: false });
+      if (historyStore) attempts.set(card, { id: uuid(), answered: false, day: historyAPI.localDay(new Date()) });
       refreshHistory();
       syncBulkAnswerButton();
       if (!historyFailure) reportHistory("新しい試行を開始しました。今日すでに答えを確認した問題は、答え確認後の回答として記録します。");
@@ -303,7 +327,7 @@
     });
   }
 
-  toggleVisibleAnswers?.addEventListener("click", () => {
+  for (const button of answerToggleButtons) button.addEventListener("click", () => {
     const visibleDisclosures = visibleAnswerDisclosures();
     const shouldOpen =
       visibleDisclosures.length > 0 &&
@@ -316,6 +340,7 @@
   });
 
   const applyFilters = () => {
+    restoreCardOrder();
     closeAnswers();
     const query = normalize(search.value);
     const activeProgress = progress.value;
@@ -347,17 +372,30 @@
       count += visible ? 1 : 0;
     }
 
+    updateVisibility(count);
+    publish("architect:filters", null);
+  };
+
+  // One visibility path for catalogue filters and the finite study set. Never
+  // move a card after grading: navigation happens only on an explicit action.
+  const updateVisibility = (count) => {
     for (const section of sections) {
       section.hidden = !section.querySelector(".principle-card:not([hidden])");
     }
-
     for (const group of groups) {
       group.hidden = !group.querySelector("[data-catalog-section]:not([hidden])");
     }
-
+    for (const label of document.querySelectorAll("[data-count-for]")) {
+      const container = document.getElementById(label.dataset.countFor);
+      if (!container) continue;
+      const shown = container.querySelectorAll(".principle-card:not([hidden])").length;
+      const total = Number(label.dataset.totalCount);
+      label.textContent = shown === total ? `${total}件` : `${shown} / 全${total}件`;
+    }
     updatePrintPositions();
     visibleCount.textContent = String(count);
     empty.hidden = count !== 0;
+    syncBulkAnswerButton();
   };
 
   canonicalizeFragment();
@@ -443,4 +481,32 @@
     applyFilters();
     search.focus();
   });
+
+  globalThis.ArchitectCatalog = {
+    cards, root, closeAnswers, refreshHistory, applyFilters,
+    readEvents() {
+      if (!historyStore) throw new Error("回答履歴を利用できません。保存設定を確認してください。");
+      return historyStore.read();
+    },
+    showCards(itemIds, { ordered = false, preserveAnswers = false } = {}) {
+      if (!preserveAnswers) closeAnswers();
+      restoreCardOrder();
+      if (ordered && studyCardList) {
+        const byId = new Map(cards.map((card) => [card.dataset.studyId, card]));
+        for (const itemId of new Set(itemIds)) {
+          const card = byId.get(itemId);
+          if (!card) continue;
+          const marker = document.createComment("study-card-location");
+          card.before(marker);
+          cardLocations.set(card, marker);
+          studyCardList.append(card);
+        }
+        studyCardList.hidden = false;
+      }
+      refreshHistory();
+      const visible = new Set(itemIds);
+      for (const card of cards) card.hidden = !visible.has(card.dataset.studyId);
+      updateVisibility(cards.filter((card) => !card.hidden).length);
+    },
+  };
 })();

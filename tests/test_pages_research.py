@@ -811,6 +811,9 @@ def test_build_loads_research_registries_and_copies_the_interaction_asset(
     # This deliberately demoted three-card projection is not the audited
     # production corpus. The independent exam audit has its own loader tests.
     monkeypatch.setattr(site_module, "load_exam_coverage", lambda actual_catalog: None)
+    # Optional practice has its own published-parent validation tests, and
+    # cannot attach to the deliberately demoted parents in this fixture.
+    monkeypatch.setattr(site_module, "load_practice", lambda actual_catalog: {})
     monkeypatch.setattr(
         site_module,
         "load_research_questions",
@@ -1222,7 +1225,7 @@ def test_confirmed_card_with_queries_adds_one_always_visible_explanation_button(
     assert unescape(accessible_name) == (
         f"{catalog.question_editions.editions[catalog.question_editions.current].reference(item.id)}：分かりやすい解説をGoogleで検索（別タブ）"
     )
-    assert visible_label == "分かりやすい解説"
+    assert visible_label == "Googleで解説を探す"
 
     print_rules = (output / "assets/styles.css").read_text(
         encoding="utf-8"
@@ -1304,7 +1307,7 @@ def test_every_card_has_one_direct_explanation_search_and_no_visible_search_trai
         assert accessible_name == expected_accessible_names[query]
         assert href == f"https://www.google.com/search?{urlencode({'q': query})}"
         assert href == google_search_url(query)
-        assert visible_label == "分かりやすい解説"
+        assert visible_label == "Googleで解説を探す"
         parsed = urlsplit(href)
         assert (parsed.scheme, parsed.netloc, parsed.path) == (
             "https",
@@ -1328,11 +1331,11 @@ def test_every_card_has_one_direct_explanation_search_and_no_visible_search_trai
         assert escape(record.explanation) not in research
 
     disclosure = (
-        "「分かりやすい解説」を開くと、項目ごとの解説向け検索語がGoogleへ"
+        "「Googleで解説を探す」を開くと、項目ごとの解説向け検索語がGoogleへ"
         "送信されます。Googleの検索結果は台帳の根拠ではありません。"
     )
     assert root.count(disclosure) == 1
-    assert root.index(disclosure) < root.index('<section class="controls"')
+    assert root.index(disclosure) < root.index('<section id="catalog-controls"')
     if provisional_records:
         assert research.count(disclosure) == 1
         warning = research.split(

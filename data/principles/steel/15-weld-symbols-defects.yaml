@@ -12,7 +12,7 @@ principles:
     distinguishing_conditions:
     - 空洞が溶接金属内部に閉じている場合
     confusable_points:
-    - 「ピット」とは区別する。
+    - ガスによる空洞が内部に閉じていればブローホール、表面へ開口していればピット。識別点は空洞の開口位置である。
   principle: ブローホールの識別
   question:
     prompt: 溶着金属中にガスが残り、空洞が溶接金属内部に閉じている欠陥の名称として正しい結論はどちらか。
@@ -69,7 +69,7 @@ principles:
     distinguishing_conditions:
     - ガスによる空洞が溶接部表面に開口している場合
     confusable_points:
-    - 「ブローホール」とは区別する。
+    - ピットはガスによる空洞が表面へ開口したもの。内部に閉じたブローホールと、表面に開いているかどうかで見分ける。
   principle: ピットの識別
   question:
     prompt: ガスによる空洞が溶接部表面に開口している欠陥の名称として、正しい結論はどちらか。

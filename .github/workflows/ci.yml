@@ -91,6 +91,9 @@ jobs:
           node --check principle_catalog/static/catalog.js
           node --check principle_catalog/static/answer-history.js
           node --check principle_catalog/static/research.js
+          node --check principle_catalog/static/study-session.js
+          node --check principle_catalog/static/study-ui.js
+          node --check principle_catalog/static/practice-ui.js
       - name: Test catalog interactions
         run: node --test tests/*.test.mjs
       - name: Build public site

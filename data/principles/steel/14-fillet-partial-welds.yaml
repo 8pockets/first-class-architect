@@ -35,7 +35,8 @@ principles:
     applicability:
     - すみ肉溶接部
     - すみ肉溶接の耐力計算
-    numbers_exceptions: []
+    numbers_exceptions:
+    - 本問は100mm×4.2mm＝420mm²。有効のど厚4.2mmを使い、すみ肉サイズを代わりに掛けない。
   verification:
     statement_source: verified
     explanation_completeness: complete
@@ -49,7 +50,7 @@ principles:
     - すみ肉溶接
     - 突合せ溶接と異なり、全長を連続溶接しなくてもよい
     numbers_exceptions:
-    - まわし溶接を含む溶接全長から、すみ肉サイズの2倍を減じた長さを有効長さとする。
+    - 計算例：溶接全長132mm、サイズ6mmなら、有効長さは132−2×6＝120mm。全長132mmをそのまま用いない。
   principle: すみ肉溶接の有効長さ
   question:
     prompt: まわし溶接を含むすみ肉溶接について、有効長さの定め方として正しい結論はどちらか。
@@ -164,7 +165,8 @@ principles:
     applicability:
     - 等脚45度すみ肉溶接の有効のど厚
     - 余盛・深溶込みを追加算入しない基本計算
-    numbers_exceptions: []
+    numbers_exceptions:
+    - 本問は0.7×6mm＝4.2mm。6mmはサイズであり、有効のど厚そのものではない。
   verification:
     statement_source: verified
     explanation_completeness: complete

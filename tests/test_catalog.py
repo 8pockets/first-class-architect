@@ -420,14 +420,13 @@ def test_build_embeds_each_current_edition_reference_in_its_question_card(
         )
 
 
-def test_learning_pages_keep_the_existing_disabled_zoom_contract(
+def test_learning_pages_allow_zoom_for_readability(
     tmp_path: Path,
 ) -> None:
     output = tmp_path / "site"
     build_site(output, "https://8pockets.github.io/first-class-architect/")
     expected = (
-        '<meta name="viewport" content="width=device-width, initial-scale=1, '
-        'maximum-scale=1, user-scalable=no">'
+        '<meta name="viewport" content="width=device-width, initial-scale=1">'
     )
     pages = [output / "index.html", output / "404.html"]
     for page in pages:
@@ -437,10 +436,10 @@ def test_learning_pages_keep_the_existing_disabled_zoom_contract(
 
     css = (output / "assets/styles.css").read_text(encoding="utf-8")
     root = _css_declarations(css, ":root")
-    assert root["touch-action"] == "pan-x pan-y"
+    assert root["touch-action"] == "manipulation"
 
 
-def test_research_page_keeps_the_disabled_zoom_contract(tmp_path: Path) -> None:
+def test_research_page_allows_zoom_for_readability(tmp_path: Path) -> None:
     output = tmp_path / "site"
     build_site(output, "https://8pockets.github.io/first-class-architect/")
     html = (output / "research/index.html").read_text(encoding="utf-8")
@@ -448,13 +447,12 @@ def test_research_page_keeps_the_disabled_zoom_contract(tmp_path: Path) -> None:
 
     assert '<html lang="ja" class="research-document">' in html
     assert (
-        '<meta name="viewport" content="width=device-width, initial-scale=1, '
-        'maximum-scale=1, user-scalable=no">'
+        '<meta name="viewport" content="width=device-width, initial-scale=1">'
         in html
     )
     assert ":root.research-document" not in css
     root = _css_declarations(css, ":root")
-    assert root["touch-action"] == "pan-x pan-y"
+    assert root["touch-action"] == "manipulation"
 
 
 def test_build_places_each_question_before_its_three_point_answer_and_searches_it(
@@ -558,7 +556,10 @@ def test_confirmed_choices_are_buttons_that_control_their_answer(tmp_path: Path)
         answer_id = f"answer-{item.code}"
         assert card.count('class="choice-button"') == 2
         assert card.count('data-answer-choice') == 2
-        assert card.count('type="button"') == 3  # A/B plus explicit retry.
+        # Optional variants live inside the answer; the canonical question
+        # still has exactly A/B plus an explicit retry.
+        question_controls = card.split('<details id="answer-', maxsplit=1)[0]
+        assert question_controls.count('type="button"') == 3
         assert 'data-answer-choice="A"' in card
         assert 'data-answer-choice="B"' in card
         assert card.count(f'aria-controls="{answer_id}"') == 2
@@ -747,7 +748,7 @@ def test_print_styles_make_a_compact_a4_two_column_question_sheet(
     assert catalog["column-gap"] == "2.5mm"
     section = _css_declarations(
         print_rules,
-        ".catalog-group,\n  .catalog-section,\n  .card-grid",
+        ".catalog-group,\n  .catalog-section,\n  .card-grid,\n  .study-card-list",
     )
     assert section["display"] == "contents"
     card = _css_declarations(print_rules, ".principle-card")

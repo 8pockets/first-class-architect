@@ -74,7 +74,7 @@ question_audit:
   answer_positions:
     A: 156
     B: 155
-  content_sha256: 91e7d6faafd7d19216ddbd4d630d87bd88f7830eccfd4761b218703ae0b0e9e2
+  content_sha256: 570df69d663f9e5d9baafc34275ed3ba1d285d665b71e41fc008d19561eee492
   order_sha256: 60b04cb596976ea5b9cbc93b8169419a788c8f20e4dc53a1c4fed99cc8ab4994
   taxonomy_sha256: 7f30eabe75ff5d5d2f911152f39cdf3c000d6c651efae37ddc5d734d41d0b152
   prerequisites_sha256: 0a7c512fda21cd6edd2846906a40e7fd56980d551c06dc3e06a6f013bf6e1e2f
