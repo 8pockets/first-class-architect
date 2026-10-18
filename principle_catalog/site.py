@@ -371,14 +371,14 @@ def _card(
       <dl class="three-point">{_facet_list(facets)}</dl>
       <p class="card-id">{escape(item.code)}</p>
       {_authoritative_sources(item)}
+      {_explanation_search_action(item, research_queries, neutral=question_reference)}
       {_prerequisite_links(catalog, item)}
       {practice_html}
     </div>
   </details>
   <details class="card-tools">
-    <summary>補助情報<span>検索・履歴・出典</span></summary>
+    <summary>補助情報<span>履歴・出典</span></summary>
     <div class="card-tools-content">
-    {_explanation_search_action(item, research_queries, neutral=question_reference)}
     <details class="answer-history" data-answer-history>
       <summary>この問題の回答履歴</summary>
       <ul data-answer-history-list><li>この端末にはまだ履歴がありません。</li></ul>

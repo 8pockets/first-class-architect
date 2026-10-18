@@ -154,8 +154,12 @@ def test_card_tools_fold_without_hiding_question_or_answer(page):
     assert all("open" not in node["attrs"] for node in tools)
     for node in markup.elements:
         attrs = node["attrs"]
-        if "data-answer-history" in attrs or attrs.get("class") == "card-source" or attrs.get("data-research-search") == "explanation":
+        if "data-answer-history" in attrs or attrs.get("class") == "card-source":
             assert any(parent["attrs"].get("class") == "card-tools" for parent in node["parents"])
+        if attrs.get("data-research-search") == "explanation":
+            answer = next(parent for parent in node["parents"] if "data-answer-disclosure" in parent["attrs"])
+            assert "open" not in answer["attrs"]
+            assert not any(parent["attrs"].get("class") == "card-tools" for parent in node["parents"])
         if "data-answer-disclosure" in attrs or "data-answer-choice" in attrs:
             assert not any(parent["attrs"].get("class") == "card-tools" for parent in node["parents"])
 

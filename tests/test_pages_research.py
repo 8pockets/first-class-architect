@@ -1153,7 +1153,7 @@ def test_research_page_content_is_excluded_from_print(
     assert "display: none !important" in hidden.group(1)
 
 
-def test_confirmed_card_with_queries_adds_one_always_visible_explanation_button(
+def test_confirmed_card_with_queries_adds_one_explanation_button_inside_answer(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
@@ -1204,7 +1204,8 @@ def test_confirmed_card_with_queries_adds_one_always_visible_explanation_button(
     assert root.count('class="explanation-search-button"') == expected_button_count
     assert card.count(action_opening) == 1
     assert card.count('class="explanation-search-button"') == 1
-    assert card.index("</details>") < card.index(action_opening)
+    assert card.index('class="answer-content"') < card.index(action_opening)
+    assert card.index(action_opening) < card.index('class="card-tools"')
     assert card.index(action_opening) < card.index('<footer class="card-source">')
     assert "<details" not in action
     assert "<summary" not in action
