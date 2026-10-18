@@ -192,6 +192,19 @@ def test_favorites_are_question_controls_separate_from_answers(page):
     assert markup.by_id("favorite-status")["attrs"]["role"] == "status"
 
 
+def test_stylesheet_cache_version_tracks_its_contents(page, monkeypatch):
+    import hashlib
+    from principle_catalog import site
+
+    _, html, _ = page
+    css = Path("principle_catalog/static/styles.css").read_bytes()
+    expected = BASE_URL + "assets/styles.css?v=" + hashlib.sha256(css).hexdigest()[:12]
+    assert f'href="{expected}"' in html
+    assert site._stylesheet_url(BASE_URL) == expected
+    monkeypatch.setattr(site, "_asset_text", lambda name: "changed stylesheet")
+    assert site._stylesheet_url(BASE_URL) != expected
+
+
 def test_new_script_assets_are_copied_to_static_release(tmp_path):
     output = tmp_path / "site"
     build_site(output, BASE_URL)
