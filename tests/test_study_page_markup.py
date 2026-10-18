@@ -104,12 +104,16 @@ def test_prerequisite_links_stay_inside_answer_and_have_public_targets(page):
         assert any("data-answer-disclosure" in parent["attrs"] for parent in link["parents"])
 
 
-def test_advanced_filters_and_backup_fold_without_hiding_save_status(page):
+def test_search_and_progress_fold_without_hiding_save_status(page):
     _, _, markup = page
     for identifier in ("progress-filter", "source-kind-filter"):
         assert any(parent["attrs"].get("class") == "advanced-filters" for parent in markup.by_id(identifier)["parents"])
-    for identifier in ("catalog-search", "review-filter", "coverage-filter", "history-status"):
+    for identifier in ("catalog-search", "review-filter", "coverage-filter"):
+        assert any(parent["attrs"].get("id") == "catalog-browser" for parent in markup.by_id(identifier)["parents"])
+    for identifier in ("history-status", "study-status"):
         assert not any(parent["tag"] == "details" for parent in markup.by_id(identifier)["parents"])
+        assert markup.by_id(identifier)["parents"][-1]["attrs"].get("class") == "study-notices"
+    assert any(parent["attrs"].get("class") == "study-progress-summary" for parent in markup.by_id("study-metrics")["parents"])
     for identifier in ("history-export", "history-import"):
         assert any(parent["tag"] == "details" for parent in markup.by_id(identifier)["parents"])
 
@@ -141,6 +145,19 @@ def test_zoom_is_allowed_and_new_ui_is_hidden_when_printed(page):
     list_rule = re.search(r"\.study-card-list\s*\{([^}]*)\}", print_css)
     assert list_rule is not None and "display: contents" in list_rule.group(1)
     assert "study-card-next" not in css
+
+
+def test_card_tools_fold_without_hiding_question_or_answer(page):
+    _, _, markup = page
+    tools = [node for node in markup.elements if node["attrs"].get("class") == "card-tools"]
+    assert len(tools) == 311
+    assert all("open" not in node["attrs"] for node in tools)
+    for node in markup.elements:
+        attrs = node["attrs"]
+        if "data-answer-history" in attrs or attrs.get("class") == "card-source" or attrs.get("data-research-search") == "explanation":
+            assert any(parent["attrs"].get("class") == "card-tools" for parent in node["parents"])
+        if "data-answer-disclosure" in attrs or "data-answer-choice" in attrs:
+            assert not any(parent["attrs"].get("class") == "card-tools" for parent in node["parents"])
 
 
 def test_study_set_is_one_column_with_readable_gaps():

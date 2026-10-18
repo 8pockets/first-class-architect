@@ -15,6 +15,8 @@
   const result = $("study-session-result");
   const resume = $("study-resume");
   const controls = $("catalog-controls");
+  const browser = $("catalog-browser");
+  const menu = $("study-session-menu");
   const nav = document.querySelector('nav[aria-label="分野から探す"]');
   const returnButton = $("study-return");
   const labels = { 1: "骨格", 2: "骨格＋標準", 3: "骨格＋標準＋発展" };
@@ -59,7 +61,11 @@
   const setMode = (enabled) => {
     active = enabled;
     if (!enabled) clearSetLabels();
+    document.body.classList.toggle("is-studying", enabled);
     bar.hidden = !enabled;
+    if (!enabled) result.hidden = true;
+    if (menu) menu.open = false;
+    if (browser) browser.hidden = enabled;
     controls.hidden = enabled;
     if (nav) nav.hidden = enabled;
     catalog.root.classList.toggle("study-session-active", enabled);
@@ -84,9 +90,10 @@
     const finished = state.index >= state.items.length;
     title.textContent = finished ? "今回のセットを終了しました" :
       `${labels[state.tier]} · ${state.mode === "review" ? "今日の復習" : "今日の学習セット"}`;
-    progress.textContent = `回答 ${state.done.length} / ${state.items.length}問 · 残り ${state.items.length - state.done.length}問`;
+    progress.textContent = `${state.done.length} / ${state.items.length}問`;
+    progress.setAttribute("aria-label", `回答 ${state.done.length} / ${state.items.length}問 · 残り ${state.items.length - state.done.length}問`);
     $("study-finish").disabled = finished;
-    result.hidden = !finished;
+    result.hidden = !active || !finished;
     if (finished) {
       const events = catalog.readEvents();
       const pending = state.items.filter((item) => history.summarize(events, item.itemId, item.revision).review).length;
@@ -239,13 +246,24 @@
   $("study-finish").addEventListener("click", protect(() => {
     if (!state) return;
     state = engine.setIndex(state, state.items.length); persist(); updateSessionText();
+    if (menu) { menu.open = false; menu.querySelector("summary")?.focus({ preventScroll: true }); }
   }));
   $("study-pause").addEventListener("click", protect(() => {
-    leaveSession(); dashboard.scrollIntoView({ block: "start" }); resume.focus();
+    leaveSession(); dashboard.scrollIntoView({ block: "start" });
+    (resume.hidden ? $("study-start") : resume).focus({ preventScroll: true });
   }));
   $("study-browse").addEventListener("click", protect(() => {
-    leaveSession(); controls.scrollIntoView({ block: "start" }); $("catalog-search").focus({ preventScroll: true });
+    leaveSession(); if (browser) browser.open = true;
+    controls.scrollIntoView({ block: "start" }); $("catalog-search").focus({ preventScroll: true });
   }));
+  menu?.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    event.preventDefault(); menu.open = false;
+    menu.querySelector("summary")?.focus({ preventScroll: true });
+  });
+  document.addEventListener("click", (event) => {
+    if (menu?.open && !event.target.closest?.("#study-session-menu")) menu.open = false;
+  });
   tier.addEventListener("change", protect(refreshDashboard));
   document.addEventListener("architect:history", protect(() => { refreshDashboard(); if (active) updateSessionText(); }));
   document.addEventListener("architect:answer", protect((event) => {

@@ -375,19 +375,24 @@ def _card(
       {practice_html}
     </div>
   </details>
-  {_explanation_search_action(item, research_queries, neutral=question_reference)}
-  <details class="answer-history" data-answer-history>
-    <summary>この問題の回答履歴</summary>
-    <ul data-answer-history-list><li>この端末にはまだ履歴がありません。</li></ul>
-  </details>
-  <footer class="card-source">
-    <details class="source-provenance">
-      <summary>出典・確認状況</summary>
-      <span>{escape(_source_label(catalog, item))}</span>
-      <span>主張根拠 {escape(item.verification.statement_source)} / 説明 {escape(item.verification.explanation_completeness)} / 条件 {escape(item.verification.conditions_completeness)}</span>
+  <details class="card-tools">
+    <summary>補助情報<span>検索・履歴・出典</span></summary>
+    <div class="card-tools-content">
+    {_explanation_search_action(item, research_queries, neutral=question_reference)}
+    <details class="answer-history" data-answer-history>
+      <summary>この問題の回答履歴</summary>
+      <ul data-answer-history-list><li>この端末にはまだ履歴がありません。</li></ul>
     </details>
-    <a href="#{escape(item.code)}" data-principle-link aria-label="{escape(question_reference)}への固定リンク">#</a>
-  </footer>
+    <footer class="card-source">
+      <details class="source-provenance">
+        <summary>出典・確認状況</summary>
+        <span>{escape(_source_label(catalog, item))}</span>
+        <span>主張根拠 {escape(item.verification.statement_source)} / 説明 {escape(item.verification.explanation_completeness)} / 条件 {escape(item.verification.conditions_completeness)}</span>
+      </details>
+      <a href="#{escape(item.code)}" data-principle-link aria-label="{escape(question_reference)}への固定リンク">#</a>
+    </footer>
+    </div>
+  </details>
 </article>""".strip()
 
 
@@ -1183,11 +1188,10 @@ def _page(
 <body class="study-page">
   <a class="skip-link" href="#catalog">原理一覧へ移動</a>
   <header class="site-header">
-    <div class="eyebrow">FIRST-CLASS ARCHITECT / STEEL STRUCTURE</div>
     <h1>鉄骨構造 <span>原理台帳</span></h1>
-    <p class="lead">2択から結論を選び、<strong>理由・条件</strong>までつなげて理解する。</p>
     <details class="catalog-about">
-      <summary>この台帳について · {len(published)}問 / {group_count}分野 / {subtopic_count}小項目</summary>
+      <summary>台帳について</summary>
+    <p class="lead">2択から結論を選び、<strong>理由・条件</strong>までつなげて理解する。</p>
     <div class="scope-note">対象：教材の鉄骨構造（PDF P{catalog.manifest.first_page}-P{catalog.manifest.last_page}）＋鋼材・合成構造・耐震設計の関連論点</div>
     <div class="hero-stats" aria-label="台帳の収録範囲">
       <div><strong>{len(published)}</strong><span>公開項目</span></div>
@@ -1205,13 +1209,9 @@ def _page(
   <main>
     <section id="study-dashboard" class="study-dashboard" aria-labelledby="study-dashboard-title" hidden>
       <div class="study-dashboard-heading">
-        <div>
-          <p class="section-kicker">SMALL STEPS, WIDE VIEW</p>
-          <h2 id="study-dashboard-title">少しずつ、分野をひとめぐり</h2>
-          <p>復習は最大5問、残りは未回答から。足りない日は10問未満で終わります。</p>
-        </div>
+        <h2 id="study-dashboard-title" class="visually-hidden">今日の学習</h2>
         <label class="select-field">
-          <span>今日の学習範囲</span>
+          <span>学習範囲</span>
           <select id="study-tier">
             <option value="1">骨格</option>
             <option value="2">骨格＋標準</option>
@@ -1223,14 +1223,17 @@ def _page(
         <button type="button" class="study-primary" id="study-start">今日の10問</button>
         <button type="button" id="study-resume" hidden>続きから</button>
         <button type="button" id="study-review">今日の復習</button>
-        <button type="button" id="study-browse">一覧から探す</button>
+        <button type="button" id="study-browse" aria-label="一覧から探す">一覧・検索</button>
       </div>
-      <p id="study-status" role="status" aria-live="polite"></p>
-      <div id="study-metrics" class="study-metrics" aria-label="この端末の回答状況"></div>
-      <details id="study-map" class="study-map">
-        <summary>小項目ごとの現在地を見る</summary>
-        <p>回答の記録です。正解数だけで習得や合格を判定するものではありません。</p>
-        <div id="study-map-content"></div>
+      <details class="study-progress-summary">
+        <summary>成績・小項目の現在地</summary>
+        <p class="study-guide">復習は最大5問、残りは未回答から。足りない日は10問未満で終わります。</p>
+        <div id="study-metrics" class="study-metrics" aria-label="この端末の回答状況"></div>
+        <details id="study-map" class="study-map">
+          <summary>小項目ごとの現在地を見る</summary>
+          <p>回答の記録です。正解数だけで習得や合格を判定するものではありません。</p>
+          <div id="study-map-content"></div>
+        </details>
       </details>
     </section>
     {f'''<section class="research-entry" aria-labelledby="research-entry-title">
@@ -1244,7 +1247,8 @@ def _page(
 
     <section class="study-history-controls" aria-labelledby="study-history-title">
       <details>
-      <summary id="study-history-title">回答・復習のルールと履歴のバックアップ</summary>
+      <summary id="study-history-title">使い方・履歴の管理</summary>
+      <p>履歴はこの端末のブラウザ内だけに保存します。端末間の自動同期はありません。ブラウザのデータ削除に備えてバックアップしてください。</p>
       <p>A/Bを選ぶと初回回答を採点・保存します。解説を見るだけでは回答になりません。答えを見た日の解き直しは練習として記録し、独力の成績には含めません。</p>
       <p>誤答は要復習、独力で2回連続誤答すると重点復習。日を分けた初回回答で2回連続正解すると復習対象から外れます。合格や習得を保証する判定ではありません。</p>
       <p>今日の復習には、まだ答えを見ていない日の問題を選びます。一覧の「要復習」からは同じ日の練習もできます。</p>
@@ -1254,14 +1258,14 @@ def _page(
         <label>履歴を復元・統合<input id="history-import" type="file" accept="application/json,.json"></label>
       </div>
       </details>
-      <p id="history-status" role="status" aria-live="polite">履歴はこの端末のブラウザ内だけに保存します。端末間の自動同期はありません。ブラウザのデータ削除に備えてバックアップしてください。</p>
       <noscript><p>回答の採点・保存・絞込みにはJavaScriptが必要です。正解と解説は各カードで開けます。</p></noscript>
     </section>
 
+    <details id="catalog-browser" class="catalog-browser">
+      <summary>一覧・検索</summary>
     <section id="catalog-controls" class="controls" aria-labelledby="filter-title" tabindex="-1">
       <div>
-        <p class="section-kicker">FIND A PRINCIPLE</p>
-        <h2 id="filter-title">一覧から探す</h2>
+        <h2 id="filter-title" class="visually-hidden">一覧から探す</h2>
       </div>
       <label class="search-field">
         <span>キーワード検索</span>
@@ -1322,22 +1326,31 @@ def _page(
     </section>
 
     <nav class="section-nav" aria-label="分野から探す">{_taxonomy_nav(catalog, published)}</nav>
+    </details>
+
+    <div class="study-notices">
+      <p id="study-status" role="status" aria-live="polite"></p>
+      <p id="history-status" role="status" aria-live="polite">履歴はこのブラウザに保存します。</p>
+    </div>
 
     {legacy_section_routes}
     {identity_route_notices}
 
     <section id="study-session" class="study-session" aria-labelledby="study-session-title" tabindex="-1" hidden>
-      <div class="study-session-heading">
-        <h2 id="study-session-title">今日の10問</h2>
+      <h2 id="study-session-title" class="visually-hidden">今日の10問</h2>
+      <div class="study-session-toolbar">
         <p id="study-session-progress" role="status" aria-live="polite"></p>
+        <button type="button" id="study-toggle-answers" data-toggle-visible-answers aria-label="表示中の答えをすべて開く" aria-controls="catalog" aria-pressed="false">答えを開く</button>
+        <details id="study-session-menu" class="study-session-menu">
+          <summary>その他</summary>
+          <div class="study-session-actions">
+            <button type="button" id="study-finish">今回の学習を終える</button>
+            <button type="button" id="study-pause">一覧へ戻る</button>
+          </div>
+        </details>
       </div>
-      <div class="study-session-actions">
-        <button type="button" id="study-toggle-answers" data-toggle-visible-answers aria-controls="catalog" aria-pressed="false">表示中の答えをすべて開く</button>
-        <button type="button" id="study-finish">今回の学習を終える</button>
-        <button type="button" id="study-pause">一覧へ戻る</button>
-      </div>
-      <p id="study-session-result" role="status" aria-live="polite"></p>
     </section>
+    <p id="study-session-result" class="study-session-result" role="status" aria-live="polite" hidden></p>
     <button type="button" id="study-return" class="study-return" hidden>元の問題へ戻る</button>
     <div id="catalog" class="catalog" data-catalog-root
       data-coverage-scheme="{escape(catalog.coverage.current)}">

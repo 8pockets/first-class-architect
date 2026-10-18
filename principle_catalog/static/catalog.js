@@ -53,11 +53,12 @@
   };
   let historyStore = null;
   let historyFailure = false;
-  const reportHistory = (message, failure = false) => {
+  const reportHistory = (message, failure = false, notice = false) => {
     historyFailure = failure;
     if (historyStatus) {
       historyStatus.textContent = message;
       historyStatus.dataset.error = String(failure);
+      historyStatus.dataset.notice = String(failure || notice);
     }
   };
   const uuid = () => globalThis.crypto.randomUUID();
@@ -196,9 +197,12 @@
 
   const updateBulkAnswerButton = (answersOpen) => {
     for (const button of answerToggleButtons) {
-      button.textContent = answersOpen
+      const label = answersOpen
         ? "表示中の答えをすべて閉じる"
         : "表示中の答えをすべて開く";
+      button.textContent = button.id === "study-toggle-answers"
+        ? (answersOpen ? "答えを閉じる" : "答えを開く") : label;
+      if (button.id === "study-toggle-answers") button.setAttribute("aria-label", label);
       button.setAttribute("aria-pressed", String(answersOpen));
     }
   };
@@ -438,7 +442,7 @@
       link.href = url;
       link.download = `steel-answer-history-${historyAPI.localDay(new Date())}.json`;
       link.click();
-      reportHistory("回答履歴のバックアップをダウンロードしました。個人の学習記録として安全に保管してください。");
+      reportHistory("回答履歴のバックアップをダウンロードしました。個人の学習記録として安全に保管してください。", false, true);
     } catch (error) { reportHistory(`バックアップできません。${error.message}`, true); }
     finally { if (url) setTimeout(() => URL.revokeObjectURL(url), 1000); }
   });
@@ -449,7 +453,7 @@
       if (!historyStore) throw new Error("回答履歴を利用できません。");
       if (file.size > historyAPI.MAX_IMPORT_BYTES) throw new Error("履歴ファイルは20 MB以下にしてください。");
       const added = historyStore.importBackup(await file.text());
-      if (refreshHistory()) reportHistory(`${added}件の履歴を追加しました。同じ履歴は重複せず、既存の記録は保持しました。絞込みを操作すると復習対象が更新されます。`);
+      if (refreshHistory()) reportHistory(`${added}件の履歴を追加しました。同じ履歴は重複せず、既存の記録は保持しました。絞込みを操作すると復習対象が更新されます。`, false, true);
     } catch (error) { refreshHistory(); reportHistory(error.message, true); }
     finally { historyImport.value = ""; }
   });

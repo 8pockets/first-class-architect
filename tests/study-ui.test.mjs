@@ -89,9 +89,11 @@ function boot({ count = 12, storage = new Storage(), beforeUI, revision = "rev1"
     "study-session-result", "study-resume", "catalog-controls", "study-return", "study-finish", "study-toggle-answers", "study-metrics",
     "study-map-content", "study-start", "study-review", "study-pause", "study-browse", "catalog-search", "progress-filter",
     "source-kind-filter", "coverage-filter", "review-filter", "history-status", "history-export", "history-import",
-    "toggle-visible-answers", "reset-filters", "visible-count", "empty-state"];
-  for (const id of ids) add("div", { id, value: id === "study-tier" ? "1" : id.endsWith("-filter") ? "all" : "" });
+    "toggle-visible-answers", "reset-filters", "visible-count", "empty-state", "catalog-browser", "study-session-menu"];
+  for (const id of ids) add(["catalog-browser", "study-session-menu"].includes(id) ? "details" : "div",
+    { id, value: id === "study-tier" ? "1" : id.endsWith("-filter") ? "all" : "" });
   const $ = (id) => document.getElementById(id);
+  add("summary", {}, $("study-session-menu"));
   $("study-resume").hidden = true; $("study-return").hidden = true; $("study-session").hidden = true;
   const nav = add("nav"); nav.setAttribute("aria-label", "分野から探す");
   const root = add("div", { dataset: { catalogRoot: "" } });
@@ -178,7 +180,8 @@ test("today's ten questions show the saved set together without moving cards whe
   app.answer(3, "A");
   assert.equal(app.state().index, 1);
   assert.deepEqual(app.shown(), selected);
-  assert.match(app.$("study-session-progress").textContent, /回答 2 \/ 10問 · 残り 8問/);
+  assert.equal(app.$("study-session-progress").textContent, "2 / 10問");
+  assert.match(app.$("study-session-progress").getAttribute("aria-label"), /回答 2 \/ 10問 · 残り 8問/);
   assert.equal(app.document.querySelector(".study-card-next"), null);
   assert.match(app.cards[3].querySelector(".study-set-position").textContent, /第4問 · 新規 · 架構/);
 });
