@@ -221,6 +221,7 @@ test("finishing with skipped questions persists the terminal position and does n
   assert.equal(app.state().done.length, 1);
   assert.equal(app.$("empty-state").hidden, true);
   assert.match(app.$("study-session-result").textContent, /今回の回答 1 \/ 2問/);
+  assert.equal(app.$("study-session-progress").textContent, "終了 1/2");
   assert.equal(app.$("study-finish").disabled, true);
   assert.deepEqual(app.shown(), ["steel.item-0", "steel.item-1"]);
   assert.equal(app.cards[0].querySelector("[data-answer-disclosure]").open, true);

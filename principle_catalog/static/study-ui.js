@@ -90,8 +90,8 @@
     const finished = state.index >= state.items.length;
     title.textContent = finished ? "今回のセットを終了しました" :
       `${labels[state.tier]} · ${state.mode === "review" ? "今日の復習" : "今日の学習セット"}`;
-    progress.textContent = `${state.done.length} / ${state.items.length}問`;
-    progress.setAttribute("aria-label", `回答 ${state.done.length} / ${state.items.length}問 · 残り ${state.items.length - state.done.length}問`);
+    progress.textContent = finished ? `終了 ${state.done.length}/${state.items.length}` : `${state.done.length} / ${state.items.length}問`;
+    progress.setAttribute("aria-label", `${finished ? "今回の学習を終了。" : ""}回答 ${state.done.length} / ${state.items.length}問 · 残り ${state.items.length - state.done.length}問`);
     $("study-finish").disabled = finished;
     result.hidden = !active || !finished;
     if (finished) {
