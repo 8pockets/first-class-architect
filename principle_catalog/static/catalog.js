@@ -7,6 +7,8 @@
   const sourceKind = document.querySelector("#source-kind-filter");
   const coverage = document.querySelector("#coverage-filter");
   const reviewFilter = document.querySelector("#review-filter");
+  const favoriteFilter = document.querySelector("#favorite-filter");
+  const favoriteStatus = document.querySelector("#favorite-status");
   const historyStatus = document.querySelector("#history-status");
   const historyExport = document.querySelector("#history-export");
   const historyImport = document.querySelector("#history-import");
@@ -38,6 +40,44 @@
   const principleLinks = [...root.querySelectorAll("[data-principle-link]")];
   const studyCardList = document.getElementById("study-card-list");
   const cardLocations = new Map();
+  const FAVORITE_PREFIX = "architect-steel-favorites:v1:item:";
+  const favorites = new Map();
+  let catalogProjection = true;
+  const reportFavorite = (message, failure = false) => {
+    if (!favoriteStatus) return;
+    favoriteStatus.textContent = message;
+    favoriteStatus.dataset.error = String(failure);
+    favoriteStatus.dataset.notice = String(failure);
+  };
+  const renderFavorite = (card) => {
+    const button = card.querySelector("[data-favorite-toggle]");
+    if (!button || !card.dataset.studyId) return;
+    const selected = favorites.get(card.dataset.studyId) === true;
+    button.hidden = false;
+    button.textContent = selected ? "★" : "☆";
+    button.setAttribute("aria-pressed", String(selected));
+    button.setAttribute("title", selected ? "お気に入りを解除" : "お気に入りに追加");
+  };
+  const refreshFavorites = () => {
+    try {
+      // Per-item keys avoid overwriting unrelated favorites from another tab.
+      const next = new Map();
+      for (const card of cards) {
+        if (card.dataset.studyId && card.querySelector("[data-favorite-toggle]")) {
+          next.set(card.dataset.studyId,
+            window.localStorage.getItem(FAVORITE_PREFIX + card.dataset.studyId) === "true");
+        }
+      }
+      favorites.clear();
+      for (const [id, selected] of next) favorites.set(id, selected);
+      for (const card of cards) renderFavorite(card);
+      reportFavorite("");
+      return true;
+    } catch {
+      reportFavorite("お気に入りを読み込めません。ブラウザの保存設定を確認してください。", true);
+      return false;
+    }
+  };
   const restoreCardOrder = () => {
     for (const [card, marker] of cardLocations) marker.replaceWith(card);
     cardLocations.clear();
@@ -343,9 +383,10 @@
     updateBulkAnswerButton(shouldOpen);
   });
 
-  const applyFilters = () => {
+  const applyFilters = ({ preserveAnswers = false } = {}) => {
+    catalogProjection = true;
     restoreCardOrder();
-    closeAnswers();
+    if (!preserveAnswers) closeAnswers();
     const query = normalize(search.value);
     const activeProgress = progress.value;
     const activeSourceKind = sourceKind.value;
@@ -370,6 +411,7 @@
         matchesProgress &&
         matchesSourceKind &&
         matchesCoverage &&
+        (!favoriteFilter?.checked || favorites.get(card.dataset.studyId) === true) &&
         (!reviewFilter || reviewFilter.value === "all" ||
           (summaries.has(card) && historyAPI.matchesFilter(summaries.get(card), reviewFilter.value)));
       card.hidden = !visible;
@@ -419,9 +461,11 @@
   progress.addEventListener("change", applyFilters);
   sourceKind.addEventListener("change", applyFilters);
   coverage.addEventListener("change", applyFilters);
+  favoriteFilter?.addEventListener("change", applyFilters);
   reviewFilter?.addEventListener("change", () => { refreshHistory(); applyFilters(); });
   window.addEventListener("storage", (event) => {
     if (event.key === null || event.key?.startsWith(historyAPI?.PREFIX)) refreshHistory();
+    if (event.key === null || event.key?.startsWith(FAVORITE_PREFIX)) refreshFavorites();
   });
   window.addEventListener("focus", () => {
     for (const disclosure of disclosures) {
@@ -431,7 +475,33 @@
       if (card.querySelector("[data-answer-history]")?.open && summaries.get(card)?.hasHistory) markViewed(card);
     }
     refreshHistory();
+    refreshFavorites();
   });
+
+  refreshFavorites();
+  for (const card of cards) {
+    const button = card.querySelector("[data-favorite-toggle]");
+    if (!button || !card.dataset.studyId) continue;
+    button.addEventListener("click", () => {
+      // Read before toggling so another tab's most recent value is respected.
+      if (!refreshFavorites()) return;
+      const id = card.dataset.studyId;
+      const selected = favorites.get(id) !== true;
+      try {
+        window.localStorage.setItem(FAVORITE_PREFIX + id, String(selected));
+        favorites.set(id, selected);
+        renderFavorite(card);
+        reportFavorite(selected ? "お気に入りに追加しました。" : "お気に入りを解除しました。");
+        // An explicit removal may update a filtered catalogue, but never a study set.
+        if (catalogProjection && favoriteFilter?.checked) {
+          applyFilters({ preserveAnswers: true });
+          if (card.hidden) favoriteFilter.focus({ preventScroll: true });
+        }
+      } catch {
+        reportFavorite("お気に入りを保存できませんでした。ブラウザの保存設定を確認してください。", true);
+      }
+    });
+  }
 
   historyExport?.addEventListener("click", () => {
     if (!historyStore) { reportHistory("回答履歴を利用できないため、バックアップできません。", true); return; }
@@ -476,6 +546,7 @@
     sourceKind.value = "all";
     coverage.value = "all";
     if (reviewFilter) reviewFilter.value = "all";
+    if (favoriteFilter) favoriteFilter.checked = false;
     activeType = "all";
     for (const button of typeButtons) {
       const pressed = button.dataset.filterType === "all";
@@ -493,6 +564,7 @@
       return historyStore.read();
     },
     showCards(itemIds, { ordered = false, preserveAnswers = false } = {}) {
+      catalogProjection = false;
       if (!preserveAnswers) closeAnswers();
       restoreCardOrder();
       if (ordered && studyCardList) {

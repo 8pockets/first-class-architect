@@ -349,6 +349,7 @@ def _card(
     </div>
     <p class="card-id">{escape(question_reference)}</p>
     <h3>{escape(taxonomy_context[-1])}</h3>
+    <button class="favorite-button" type="button" data-favorite-toggle aria-pressed="false" aria-label="お気に入り：{escape(question_reference)}" title="お気に入りに追加" hidden>☆</button>
   </header>
   <div class="practice-question">
     <p class="print-question-number" aria-hidden="true"><span data-print-position>問{print_position}</span> [{escape(question_reference)}]</p>
@@ -1249,6 +1250,7 @@ def _page(
       <details>
       <summary id="study-history-title">使い方・履歴の管理</summary>
       <p>履歴はこの端末のブラウザ内だけに保存します。端末間の自動同期はありません。ブラウザのデータ削除に備えてバックアップしてください。</p>
+      <p>各問題の☆でお気に入りを登録・解除できます。「一覧・検索」の「お気に入りのみ」で絞り込めます。お気に入りもこのブラウザ内だけに保存され、履歴のバックアップには含まれません。</p>
       <p>A/Bを選ぶと初回回答を採点・保存します。解説を見るだけでは回答になりません。答えを見た日の解き直しは練習として記録し、独力の成績には含めません。</p>
       <p>誤答は要復習、独力で2回連続誤答すると重点復習。日を分けた初回回答で2回連続正解すると復習対象から外れます。合格や習得を保証する判定ではありません。</p>
       <p>今日の復習には、まだ答えを見ていない日の問題を選びます。一覧の「要復習」からは同じ日の練習もできます。</p>
@@ -1320,6 +1322,7 @@ def _page(
           </label>
         </div>
       </details>
+      <label class="favorite-filter-field"><input type="checkbox" id="favorite-filter">お気に入りのみ</label>
       <p class="result-summary" aria-live="polite"><strong id="visible-count">{len(published)}</strong>件を表示</p>
       <button class="answer-toggle-button" id="toggle-visible-answers" type="button" data-toggle-visible-answers aria-controls="catalog" aria-pressed="false">表示中の答えをすべて開く</button>
       <button class="reset-button" id="reset-filters" type="button">条件をリセット</button>
@@ -1331,6 +1334,7 @@ def _page(
     <div class="study-notices">
       <p id="study-status" role="status" aria-live="polite"></p>
       <p id="history-status" role="status" aria-live="polite">履歴はこのブラウザに保存します。</p>
+      <p id="favorite-status" role="status" aria-live="polite"></p>
     </div>
 
     {legacy_section_routes}

@@ -177,6 +177,21 @@ def test_study_set_is_one_column_with_readable_gaps():
     assert ".study-set-supplement .study-set-position" in css
 
 
+def test_favorites_are_question_controls_separate_from_answers(page):
+    _, _, markup = page
+    buttons = [node for node in markup.elements if "data-favorite-toggle" in node["attrs"]]
+    assert len(buttons) == 311
+    for button in buttons:
+        assert button["attrs"]["type"] == "button"
+        assert button["attrs"]["aria-pressed"] == "false"
+        assert "hidden" in button["attrs"]
+        assert "お気に入り：K6-R3 Q" in button["attrs"]["aria-label"]
+        assert any(parent["attrs"].get("class") == "card-header" for parent in button["parents"])
+        assert not any("data-answer-disclosure" in parent["attrs"] for parent in button["parents"])
+    assert markup.by_id("favorite-filter")["attrs"]["type"] == "checkbox"
+    assert markup.by_id("favorite-status")["attrs"]["role"] == "status"
+
+
 def test_new_script_assets_are_copied_to_static_release(tmp_path):
     output = tmp_path / "site"
     build_site(output, BASE_URL)

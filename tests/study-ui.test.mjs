@@ -89,7 +89,7 @@ function boot({ count = 12, storage = new Storage(), beforeUI, revision = "rev1"
     "study-session-result", "study-resume", "catalog-controls", "study-return", "study-finish", "study-toggle-answers", "study-metrics",
     "study-map-content", "study-start", "study-review", "study-pause", "study-browse", "catalog-search", "progress-filter",
     "source-kind-filter", "coverage-filter", "review-filter", "history-status", "history-export", "history-import",
-    "toggle-visible-answers", "reset-filters", "visible-count", "empty-state", "catalog-browser", "study-session-menu"];
+    "toggle-visible-answers", "reset-filters", "visible-count", "empty-state", "catalog-browser", "study-session-menu", "favorite-filter", "favorite-status"];
   for (const id of ids) add(["catalog-browser", "study-session-menu"].includes(id) ? "details" : "div",
     { id, value: id === "study-tier" ? "1" : id.endsWith("-filter") ? "all" : "" });
   const $ = (id) => document.getElementById(id);
@@ -108,6 +108,7 @@ function boot({ count = 12, storage = new Storage(), beforeUI, revision = "rev1"
       type: "principle", progress: "unstarted", sourceKind: "pdf", search: `question-${i}`,
     } }, section);
     add("span", { dataset: { printPosition: "" } }, card);
+    add("button", { dataset: { favoriteToggle: "" } }, card);
     for (const choice of ["A", "B"]) {
       const button = add("button", { dataset: { answerChoice: choice } }, card);
       button.setAttribute("aria-controls", `answer-${i}`);
@@ -437,4 +438,26 @@ test("answers after explicit finish update history without reopening the finishe
   assert.deepEqual(app.shown(), ["steel.item-0", "steel.item-1", "steel.item-2"]);
   app.$("study-pause").click();
   assert.equal(app.$("study-resume").hidden, true);
+});
+
+test("favorites never remove or reorder an active study set and survive content revisions", () => {
+  const app = boot();
+  app.cards[0].querySelector("[data-favorite-toggle]").click();
+  app.$("favorite-filter").checked = true;
+  app.$("favorite-filter").dispatchEvent(new Event("change"));
+  assert.deepEqual(app.shown(), ["steel.item-0"]);
+  app.$("study-start").click();
+  const ids = app.shown();
+  app.answer(0);
+  const answer = app.cards[0].querySelector("[data-answer-disclosure]");
+  assert.equal(answer.open, true);
+  app.cards[0].querySelector("[data-favorite-toggle]").click();
+  assert.deepEqual(app.shown(), ids);
+  assert.equal(answer.open, true);
+  assert.equal(app.$("study-session").hidden, false);
+  app.cards[1].querySelector("[data-favorite-toggle]").click();
+  const reload = boot({ storage: app.storage, revision: "rev2" });
+  assert.equal(reload.cards[1].querySelector("[data-favorite-toggle]").getAttribute("aria-pressed"), "true");
+  app.$("study-pause").click();
+  assert.deepEqual(app.shown(), ["steel.item-1"]);
 });

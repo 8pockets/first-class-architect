@@ -87,6 +87,10 @@ const bootCatalog = ({ catalogCards, withHistory = false, storage } = {}) => {
     }),
   ];
   const cards = catalogCards ?? defaultCards;
+  cards.forEach((card, index) => {
+    card.dataset.studyId ??= `steel.test-${index}`;
+    card.elements.set("[data-favorite-toggle]", new FakeElement());
+  });
   if (withHistory) cards.forEach((card, index) => {
     Object.assign(card.dataset, { studyId: `steel.test-${index}`, questionRevision: "rev1", correctChoice: "A" });
     for (const selector of ["[data-answer-result]", "[data-answer-retry]", "[data-answer-history]", "[data-answer-history-list]", '[data-research-search="explanation"]']) {
@@ -157,6 +161,9 @@ const bootCatalog = ({ catalogCards, withHistory = false, storage } = {}) => {
   const sourceKind = new FakeElement({ value: "all" });
   const coverage = new FakeElement({ value: "all" });
   const reviewFilter = new FakeElement({ value: "all" });
+  const favoriteFilter = new FakeElement();
+  favoriteFilter.checked = false;
+  const favoriteStatus = new FakeElement();
   const historyStatus = new FakeElement();
   const historyExport = new FakeElement();
   const historyImport = new FakeElement();
@@ -174,6 +181,8 @@ const bootCatalog = ({ catalogCards, withHistory = false, storage } = {}) => {
     ["#progress-filter", progress],
     ["#source-kind-filter", sourceKind],
     ["#coverage-filter", coverage],
+    ["#favorite-filter", favoriteFilter],
+    ["#favorite-status", favoriteStatus],
     ["#toggle-visible-answers", toggleVisibleAnswers],
     ["#reset-filters", reset],
     ["#visible-count", visibleCount],
@@ -230,6 +239,8 @@ const bootCatalog = ({ catalogCards, withHistory = false, storage } = {}) => {
     groups,
     canonicalCard,
     coverage,
+    favoriteFilter,
+    favoriteStatus,
     reviewFilter,
     historyStatus,
     historyImport,
@@ -786,4 +797,95 @@ test("a legacy item fragment is canonicalized after its native anchor resolves",
     "#structure.steel.compression-member-slenderness",
   );
   assert.equal(canonicalCard.scrolledIntoView, true);
+});
+
+const favoriteButton = (app, index) => app.cards[index].querySelector("[data-favorite-toggle]");
+
+test("favorites persist by stable item ID without recording or revealing an answer", () => {
+  const app = bootCatalog({ withHistory: true });
+  favoriteButton(app, 0).dispatchEvent(new Event("click"));
+  assert.equal(favoriteButton(app, 0).getAttribute("aria-pressed"), "true");
+  assert.equal(app.storedEvents().length, 0);
+  assert.equal(app.disclosures[0].open, false);
+  assert.equal(app.cards[0].hidden, false);
+  app.answerChoices[0].dispatchEvent(new Event("click"));
+  assert.equal(app.storedEvents().find(event => event.type === "answer").independent, true);
+  const reloaded = bootCatalog({ withHistory: true, storage: app.window.localStorage });
+  assert.equal(favoriteButton(reloaded, 0).getAttribute("aria-pressed"), "true");
+  favoriteButton(reloaded, 0).dispatchEvent(new Event("click"));
+  assert.equal(favoriteButton(reloaded, 0).getAttribute("aria-pressed"), "false");
+  assert.equal(favoriteButton(bootCatalog({ storage: app.window.localStorage }), 0).getAttribute("aria-pressed"), "false");
+});
+
+test("favorite filtering intersects with coverage, search and review, and reset retains saved favorites", () => {
+  const app = bootCatalog({ withHistory: true });
+  favoriteButton(app, 0).dispatchEvent(new Event("click"));
+  favoriteButton(app, 1).dispatchEvent(new Event("click"));
+  app.favoriteFilter.checked = true;
+  app.favoriteFilter.dispatchEvent(new Event("change"));
+  assert.deepEqual(app.cards.map(card => card.hidden), [false, false, true]);
+  assert.equal(app.visibleCount.textContent, "2");
+  app.coverage.value = "standard-only";
+  app.coverage.dispatchEvent(new Event("change"));
+  assert.deepEqual(app.cards.map(card => card.hidden), [true, false, true]);
+  app.search.value = "存在しない語";
+  app.search.dispatchEvent(new Event("input"));
+  assert.equal(app.visibleCount.textContent, "0");
+  app.search.value = "";
+  app.coverage.value = "all";
+  app.answerChoices[0].dispatchEvent(new Event("click"));
+  app.reviewFilter.value = "unanswered";
+  app.reviewFilter.dispatchEvent(new Event("change"));
+  assert.deepEqual(app.cards.map(card => card.hidden), [true, false, true]);
+  app.reset.dispatchEvent(new Event("click"));
+  assert.equal(app.favoriteFilter.checked, false);
+  assert.equal(favoriteButton(app, 0).getAttribute("aria-pressed"), "true");
+  assert.equal(app.cards.every(card => !card.hidden), true);
+});
+
+test("removing a filtered favorite preserves other open answers and updates counts", () => {
+  const app = bootCatalog();
+  for (const index of [0, 1]) favoriteButton(app, index).dispatchEvent(new Event("click"));
+  app.favoriteFilter.checked = true;
+  app.favoriteFilter.dispatchEvent(new Event("change"));
+  openAnswer(app.disclosures[1]);
+  favoriteButton(app, 0).dispatchEvent(new Event("click"));
+  assert.equal(app.cards[0].hidden, true);
+  assert.equal(app.cards[1].hidden, false);
+  assert.equal(app.disclosures[1].open, true);
+  assert.equal(app.visibleCount.textContent, "1");
+  favoriteButton(app, 1).dispatchEvent(new Event("click"));
+  assert.equal(app.visibleCount.textContent, "0");
+});
+
+test("favorite write and read failures are explicit without pretending a save or breaking answers", () => {
+  const app = bootCatalog();
+  app.window.localStorage.setItem = () => { throw new Error("QuotaExceededError"); };
+  favoriteButton(app, 0).dispatchEvent(new Event("click"));
+  assert.equal(favoriteButton(app, 0).getAttribute("aria-pressed"), "false");
+  assert.match(app.favoriteStatus.textContent, /保存できません/);
+  assert.equal(app.favoriteStatus.dataset.error, "true");
+  app.answerChoices[0].dispatchEvent(new Event("click"));
+  assert.equal(app.disclosures[0].open, true);
+  app.window.localStorage.getItem = () => { throw new Error("SecurityError"); };
+  favoriteButton(app, 0).dispatchEvent(new Event("click"));
+  assert.match(app.favoriteStatus.textContent, /読み込めません/);
+  assert.equal(favoriteButton(app, 0).getAttribute("aria-pressed"), "false");
+});
+
+test("favorite changes in another tab merge per item and refresh without closing answers", () => {
+  const first = bootCatalog();
+  const second = bootCatalog({ storage: first.window.localStorage });
+  favoriteButton(first, 0).dispatchEvent(new Event("click"));
+  favoriteButton(second, 1).dispatchEvent(new Event("click"));
+  openAnswer(first.disclosures[0]);
+  const event = new Event("storage");
+  Object.defineProperty(event, "key", { value: "architect-steel-favorites:v1:item:steel.test-1" });
+  first.window.dispatchEvent(event);
+  assert.equal(favoriteButton(first, 0).getAttribute("aria-pressed"), "true");
+  assert.equal(favoriteButton(first, 1).getAttribute("aria-pressed"), "true");
+  assert.equal(first.disclosures[0].open, true);
+  favoriteButton(second, 0).dispatchEvent(new Event("click"));
+  first.window.dispatchEvent(new Event("focus"));
+  assert.equal(favoriteButton(first, 0).getAttribute("aria-pressed"), "false");
 });

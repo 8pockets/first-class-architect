@@ -2367,7 +2367,8 @@ a:focus-visible {
 
 .study-history-controls > details > summary { font-size: 0.85rem; }
 .study-notices > p { margin: 8px 0; font-size: 0.85rem; }
-#history-status:not([data-notice="true"]):not([data-error="true"]) { display: none; }
+#history-status:not([data-notice="true"]):not([data-error="true"]),
+#favorite-status:not([data-notice="true"]):not([data-error="true"]) { display: none; }
 .is-studying #study-status:not([data-error="true"]) { display: none; }
 .is-studying .study-notices {
   position: fixed;
@@ -2406,9 +2407,14 @@ a:focus-visible {
 .study-page .section-heading { grid-template-columns: minmax(0, 1fr) auto; margin-bottom: 10px; padding-bottom: 8px; }
 .study-page .section-heading h2 { font-size: 1.1rem; }
 .study-page .section-heading h3 { font-size: 0.95rem; }
-.study-page .card-header { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 4px 10px; padding: 10px var(--card-inset-end) 10px var(--card-inset-start); }
+.study-page .card-header { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 4px 10px; padding: 10px var(--card-inset-end) 10px var(--card-inset-start); }
 .study-page .card-header .card-id { margin: 0; font-size: 0.7rem; }
-.study-page .card-header h3 { grid-column: 1 / -1; margin: 0; font-size: 0.85rem; }
+.study-page .card-header h3 { grid-column: 1 / 3; margin: 0; font-size: 0.85rem; }
+.favorite-button { grid-column: 3; grid-row: 1 / 3; min-width: 44px; min-height: 44px; padding: 4px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--blue-dark); font-size: 1.5rem; cursor: pointer; touch-action: manipulation; }
+.favorite-button[aria-pressed="true"] { color: #875500; background: #fff0c4; border-color: #b88a36; }
+.favorite-button:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+.favorite-filter-field { grid-column: 1 / -1; display: flex; align-items: center; gap: 10px; min-height: 44px; cursor: pointer; }
+.favorite-filter-field input { width: 20px; height: 20px; accent-color: var(--blue); }
 
 .card-tools { border-top: 1px solid var(--line); }
 .card-tools > summary { padding: 10px var(--card-inset-end) 10px var(--card-inset-start); color: var(--blue-dark); font-size: 0.8rem; }
