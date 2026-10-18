@@ -345,7 +345,6 @@ def _card(
   {legacy_anchors}
   <header class="card-header">
     <div class="badge-row">
-      <span class="type-badge type-{escape(item.type)}">{_TYPE_LABELS[item.type]}</span>
       <span class="coverage-badge coverage-{escape(coverage_tier.slug)}">{escape(coverage_tier.label)}</span>
     </div>
     <p class="card-id">{escape(question_reference)}</p>
@@ -377,8 +376,9 @@ def _card(
     </div>
   </details>
   <details class="card-tools">
-    <summary>補助情報<span>履歴・出典</span></summary>
+    <summary>補助情報<span>種類・履歴・出典</span></summary>
     <div class="card-tools-content">
+    <p class="card-content-type">内容の種類 <span class="type-badge type-{escape(item.type)}">{_TYPE_LABELS[item.type]}</span></p>
     <details class="answer-history" data-answer-history>
       <summary>この問題の回答履歴</summary>
       <ul data-answer-history-list><li>この端末にはまだ履歴がありません。</li></ul>
