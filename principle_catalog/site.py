@@ -199,6 +199,21 @@ def _facet_list(facets: CardDisplayFacets) -> str:
     )
 
 
+def _action_icon(name: str) -> str:
+    shapes = {
+        "eye": '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>',
+        "eye-off": '<path d="m3 3 18 18M10.6 5.1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3.1 3.9M6.2 6.2A21 21 0 0 0 2 12s3.5 7 10 7a13 13 0 0 0 5.8-1.8M10 10a3 3 0 0 0 4 4"/>',
+        "info": '<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/>',
+        "retry": '<path d="M3 10a9 9 0 1 1 1.6 7M3 4v6h6"/>',
+    }
+    return (
+        f'<svg class="action-icon" data-icon="{name}" viewBox="0 0 24 24" '
+        'width="18" height="18" fill="none" stroke="currentColor" '
+        'stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" '
+        f'aria-hidden="true" focusable="false">{shapes[name]}</svg>'
+    )
+
+
 def _explanation_search_action(
     item: Principle,
     queries: ResearchQueryPair | None,
@@ -364,11 +379,12 @@ def _card(
     <ul class="binary-choices">{_binary_choices(item)}</ul>
   </div>
   <div class="answer-feedback" data-answer-result role="status" aria-live="polite">未回答</div>
-  <button class="answer-retry" type="button" data-answer-retry hidden>もう一度解く</button>
+  <div class="card-disclosures">
+  <button class="answer-retry card-action" type="button" data-answer-retry title="もう一度解く" aria-label="もう一度解く：{escape(question_reference)}" hidden>{_action_icon('retry')}</button>
   <details id="answer-{escape(item.code)}" class="answer-disclosure" data-answer-disclosure>
-    <summary>
-      <span class="disclosure-label-closed">正解と解説を見る<span class="visually-hidden">：{escape(question_reference)}</span></span>
-      <span class="disclosure-label-open">正解と解説を閉じる<span class="visually-hidden">：{escape(question_reference)}</span></span>
+    <summary class="card-action" title="正解と解説を開閉">
+      <span class="disclosure-label-closed">{_action_icon('eye')}<span class="visually-hidden">正解と解説を見る</span><span class="visually-hidden">：{escape(question_reference)}</span></span>
+      <span class="disclosure-label-open">{_action_icon('eye-off')}<span class="visually-hidden">正解と解説を閉じる</span><span class="visually-hidden">：{escape(question_reference)}</span></span>
     </summary>
     <div class="answer-content">
       <h4>{escape(item.principle)}</h4>
@@ -382,7 +398,7 @@ def _card(
     </div>
   </details>
   <details class="card-tools">
-    <summary>補助情報<span>種類・履歴・出典</span></summary>
+    <summary class="card-action" title="補助情報（種類・履歴・出典）">{_action_icon('info')}<span class="visually-hidden">補助情報：{escape(question_reference)}</span></summary>
     <div class="card-tools-content">
     <p class="card-content-type">内容の種類 <span class="type-badge type-{escape(item.type)}">{_TYPE_LABELS[item.type]}</span></p>
     <details class="answer-history" data-answer-history>
@@ -399,6 +415,7 @@ def _card(
     </footer>
     </div>
   </details>
+  </div>
 </article>""".strip()
 
 
@@ -1257,6 +1274,7 @@ def _page(
       <p>履歴はこの端末のブラウザ内だけに保存します。端末間の自動同期はありません。ブラウザのデータ削除に備えてバックアップしてください。</p>
       <p>各問題の☆でお気に入りを登録・解除できます。「一覧・検索」の「お気に入りのみ」で絞り込めます。お気に入りもこのブラウザ内だけに保存され、履歴のバックアップには含まれません。</p>
       <p>A/Bを選ぶと初回回答を採点・保存します。解説を見るだけでは回答になりません。答えを見た日の解き直しは練習として記録し、独力の成績には含めません。</p>
+      <p>カード下部の目アイコンで正解・解説、iアイコンで補助情報、回転矢印でもう一度解けます。各アイコンには操作名のツールチップがあります。</p>
       <p>誤答は要復習、独力で2回連続誤答すると重点復習。日を分けた初回回答で2回連続正解すると復習対象から外れます。合格や習得を保証する判定ではありません。</p>
       <p>今日の復習には、まだ答えを見ていない日の問題を選びます。一覧の「要復習」からは同じ日の練習もできます。</p>
       <p class="search-disclosure">「Googleで解説を探す」を開くと、項目ごとの解説向け検索語がGoogleへ送信されます。Googleの検索結果は台帳の根拠ではありません。</p>

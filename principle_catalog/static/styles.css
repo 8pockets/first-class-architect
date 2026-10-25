@@ -2425,6 +2425,43 @@ a:focus-visible {
 .card-tools .answer-history { margin: 0; padding-top: 0; }
 .card-tools .card-source { padding: 0; background: none; }
 
+.card-disclosures { position: relative; padding-top: 44px; border-top: 1px solid var(--line); }
+.card-disclosures > details { border: 0; }
+.card-disclosures > details > summary,
+.card-disclosures > .answer-retry {
+  position: absolute;
+  top: 0;
+  left: var(--card-inset-start);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  min-height: 44px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  color: var(--ink-soft);
+  background: transparent;
+  list-style: none;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.card-disclosures > .card-tools > summary { left: calc(var(--card-inset-start) + 48px); }
+.card-disclosures > .answer-retry { left: calc(var(--card-inset-start) + 96px); }
+.card-disclosures > details > summary::-webkit-details-marker { display: none; }
+.card-disclosures > details[open] > summary { color: var(--blue-dark); background: #edf2f4; border: 0; }
+.card-disclosures > details > summary:focus-visible,
+.card-disclosures > .answer-retry:focus-visible { position: absolute; outline: 3px solid var(--blue); outline-offset: -3px; }
+.card-disclosures .disclosure-label-closed,
+.card-disclosures .disclosure-label-open { line-height: 0; }
+.card-disclosures .action-icon { display: block; pointer-events: none; }
+@media (hover: hover) and (pointer: fine) {
+  .card-disclosures > details > summary:hover,
+  .card-disclosures > .answer-retry:hover { color: var(--blue-dark); background: #edf2f4; }
+}
+
 .study-return {
   display: block;
   margin: 16px auto;
@@ -2563,6 +2600,7 @@ a:focus-visible {
   .section-nav,
   .section-heading,
   .card-header,
+  .card-disclosures,
   .answer-disclosure,
   .card-source,
   .migration-notice,

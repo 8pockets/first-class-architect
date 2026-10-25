@@ -205,6 +205,33 @@ def test_stylesheet_cache_version_tracks_its_contents(page, monkeypatch):
     assert site._stylesheet_url(BASE_URL) != expected
 
 
+def test_card_action_icons_keep_accessible_names_and_native_disclosures(page):
+    _, _, markup = page
+    rows = [node for node in markup.elements if node["attrs"].get("class") == "card-disclosures"]
+    assert len(rows) == 311
+    actions = [node for node in markup.elements if "card-action" in node["attrs"].get("class", "").split()]
+    assert len(actions) == 311 * 3
+    with_icon, with_name = set(), set()
+    for node in markup.elements:
+        action = next((parent for parent in reversed(node["parents"]) if "card-action" in parent["attrs"].get("class", "").split()), None)
+        if action is None:
+            continue
+        if node["tag"] == "svg":
+            assert node["attrs"].get("aria-hidden") == "true"
+            with_icon.add(id(action))
+        if node["attrs"].get("class") == "visually-hidden":
+            with_name.add(id(action))
+    for action in actions:
+        assert action["attrs"].get("title")
+        assert id(action) in with_icon
+        assert any(parent["attrs"].get("class") == "card-disclosures" for parent in action["parents"])
+        if action["tag"] == "summary":
+            assert action["parents"][-1]["tag"] == "details"
+            assert id(action) in with_name
+        else:
+            assert action["attrs"].get("aria-label", "").startswith("もう一度解く：")
+
+
 def test_new_script_assets_are_copied_to_static_release(tmp_path):
     output = tmp_path / "site"
     build_site(output, BASE_URL)

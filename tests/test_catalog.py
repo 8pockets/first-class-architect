@@ -647,7 +647,7 @@ def test_answer_disclosure_is_closed_by_default_and_accessible_on_screen(
     assert len(
         re.findall(
             r'<details id="answer-[^"]+" class="answer-disclosure" '
-            r'data-answer-disclosure>\s*<summary>',
+            r'data-answer-disclosure>\s*<summary class="card-action" title="正解と解説を開閉">',
             html,
         )
     ) == published_count
@@ -774,6 +774,7 @@ def test_print_styles_make_a_compact_a4_two_column_question_sheet(
         "  .section-nav,\n"
         "  .section-heading,\n"
         "  .card-header,\n"
+            "  .card-disclosures,\n"
         "  .answer-disclosure,\n"
         "  .card-source,\n"
         "  .migration-notice,\n"
