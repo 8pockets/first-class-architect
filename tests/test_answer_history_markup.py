@@ -155,6 +155,11 @@ def test_print_sheet_hides_history_result_retry_and_answers_without_choice_scori
     assert "background: transparent" in selected_print.group(1)
     assert "border: 0" in selected_print.group(1)
     assert "color: #000" in selected_print.group(1)
+    feedback_css = re.search(r'@media screen\s*\{([^}]*data-answer-feedback[^}]*\}[^}]*\})\s*\}', css)
+    assert feedback_css is not None
+    assert 'data-answer-feedback="correct"' in feedback_css.group(1)
+    assert 'data-answer-feedback="incorrect"' in feedback_css.group(1)
+    assert "data-answer-feedback" not in print_css
 
 
 def _typed_fixture(tmp_path, item_type):

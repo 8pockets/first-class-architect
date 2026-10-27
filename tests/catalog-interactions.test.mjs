@@ -310,6 +310,36 @@ test("answer history grades the first button only, and native keyboard click is 
   assert.equal(app.cards[0].querySelector("[data-answer-result]").textContent, "不正解 · 要復習");
   assert.match(app.cards[0].querySelector("[data-answer-status-details]").textContent, /今回：Bを選択 → 不正解/);
   assert.equal(app.disclosures[0].open, true);
+  assert.deepEqual(app.answerChoices.slice(0, 2).map((choice) => choice.dataset.answerFeedback), ["correct", "incorrect"]);
+});
+
+test("choice feedback reveals the correct icon only after answering and resets on retry or reload", () => {
+  const app = bootCatalog({ withHistory: true });
+  const feedback = () => app.answerChoices.slice(0, 2).map((choice) => choice.dataset.answerFeedback);
+  assert.deepEqual(feedback(), ["", ""]);
+  app.disclosures[0].summary.dispatchEvent(new Event("click"));
+  assert.deepEqual(feedback(), ["", ""], "opening the explanation alone does not grade either choice");
+  app.answerChoices[0].dispatchEvent(new Event("click"));
+  assert.deepEqual(feedback(), ["correct", ""]);
+  app.cards[0].querySelector("[data-answer-retry]").dispatchEvent(new Event("click"));
+  assert.deepEqual(feedback(), ["", ""]);
+  app.answerChoices[1].dispatchEvent(new Event("click"));
+  assert.deepEqual(feedback(), ["correct", "incorrect"]);
+  const reloaded = bootCatalog({ withHistory: true, storage: app.window.localStorage });
+  assert.deepEqual(reloaded.answerChoices.slice(0, 2).map((choice) => choice.dataset.answerFeedback), ["", ""]);
+});
+
+test("choice feedback also grades a B answer and preserves colors when explanations close", () => {
+  const app = bootCatalog({ withHistory: true });
+  app.cards[0].dataset.correctChoice = "B";
+  app.answerChoices[0].dispatchEvent(new Event("click"));
+  assert.deepEqual(app.answerChoices.slice(0, 2).map((choice) => choice.dataset.answerFeedback), ["incorrect", "correct"]);
+  app.toggleVisibleAnswers.dispatchEvent(new Event("click"));
+  app.toggleVisibleAnswers.dispatchEvent(new Event("click"));
+  assert.deepEqual(app.answerChoices.slice(0, 2).map((choice) => choice.dataset.answerFeedback), ["incorrect", "correct"]);
+  app.cards[0].querySelector("[data-answer-retry]").dispatchEvent(new Event("click"));
+  app.answerChoices[1].dispatchEvent(new Event("click"));
+  assert.deepEqual(app.answerChoices.slice(0, 2).map((choice) => choice.dataset.answerFeedback), ["", "correct"]);
 });
 
 test("individual and bulk answer viewing never counts as answering and later answers are assisted", () => {
@@ -391,6 +421,7 @@ test("storage failure is explicit and never prevents independent answer disclosu
   assert.match(app.historyStatus.textContent, /保存できません/);
   assert.equal(app.historyStatus.dataset.error, "true");
   assert.match(app.cards[0].querySelector("[data-answer-result]").textContent, /保存されていません/);
+  assert.deepEqual(app.answerChoices.slice(0, 2).map((choice) => choice.dataset.answerFeedback), ["correct", ""]);
   assert.equal(app.disclosures[0].open, true);
   app.answerChoices[0].dispatchEvent(new Event("click"));
   assert.equal(app.storedEvents().length, 0);

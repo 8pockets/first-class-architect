@@ -1164,7 +1164,7 @@ def _page(
     history_script_url = urljoin(base_url, "assets/answer-history.js")
     session_script_url = urljoin(base_url, "assets/study-session.js")
     study_script_url = urljoin(base_url, "assets/study-ui.js")
-    practice_script_url = urljoin(base_url, "assets/practice-ui.js")
+    practice_script_url = _versioned_asset_url(base_url, "practice-ui.js")
     practice_variants = load_practice(catalog)
     current_edition = catalog.question_editions.editions[
         catalog.question_editions.current

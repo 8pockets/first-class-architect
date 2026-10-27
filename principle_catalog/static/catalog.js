@@ -37,6 +37,12 @@
   const groups = [...root.querySelectorAll("[data-catalog-group]")];
   const disclosures = [...root.querySelectorAll("[data-answer-disclosure]")];
   const answerChoices = [...root.querySelectorAll("[data-answer-choice]")];
+  const choicesByCard = new Map();
+  for (const choice of answerChoices) {
+    const card = choice.closest(".principle-card");
+    if (!choicesByCard.has(card)) choicesByCard.set(card, []);
+    choicesByCard.get(card).push(choice);
+  }
   const principleLinks = [...root.querySelectorAll("[data-principle-link]")];
   const studyCardList = document.getElementById("study-card-list");
   const cardLocations = new Map();
@@ -113,6 +119,14 @@
   const eventTime = (event) =>
     `${new Date(Date.parse(event.at) - event.offsetMinutes * 60000).toISOString().slice(0, 16).replace("T", " ")}（回答時の現地日時）`;
 
+  const renderChoiceFeedback = (card, selected) => {
+    for (const choice of choicesByCard.get(card) ?? []) {
+      choice.dataset.answerFeedback = !selected ? ""
+        : choice.dataset.answerChoice === card.dataset.correctChoice ? "correct"
+        : choice.dataset.answerChoice === selected ? "incorrect" : "";
+    }
+  };
+
   const renderHistory = (card, events) => {
     const { itemId, revision } = metadata(card);
     if (!itemId || !revision) return;
@@ -121,6 +135,7 @@
     const result = card.querySelector("[data-answer-result]");
     const details = card.querySelector("[data-answer-status-details]");
     const attempt = attempts.get(card);
+    renderChoiceFeedback(card, attempt?.choice);
     const retry = card.querySelector("[data-answer-retry]");
     if (retry) retry.hidden = !attempt?.answered;
     if (result || details) {
@@ -215,6 +230,8 @@
     if (attempt.answered) return;
     // Lock before saving: repeated clicks never create another answer, even if storage fails.
     attempt.answered = true;
+    attempt.choice = choice.dataset.answerChoice;
+    renderChoiceFeedback(card, attempt.choice);
     const retry = card.querySelector("[data-answer-retry]");
     if (retry) retry.hidden = false;
     try {

@@ -727,6 +727,13 @@ a:focus-visible {
   line-height: 1.65;
 }
 
+@media screen {
+  .choice-button[data-answer-feedback="correct"] .choice-label,
+  .practice-choice[data-answer-feedback="correct"] .choice-label { background: #227346; }
+  .choice-button[data-answer-feedback="incorrect"] .choice-label,
+  .practice-choice[data-answer-feedback="incorrect"] .choice-label { background: #b23a32; }
+}
+
 .answer-disclosure {
   color: var(--ink);
   background: var(--card);

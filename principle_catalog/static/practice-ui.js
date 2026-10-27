@@ -49,6 +49,10 @@
         answered = true; retry.hidden = false;
         const selected = choice.dataset.practiceChoice;
         const correct = selected === panel.dataset.correctChoice;
+        choices.forEach((button) => {
+          button.dataset.answerFeedback = button.dataset.practiceChoice === panel.dataset.correctChoice ? "correct"
+            : button.dataset.practiceChoice === selected ? "incorrect" : "";
+        });
         result.textContent = `${selected} → ${correct ? "正解" : "不正解"}。追加練習として記録します。本体の成績・復習解除には含めません。`;
         try {
           if (!store) throw new Error("ブラウザの保存機能を利用できません。");
@@ -66,7 +70,7 @@
     }
     retry.addEventListener("click", () => {
       answered = false; answer.open = false; sync(); retry.hidden = true;
-      choices.forEach((choice) => { choice.disabled = false; });
+      choices.forEach((choice) => { choice.disabled = false; choice.dataset.answerFeedback = ""; });
       result.textContent = "追加練習です。本体の成績とは別に記録します。";
       choices[0]?.focus();
     });

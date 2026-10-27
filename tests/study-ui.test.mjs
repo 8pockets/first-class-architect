@@ -277,6 +277,8 @@ test("optional practice has separate events and cannot mark a main question done
   const app = boot({ withPractice: true, beforeUI(app) { app.day(14); app.fixtureAnswer(0); app.day(15); } });
   app.$("study-start").click();
   app.practice.querySelector('[data-practice-choice="A"]').click();
+  assert.equal(app.practice.querySelector('[data-practice-choice="A"]').dataset.answerFeedback, "correct");
+  assert.equal(app.practice.querySelector('[data-practice-choice="B"]').dataset.answerFeedback, "");
   const answers = app.events().filter((event) => event.type === "answer");
   assert.equal(answers.at(-1).itemId, "practice.steel.item-0");
   assert.equal(answers.at(-1).independent, false);
@@ -309,6 +311,7 @@ test("a new question revision reconciles the saved set without reusing old compl
   assert.equal(reload.state().done.length, 0);
   assert.equal(reload.state().index, 0);
   assert.equal(reload.state().items[0].revision, "rev2");
+  assert.equal(reload.cards[0].querySelector('[data-answer-choice="A"]').dataset.answerFeedback, "");
   assert.equal(reload.events().filter((event) => event.type === "answer").length, 1);
   assert.match(reload.$("study-status").textContent, /過去の回答は保持/);
   assert.equal(reload.cards[0].querySelector("[data-answer-result]").textContent, "未回答");
@@ -333,6 +336,8 @@ test("next-day review in the same tab records a fresh independent answer", () =>
   const app = boot({ count: 2 });
   app.$("study-start").click(); app.answer(0, "B"); app.$("study-pause").click();
   app.day(16); app.$("study-review").click();
+  assert.equal(app.cards[0].querySelector('[data-answer-choice="A"]').dataset.answerFeedback, "");
+  assert.equal(app.cards[0].querySelector('[data-answer-choice="B"]').dataset.answerFeedback, "");
   assert.deepEqual(app.shown(), ["steel.item-0"]);
   app.answer(0, "A");
   const answers = app.events().filter((event) => event.type === "answer");
