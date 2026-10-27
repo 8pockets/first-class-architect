@@ -217,12 +217,29 @@ def test_catalog_script_cache_version_tracks_its_contents(page, monkeypatch):
     assert site._versioned_asset_url(BASE_URL, "catalog.js") != expected
 
 
+def test_prompt_copy_controls_are_compact_and_manual_fallback_starts_hidden(page):
+    _, _, markup = page
+    buttons = [node for node in markup.elements if "data-prompt-copy" in node["attrs"]]
+    assert len(buttons) == 311
+    for button in buttons:
+        assert button["attrs"]["type"] == "button"
+        assert "hidden" in button["attrs"]
+        assert "正解・解説を含む" in button["attrs"]["aria-label"]
+        assert not any(parent["tag"] == "details" for parent in button["parents"])
+    fallbacks = [node for node in markup.elements if "data-prompt-copy-fallback" in node["attrs"]]
+    assert len(fallbacks) == 311
+    assert all("hidden" in node["attrs"] for node in fallbacks)
+    fields = [node for node in markup.elements if "data-prompt-copy-text" in node["attrs"]]
+    assert len(fields) == 311
+    assert all(node["tag"] == "textarea" and "readonly" in node["attrs"] for node in fields)
+
+
 def test_card_action_icons_keep_accessible_names_and_native_disclosures(page):
     _, _, markup = page
     rows = [node for node in markup.elements if node["attrs"].get("class") == "card-disclosures"]
     assert len(rows) == 311
     actions = [node for node in markup.elements if "card-action" in node["attrs"].get("class", "").split()]
-    assert len(actions) == 311 * 3
+    assert len(actions) == 311 * 4
     with_icon, with_name = set(), set()
     for node in markup.elements:
         action = next((parent for parent in reversed(node["parents"]) if "card-action" in parent["attrs"].get("class", "").split()), None)
@@ -241,7 +258,7 @@ def test_card_action_icons_keep_accessible_names_and_native_disclosures(page):
             assert action["parents"][-1]["tag"] == "details"
             assert id(action) in with_name
         else:
-            assert action["attrs"].get("aria-label", "").startswith("もう一度解く：")
+            assert action["attrs"].get("aria-label", "").startswith(("もう一度解く：", "解説依頼文をコピー："))
 
 
 def test_new_script_assets_are_copied_to_static_release(tmp_path):

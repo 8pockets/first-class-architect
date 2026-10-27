@@ -557,9 +557,9 @@ def test_confirmed_choices_are_buttons_that_control_their_answer(tmp_path: Path)
         assert card.count('class="choice-button"') == 2
         assert card.count('data-answer-choice') == 2
         # Optional variants live inside the answer; the canonical question
-        # still has exactly A/B, an explicit retry, and a separate favorite control.
+        # still has A/B, retry, favorite, and a separate prompt-copy control.
         question_controls = card.split('<details id="answer-', maxsplit=1)[0]
-        assert question_controls.count('type="button"') == 4
+        assert question_controls.count('type="button"') == 5
         assert question_controls.count('data-favorite-toggle') == 1
         assert 'data-answer-choice="A"' in card
         assert 'data-answer-choice="B"' in card

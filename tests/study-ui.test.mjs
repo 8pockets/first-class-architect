@@ -109,6 +109,8 @@ function boot({ count = 12, storage = new Storage(), beforeUI, revision = "rev1"
     } }, section);
     add("span", { dataset: { printPosition: "" } }, card);
     add("button", { dataset: { favoriteToggle: "" } }, card);
+    add("button", { dataset: { promptCopy: "" } }, card);
+    add("span", { dataset: { promptCopyStatus: "" } }, card);
     for (const choice of ["A", "B"]) {
       const button = add("button", { dataset: { answerChoice: choice } }, card);
       button.setAttribute("aria-controls", `answer-${i}`);
@@ -139,6 +141,7 @@ function boot({ count = 12, storage = new Storage(), beforeUI, revision = "rev1"
   class DetailEvent extends Event { constructor(name, { detail }) { super(name); this.detail = detail; } }
   const serial = ++bootSerial; let uuid = 0;
   const context = { document, window, Event, CustomEvent: DetailEvent, Date: Clock,
+    navigator: { clipboard: { writeText: async () => {} } },
     crypto: { randomUUID: () => `boot-${serial}-${++uuid}` } };
   vm.createContext(context);
   vm.runInContext(scripts["answer-history"], context);
@@ -271,6 +274,21 @@ test("a session-only save failure allows in-page progress without claiming a sav
   app.$("study-resume").click();
   assert.deepEqual(app.shown(), Array.from(app.state().items, (item) => item.itemId));
   assert.equal(app.cards[1].scrolled, true);
+});
+
+test("copying a prompt never completes, moves, or hides a question in the active set", async () => {
+  const app = boot();
+  app.$("study-start").click();
+  const shown = app.shown();
+  app.cards[0].querySelector("[data-prompt-copy]").click();
+  await new Promise(setImmediate);
+  assert.deepEqual(app.shown(), shown);
+  assert.equal(app.state().done.length, 0);
+  assert.equal(app.events().filter((event) => event.type === "answer").length, 0);
+  assert.equal(app.cards[0].querySelector("[data-answer-disclosure]").open, false);
+  app.answer(0);
+  assert.equal(app.events().filter((event) => event.type === "answer").at(-1).independent, false);
+  assert.equal(app.state().done.length, 1);
 });
 
 test("optional practice has separate events and cannot mark a main question done or clear its review", () => {

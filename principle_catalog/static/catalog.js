@@ -219,6 +219,43 @@
     catch (error) { reportHistory(error.message, true); }
   };
 
+  const explanationPrompt = (card) => {
+    const clean = (value) => (value ?? "").replace(/\s+/g, " ").trim();
+    const text = (selector) => clean(card.querySelector(selector)?.textContent);
+    const selected = attempts.get(card)?.answer;
+    const figure = card.querySelector(".practice-question .question-figure svg")?.getAttribute("aria-label");
+    const facets = [...card.querySelectorAll(".three-point > div")].map((facet) => {
+      const value = facet.querySelector("dd");
+      const points = [...(value?.querySelectorAll("li") ?? [])].map((point) => clean(point.textContent));
+      return `${clean(facet.querySelector("dt")?.textContent)}：${points.length ? points.join("／") : clean(value?.textContent)}`;
+    });
+    const sources = [...card.querySelectorAll(".authority-sources > li")].map((source) => {
+      const url = source.querySelector("a")?.getAttribute("href");
+      return `${clean(source.textContent)}${url ? `\n${url}` : ""}`;
+    });
+    const origin = text(".source-provenance > span");
+    if (origin) sources.unshift(origin);
+    return [
+      "一級建築士試験の鉄骨構造を勉強しています。以下の学習問題を日本語で詳しく解説してください。",
+      "", "【問題】", text(".card-header > .card-id"), text(".practice-question-text"),
+      ...(figure ? [`図の説明：${figure}`] : []),
+      ...(choicesByCard.get(card) ?? []).map((choice) =>
+        `${choice.dataset.answerChoice}：${clean(choice.querySelector(".choice-text")?.textContent)}`),
+      "", "【今回の回答】",
+      selected ? `${selected.choice}（${selected.correct ? "正解" : "不正解"}・${selected.independent ? "独力" : "答え確認後"}）` : "未回答",
+      "", "【サイトの正解・解説】", `正解：${card.dataset.correctChoice}`,
+      text(".answer-content > h4"), ...facets,
+      ...(sources.length ? ["", "【サイトに記載された根拠】", ...sources] : []),
+      "", "【解説してほしいこと】",
+      "1. 正解になる理由と、もう一方の選択肢が誤りになる理由。",
+      "2. 初学者にも分かる具体例や、力の流れ・仕組み。",
+      "3. 成り立つ条件・例外と、似た論点との違い。",
+      "4. 試験での見分け方と、最後に短い理解確認を1問。",
+      "私が間違えた場合は、選んだ答えから考えられる勘違いも説明してください。",
+      "サイトの解説を無条件に正しいとせず、根拠と適用条件を確認してください。不明な点は断定せず、確認できない出典や規定を作らないでください。",
+    ].join("\n");
+  };
+
   const recordChoice = (choice) => {
     const card = choice.closest(".principle-card");
     if (!canRecord(card)) return;
@@ -370,6 +407,34 @@
   }
 
   for (const card of cards) {
+    const copy = card.querySelector("[data-prompt-copy]");
+    if (copy) {
+      copy.hidden = false;
+      copy.addEventListener("click", async () => {
+        if (copy.disabled) return;
+        const status = card.querySelector("[data-prompt-copy-status]");
+        const fallback = card.querySelector("[data-prompt-copy-fallback]");
+        const field = card.querySelector("[data-prompt-copy-text]");
+        const prompt = explanationPrompt(card);
+        // Copying includes the answer, so it is an exposure, never an answer.
+        markViewed(card);
+        copy.disabled = true;
+        try {
+          if (!globalThis.navigator?.clipboard?.writeText) throw new Error("Clipboard unavailable");
+          await globalThis.navigator.clipboard.writeText(prompt);
+          if (fallback) fallback.hidden = true;
+          copy.dataset.copied = "true";
+          copy.setAttribute("title", "コピーしました。ChatGPTに貼り付けて送信してください。");
+          if (status) status.textContent = "コピーしました。ChatGPTに貼り付けて送信してください。";
+        } catch {
+          copy.dataset.copied = "false";
+          copy.setAttribute("title", "解説依頼文をもう一度コピー");
+          if (fallback) fallback.hidden = false;
+          if (field) { field.value = prompt; field.focus(); field.select(); }
+          if (status) status.textContent = "自動コピーできませんでした。表示した依頼文を選択してコピーしてください。";
+        } finally { copy.disabled = false; }
+      });
+    }
     const explanationSearch = card.querySelector('[data-research-search="explanation"]');
     explanationSearch?.addEventListener("click", () => markViewed(card));
     explanationSearch?.addEventListener("auxclick", () => markViewed(card));

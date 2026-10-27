@@ -23,6 +23,7 @@ class FakeElement extends EventTarget {
     this.textContent = "";
     this.attributes = new Map();
     this.elements = new Map();
+    this.collections = new Map();
     this.classList = {
       toggle: () => {},
     };
@@ -42,12 +43,15 @@ class FakeElement extends EventTarget {
     return this.elements.get(selector) ?? null;
   }
 
+  querySelectorAll(selector) { return this.collections.get(selector) ?? []; }
+
   closest(selector) {
     if (selector === ".principle-card") return this.card ?? null;
     return null;
   }
 
-  focus() {}
+  focus() { this.focused = true; }
+  select() { this.selected = true; }
 
   replaceChildren(...children) { this.children = children; }
 
@@ -56,7 +60,7 @@ class FakeElement extends EventTarget {
   }
 }
 
-const bootCatalog = ({ catalogCards, withHistory = false, storage } = {}) => {
+const bootCatalog = ({ catalogCards, withHistory = false, storage, clipboard } = {}) => {
   const defaultCards = [
     new FakeElement({
       dataset: {
@@ -90,6 +94,19 @@ const bootCatalog = ({ catalogCards, withHistory = false, storage } = {}) => {
   cards.forEach((card, index) => {
     card.dataset.studyId ??= `steel.test-${index}`;
     card.elements.set("[data-favorite-toggle]", new FakeElement());
+    for (const selector of ["[data-prompt-copy]", "[data-prompt-copy-status]", "[data-prompt-copy-fallback]", "[data-prompt-copy-text]"]) {
+      card.elements.set(selector, new FakeElement());
+    }
+    card.querySelector("[data-prompt-copy-fallback]").hidden = true;
+    for (const [selector, value] of [[".card-header > .card-id", `K6-R3 Q00${index + 1}`],
+      [".practice-question-text", `問題文${index + 1}`], [".answer-content > h4", "解説の見出し"]]) {
+      const node = new FakeElement(); node.textContent = value; card.elements.set(selector, node);
+    }
+    const facet = new FakeElement();
+    for (const [selector, value] of [["dt", "結論"], ["dd", "フランジは曲げを主に負担する。"]]) {
+      const node = new FakeElement(); node.textContent = value; facet.elements.set(selector, node);
+    }
+    card.collections.set(".three-point > div", [facet]);
   });
   if (withHistory) cards.forEach((card, index) => {
     Object.assign(card.dataset, { studyId: `steel.test-${index}`, questionRevision: "rev1", correctChoice: "A" });
@@ -104,6 +121,8 @@ const bootCatalog = ({ catalogCards, withHistory = false, storage } = {}) => {
     ["A", "B"].map((letter) => {
       const choice = new FakeElement({ dataset: { answerChoice: letter } });
       choice.card = card;
+      const text = new FakeElement(); text.textContent = `${letter}の選択肢`;
+      choice.elements.set(".choice-text", text);
       choice.setAttribute("aria-controls", disclosures[index].id);
       choice.setAttribute("aria-expanded", "false");
       return choice;
@@ -227,7 +246,10 @@ const bootCatalog = ({ catalogCards, withHistory = false, storage } = {}) => {
   };
   const serial = ++bootSerial;
   let id = 0;
-  const context = { document, Event, window, crypto: { randomUUID: () => `boot-${serial}-id-${++id}` } };
+  const copiedPrompts = [];
+  const context = { document, Event, window, navigator: { clipboard: clipboard === undefined
+    ? { writeText: async (value) => { copiedPrompts.push(value); } } : clipboard },
+    crypto: { randomUUID: () => `boot-${serial}-id-${++id}` } };
   vm.createContext(context);
   if (withHistory) vm.runInContext(historyScript, context);
   vm.runInContext(script, context);
@@ -235,6 +257,7 @@ const bootCatalog = ({ catalogCards, withHistory = false, storage } = {}) => {
   return {
     answerChoices,
     cards,
+    copiedPrompts,
     disclosures,
     groups,
     canonicalCard,
@@ -277,6 +300,64 @@ const pressChoice = (choice, key) => {
   choice.dispatchEvent(event);
   return event;
 };
+
+test("copying an explanation prompt includes only the target question and marks exposure without answering", async () => {
+  const app = bootCatalog({ withHistory: true });
+  const card = app.cards[0];
+  const figure = new FakeElement(); figure.setAttribute("aria-label", "図1は幅広のループ、図2は中央がくびれたループ。");
+  card.elements.set(".practice-question .question-figure svg", figure);
+  const source = new FakeElement(); source.textContent = "告示：根拠の資料 / 第1項";
+  const origin = new FakeElement(); origin.textContent = "教材 P178";
+  card.elements.set(".source-provenance > span", origin);
+  const link = new FakeElement(); link.setAttribute("href", "https://example.go.jp/source");
+  source.elements.set("a", link); card.collections.set(".authority-sources > li", [source]);
+  const button = card.querySelector("[data-prompt-copy]");
+  assert.equal(button.hidden, false);
+  button.dispatchEvent(new Event("click"));
+  await new Promise(setImmediate);
+  const prompt = app.copiedPrompts[0];
+  for (const text of ["K6-R3 Q001", "問題文1", "A：Aの選択肢", "B：Bの選択肢", "正解：A",
+    "結論：フランジは曲げを主に負担する。", "図1は幅広のループ", "教材 P178", "https://example.go.jp/source", "試験での見分け方"]) assert.ok(prompt.includes(text), text);
+  assert.doesNotMatch(prompt, /問題文2|最終回答|連続誤答/);
+  assert.equal(button.dataset.copied, "true");
+  assert.equal(button.disabled, false);
+  assert.match(card.querySelector("[data-prompt-copy-status]").textContent, /コピーしました/);
+  assert.equal(card.querySelector("[data-prompt-copy-fallback]").hidden, true);
+  assert.equal(app.disclosures[0].open, false);
+  assert.equal(app.cards.every((candidate) => !candidate.hidden), true);
+  assert.equal(app.storedEvents().filter((event) => event.type === "answer").length, 0);
+  app.answerChoices[0].dispatchEvent(new Event("click"));
+  assert.equal(app.storedEvents().filter((event) => event.type === "answer").at(-1).independent, false);
+});
+
+test("copying after an answer includes the current selection and preserves other open explanations", async () => {
+  const app = bootCatalog({ withHistory: true });
+  app.answerChoices[1].dispatchEvent(new Event("click"));
+  openAnswer(app.disclosures[1]);
+  app.cards[0].querySelector("[data-prompt-copy]").dispatchEvent(new Event("click"));
+  await new Promise(setImmediate);
+  assert.match(app.copiedPrompts[0], /【今回の回答】\nB（不正解・独力）/);
+  assert.equal(app.storedEvents().filter((event) => event.type === "answer").length, 1);
+  assert.deepEqual(app.disclosures.slice(0, 2).map((disclosure) => disclosure.open), [true, true]);
+});
+
+for (const clipboard of [null, { writeText: async () => { throw new Error("NotAllowedError"); } }]) {
+  test(`manual prompt copying remains available when clipboard ${clipboard ? "rejects" : "is unavailable"}`, async () => {
+    const app = bootCatalog({ withHistory: true, clipboard });
+    const card = app.cards[0];
+    const button = card.querySelector("[data-prompt-copy]");
+    button.dispatchEvent(new Event("click"));
+    await new Promise(setImmediate);
+    assert.equal(button.dataset.copied, "false");
+    assert.equal(button.disabled, false);
+    assert.equal(card.querySelector("[data-prompt-copy-fallback]").hidden, false);
+    const field = card.querySelector("[data-prompt-copy-text]");
+    assert.match(field.value, /正解：A/);
+    assert.equal(field.focused, true); assert.equal(field.selected, true);
+    assert.match(card.querySelector("[data-prompt-copy-status]").textContent, /自動コピーできませんでした/);
+    assert.equal(app.storedEvents().filter((event) => event.type === "answer").length, 0);
+  });
+}
 
 test("answer status stays compact while supplementary details retain counts and timestamps", () => {
   const app = bootCatalog({ withHistory: true });

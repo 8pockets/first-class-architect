@@ -209,6 +209,8 @@ def _action_icon(name: str) -> str:
         "eye-off": '<path d="m3 3 18 18M10.6 5.1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3.1 3.9M6.2 6.2A21 21 0 0 0 2 12s3.5 7 10 7a13 13 0 0 0 5.8-1.8M10 10a3 3 0 0 0 4 4"/>',
         "info": '<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/>',
         "retry": '<path d="M3 10a9 9 0 1 1 1.6 7M3 4v6h6"/>',
+        "copy": '<rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/>',
+        "check": '<path d="m5 12 4 4L19 6"/>',
     }
     return (
         f'<svg class="action-icon" data-icon="{name}" viewBox="0 0 24 24" '
@@ -384,6 +386,8 @@ def _card(
   </div>
   <div class="answer-feedback" data-answer-result role="status" aria-live="polite">未回答</div>
   <div class="card-disclosures">
+  <button class="prompt-copy card-action" type="button" data-prompt-copy title="ChatGPTへの解説依頼文をコピー（正解・解説を含む）" aria-label="解説依頼文をコピー：{escape(question_reference)}（正解・解説を含む）" hidden>{_action_icon('copy')}{_action_icon('check')}</button>
+  <span class="visually-hidden" data-prompt-copy-status role="status" aria-live="polite"></span>
   <button class="answer-retry card-action" type="button" data-answer-retry title="もう一度解く" aria-label="もう一度解く：{escape(question_reference)}" hidden>{_action_icon('retry')}</button>
   <details id="answer-{escape(item.code)}" class="answer-disclosure" data-answer-disclosure>
     <summary class="card-action" title="正解と解説を開閉">
@@ -420,6 +424,10 @@ def _card(
     </footer>
     </div>
   </details>
+  <div class="prompt-copy-fallback" data-prompt-copy-fallback hidden>
+    <p>自動コピーできませんでした。下の依頼文を選択してコピーし、ChatGPTに貼り付けて送信してください。</p>
+    <textarea data-prompt-copy-text readonly rows="8" aria-label="解説依頼文：{escape(question_reference)}"></textarea>
+  </div>
   </div>
 </article>""".strip()
 
@@ -1279,7 +1287,7 @@ def _page(
       <p>履歴はこの端末のブラウザ内だけに保存します。端末間の自動同期はありません。ブラウザのデータ削除に備えてバックアップしてください。</p>
       <p>各問題の☆でお気に入りを登録・解除できます。「一覧・検索」の「お気に入りのみ」で絞り込めます。お気に入りもこのブラウザ内だけに保存され、履歴のバックアップには含まれません。</p>
       <p>A/Bを選ぶと初回回答を採点・保存します。解説を見るだけでは回答になりません。答えを見た日の解き直しは練習として記録し、独力の成績には含めません。</p>
-      <p>カード下部の目アイコンで正解・解説、iアイコンで補助情報、回転矢印でもう一度解けます。各アイコンには操作名のツールチップがあります。</p>
+      <p>カード下部の目アイコンで正解・解説、iアイコンで補助情報、回転矢印でもう一度解けます。コピーアイコンはChatGPTへの解説依頼文をコピーします。ChatGPTに貼り付けて送信してください。正解・解説を含むため、コピー後の回答は答え確認後として扱います。各アイコンには操作名のツールチップがあります。</p>
       <p>誤答は要復習、独力で2回連続誤答すると重点復習。日を分けた初回回答で2回連続正解すると復習対象から外れます。合格や習得を保証する判定ではありません。</p>
       <p>今日の復習には、まだ答えを見ていない日の問題を選びます。一覧の「要復習」からは同じ日の練習もできます。</p>
       <p class="search-disclosure">「Googleで解説を探す」を開くと、項目ごとの解説向け検索語がGoogleへ送信されます。Googleの検索結果は台帳の根拠ではありません。</p>

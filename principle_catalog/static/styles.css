@@ -2436,7 +2436,7 @@ a:focus-visible {
 .card-disclosures { position: relative; padding-top: 44px; border-top: 1px solid var(--line); }
 .card-disclosures > details { border: 0; }
 .card-disclosures > details > summary,
-.card-disclosures > .answer-retry {
+.card-disclosures > .card-action {
   position: absolute;
   top: 0;
   left: var(--card-inset-start);
@@ -2457,17 +2457,23 @@ a:focus-visible {
   touch-action: manipulation;
 }
 .card-disclosures > .card-tools > summary { left: calc(var(--card-inset-start) + 48px); }
-.card-disclosures > .answer-retry { left: calc(var(--card-inset-start) + 96px); }
+.card-disclosures > .prompt-copy { left: calc(var(--card-inset-start) + 96px); }
+.card-disclosures > .answer-retry { left: calc(var(--card-inset-start) + 144px); }
 .card-disclosures > details > summary::-webkit-details-marker { display: none; }
 .card-disclosures > details[open] > summary { color: var(--blue-dark); background: #edf2f4; border: 0; }
 .card-disclosures > details > summary:focus-visible,
-.card-disclosures > .answer-retry:focus-visible { position: absolute; outline: 3px solid var(--blue); outline-offset: -3px; }
+.card-disclosures > .card-action:focus-visible { position: absolute; outline: 3px solid var(--blue); outline-offset: -3px; }
 .card-disclosures .disclosure-label-closed,
 .card-disclosures .disclosure-label-open { line-height: 0; }
 .card-disclosures .action-icon { display: block; pointer-events: none; }
+.card-disclosures .prompt-copy [data-icon="check"],
+.card-disclosures .prompt-copy[data-copied="true"] [data-icon="copy"] { display: none; }
+.card-disclosures .prompt-copy[data-copied="true"] [data-icon="check"] { display: block; color: #227346; }
+.prompt-copy-fallback { padding: 0 var(--card-inset-end) 12px var(--card-inset-start); font-size: .85rem; }
+.prompt-copy-fallback textarea { display: block; width: 100%; min-width: 0; box-sizing: border-box; padding: 10px; font: inherit; line-height: 1.6; color: var(--ink); background: white; border: 1px solid var(--line); border-radius: 4px; }
 @media (hover: hover) and (pointer: fine) {
   .card-disclosures > details > summary:hover,
-  .card-disclosures > .answer-retry:hover { color: var(--blue-dark); background: #edf2f4; }
+  .card-disclosures > .card-action:hover { color: var(--blue-dark); background: #edf2f4; }
 }
 
 .study-return {
