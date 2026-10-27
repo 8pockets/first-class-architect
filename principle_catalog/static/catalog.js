@@ -119,11 +119,21 @@
     const summary = historyAPI.summarize(events, itemId, revision);
     summaries.set(card, summary);
     const result = card.querySelector("[data-answer-result]");
+    const details = card.querySelector("[data-answer-status-details]");
     const attempt = attempts.get(card);
     const retry = card.querySelector("[data-answer-retry]");
     if (retry) retry.hidden = !attempt?.answered;
-    if (result) {
+    if (result || details) {
       const state = summary.priority ? "重点復習" : summary.review ? "要復習" : summary.unanswered ? "未回答" : "回答済み";
+      if (result) {
+        const labels = attempt?.answer
+          ? [attempt.answer.correct ? "正解" : "不正解",
+            ...(!attempt.answer.independent ? ["答え確認後"] : []),
+            ...(summary.review ? [state] : [])]
+          : [state];
+        result.textContent = labels.join(" · ");
+        result.dataset.reviewState = summary.priority ? "priority" : summary.review ? "review" : "none";
+      }
       const latest = summary.latest;
       const latestText = latest
         ? ` 最終回答：${eventTime(latest)}・${latest.correct ? "正解" : "不正解"}（${latest.independent ? "独力" : "答え確認後"}）。`
@@ -134,8 +144,7 @@
       const oldText = summary.oldAnswers.length
         ? ` 旧版の回答${summary.oldAnswers.length}件は今回の判定に含めません。`
         : "";
-      result.textContent = `${outcome}${state}。独力の連続誤答：${summary.wrongStreak}回。${summary.review ? `復習解除まで別日の独力正解：${summary.recoveryDays}/2日。` : ""}${latestText}${oldText}`;
-      result.dataset.reviewState = summary.priority ? "priority" : summary.review ? "review" : "none";
+      if (details) details.textContent = `${outcome}${state}。独力の連続誤答：${summary.wrongStreak}回。${summary.review ? `復習解除まで別日の独力正解：${summary.recoveryDays}/2日。` : ""}${latestText}${oldText}`;
     }
     const list = card.querySelector("[data-answer-history-list]");
     if (list) {

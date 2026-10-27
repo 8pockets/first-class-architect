@@ -128,7 +128,7 @@ def test_count_targets_and_scripts_have_explicit_contracts(page):
     scripts = ["answer-history.js", "study-session.js", "catalog.js", "study-ui.js", "practice-ui.js"]
     assert [html.index(f"assets/{name}") for name in scripts] == sorted(html.index(f"assets/{name}") for name in scripts)
     for name in scripts:
-        assert re.search(rf'<script defer src="[^"]*/assets/{re.escape(name)}"></script>', html)
+        assert re.search(rf'<script defer src="[^"]*/assets/{re.escape(name)}(?:\?v=[a-f0-9]{{12}})?"></script>', html)
 
 
 def test_zoom_is_allowed_and_new_ui_is_hidden_when_printed(page):
@@ -155,7 +155,7 @@ def test_card_tools_fold_without_hiding_question_or_answer(page):
     for node in markup.elements:
         attrs = node["attrs"]
         classes = attrs.get("class", "").split()
-        if "data-answer-history" in attrs or attrs.get("class") == "card-source" or "type-badge" in classes:
+        if "data-answer-status-details" in attrs or "data-answer-history" in attrs or attrs.get("class") == "card-source" or "type-badge" in classes:
             assert any(parent["attrs"].get("class") == "card-tools" for parent in node["parents"])
         if "coverage-badge" in classes:
             assert any(parent["attrs"].get("class") == "card-header" for parent in node["parents"])
@@ -163,7 +163,7 @@ def test_card_tools_fold_without_hiding_question_or_answer(page):
             answer = next(parent for parent in node["parents"] if "data-answer-disclosure" in parent["attrs"])
             assert "open" not in answer["attrs"]
             assert not any(parent["attrs"].get("class") == "card-tools" for parent in node["parents"])
-        if "data-answer-disclosure" in attrs or "data-answer-choice" in attrs:
+        if "data-answer-result" in attrs or "data-answer-disclosure" in attrs or "data-answer-choice" in attrs:
             assert not any(parent["attrs"].get("class") == "card-tools" for parent in node["parents"])
 
 
@@ -203,6 +203,18 @@ def test_stylesheet_cache_version_tracks_its_contents(page, monkeypatch):
     assert site._stylesheet_url(BASE_URL) == expected
     monkeypatch.setattr(site, "_asset_text", lambda name: "changed stylesheet")
     assert site._stylesheet_url(BASE_URL) != expected
+
+
+def test_catalog_script_cache_version_tracks_its_contents(page, monkeypatch):
+    import hashlib
+    from principle_catalog import site
+
+    _, html, _ = page
+    script = Path("principle_catalog/static/catalog.js").read_bytes()
+    expected = BASE_URL + "assets/catalog.js?v=" + hashlib.sha256(script).hexdigest()[:12]
+    assert f'src="{expected}"' in html
+    monkeypatch.setattr(site, "_asset_text", lambda name: "changed script")
+    assert site._versioned_asset_url(BASE_URL, "catalog.js") != expected
 
 
 def test_card_action_icons_keep_accessible_names_and_native_disclosures(page):

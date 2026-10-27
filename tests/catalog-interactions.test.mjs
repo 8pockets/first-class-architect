@@ -93,7 +93,7 @@ const bootCatalog = ({ catalogCards, withHistory = false, storage } = {}) => {
   });
   if (withHistory) cards.forEach((card, index) => {
     Object.assign(card.dataset, { studyId: `steel.test-${index}`, questionRevision: "rev1", correctChoice: "A" });
-    for (const selector of ["[data-answer-result]", "[data-answer-retry]", "[data-answer-history]", "[data-answer-history-list]", '[data-research-search="explanation"]']) {
+    for (const selector of ["[data-answer-result]", "[data-answer-status-details]", "[data-answer-retry]", "[data-answer-history]", "[data-answer-history-list]", '[data-research-search="explanation"]']) {
       card.elements.set(selector, new FakeElement());
     }
   });
@@ -278,6 +278,23 @@ const pressChoice = (choice, key) => {
   return event;
 };
 
+test("answer status stays compact while supplementary details retain counts and timestamps", () => {
+  const app = bootCatalog({ withHistory: true });
+  const card = app.cards[0];
+  const result = card.querySelector("[data-answer-result]");
+  const details = card.querySelector("[data-answer-status-details]");
+  assert.equal(result.textContent, "未回答");
+  assert.match(details.textContent, /未回答。独力の連続誤答：0回/);
+  app.answerChoices[0].dispatchEvent(new Event("click"));
+  assert.equal(result.textContent, "正解");
+  assert.match(details.textContent, /今回：Aを選択 → 正解/);
+  assert.match(details.textContent, /独力の初回回答/);
+  assert.match(details.textContent, /最終回答：/);
+  const reloaded = bootCatalog({ withHistory: true, storage: app.window.localStorage });
+  assert.equal(reloaded.cards[0].querySelector("[data-answer-result]").textContent, "回答済み");
+  assert.doesNotMatch(reloaded.cards[0].querySelector("[data-answer-status-details]").textContent, /Aを選択/);
+});
+
 test("answer history grades the first button only, and native keyboard click is not duplicated", () => {
   const app = bootCatalog({ withHistory: true });
   pressChoice(app.answerChoices[1], "Enter");
@@ -290,7 +307,8 @@ test("answer history grades the first button only, and native keyboard click is 
   assert.equal(answers[0].choice, "B");
   assert.equal(answers[0].correct, false);
   assert.equal(answers[0].independent, true);
-  assert.match(app.cards[0].querySelector("[data-answer-result]").textContent, /今回：Bを選択 → 不正解/);
+  assert.equal(app.cards[0].querySelector("[data-answer-result]").textContent, "不正解 · 要復習");
+  assert.match(app.cards[0].querySelector("[data-answer-status-details]").textContent, /今回：Bを選択 → 不正解/);
   assert.equal(app.disclosures[0].open, true);
 });
 
@@ -318,7 +336,8 @@ test("explicit retry records a new assisted attempt without erasing the first an
   assert.equal(answers.length, 2);
   assert.deepEqual(answers.map((event) => event.choice), ["B", "A"]);
   assert.equal(answers[1].independent, false);
-  assert.match(app.cards[0].querySelector("[data-answer-result]").textContent, /要復習/);
+  assert.equal(app.cards[0].querySelector("[data-answer-result]").textContent, "正解 · 答え確認後 · 要復習");
+  assert.match(app.cards[0].querySelector("[data-answer-status-details]").textContent, /復習解除まで別日の独力正解：0\/2日/);
 });
 
 test("review filters combine with coverage and never hide cards while answering", () => {

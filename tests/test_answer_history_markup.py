@@ -119,9 +119,9 @@ def test_history_assets_and_browser_only_controls_are_present_without_outbound_r
     html = (output / "index.html").read_text(encoding="utf-8")
     history = (output / "assets/answer-history.js").read_text(encoding="utf-8")
     script = (output / "assets/catalog.js").read_text(encoding="utf-8")
-    assert html.index('assets/answer-history.js"') < html.index('assets/catalog.js"')
+    assert html.index('assets/answer-history.js') < html.index('assets/catalog.js')
     for asset in ("answer-history.js", "catalog.js"):
-        tag = re.search(rf'<script[^>]+src="[^"]*/assets/{re.escape(asset)}"[^>]*>', html)
+        tag = re.search(rf'<script[^>]+src="[^"]*/assets/{re.escape(asset)}(?:\?v=[a-f0-9]{{12}})?"[^>]*>', html)
         assert tag is not None and "defer" in tag.group(0)
     assert history == Path("principle_catalog/static/answer-history.js").read_text(encoding="utf-8")
     assert "localStorage" in script
@@ -135,7 +135,7 @@ def test_history_assets_and_browser_only_controls_are_present_without_outbound_r
         select = html.split('<select id="review-filter">', 1)[1].split("</select>", 1)[0]
         assert f'value="{value}"' in select
     published_count = len(display_principles(load_catalog(), published_only=True))
-    for marker in ('data-study-id="', 'data-question-revision="', "data-answer-result", "data-answer-retry", "data-answer-history-list"):
+    for marker in ('data-study-id="', 'data-question-revision="', "data-answer-result", "data-answer-status-details", "data-answer-retry", "data-answer-history-list"):
         assert html.count(marker) == published_count
 
 

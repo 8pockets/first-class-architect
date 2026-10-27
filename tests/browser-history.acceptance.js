@@ -92,7 +92,7 @@ async (page) => {
       log = await answers(first);
       check(log.length === 3 && log.filter((entry) => entry.independent).length === 1, "Reload erased exposure evidence");
 
-      for (const [day, right, expected] of [[7, false, "重点復習"], [8, true, "要復習"], [9, true, "回答済み"]]) {
+      for (const [day, right, expected] of [[7, false, "重点復習"], [8, true, "要復習"], [9, true, "正解"]]) {
         // Advance on the next document, not while yesterday's answer remains
         // on screen (which would correctly count as seeing today's answer).
         await view.evaluate((day) => sessionStorage.setItem("history-test-clock",
@@ -182,8 +182,10 @@ async (page) => {
       revisionOverride = true;
       await view.reload({ waitUntil: "networkidle" });
       check(await cardFor(first).getAttribute("data-question-revision") === "f".repeat(64), "Revision test override was not applied");
-      let revisedResult = await cardFor(first).locator("[data-answer-result]").innerText();
-      check(revisedResult.includes("未回答") && revisedResult.includes("旧版の回答"), "Old revision answers contaminated current grading");
+      const revisedResult = await cardFor(first).locator("[data-answer-result]").innerText();
+      await cardFor(first).locator(".card-tools > summary").click();
+      const revisedDetails = await cardFor(first).locator("[data-answer-status-details]").innerText();
+      check(revisedResult === "未回答" && revisedDetails.includes("旧版の回答"), "Old revision answers contaminated current grading");
       await choose(first, true);
       const afterRevision = await answers(first);
       check(afterRevision.length === countBeforeRevision + 1, "Revision lost historical records");

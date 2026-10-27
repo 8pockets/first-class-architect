@@ -116,6 +116,7 @@ function boot({ count = 12, storage = new Storage(), beforeUI, revision = "rev1"
     const disclosure = add("details", { id: `answer-${i}`, dataset: { answerDisclosure: "" } }, card);
     add("summary", {}, disclosure);
     add("p", { dataset: { answerResult: "" } }, card);
+    add("p", { dataset: { answerStatusDetails: "" } }, card);
     add("button", { dataset: { answerRetry: "" } }, card);
     const log = add("details", { dataset: { answerHistory: "" } }, card);
     add("summary", {}, log); add("ul", { dataset: { answerHistoryList: "" } }, log);
@@ -310,6 +311,22 @@ test("a new question revision reconciles the saved set without reusing old compl
   assert.equal(reload.state().items[0].revision, "rev2");
   assert.equal(reload.events().filter((event) => event.type === "answer").length, 1);
   assert.match(reload.$("study-status").textContent, /過去の回答は保持/);
+  assert.equal(reload.cards[0].querySelector("[data-answer-result]").textContent, "未回答");
+  assert.match(reload.cards[0].querySelector("[data-answer-status-details]").textContent, /旧版の回答1件/);
+});
+
+test("compact review status retains priority and separate-day recovery details", () => {
+  const app = boot({ count: 2, beforeUI(app) {
+    app.day(13); app.fixtureAnswer(0);
+    app.day(14); app.fixtureAnswer(0);
+    app.day(15);
+  } });
+  const card = app.cards[0];
+  assert.equal(card.querySelector("[data-answer-result]").textContent, "重点復習");
+  assert.match(card.querySelector("[data-answer-status-details]").textContent, /連続誤答：2回/);
+  app.answer(0, "A");
+  assert.equal(card.querySelector("[data-answer-result]").textContent, "正解 · 要復習");
+  assert.match(card.querySelector("[data-answer-status-details]").textContent, /別日の独力正解：1\/2日/);
 });
 
 test("next-day review in the same tab records a fresh independent answer", () => {

@@ -117,9 +117,13 @@ def _asset_text(name: str) -> str:
     return path.read_text(encoding="utf-8")
 
 
+def _versioned_asset_url(base_url: str, name: str) -> str:
+    version = hashlib.sha256(_asset_text(name).encode("utf-8")).hexdigest()[:12]
+    return urljoin(base_url, f"assets/{name}") + f"?v={version}"
+
+
 def _stylesheet_url(base_url: str) -> str:
-    version = hashlib.sha256(_asset_text("styles.css").encode("utf-8")).hexdigest()[:12]
-    return urljoin(base_url, "assets/styles.css") + f"?v={version}"
+    return _versioned_asset_url(base_url, "styles.css")
 
 
 def _page_kinds(catalog: Catalog, item: Principle) -> tuple[str, ...]:
@@ -398,8 +402,9 @@ def _card(
     </div>
   </details>
   <details class="card-tools">
-    <summary class="card-action" title="補助情報（種類・履歴・出典）">{_action_icon('info')}<span class="visually-hidden">補助情報：{escape(question_reference)}</span></summary>
+    <summary class="card-action" title="補助情報（回答状況・種類・履歴・出典）">{_action_icon('info')}<span class="visually-hidden">補助情報：{escape(question_reference)}</span></summary>
     <div class="card-tools-content">
+    <p class="answer-status-details" data-answer-status-details>未回答</p>
     <p class="card-content-type">内容の種類 <span class="type-badge type-{escape(item.type)}">{_TYPE_LABELS[item.type]}</span></p>
     <details class="answer-history" data-answer-history>
       <summary>この問題の回答履歴</summary>
@@ -1154,7 +1159,7 @@ def _page(
     canonical_url = urljoin(base_url, "./")
     og_url = urljoin(base_url, "assets/og.png")
     stylesheet_url = _stylesheet_url(base_url)
-    script_url = urljoin(base_url, "assets/catalog.js")
+    script_url = _versioned_asset_url(base_url, "catalog.js")
     research_url = urljoin(base_url, "research/")
     history_script_url = urljoin(base_url, "assets/answer-history.js")
     session_script_url = urljoin(base_url, "assets/study-session.js")
